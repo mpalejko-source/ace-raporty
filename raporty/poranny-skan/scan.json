@@ -1,5 +1,36 @@
 {
   "items": [
+        {
+      "id": "2026-01-30",
+      "date": "2026-01-30",
+      "time": "08:30",
+      "pl": {
+         "title": "ACE – Poranny Skan Rynku",
+  "lead": "Płynność, handel i logistyka w centrum uwagi: oleiste reagują na przetasowania handlowe, a zboża korzystają ze słabszego dolara i aktywności funduszy, przy wciąż wysokiej podaży globalnej.",
+  "fx": "Dolar pozostaje słabszy, wspierany oczekiwaniami obniżek stóp w USA i niepewnością wokół ceł oraz polityki fiskalnej. Słabszy USD poprawia konkurencyjność eksportową zbóż i soi z USA, wspierając nastroje na rynkach surowcowych.",
+  "agri": "Oleiste w centrum zmian handlowych: Chiny dopuszczają australijski rzepak i zwiększają zakupy canoli z Australii oraz Kanady, co wpływa na bilans rzepaku i relacje cenowe olejów. Zboża korzystają z osłabienia dolara i short-coveringu funduszy na CBOT, choć wzrosty ogranicza wysoka globalna podaż. Logistyka pozostaje kluczowym czynnikiem na rynku śruty sojowej w USA.",
+  "focus": [
+    "płynność finansowa w łańcuchu agro i jej wpływ na podaż (lekcja z rynku kakao)",
+    "przetargi i sygnały popytowe: Tunezja (pszenica), Jordania (jęczmień, pszenica)",
+    "handel oleistymi: Chiny–Australia–Kanada, pierwsze ceny rzepaku 2026 z Ukrainy",
+    "logistyka i pogoda w USA jako czynnik ryzyka dla śruty sojowej",
+    "kurs dolara i aktywność funduszy jako krótkoterminowy driver cen zbóż i soi"
+        ]
+      },
+      "en": {
+        "title": "ACE – Morning Market Scan",
+  "lead": "Liquidity, trade flows and logistics take center stage: oilseeds react to shifting trade patterns, while grains draw support from a weaker dollar and fund activity despite ample global supply.",
+  "fx": "The U.S. dollar remains soft, driven by expectations of rate cuts in the U.S. and uncertainty around tariffs and fiscal policy. A weaker USD improves the export competitiveness of U.S. grains and soybeans, supporting commodity sentiment.",
+  "agri": "Oilseeds in focus as trade routes shift: China clears Australian rapeseed for processing and expands canola purchases from Australia and Canada, impacting rapeseed balances and vegetable oil price relationships. Grains benefit from a weaker dollar and fund short-covering on CBOT, though gains are capped by abundant global supply. Logistics remain the key short-term constraint in the U.S. soymeal market.",
+  "focus": [
+    "liquidity risks in the agri supply chain and implications for future supply (lessons from cocoa)",
+    "tenders and demand signals: Tunisia (wheat), Jordan (barley, wheat)",
+    "oilseed trade shifts: China–Australia–Canada, first 2026 rapeseed price indications from Ukraine",
+    "U.S. logistics and weather as near-term risks for soymeal deliveries",
+    "USD dynamics and fund positioning as key short-term drivers for grain and soybean prices"
+        ]
+      }
+    },
     {
       "id": "2026-01-29",
       "date": "2026-01-29",
