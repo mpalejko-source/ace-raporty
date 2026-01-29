@@ -3,7 +3,8 @@
 <head>
 
   <script>
-  if (localStorage.getItem("ace_access") !== "1") {
+ if (sessionStorage.getItem("ace_access") !== "1") {
+
     window.location.href = "./login.html";
   }
 </script>
