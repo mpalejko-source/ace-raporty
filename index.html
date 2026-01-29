@@ -166,6 +166,34 @@
       box-shadow: var(--shadow);
     }
     footer{margin-top:16px; color:var(--muted2); font-size:12px}
+
+    /* ==============================
+       FEATURED TILE: Poranny Skan
+       ============================== */
+    a.card.featured{
+      border: 2px solid rgba(125,211,252,.70);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      transform: translateY(-2px);
+    }
+    a.card.featured:hover{
+      transform: translateY(-4px);
+      border-color: rgba(125,211,252,.90);
+    }
+    a.card.featured::after{
+      content: "PORANNY SKAN • DAILY";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,.88);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      letter-spacing: .04em;
+      z-index: 3;
+    }
   </style>
 </head>
 
@@ -258,21 +286,22 @@
 
     function applySort(items, sortKey){
       const arr = items.slice();
-      const cmpStr = (a,b) => a.localeCompare(b, "pl", { sensitivity:"base" });
 
       arr.sort((A,B) => {
-      // 1️⃣ Poranny Skan zawsze pierwszy
-      if (A.id === "poranny-skan") return -1;
-      if (B.id === "poranny-skan") return 1;
-    
-      // 2️⃣ reszta normalnie po dacie
-      if(sortKey === "updated_desc") return parseISO(B.updated) - parseISO(A.updated);
-      if(sortKey === "updated_asc")  return parseISO(A.updated) - parseISO(B.updated);
-    
-      if(sortKey === "name_asc") return A.name.localeCompare(B.name,"pl");
-      if(sortKey === "name_desc") return B.name.localeCompare(A.name,"pl");
+        // 1️⃣ Poranny Skan zawsze pierwszy
+        if (A.id === "poranny-skan") return -1;
+        if (B.id === "poranny-skan") return 1;
 
-  return 0;
+        // 2️⃣ reszta normalnie
+        if(sortKey === "updated_desc") return parseISO(B.updated) - parseISO(A.updated);
+        if(sortKey === "updated_asc")  return parseISO(A.updated) - parseISO(B.updated);
+
+        if(sortKey === "name_asc") return A.name.localeCompare(B.name,"pl");
+        if(sortKey === "name_desc") return B.name.localeCompare(A.name,"pl");
+        if(sortKey === "id_asc") return A.id.localeCompare(B.id,"pl");
+        if(sortKey === "id_desc") return B.id.localeCompare(A.id,"pl");
+
+        return 0;
       });
 
       return arr;
@@ -299,12 +328,17 @@
       }
 
       grid.innerHTML = items.map((r, i) => {
-        const t = tagFor(i);
+        // tag
+        const t = (r.id === "poranny-skan")
+          ? { cls: "tag", txt: "Poranny skan" }
+          : tagFor(i);
+
         const updated = fmtDatePL(r.updated);
         const safePath = (r.path || "").replace(/^\/+/, ""); // no leading /
+        const isFeatured = (r.id === "poranny-skan");
 
         return `
-          <a class="card" href="${safePath}">
+          <a class="card ${isFeatured ? "featured" : ""}" href="${safePath}">
             <div class="kicker">
               <span class="${t.cls}">${t.txt}</span>
               <span class="muted">ID: <code>${r.id}</code></span>
