@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Panel raportów</title>
 
-  <!-- Cache OFF: tygodniowe aktualizacje -->
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -13,8 +12,6 @@
   <style>
     :root{
       --bg:#0b1220;
-      --card:#0f1a33;
-      --card2:#0d172e;
       --border:rgba(255,255,255,.10);
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
@@ -23,8 +20,9 @@
       --accent2:#a78bfa;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
+      --input: rgba(255,255,255,.06);
+      --inputb: rgba(255,255,255,.14);
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -34,41 +32,74 @@
                   var(--bg);
       color:var(--text);
     }
-
-    .wrap{max-width:1040px; margin:0 auto; padding:26px 18px 40px}
-    header{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:16px}
-    .brand{
-      display:flex; gap:12px; align-items:center;
-    }
+    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px}
+    header{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px}
+    .brand{display:flex; gap:12px; align-items:center;}
     .logo{
       width:44px; height:44px; border-radius:14px;
       background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.9));
       box-shadow: var(--shadow);
+      flex:0 0 auto;
     }
     h1{margin:0; font-size:24px; letter-spacing:.2px}
     .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .right{
-      text-align:right;
-      color:var(--muted2);
-      font-size:12px;
-      margin-top:6px;
+
+    .topbar{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .search{
+      flex: 1 1 380px;
+      display:flex; gap:10px; align-items:center;
+      border:1px solid var(--inputb);
+      background: var(--input);
+      padding:10px 12px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-size:14px;
+    }
+    .search input::placeholder{ color: rgba(234,240,255,.55); }
+
+    .controls{
+      display:flex; gap:10px; align-items:center;
+      flex: 0 1 auto;
+    }
+    select{
+      border:1px solid var(--inputb);
+      background: var(--input);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      outline:none;
+      box-shadow: var(--shadow);
+      font-size:13px;
     }
     .pill{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:7px 10px; border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
-      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      color:var(--muted2);
       font-size:12px;
+      box-shadow: var(--shadow);
+      white-space:nowrap;
     }
 
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap:14px;
       margin-top:14px;
     }
-
     a.card{
       display:block;
       text-decoration:none;
@@ -118,6 +149,12 @@
       padding-top:10px;
       border-top:1px solid rgba(255,255,255,.08);
     }
+    .meta code{
+      background: rgba(255,255,255,.06);
+      padding:2px 6px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.10)
+    }
 
     .muted{color:var(--muted2)}
     .error{
@@ -126,10 +163,9 @@
       padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
       margin-top:14px;
       font-size:13px;
+      box-shadow: var(--shadow);
     }
-
-    footer{margin-top:18px; color:var(--muted2); font-size:12px}
-    code{background: rgba(255,255,255,.06); padding:2px 6px; border-radius:10px; border:1px solid rgba(255,255,255,.10)}
+    footer{margin-top:16px; color:var(--muted2); font-size:12px}
   </style>
 </head>
 
@@ -140,38 +176,65 @@
         <div class="logo" aria-hidden="true"></div>
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">Kliknij kafelek, aby otworzyć najnowszą wersję. Daty są pobierane z <code>manifest.json</code>.</p>
+          <p class="sub">Szukaj po nazwie/ID/opisie. Raporty są sortowane wg daty „Last updated”.</p>
         </div>
       </div>
-
-      <div class="right">
-        <div class="pill">
-          <span>Źródło:</span>
-          <strong>ACE Group</strong>
-        </div>
-        <div style="margin-top:8px" class="muted" id="asof">Aktualizacja panelu: —</div>
-      </div>
+      <div class="pill" id="asof">Aktualizacja panelu: —</div>
     </header>
 
-    <section class="grid" id="grid" aria-live="polite">
-      <!-- karty pojawią się z manifestu -->
-    </section>
+    <div class="topbar">
+      <div class="search">
+        <span class="muted">🔎</span>
+        <input id="q" type="search" placeholder="Szukaj: np. fundusze, chart, pozycje…" autocomplete="off" />
+      </div>
 
+      <div class="controls">
+        <select id="sort">
+          <option value="updated_desc" selected>Sort: Last updated ↓</option>
+          <option value="updated_asc">Sort: Last updated ↑</option>
+          <option value="name_asc">Sort: Nazwa A–Z</option>
+          <option value="name_desc">Sort: Nazwa Z–A</option>
+          <option value="id_asc">Sort: ID A–Z</option>
+          <option value="id_desc">Sort: ID Z–A</option>
+        </select>
+        <div class="pill" id="count">0 raportów</div>
+      </div>
+    </div>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
-      <div>Jak aktualizować: podmień raport w <code>/raporty/nazwa/index.html</code> + zmień datę w <code>manifest.json</code>.</div>
+      Aktualizacja: podmień raport w <code>/raporty/nazwa/index.html</code> + zmień datę w <code>manifest.json</code>.
     </footer>
   </div>
 
   <script>
-    function fmtDate(iso){
+    // -------- helpers ----------
+    function fmtDatePL(iso){
       // iso: YYYY-MM-DD
       if(!iso || typeof iso !== "string") return "—";
       const parts = iso.split("-");
       if(parts.length !== 3) return iso;
       const [y,m,d] = parts;
       return `${d}.${m}.${y}`;
+    }
+
+    function parseISO(iso){
+      // returns timestamp or -Infinity
+      if(!iso || typeof iso !== "string") return -Infinity;
+      const t = Date.parse(iso + "T00:00:00Z");
+      return isNaN(t) ? -Infinity : t;
+    }
+
+    function norm(s){
+      return (s || "").toString().toLowerCase().trim();
+    }
+
+    function tagFor(i){
+      return i % 2 === 0
+        ? { cls: "tag", txt: "Raport" }
+        : { cls: "tag purple", txt: "Wykresy" };
     }
 
     async function loadManifest(){
@@ -181,39 +244,73 @@
       return await res.json();
     }
 
-    function tagFor(i){
-      // proste tagi naprzemiennie (można dopracować)
-      return i % 2 === 0
-        ? { cls: "tag", txt: "Raport tygodniowy" }
-        : { cls: "tag purple", txt: "Chart pack" };
+    function toItems(manifest){
+      // manifest object → array of items
+      const entries = Object.entries(manifest);
+      return entries.map(([id, r]) => ({
+        id,
+        name: r.name || id,
+        description: r.description || "",
+        path: r.path || ("raporty/" + id + "/"),
+        updated: r.updated || ""
+      }));
     }
 
-    function buildCards(data){
-      const entries = Object.entries(data);
-      const grid = document.getElementById("grid");
+    function applySort(items, sortKey){
+      const arr = items.slice();
+      const cmpStr = (a,b) => a.localeCompare(b, "pl", { sensitivity:"base" });
 
-      if(entries.length === 0){
-        grid.innerHTML = `<div class="error">Brak raportów w manifest.json</div>`;
+      arr.sort((A,B) => {
+        if(sortKey === "updated_desc") return parseISO(B.updated) - parseISO(A.updated);
+        if(sortKey === "updated_asc")  return parseISO(A.updated) - parseISO(B.updated);
+
+        if(sortKey === "name_asc") return cmpStr(A.name, B.name);
+        if(sortKey === "name_desc") return cmpStr(B.name, A.name);
+
+        if(sortKey === "id_asc") return cmpStr(A.id, B.id);
+        if(sortKey === "id_desc") return cmpStr(B.id, A.id);
+
+        return 0;
+      });
+
+      return arr;
+    }
+
+    function applyFilter(items, query){
+      const q = norm(query);
+      if(!q) return items;
+
+      return items.filter(it => {
+        const hay = norm(it.id) + " " + norm(it.name) + " " + norm(it.description);
+        return hay.includes(q);
+      });
+    }
+
+    function render(items){
+      const grid = document.getElementById("grid");
+      const count = document.getElementById("count");
+      count.textContent = items.length + (items.length === 1 ? " raport" : " raportów");
+
+      if(items.length === 0){
+        grid.innerHTML = `<div class="error">Brak wyników. Zmień frazę wyszukiwania.</div>`;
         return;
       }
 
-      grid.innerHTML = entries.map(([id, r], i) => {
+      grid.innerHTML = items.map((r, i) => {
         const t = tagFor(i);
-        const name = r.name || id;
-        const desc = r.description || "";
-        const path = r.path || ("raporty/" + id + "/");
-        const updated = fmtDate(r.updated);
+        const updated = fmtDatePL(r.updated);
+        const safePath = (r.path || "").replace(/^\/+/, ""); // no leading /
 
         return `
-          <a class="card" href="${path}">
+          <a class="card" href="${safePath}">
             <div class="kicker">
               <span class="${t.cls}">${t.txt}</span>
-              <span class="muted">ID: <code>${id}</code></span>
+              <span class="muted">ID: <code>${r.id}</code></span>
             </div>
-            <p class="title">${name}</p>
-            <p class="desc">${desc}</p>
+            <p class="title">${r.name}</p>
+            <p class="desc">${r.description}</p>
             <div class="meta">
-              <span>Ścieżka: <code>/${path.replace(/^\/?/,"")}</code></span>
+              <span>Ścieżka: <code>/${safePath}</code></span>
               <span><strong>Last updated:</strong> ${updated}</span>
             </div>
           </a>
@@ -221,12 +318,32 @@
       }).join("");
     }
 
+    // -------- app ----------
+    let ALL = [];
+
+    function refresh(){
+      const q = document.getElementById("q").value;
+      const sortKey = document.getElementById("sort").value;
+
+      const filtered = applyFilter(ALL, q);
+      const sorted = applySort(filtered, sortKey);
+
+      render(sorted);
+    }
+
     (async () => {
       try{
         const manifest = await loadManifest();
-        buildCards(manifest);
+        ALL = toItems(manifest);
         document.getElementById("asof").textContent =
           "Aktualizacja panelu: " + new Date().toLocaleString("pl-PL");
+
+        // events
+        document.getElementById("q").addEventListener("input", refresh);
+        document.getElementById("sort").addEventListener("change", refresh);
+
+        // initial render
+        refresh();
       } catch(e){
         const err = document.getElementById("err");
         err.style.display = "block";
