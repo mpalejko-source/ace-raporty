@@ -1,11 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Panel raportów</title>
+
+  <!-- żeby zawsze łapało najnowszą wersję -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <style>
+    :root { --border:#e6e6e6; --muted:#666; }
+    body { font-family: Arial, sans-serif; margin: 24px; max-width: 980px; }
+    header { margin-bottom: 18px; }
+    h1 { margin: 0 0 6px 0; font-size: 26px; }
+    .sub { color: var(--muted); margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px; }
+    a.card { display: block; border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-decoration: none; color: inherit; }
+    a.card:hover { border-color:#cfcfcf; }
+    .title { font-weight: 700; font-size: 16px; margin: 0 0 6px 0; }
+    .desc { margin: 0 0 10px 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .meta { font-size: 12px; color: var(--muted); display:flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    footer { margin-top: 20px; color: var(--muted); font-size: 12px; }
+    code { background:#f6f6f6; padding:2px 6px; border-radius:8px; }
+  </style>
 </head>
+
 <body>
-  <h1>ACE – Panel raportów</h1>
-  <p>Jeśli to widzisz, GitHub Pages działa.</p>
+  <header>
+    <h1>ACE – Panel raportów</h1>
+    <p class="sub">Kliknij raport, aby otworzyć najnowszą wersję. Linki są stałe — Ty podmieniasz tylko <code>index.html</code> w danym folderze.</p>
+  </header>
+
+  <section class="grid">
+    <a class="card" href="raporty/pozycje-funduszy/">
+      <p class="title">ACE – Pozycje Funduszy</p>
+      <p class="desc">Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.</p>
+      <div class="meta">
+        <span>Ścieżka: <code>/raporty/pozycje-funduszy/</code></span>
+        <span id="d1">Last updated: —</span>
+      </div>
+    </a>
+
+    <a class="card" href="raporty/chart-pack/">
+      <p class="title">ACE – Chart Pack</p>
+      <p class="desc">Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.</p>
+      <div class="meta">
+        <span>Ścieżka: <code>/raporty/chart-pack/</code></span>
+        <span id="d2">Last updated: —</span>
+      </div>
+    </a>
+  </section>
+
+  <footer>
+    <p>Wskazówka: później dodamy automatyczne daty z pliku <code>manifest.json</code>. Na razie możesz je uzupełnić ręcznie poniżej.</p>
+  </footer>
+
+  <script>
+    // PROSTY RĘCZNY UPDATE DAT (na teraz)
+    // Zmieniasz tylko te dwie linie, gdy aktualizujesz raporty.
+    const UPDATED_POZYCJE_FUNDUSZY = "2026-01-29";
+    const UPDATED_CHART_PACK = "2026-01-29";
+
+    document.getElementById("d1").textContent = "Last updated: " + UPDATED_POZYCJE_FUNDUSZY;
+    document.getElementById("d2").textContent = "Last updated: " + UPDATED_CHART_PACK;
+  </script>
 </body>
 </html>
