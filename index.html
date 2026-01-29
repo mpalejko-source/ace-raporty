@@ -261,16 +261,18 @@
       const cmpStr = (a,b) => a.localeCompare(b, "pl", { sensitivity:"base" });
 
       arr.sort((A,B) => {
-        if(sortKey === "updated_desc") return parseISO(B.updated) - parseISO(A.updated);
-        if(sortKey === "updated_asc")  return parseISO(A.updated) - parseISO(B.updated);
+      // 1️⃣ Poranny Skan zawsze pierwszy
+      if (A.id === "poranny-skan") return -1;
+      if (B.id === "poranny-skan") return 1;
+    
+      // 2️⃣ reszta normalnie po dacie
+      if(sortKey === "updated_desc") return parseISO(B.updated) - parseISO(A.updated);
+      if(sortKey === "updated_asc")  return parseISO(A.updated) - parseISO(B.updated);
+    
+      if(sortKey === "name_asc") return A.name.localeCompare(B.name,"pl");
+      if(sortKey === "name_desc") return B.name.localeCompare(A.name,"pl");
 
-        if(sortKey === "name_asc") return cmpStr(A.name, B.name);
-        if(sortKey === "name_desc") return cmpStr(B.name, A.name);
-
-        if(sortKey === "id_asc") return cmpStr(A.id, B.id);
-        if(sortKey === "id_desc") return cmpStr(B.id, A.id);
-
-        return 0;
+  return 0;
       });
 
       return arr;
