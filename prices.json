@@ -1,0 +1,10 @@
+{
+  "asof": "2026-01-29 07:30",
+  "rows": [
+    { "name": "Pszenica paszowa (PL)", "unit": "PLN/t", "price": 900, "wow": -10 },
+    { "name": "Kukurydza (PL)",       "unit": "PLN/t", "price": 860, "wow": 5 },
+    { "name": "Śruta sojowa",         "unit": "PLN/t", "price": 2050, "wow": 0 },
+    { "name": "Śruta rzepakowa",      "unit": "PLN/t", "price": 1250, "wow": 15 },
+    { "name": "L-Lysine HCL",         "unit": "EUR/kg", "price": 1.24, "wow": -0.02 }
+  ]
+}
