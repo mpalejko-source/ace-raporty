@@ -1,1 +1,17 @@
-{"asof":"2026-01-29 21:07","rows":[{"name":"Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]","price":795,"w":10,"m":10},{"name":"Kukurydza – port Gdańsk/Gdynia [PLN/t]","price":790,"w":20,"m":40},{"name":"Śruta sojowa – port Gdańsk/Gdynia [PLN/t]","price":1380,"w":-30,"m":-60},{"name":"Śruta rzepakowa – centralna Polska [PLN/t]","price":980,"w":120,"m":210},{"name":"Śruta słonecznikowa – granica PL–UA [PLN/t]","price":890,"w":5,"m":-20}]}
+{
+  "asof": "2026-01-29 07:30",
+  "cash": [
+    { "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]", "price": 0, "w": 0, "m": 0 },
+    { "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",             "price": 0, "w": 0, "m": 0 },
+    { "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",          "price": 0, "w": 0, "m": 0 },
+    { "name": "Śruta rzepakowa – centralna Polska [PLN/t]",         "price": 0, "w": 0, "m": 0 },
+    { "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",        "price": 0, "w": 0, "m": 0 }
+  ],
+  "futures": [
+    { "name": "MATIF Pszenica (Front) [EUR/t]", "close": 0, "d1": 0, "w": 0, "m": 0 },
+    { "name": "MATIF Rzepak (Front) [EUR/t]",   "close": 0, "d1": 0, "w": 0, "m": 0 },
+    { "name": "MATIF Corn (Front) [EUR/bu]",       "close": 0, "d1": 0, "w": 0, "m": 0 },
+    { "name": "CBOT Soymeal [$/st]",            "close": 0, "d1": 0, "w": 0, "m": 0 },
+     { "name": "Neuss/Spyck Rapemeal [EUR/t]",            "close": 0, "d1": 0, "w": 0, "m": 0 }
+,  ]
+}
