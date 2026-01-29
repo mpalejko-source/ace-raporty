@@ -33,15 +33,20 @@
     }
     .wrap{max-width:980px; margin:0 auto; padding:26px 18px 54px}
     header{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px}
-    .brand{display:flex; gap:12px; align-items:center}
+    .brand{display:flex; gap:14px; align-items:center}
+
+    /* ✅ LOGO z głównego folderu */
     .logo{
-      width:44px; height:44px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.9));
-      box-shadow: var(--shadow);
+      height:56px;
+      width:auto;
+      display:block;
       flex:0 0 auto;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
+
     h1{margin:0; font-size:24px; letter-spacing:.2px}
     .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+
     .topbar{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin:14px 0}
     .pill{
       border:1px solid var(--border);
@@ -65,6 +70,7 @@
       font-size:12px;
     }
     .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
+
     .panel{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
@@ -74,6 +80,7 @@
     }
     .date{color:var(--muted2); font-size:13px; margin-top:4px}
     .lead{margin:12px 0 0 0; font-size:15px; line-height:1.5; color:rgba(234,240,255,.92)}
+
     .sec{margin-top:18px}
     .sec h2{
       margin:0 0 8px 0; font-size:16px;
@@ -90,6 +97,7 @@
     }
     .text{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
     .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
+
     .archive{
       margin-top:16px;
       border-top:1px solid rgba(255,255,255,.10);
@@ -107,7 +115,7 @@
     }
     .architem:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
     .archmeta{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:var(--muted2); font-size:12px; margin-top:6px}
-    .muted{color:var(--muted2)}
+
     .footer{
       margin-top:20px;
       padding-top:14px;
@@ -131,7 +139,8 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
+      <!-- ✅ logo.png z głównego folderu -->
+      <img src="logo.png" alt="ACE Group" class="logo">
       <div>
         <h1>ACE – Poranny Skan Rynku</h1>
         <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów.</p>
@@ -160,7 +169,7 @@
 </div>
 
 <script>
-  const DATA_URL = "scan.json?ts=" + Date.now(); // cache-bust
+  const DATA_URL = "scan.json?ts=" + Date.now();
   let LANG = "pl";
   let ITEMS = [];
   let ACTIVE_ID = null;
@@ -196,7 +205,7 @@
     const agri = t.agri || "";
     const focus = Array.isArray(t.focus) ? t.focus : [];
 
-    const html = `
+    document.getElementById("main").innerHTML = `
       <div>
         <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap">
           <div>
@@ -224,7 +233,6 @@
         </div>
       </div>
     `;
-    document.getElementById("main").innerHTML = html;
   }
 
   function renderArchive(){
@@ -233,31 +241,27 @@
       ? {h:"Archiwum (ostatnie 10)", open:"Otwórz"}
       : {h:"Archive (last 10)", open:"Open"};
 
-    const cards = ITEMS.slice(0, 10).map(it => {
-      const tt = it[LANG] || {};
-      const ttl = tt.title || "Poranny Skan";
-      const dateLine = `${fmtDatePL(it.date)} | ${it.time || "—"}`;
-      const active = (it.id === ACTIVE_ID);
-
-      return `
-        <div class="architem" data-id="${esc(it.id)}" style="${active ? "border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.08)" : ""}">
-          <div style="font-weight:700">${esc(ttl)}</div>
-          <div class="archmeta">
-            <span>${esc(dateLine)}</span>
-            <span>${t.open} →</span>
-          </div>
-        </div>
-      `;
-    }).join("");
-
     box.innerHTML = `
       <h3>${t.h}</h3>
-      <div class="archgrid">${cards || `<div class="muted">—</div>`}</div>
+      <div class="archgrid">
+        ${ITEMS.slice(0,10).map(it => {
+          const tt = it[LANG] || {};
+          return `
+            <div class="architem" data-id="${esc(it.id)}">
+              <div style="font-weight:700">${esc(tt.title || "Poranny Skan")}</div>
+              <div class="archmeta">
+                <span>${fmtDatePL(it.date)} | ${it.time || "—"}</span>
+                <span>${t.open} →</span>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
     `;
 
     box.querySelectorAll(".architem").forEach(el=>{
-      el.addEventListener("click", () => {
-        ACTIVE_ID = el.getAttribute("data-id");
+      el.addEventListener("click",()=>{
+        ACTIVE_ID = el.dataset.id;
         render();
       });
     });
@@ -265,11 +269,7 @@
 
   function render(){
     const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
-    if(!current){
-      document.getElementById("main").innerHTML = `<div class="muted">Brak danych w scan.json</div>`;
-      document.getElementById("archive").innerHTML = "";
-      return;
-    }
+    if(!current) return;
     ACTIVE_ID = current.id;
     renderMain(current);
     renderArchive();
@@ -278,7 +278,7 @@
   async function init(){
     try{
       const res = await fetch(DATA_URL, {cache:"no-store"});
-      if(!res.ok) throw new Error("Nie mogę wczytać scan.json (" + res.status + ")");
+      if(!res.ok) throw new Error("Nie mogę wczytać scan.json");
       const data = await res.json();
       ITEMS = Array.isArray(data.items) ? data.items : [];
       document.getElementById("asof").textContent =
@@ -287,13 +287,12 @@
     } catch(e){
       const err = document.getElementById("err");
       err.style.display = "block";
-      err.textContent = "Błąd: " + e.message + ". Sprawdź czy scan.json jest w tym samym folderze i ma poprawny JSON.";
+      err.textContent = "Błąd: " + e.message;
     }
   }
 
-  document.getElementById("btnPL").addEventListener("click", ()=>setLang("pl"));
-  document.getElementById("btnEN").addEventListener("click", ()=>setLang("en"));
-
+  document.getElementById("btnPL").onclick = ()=>setLang("pl");
+  document.getElementById("btnEN").onclick = ()=>setLang("en");
   init();
 </script>
 </body>
