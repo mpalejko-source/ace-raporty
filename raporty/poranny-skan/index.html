@@ -1,58 +1,300 @@
-{
-  "items": [
-    {
-      "id": "2026-01-29",
-      "date": "2026-01-29",
-      "time": "07:30",
-      "pl": {
-        "title": "ACE – Poranny Skan Rynku",
-        "lead": "Rynki wchodzą w dzień spokojnie; uwaga rynku przesuwa się na makro i przepływy kapitału.",
-        "fx": "EUR/USD stabilizuje się po wczorajszej sesji; USD pozostaje pod presją, a PLN trzyma poziomy na EUR/PLN przy umiarkowanym ryzyku globalnym.",
-        "agri": "Zboża w Europie bez wyraźnego impulsu; MATIF w konsolidacji. Oleiste reagują na nastroje w olejach roślinnych i sygnały popytowe.",
-        "focus": [
-          "dane makro ze strefy euro i USA",
-          "komentarze banków centralnych",
-          "raporty eksportowe / przetargi (agro)"
-        ]
-      },
-      "en": {
-        "title": "ACE – Morning Market Scan",
-        "lead": "Markets start the day quietly; focus shifts to macro releases and positioning flows.",
-        "fx": "EUR/USD steadies after yesterday’s session; USD remains under pressure while PLN holds levels versus EUR amid moderate global risk tone.",
-        "agri": "European grains lack a clear catalyst; MATIF trades in a tight range. Oilseeds track vegetable oil sentiment and demand signals.",
-        "focus": [
-          "Eurozone & US macro releases",
-          "central bank commentary",
-          "export updates / tenders (agri)"
-        ]
-      }
-    },
-    {
-      "id": "2026-01-28",
-      "date": "2026-01-28",
-      "time": "07:30",
-      "pl": {
-        "title": "ACE – Poranny Skan Rynku",
-        "lead": "Dzień zaczyna się pod znakiem ostrożności; inwestorzy wyceniają scenariusze na FX i surowcach.",
-        "fx": "Dolar miesza kierunki, a EUR utrzymuje przewagę. PLN stabilny; rynek czeka na kolejne sygnały z USA.",
-        "agri": "Rynek zbóż spokojny; kupujący selektywni. Oleiste wrażliwe na zmienność w kompleksie olejów.",
-        "focus": [
-          "kalendarz makro (USA)",
-          "zmienność na USD",
-          "tempo eksportu / logistyka (agro)"
-        ]
-      },
-      "en": {
-        "title": "ACE – Morning Market Scan",
-        "lead": "The day starts cautiously; investors price scenarios across FX and commodities.",
-        "fx": "USD trades mixed while EUR keeps an edge. PLN steady as the market waits for fresh US signals.",
-        "agri": "Grains are calm with selective buying. Oilseeds remain sensitive to moves in the vegetable oils complex.",
-        "focus": [
-          "US macro calendar",
-          "USD volatility",
-          "exports pace / logistics (agri)"
-        ]
-      }
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ACE – Poranny Skan Rynku</title>
+
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a33;
+      --border:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --muted2:rgba(234,240,255,.55);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
     }
-  ]
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:26px 18px 54px}
+    header{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.9));
+      box-shadow: var(--shadow);
+      flex:0 0 auto;
+    }
+    h1{margin:0; font-size:24px; letter-spacing:.2px}
+    .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .topbar{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin:14px 0}
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding:8px 10px;
+      border-radius:999px;
+      color:var(--muted2);
+      font-size:12px;
+      box-shadow: var(--shadow);
+      white-space:nowrap;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      font-size:12px;
+    }
+    .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
+    .panel{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .date{color:var(--muted2); font-size:13px; margin-top:4px}
+    .lead{margin:12px 0 0 0; font-size:15px; line-height:1.5; color:rgba(234,240,255,.92)}
+    .sec{margin-top:18px}
+    .sec h2{
+      margin:0 0 8px 0; font-size:16px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .icon{
+      width:28px; height:28px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+      font-size:16px;
+    }
+    .text{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+    .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
+    .archive{
+      margin-top:16px;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:14px;
+    }
+    .archive h3{margin:0 0 10px 0; font-size:14px; color:rgba(234,240,255,.9)}
+    .archgrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px}
+    .architem{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:12px;
+      cursor:pointer;
+      transition: transform .08s ease, border-color .08s ease;
+    }
+    .architem:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    .archmeta{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:var(--muted2); font-size:12px; margin-top:6px}
+    .muted{color:var(--muted2)}
+    .footer{
+      margin-top:20px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      font-size:12px;
+      color:rgba(234,240,255,.55);
+    }
+    code{background: rgba(255,255,255,.06); padding:2px 6px; border-radius:10px; border:1px solid rgba(255,255,255,.10)}
+    .error{
+      margin-top:14px;
+      border:1px solid rgba(255,120,120,.25);
+      background: rgba(255,120,120,.08);
+      padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
+      box-shadow: var(--shadow);
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>ACE – Poranny Skan Rynku</h1>
+        <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów.</p>
+      </div>
+    </div>
+
+    <div class="pill" id="asof">Aktualizacja: —</div>
+  </header>
+
+  <div class="topbar">
+    <div>
+      <button class="btn active" id="btnPL" type="button">PL</button>
+      <button class="btn" id="btnEN" type="button">EN</button>
+    </div>
+    <div class="pill">Źródło: <strong>ACE Group</strong></div>
+  </div>
+
+  <section class="panel" id="main"></section>
+  <div id="err" class="error" style="display:none"></div>
+
+  <section class="panel archive" id="archive"></section>
+
+  <div class="footer">
+    Edycja codzienna: dopisz nowy wpis na górze w <code>scan.json</code> (PL + EN). Panel sam to wczyta.
+  </div>
+</div>
+
+<script>
+  const DATA_URL = "scan.json?ts=" + Date.now(); // cache-bust
+  let LANG = "pl";
+  let ITEMS = [];
+  let ACTIVE_ID = null;
+
+  function setLang(lang){
+    LANG = lang;
+    document.getElementById("btnPL").classList.toggle("active", lang==="pl");
+    document.getElementById("btnEN").classList.toggle("active", lang==="en");
+    render();
+  }
+
+  function fmtDatePL(iso){
+    if(!iso) return "—";
+    const p = iso.split("-");
+    if(p.length!==3) return iso;
+    return `${p[2]}.${p[1]}.${p[0]}`;
+  }
+
+  function esc(s){
+    return (s||"").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
+
+  function renderMain(item){
+    const t = item[LANG] || {};
+    const dateLine = `${fmtDatePL(item.date)} | ${item.time || "—"}`;
+    const title = t.title || "ACE – Poranny Skan Rynku";
+    const lead = t.lead || "";
+
+    const fx = t.fx || "";
+    const agri = t.agri || "";
+    const focus = Array.isArray(t.focus) ? t.focus : [];
+
+    const html = `
+      <div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap">
+          <div>
+            <div style="font-weight:700; font-size:18px">${esc(title)}</div>
+            <div class="date">${esc(dateLine)}</div>
+          </div>
+          <div class="pill">ID: <strong>${esc(item.id)}</strong></div>
+        </div>
+
+        <p class="lead">${esc(lead)}</p>
+
+        <div class="sec">
+          <h2><span class="icon">💵</span> FX / Makro</h2>
+          <p class="text">${esc(fx)}</p>
+        </div>
+
+        <div class="sec">
+          <h2><span class="icon">🌾</span> Zboża i oleiste</h2>
+          <p class="text">${esc(agri)}</p>
+        </div>
+
+        <div class="sec">
+          <h2><span class="icon">🎯</span> Na co zwrócić uwagę dziś</h2>
+          ${focus.length ? `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="text muted">—</p>`}
+        </div>
+      </div>
+    `;
+    document.getElementById("main").innerHTML = html;
+  }
+
+  function renderArchive(){
+    const box = document.getElementById("archive");
+    const t = (LANG==="pl")
+      ? {h:"Archiwum (ostatnie 10)", open:"Otwórz"}
+      : {h:"Archive (last 10)", open:"Open"};
+
+    const cards = ITEMS.slice(0, 10).map(it => {
+      const tt = it[LANG] || {};
+      const ttl = tt.title || "Poranny Skan";
+      const dateLine = `${fmtDatePL(it.date)} | ${it.time || "—"}`;
+      const active = (it.id === ACTIVE_ID);
+
+      return `
+        <div class="architem" data-id="${esc(it.id)}" style="${active ? "border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.08)" : ""}">
+          <div style="font-weight:700">${esc(ttl)}</div>
+          <div class="archmeta">
+            <span>${esc(dateLine)}</span>
+            <span>${t.open} →</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    box.innerHTML = `
+      <h3>${t.h}</h3>
+      <div class="archgrid">${cards || `<div class="muted">—</div>`}</div>
+    `;
+
+    box.querySelectorAll(".architem").forEach(el=>{
+      el.addEventListener("click", () => {
+        ACTIVE_ID = el.getAttribute("data-id");
+        render();
+      });
+    });
+  }
+
+  function render(){
+    const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
+    if(!current){
+      document.getElementById("main").innerHTML = `<div class="muted">Brak danych w scan.json</div>`;
+      document.getElementById("archive").innerHTML = "";
+      return;
+    }
+    ACTIVE_ID = current.id;
+    renderMain(current);
+    renderArchive();
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(DATA_URL, {cache:"no-store"});
+      if(!res.ok) throw new Error("Nie mogę wczytać scan.json (" + res.status + ")");
+      const data = await res.json();
+      ITEMS = Array.isArray(data.items) ? data.items : [];
+      document.getElementById("asof").textContent =
+        "Aktualizacja: " + new Date().toLocaleString("pl-PL");
+      render();
+    } catch(e){
+      const err = document.getElementById("err");
+      err.style.display = "block";
+      err.textContent = "Błąd: " + e.message + ". Sprawdź czy scan.json jest w tym samym folderze i ma poprawny JSON.";
+    }
+  }
+
+  document.getElementById("btnPL").addEventListener("click", ()=>setLang("pl"));
+  document.getElementById("btnEN").addEventListener("click", ()=>setLang("en"));
+
+  init();
+</script>
+</body>
+</html>
