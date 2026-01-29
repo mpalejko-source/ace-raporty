@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="pl">
 <head>
+
+  <script>
+  if (localStorage.getItem("ace_access") !== "1") {
+    window.location.href = "./login.html";
+  }
+</script>
+
+
+  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Panel raportów</title>
