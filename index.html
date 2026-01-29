@@ -234,7 +234,16 @@
     #pricesTable td:nth-child(4){
       font-variant-numeric: tabular-nums;
       letter-spacing: .01em;
-    
+    .pricesGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+
+@media (max-width: 980px){
+  .pricesGrid{ grid-template-columns: 1fr; }
+}
   </style>
 </head>
 
@@ -272,19 +281,23 @@
 <!-- ===============================
      CENNIK SUROWCÓW PASZOWYCH
      =============================== -->
-<section class="panel" id="pricesPanel" style="margin-top:14px">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
-    <h2 style="margin:0; font-size:16px; color:rgba(234,240,255,.95)">
-      Ceny najważniejszych surowców do produkcji pasz
-    </h2>
-    <div class="pill" id="pricesAsOf">Aktualizacja: —</div>
-  </div>
+<section class="pricesGrid">
+  <section class="panel" id="cashPanel">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      <div style="font-weight:800">Ceny najważniejszych surowców do produkcji pasz</div>
+      <div class="pill" id="pricesAsOf">Aktualizacja: —</div>
+    </div>
+    <table id="cashTable" style="width:100%; border-collapse:separate; border-spacing:0 8px;"></table>
+  </section>
 
-  <div style="overflow:auto; margin-top:10px">
-    <table id="pricesTable" style="width:100%; border-collapse:separate; border-spacing:0 10px"></table>
-  </div>
-
-  <div class="muted" style="margin-top:8px; font-size:12px">
+  <section class="panel" id="futuresPanel">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      <div style="font-weight:800">Ceny giełdowe (close)</div>
+      <div class="pill" id="futuresAsOf">Źródło: JSON</div>
+    </div>
+    <table id="futuresTable" style="width:100%; border-collapse:separate; border-spacing:0 8px;"></table>
+  </section>
+</section>
     Źródło: ACE Group • rynek spot / kontrakty
   </div>
 </section>
@@ -460,66 +473,86 @@
       }
     })();
 
+function arrowCell(n){
+  if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
+    return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
+  }
+  const v = Number(n);
+  if(v > 0) return { sym:"▲", col:"rgba(125,211,252,.95)", txt:`+${v}` };
+  if(v < 0) return { sym:"▼", col:"rgba(255,160,160,.95)", txt:`${v}` };
+  return { sym:"—", col:"rgba(234,240,255,.70)", txt:"0" };
+}
+
+function renderCashTable(rows){
+  const tbl = document.getElementById("cashTable");
+  const header = `
+    <tr>
+      <th>Surowiec</th>
+      <th style="text-align:right">Cena</th>
+      <th style="text-align:right">Tydz.</th>
+      <th style="text-align:right">Mies.</th>
+    </tr>
+  `;
+  const body = rows.map(r=>{
+    const w = arrowCell(r.w);
+    const m = arrowCell(r.m);
+    return `
+      <tr>
+        <td>${r.name ?? ""}</td>
+        <td style="text-align:right;font-weight:700">${r.price ?? ""}</td>
+        <td style="text-align:right;color:${w.col}">${w.sym} ${w.txt}</td>
+        <td style="text-align:right;color:${m.col}">${m.sym} ${m.txt}</td>
+      </tr>
+    `;
+  }).join("");
+  tbl.innerHTML = header + body;
+}
+
+function renderFuturesTable(rows){
+  const tbl = document.getElementById("futuresTable");
+  const header = `
+    <tr>
+      <th>Instrument</th>
+      <th style="text-align:right">Close</th>
+      <th style="text-align:right">D-1</th>
+      <th style="text-align:right">Tydz.</th>
+      <th style="text-align:right">Mies.</th>
+    </tr>
+  `;
+  const body = rows.map(r=>{
+    const w = arrowCell(r.w);
+    const m = arrowCell(r.m);
+    return `
+      <tr>
+        <td>${r.name ?? ""}</td>
+        <td style="text-align:right;font-weight:700">${r.close ?? ""}</td>
+        <td style="text-align:right">${r.d1 ?? ""}</td>
+        <td style="text-align:right;color:${w.col}">${w.sym} ${w.txt}</td>
+        <td style="text-align:right;color:${m.col}">${m.sym} ${m.txt}</td>
+      </tr>
+    `;
+  }).join("");
+  tbl.innerHTML = header + body;
+}
+
 async function loadPrices(){
   try{
     const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
     if(!res.ok) throw new Error("prices.json (" + res.status + ")");
-
     const data = await res.json();
 
-    const asofEl = document.getElementById("pricesAsOf");
-    const panelEl = document.getElementById("pricesPanel");
-    const tbl = document.getElementById("pricesTable");
+    document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + (data.asof || "—");
+    const cashRows = Array.isArray(data.cash) ? data.cash : [];
+    const futRows  = Array.isArray(data.futures) ? data.futures : [];
 
-    if(!asofEl || !panelEl || !tbl) return;
-
-    asofEl.textContent = "Aktualizacja: " + (data.asof || "—");
-
-    const rows = Array.isArray(data.rows) ? data.rows : [];
-
-    const header = `
-      <tr>
-        <th>Surowiec</th>
-        <th style="text-align:right">Cena</th>
-        <th style="text-align:right">Zmiana tygodniowa</th>
-        <th style="text-align:right">Zmiana miesięczna</th>
-      </tr>
-    `;
-
-   const body = rows.map(r => {
-  const w = (r.w === 0 || r.w) ? Number(r.w) : null;
-  const m = (r.m === 0 || r.m) ? Number(r.m) : null;
-
-  function arrow(n){
-    if(n === null || Number.isNaN(n)) return { sym:"—", col:"rgba(234,240,255,.70)" };
-    if(n > 0) return { sym:"▲", col:"rgba(125,211,252,.95)" };   // zielonkawo-niebieski (pasuje do stylu)
-    if(n < 0) return { sym:"▼", col:"rgba(255,160,160,.95)" };  // czerwony
-    return { sym:"—", col:"rgba(234,240,255,.70)" };
-  }
-
-  const aw = arrow(w);
-  const am = arrow(m);
-
-  const wTxt = (w === null || Number.isNaN(w)) ? "—" : (w > 0 ? `+${w}` : `${w}`);
-  const mTxt = (m === null || Number.isNaN(m)) ? "—" : (m > 0 ? `+${m}` : `${m}`);
-
-  return `
-    <tr>
-      <td>${r.name ?? ""}</td>
-      <td style="text-align:right;font-weight:700">${r.price ?? ""}</td>
-      <td style="text-align:right;color:${aw.col}">${aw.sym} ${wTxt}</td>
-      <td style="text-align:right;color:${am.col}">${am.sym} ${mTxt}</td>
-    </tr>
-  `;
-}).join("");
-
-    tbl.innerHTML = header + body;
+    renderCashTable(cashRows);
+    renderFuturesTable(futRows);
 
   } catch(e){
-    const panel = document.getElementById("pricesPanel");
-    if(panel){
-      panel.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
-    }
+    const cash = document.getElementById("cashPanel");
+    if(cash) cash.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
+    const fut = document.getElementById("futuresPanel");
+    if(fut) fut.innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
   }
 }
 
