@@ -5,66 +5,234 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Panel raportów</title>
 
-  <!-- żeby zawsze łapało najnowszą wersję -->
+  <!-- Cache OFF: tygodniowe aktualizacje -->
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
   <style>
-    :root { --border:#e6e6e6; --muted:#666; }
-    body { font-family: Arial, sans-serif; margin: 24px; max-width: 980px; }
-    header { margin-bottom: 18px; }
-    h1 { margin: 0 0 6px 0; font-size: 26px; }
-    .sub { color: var(--muted); margin: 0; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px; }
-    a.card { display: block; border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-decoration: none; color: inherit; }
-    a.card:hover { border-color:#cfcfcf; }
-    .title { font-weight: 700; font-size: 16px; margin: 0 0 6px 0; }
-    .desc { margin: 0 0 10px 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
-    .meta { font-size: 12px; color: var(--muted); display:flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-    footer { margin-top: 20px; color: var(--muted); font-size: 12px; }
-    code { background:#f6f6f6; padding:2px 6px; border-radius:8px; }
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a33;
+      --card2:#0d172e;
+      --border:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --muted2:rgba(234,240,255,.55);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    .wrap{max-width:1040px; margin:0 auto; padding:26px 18px 40px}
+    header{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:16px}
+    .brand{
+      display:flex; gap:12px; align-items:center;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.9));
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0; font-size:24px; letter-spacing:.2px}
+    .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .right{
+      text-align:right;
+      color:var(--muted2);
+      font-size:12px;
+      margin-top:6px;
+    }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap:14px;
+      margin-top:14px;
+    }
+
+    a.card{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+      transition: transform .08s ease, border-color .08s ease;
+    }
+    a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
+                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
+      pointer-events:none;
+    }
+    .card > *{ position:relative; }
+
+    .kicker{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .tag{
+      display:inline-flex; gap:6px; align-items:center;
+      padding:5px 9px; border-radius:999px;
+      background: rgba(125,211,252,.10);
+      border: 1px solid rgba(125,211,252,.22);
+      color: rgba(225,245,255,.95);
+      font-size:12px;
+    }
+    .tag.purple{
+      background: rgba(167,139,250,.10);
+      border: 1px solid rgba(167,139,250,.22);
+      color: rgba(243,236,255,.95);
+    }
+
+    .title{margin:0; font-size:16px; font-weight:700}
+    .desc{margin:8px 0 12px 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .meta{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      color:var(--muted2); font-size:12px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .muted{color:var(--muted2)}
+    .error{
+      border:1px solid rgba(255,120,120,.25);
+      background: rgba(255,120,120,.08);
+      padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
+      margin-top:14px;
+      font-size:13px;
+    }
+
+    footer{margin-top:18px; color:var(--muted2); font-size:12px}
+    code{background: rgba(255,255,255,.06); padding:2px 6px; border-radius:10px; border:1px solid rgba(255,255,255,.10)}
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>ACE – Panel raportów</h1>
-    <p class="sub">Kliknij raport, aby otworzyć najnowszą wersję. Linki są stałe — Ty podmieniasz tylko <code>index.html</code> w danym folderze.</p>
-  </header>
-
-  <section class="grid">
-    <a class="card" href="raporty/pozycje-funduszy/">
-      <p class="title">ACE – Pozycje Funduszy</p>
-      <p class="desc">Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.</p>
-      <div class="meta">
-        <span>Ścieżka: <code>/raporty/pozycje-funduszy/</code></span>
-        <span id="d1">Last updated: —</span>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>ACE – Panel raportów</h1>
+          <p class="sub">Kliknij kafelek, aby otworzyć najnowszą wersję. Daty są pobierane z <code>manifest.json</code>.</p>
+        </div>
       </div>
-    </a>
 
-    <a class="card" href="raporty/chart-pack/">
-      <p class="title">ACE – Chart Pack</p>
-      <p class="desc">Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.</p>
-      <div class="meta">
-        <span>Ścieżka: <code>/raporty/chart-pack/</code></span>
-        <span id="d2">Last updated: —</span>
+      <div class="right">
+        <div class="pill">
+          <span>Źródło:</span>
+          <strong>ACE Group</strong>
+        </div>
+        <div style="margin-top:8px" class="muted" id="asof">Aktualizacja panelu: —</div>
       </div>
-    </a>
-  </section>
+    </header>
 
-  <footer>
-    <p>Wskazówka: później dodamy automatyczne daty z pliku <code>manifest.json</code>. Na razie możesz je uzupełnić ręcznie poniżej.</p>
-  </footer>
+    <section class="grid" id="grid" aria-live="polite">
+      <!-- karty pojawią się z manifestu -->
+    </section>
+
+    <div id="err" class="error" style="display:none"></div>
+
+    <footer>
+      <div>Jak aktualizować: podmień raport w <code>/raporty/nazwa/index.html</code> + zmień datę w <code>manifest.json</code>.</div>
+    </footer>
+  </div>
 
   <script>
-    // PROSTY RĘCZNY UPDATE DAT (na teraz)
-    // Zmieniasz tylko te dwie linie, gdy aktualizujesz raporty.
-    const UPDATED_POZYCJE_FUNDUSZY = "2026-01-29";
-    const UPDATED_CHART_PACK = "2026-01-29";
+    function fmtDate(iso){
+      // iso: YYYY-MM-DD
+      if(!iso || typeof iso !== "string") return "—";
+      const parts = iso.split("-");
+      if(parts.length !== 3) return iso;
+      const [y,m,d] = parts;
+      return `${d}.${m}.${y}`;
+    }
 
-    document.getElementById("d1").textContent = "Last updated: " + UPDATED_POZYCJE_FUNDUSZY;
-    document.getElementById("d2").textContent = "Last updated: " + UPDATED_CHART_PACK;
+    async function loadManifest(){
+      const url = "manifest.json?ts=" + Date.now(); // cache-bust
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
+      return await res.json();
+    }
+
+    function tagFor(i){
+      // proste tagi naprzemiennie (można dopracować)
+      return i % 2 === 0
+        ? { cls: "tag", txt: "Raport tygodniowy" }
+        : { cls: "tag purple", txt: "Chart pack" };
+    }
+
+    function buildCards(data){
+      const entries = Object.entries(data);
+      const grid = document.getElementById("grid");
+
+      if(entries.length === 0){
+        grid.innerHTML = `<div class="error">Brak raportów w manifest.json</div>`;
+        return;
+      }
+
+      grid.innerHTML = entries.map(([id, r], i) => {
+        const t = tagFor(i);
+        const name = r.name || id;
+        const desc = r.description || "";
+        const path = r.path || ("raporty/" + id + "/");
+        const updated = fmtDate(r.updated);
+
+        return `
+          <a class="card" href="${path}">
+            <div class="kicker">
+              <span class="${t.cls}">${t.txt}</span>
+              <span class="muted">ID: <code>${id}</code></span>
+            </div>
+            <p class="title">${name}</p>
+            <p class="desc">${desc}</p>
+            <div class="meta">
+              <span>Ścieżka: <code>/${path.replace(/^\/?/,"")}</code></span>
+              <span><strong>Last updated:</strong> ${updated}</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    (async () => {
+      try{
+        const manifest = await loadManifest();
+        buildCards(manifest);
+        document.getElementById("asof").textContent =
+          "Aktualizacja panelu: " + new Date().toLocaleString("pl-PL");
+      } catch(e){
+        const err = document.getElementById("err");
+        err.style.display = "block";
+        err.textContent = "Błąd panelu: " + e.message + ". Sprawdź czy manifest.json jest w root repo i ma poprawny JSON.";
+      }
+    })();
   </script>
 </body>
 </html>
