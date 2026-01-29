@@ -6,24 +6,24 @@
       "time": "07:30",
       "pl": {
         "title": "ACE – Poranny Skan Rynku",
-        "lead": "Rynki wchodzą w dzień spokojnie; uwaga rynku przesuwa się na makro i przepływy kapitału.",
-        "fx": "EUR/USD stabilizuje się po wczorajszej sesji; USD pozostaje pod presją, a PLN trzyma poziomy na EUR/PLN przy umiarkowanym ryzyku globalnym.",
-        "agri": "Zboża w Europie bez wyraźnego impulsu; MATIF w konsolidacji. Oleiste reagują na nastroje w olejach roślinnych i sygnały popytowe.",
+        "lead": "Start dnia spokojny: FX trzyma kierunek po wczorajszej sesji, a agro pozostaje w konsolidacji i czeka na bodźce z eksportu i pogody.",
+        "fx": "EUR/USD stabilnie po ostatnim ruchu, dolar bez wyraźnego impulsu. PLN spokojny — wahania ograniczone, rynek bardziej reaguje na nastroje globalne niż na lokalne czynniki.",
+        "agri": "Zboża w Europie bez kierunku: MATIF w wąskim zakresie, kupujący selektywni. Oleiste wrażliwe na sentyment w olejach roślinnych i na sygnały popytowe.",
         "focus": [
-          "dane makro ze strefy euro i USA",
-          "komentarze banków centralnych",
-          "raporty eksportowe / przetargi (agro)"
+          "kalendarz makro (USA / strefa euro)",
+          "komentarze banków centralnych i ryzyko dla USD",
+          "sygnały eksportowe / przetargi (agro) + pogoda w kluczowych regionach"
         ]
       },
       "en": {
         "title": "ACE – Morning Market Scan",
-        "lead": "Markets start the day quietly; focus shifts to macro releases and positioning flows.",
-        "fx": "EUR/USD steadies after yesterday’s session; USD remains under pressure while PLN holds levels versus EUR amid moderate global risk tone.",
-        "agri": "European grains lack a clear catalyst; MATIF trades in a tight range. Oilseeds track vegetable oil sentiment and demand signals.",
+        "lead": "A calm start: FX holds direction after yesterday’s session, while agri markets stay range-bound awaiting fresh export and weather catalysts.",
+        "fx": "EUR/USD steadies after recent moves; the dollar lacks a clear trigger. PLN remains stable — moves are contained with sentiment driven mainly by global risk tone.",
+        "agri": "European grains lack direction: MATIF trades in a tight range with selective buying. Oilseeds track vegetable oil sentiment and demand signals.",
         "focus": [
-          "Eurozone & US macro releases",
-          "central bank commentary",
-          "export updates / tenders (agri)"
+          "macro calendar (US / Eurozone)",
+          "central bank commentary and USD risks",
+          "export signals / tenders (agri) + key weather developments"
         ]
       }
     },
@@ -33,24 +33,24 @@
       "time": "07:30",
       "pl": {
         "title": "ACE – Poranny Skan Rynku",
-        "lead": "Dzień zaczyna się pod znakiem ostrożności; inwestorzy wyceniają scenariusze na FX i surowcach.",
-        "fx": "Dolar miesza kierunki, a EUR utrzymuje przewagę. PLN stabilny; rynek czeka na kolejne sygnały z USA.",
-        "agri": "Rynek zbóż spokojny; kupujący selektywni. Oleiste wrażliwe na zmienność w kompleksie olejów.",
+        "lead": "Wczorajsza sesja przyniosła ostrożny handel: rynek FX obserwował dolara, a agro koncentrowało się na podaży z Ameryki Płd. i konkurencji eksportowej.",
+        "fx": "Dolar miesza kierunki, euro utrzymuje przewagę. PLN stabilny; rynek czeka na nowe sygnały z USA i odczyty makro, które mogą podbić zmienność.",
+        "agri": "Zboża: spokojniej po wcześniejszych ruchach, ale podaż z kierunków konkurencyjnych utrzymuje presję. Oleiste: wrażliwe na zmienność w kompleksie olejów.",
         "focus": [
-          "kalendarz makro (USA)",
-          "zmienność na USD",
-          "tempo eksportu / logistyka (agro)"
+          "odczyty makro z USA i ich wpływ na USD",
+          "wątki handlowe / polityczne (ryzyko nagłówków)",
+          "tempo eksportu i konkurencja cenowa w przetargach"
         ]
       },
       "en": {
         "title": "ACE – Morning Market Scan",
-        "lead": "The day starts cautiously; investors price scenarios across FX and commodities.",
-        "fx": "USD trades mixed while EUR keeps an edge. PLN steady as the market waits for fresh US signals.",
-        "agri": "Grains are calm with selective buying. Oilseeds remain sensitive to moves in the vegetable oils complex.",
+        "lead": "Yesterday was cautious: FX watched the dollar, while agri focused on South American supply and export competition.",
+        "fx": "USD traded mixed while EUR kept an edge. PLN stayed stable; markets waited for fresh US signals and data that could lift volatility.",
+        "agri": "Grains: calmer after prior moves, though competitive supply keeps pressure on prices. Oilseeds: sensitive to swings in the vegetable oils complex.",
         "focus": [
-          "US macro calendar",
-          "USD volatility",
-          "exports pace / logistics (agri)"
+          "US data prints and USD reaction",
+          "trade/policy headlines risk",
+          "export pace and tender price competition"
         ]
       }
     }
