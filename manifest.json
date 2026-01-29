@@ -16,5 +16,11 @@
   "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
   "path": "raporty/poranny-skan/",
   "updated": "2026-01-29"
+    },
+"weather-watch": {
+  "name": "ACE – Weather Watch (Pogoda)",
+  "description": "Mapki pogodowe z krótką prognozą",
+  "path": "raporty/weather-watch/",
+  "updated": "2026-01-29"
 }
 }
