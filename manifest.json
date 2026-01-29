@@ -11,9 +11,9 @@
     "path": "raporty/chart-pack/",
     "updated": "2026-01-29"
   },
-  "poranny-skan": {
+"poranny-skan": {
   "name": "ACE – Poranny Skan Rynku",
-  "description": "Codzienny poranny komentarz rynkowy i najważniejsze newsy.",
+  "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
   "path": "raporty/poranny-skan/",
   "updated": "2026-01-29"
 }
