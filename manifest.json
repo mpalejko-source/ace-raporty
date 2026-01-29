@@ -1,0 +1,14 @@
+{
+  "pozycje-funduszy": {
+    "name": "ACE – Pozycje Funduszy",
+    "description": "Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.",
+    "path": "raporty/pozycje-funduszy/",
+    "updated": "2026-01-29"
+  },
+  "chart-pack": {
+    "name": "ACE – Chart Pack",
+    "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
+    "path": "raporty/chart-pack/",
+    "updated": "2026-01-29"
+  }
+}
