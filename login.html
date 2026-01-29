@@ -77,7 +77,7 @@
     function login() {
       const val = document.getElementById("password").value;
       if (val === PASSWORD) {
-        localStorage.setItem("ace_access", "1");
+        sessionStorage.setItem("ace_access", "1");
         window.location.href = "./index.html";
       } else {
         document.getElementById("error").style.display = "block";
