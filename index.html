@@ -34,13 +34,17 @@
     }
     .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px}
     header{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px}
-    .brand{display:flex; gap:12px; align-items:center;}
+    .brand{display:flex; gap:14px; align-items:center;}
+
+    /* ✅ LOGO jako plik (logo.png obok index.html) */
     .logo{
-      width:44px; height:44px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.9));
-      box-shadow: var(--shadow);
+      height:56px;
+      width:auto;
+      display:block;
       flex:0 0 auto;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
+
     h1{margin:0; font-size:24px; letter-spacing:.2px}
     .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
 
@@ -201,7 +205,8 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <!-- ✅ logo.png w tym samym folderze co index.html -->
+        <img src="logo.png" alt="ACE Group" class="logo">
         <div>
           <h1>ACE – Panel raportów</h1>
           <p class="sub">Szukaj po nazwie/ID/opisie. Raporty są sortowane wg daty „Last updated”.</p>
@@ -328,7 +333,6 @@
       }
 
       grid.innerHTML = items.map((r, i) => {
-        // tag
         const t = (r.id === "poranny-skan")
           ? { cls: "tag", txt: "Poranny skan" }
           : tagFor(i);
@@ -374,11 +378,9 @@
         document.getElementById("asof").textContent =
           "Aktualizacja panelu: " + new Date().toLocaleString("pl-PL");
 
-        // events
         document.getElementById("q").addEventListener("input", refresh);
         document.getElementById("sort").addEventListener("change", refresh);
 
-        // initial render
         refresh();
       } catch(e){
         const err = document.getElementById("err");
