@@ -215,6 +215,23 @@
       letter-spacing: .04em;
       z-index: 3;
     }
+#pricesTable th{
+  text-align:left;
+  font-size:12px;
+  color: var(--muted2);
+  padding: 0 10px 6px;
+}
+#pricesTable td{
+  padding:12px 10px;
+  background: rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  color: rgba(234,240,255,.92);
+}
+#pricesTable tr td:first-child{ border-radius:14px 0 0 14px; }
+#pricesTable tr td:last-child{ border-radius:0 14px 14px 0; }
+
+    
   </style>
 </head>
 
@@ -249,7 +266,26 @@
         <div class="pill" id="count">0 raportów</div>
       </div>
     </div>
+<!-- ===============================
+     CENNIK SUROWCÓW PASZOWYCH
+     =============================== -->
+<section class="panel" id="pricesPanel" style="margin-top:14px">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <h2 style="margin:0; font-size:16px; color:rgba(234,240,255,.95)">
+      Ceny najważniejszych surowców do produkcji pasz
+    </h2>
+    <div class="pill" id="pricesAsOf">Aktualizacja: —</div>
+  </div>
 
+  <div style="overflow:auto; margin-top:10px">
+    <table id="pricesTable" style="width:100%; border-collapse:separate; border-spacing:0 10px"></table>
+  </div>
+
+  <div class="muted" style="margin-top:8px; font-size:12px">
+    Źródło: ACE Group • rynek spot / kontrakty
+  </div>
+</section>
+<!-- KONIEC CENNIK SUROWCÓW PASZOWYCH-->
     <section class="grid" id="grid" aria-live="polite"></section>
     <div id="err" class="error" style="display:none"></div>
 
@@ -423,3 +459,49 @@
   </script>
 </body>
 </html>
+
+async function loadPrices(){
+  try{
+    const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
+    if(!res.ok) throw new Error("prices.json (" + res.status + ")");
+    const data = await res.json();
+
+    document.getElementById("pricesAsOf").textContent =
+      "Aktualizacja: " + (data.asof || "—");
+
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    const tbl = document.getElementById("pricesTable");
+
+    tbl.innerHTML = `
+      <tr>
+        <th>Surowiec</th>
+        <th>Jedn.</th>
+        <th style="text-align:right">Cena</th>
+        <th style="text-align:right">Zmiana WoW</th>
+      </tr>
+      ${rows.map(r => {
+        const wow = r.wow ?? "";
+        const col = wow > 0
+          ? "rgba(125,211,252,.95)"
+          : wow < 0
+            ? "rgba(255,160,160,.95)"
+            : "rgba(234,240,255,.70)";
+        const txt = wow === "" ? "—" : (wow > 0 ? `+${wow}` : wow);
+        return `
+          <tr>
+            <td>${r.name}</td>
+            <td>${r.unit}</td>
+            <td style="text-align:right;font-weight:700">${r.price}</td>
+            <td style="text-align:right;color:${col}">${txt}</td>
+          </tr>
+        `;
+      }).join("")}
+    `;
+  } catch(e){
+    document.getElementById("pricesPanel").innerHTML =
+      `<div class="error">Błąd cennika: ${e.message}</div>`;
+  }
+}
+
+// uruchom przy starcie
+loadPrices();
