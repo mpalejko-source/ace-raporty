@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>ACE – dostęp do raportów</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .box {
+      background: #020617;
+      padding: 32px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+    p {
+      margin: 0 0 20px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #1e293b;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .error {
+      margin-top: 10px;
+      color: #f87171;
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>ACE – raporty</h1>
+    <p>Dostęp tylko dla klientów</p>
+
+    <input type="password" id="password" placeholder="Hasło dostępu" />
+    <button onclick="login()">Wejdź</button>
+
+    <div class="error" id="error">Nieprawidłowe hasło</div>
+  </div>
+
+  <script>
+    const PASSWORD = "ACE2026"; // <<< ZMIEŃ HASŁO
+
+    function login() {
+      const val = document.getElementById("password").value;
+      if (val === PASSWORD) {
+        localStorage.setItem("ace_access", "1");
+        window.location.href = "./index.html";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+
+    // enter
+    document.getElementById("password").addEventListener("keydown", e => {
+      if (e.key === "Enter") login();
+    });
+  </script>
+</body>
+</html>
