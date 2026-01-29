@@ -456,52 +456,68 @@
         err.textContent = "Błąd panelu: " + e.message + ". Sprawdź czy manifest.json jest w root repo i ma poprawny JSON.";
       }
     })();
-  </script>
-</body>
-</html>
 
 async function loadPrices(){
   try{
     const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
     if(!res.ok) throw new Error("prices.json (" + res.status + ")");
+
     const data = await res.json();
 
-    document.getElementById("pricesAsOf").textContent =
-      "Aktualizacja: " + (data.asof || "—");
-
-    const rows = Array.isArray(data.rows) ? data.rows : [];
+    const asofEl = document.getElementById("pricesAsOf");
+    const panelEl = document.getElementById("pricesPanel");
     const tbl = document.getElementById("pricesTable");
 
-    tbl.innerHTML = `
+    if(!asofEl || !panelEl || !tbl) return;
+
+    asofEl.textContent = "Aktualizacja: " + (data.asof || "—");
+
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+
+    const header = `
       <tr>
         <th>Surowiec</th>
         <th>Jedn.</th>
         <th style="text-align:right">Cena</th>
         <th style="text-align:right">Zmiana WoW</th>
       </tr>
-      ${rows.map(r => {
-        const wow = r.wow ?? "";
-        const col = wow > 0
-          ? "rgba(125,211,252,.95)"
-          : wow < 0
-            ? "rgba(255,160,160,.95)"
-            : "rgba(234,240,255,.70)";
-        const txt = wow === "" ? "—" : (wow > 0 ? `+${wow}` : wow);
-        return `
-          <tr>
-            <td>${r.name}</td>
-            <td>${r.unit}</td>
-            <td style="text-align:right;font-weight:700">${r.price}</td>
-            <td style="text-align:right;color:${col}">${txt}</td>
-          </tr>
-        `;
-      }).join("")}
     `;
+
+    const body = rows.map(r => {
+      const wow = (r.wow === 0 || r.wow) ? r.wow : null;
+      const col = (wow === null) ? "rgba(234,240,255,.70)"
+                : (wow > 0) ? "rgba(125,211,252,.95)"
+                : (wow < 0) ? "rgba(255,160,160,.95)"
+                : "rgba(234,240,255,.70)";
+
+      const txt = (wow === null) ? "—" : (wow > 0 ? `+${wow}` : `${wow}`);
+
+      return `
+        <tr>
+          <td>${r.name ?? ""}</td>
+          <td>${r.unit ?? ""}</td>
+          <td style="text-align:right;font-weight:700">${r.price ?? ""}</td>
+          <td style="text-align:right;color:${col}">${txt}</td>
+        </tr>
+      `;
+    }).join("");
+
+    tbl.innerHTML = header + body;
+
   } catch(e){
-    document.getElementById("pricesPanel").innerHTML =
-      `<div class="error">Błąd cennika: ${e.message}</div>`;
+    const panel = document.getElementById("pricesPanel");
+    if(panel){
+      panel.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
+    }
   }
 }
 
 // uruchom przy starcie
 loadPrices();
+
+
+    
+  </script>
+</body>
+</html>
+
