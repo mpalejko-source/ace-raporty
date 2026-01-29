@@ -10,5 +10,11 @@
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
     "updated": "2026-01-29"
-  }
+  },
+  "poranny-skan": {
+  "name": "ACE – Poranny Skan Rynku",
+  "description": "Codzienny poranny komentarz rynkowy i najważniejsze newsy.",
+  "path": "raporty/poranny-skan/",
+  "updated": "2026-01-29"
+}
 }
