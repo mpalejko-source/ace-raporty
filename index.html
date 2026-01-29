@@ -37,6 +37,7 @@
       display:flex;
       flex-direction:column;
     }
+
     .wrap{
       max-width:1100px;
       margin:0 auto;
@@ -49,7 +50,11 @@
       flex-direction:column;
     }
 
-    header{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px}
+    header{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      flex-wrap:wrap; margin-bottom:14px
+    }
+
     .brand{display:flex; gap:14px; align-items:center;}
 
     /* logo.png obok index.html */
@@ -114,13 +119,12 @@
       white-space:nowrap;
     }
 
+    /* cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap:14px;
       margin-top:14px;
-
-      /* sticky bottom layout */
       flex:1;
     }
     a.card{
@@ -215,35 +219,59 @@
       letter-spacing: .04em;
       z-index: 3;
     }
-#pricesTable th{
-  text-align:left;
-  font-size:12px;
-  color: var(--muted2);
-  padding: 0 10px 6px;
-}
-#pricesTable td{
-  padding:12px 10px;
-  background: rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  font-size:13px;
-  color: rgba(234,240,255,.92);
-}
-#pricesTable tr td:first-child{ border-radius:14px 0 0 14px; }
-#pricesTable tr td:last-child{ border-radius:0 14px 14px 0; }
- #pricesTable td:nth-child(3),
-    #pricesTable td:nth-child(4){
+
+    /* panels */
+    .panel{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+
+    /* prices layout */
+    .pricesGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .pricesGrid{ grid-template-columns: 1fr; }
+    }
+
+    /* tables in panels */
+    table.prTable{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0 8px;
+    }
+    table.prTable th{
+      text-align:left;
+      font-size:12px;
+      color: var(--muted2);
+      padding: 0 10px 6px;
+      font-weight:700;
+    }
+    table.prTable td{
+      padding:12px 10px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:13px;
+      color: rgba(234,240,255,.92);
+      vertical-align:middle;
+    }
+    table.prTable tr td:first-child{ border-radius:14px 0 0 14px; }
+    table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
+    table.prTable td:nth-child(2),
+    table.prTable td:nth-child(3),
+    table.prTable td:nth-child(4),
+    table.prTable td:nth-child(5){
       font-variant-numeric: tabular-nums;
       letter-spacing: .01em;
-    .pricesGrid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:14px;
-  margin-top:14px;
-}
+    }
 
-@media (max-width: 980px){
-  .pricesGrid{ grid-template-columns: 1fr; }
-}
+    .right{text-align:right}
   </style>
 </head>
 
@@ -278,47 +306,39 @@
         <div class="pill" id="count">0 raportów</div>
       </div>
     </div>
-<!-- ===============================
-     CENNIK SUROWCÓW PASZOWYCH
-     =============================== -->
-<section class="pricesGrid">
-  <section class="panel" id="cashPanel">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-      <div style="font-weight:800">Ceny najważniejszych surowców do produkcji pasz</div>
-      <div class="pill" id="pricesAsOf">Aktualizacja: —</div>
-    </div>
-    <table id="cashTable" style="width:100%; border-collapse:separate; border-spacing:0 8px;"></table>
-  </section>
 
-  <section class="panel" id="futuresPanel">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-      <div style="font-weight:800">Ceny giełdowe (close)</div>
-      <div class="pill" id="futuresAsOf">Źródło: JSON</div>
-    </div>
-    <table id="futuresTable" style="width:100%; border-collapse:separate; border-spacing:0 8px;"></table>
-  </section>
-</section>
-    Źródło: ACE Group • rynek spot / kontrakty
-  </div>
-</section>
-<!-- KONIEC CENNIK SUROWCÓW PASZOWYCH-->
+    <!-- ===== PRICES: TWO PANELS ===== -->
+    <section class="pricesGrid">
+      <section class="panel" id="cashPanel">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+          <div style="font-weight:800">Ceny najważniejszych surowców do produkcji pasz</div>
+          <div class="pill" id="pricesAsOf">Aktualizacja: —</div>
+        </div>
+        <table id="cashTable" class="prTable"></table>
+        <div class="muted" style="margin-top:8px;font-size:12px">Źródło: ACE Group • rynek spot</div>
+      </section>
+
+      <section class="panel" id="futuresPanel">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+          <div style="font-weight:800">Ceny giełdowe (close)</div>
+          <div class="pill" id="futuresAsOf">Źródło: JSON</div>
+        </div>
+        <table id="futuresTable" class="prTable"></table>
+        <div class="muted" style="margin-top:8px;font-size:12px">Źródło: ACE Group • futures</div>
+      </section>
+    </section>
+    <!-- ===== END PRICES ===== -->
+
     <section class="grid" id="grid" aria-live="polite"></section>
     <div id="err" class="error" style="display:none"></div>
 
-    <!-- === ACE PREVIEW – JEDYNE (DOLNE), ROZMIAR JAK "GÓRNE" === -->
+    <!-- preview at bottom -->
     <div style="margin-top:auto; display:flex; justify-content:center; padding:18px 0 10px">
       <div class="panel" style="max-width:520px; width:100%">
         <a href="raporty/poranny-skan/" style="text-decoration:none;color:inherit">
           <img src="preview_pro.png"
                alt="ACE – Market Snapshot"
-               style="
-                 width:100%;
-                 height:auto;
-                 display:block;
-                 border-radius:14px;
-                 box-shadow:0 14px 34px rgba(0,0,0,.55);
-                 cursor:pointer;
-               ">
+               style="width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.55);cursor:pointer;">
         </a>
         <div class="muted" style="text-align:center;margin-top:6px;font-size:12px">
           Podgląd rynku • kliknij, aby przejść do porannego skanu
@@ -332,7 +352,7 @@
   </div>
 
   <script>
-    // -------- helpers ----------
+    // ---------- helpers ----------
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
       const parts = iso.split("-");
@@ -377,7 +397,6 @@
 
     function applySort(items, sortKey){
       const arr = items.slice();
-
       arr.sort((A,B) => {
         if (A.id === "poranny-skan") return -1;
         if (B.id === "poranny-skan") return 1;
@@ -392,14 +411,12 @@
 
         return 0;
       });
-
       return arr;
     }
 
     function applyFilter(items, query){
       const q = norm(query);
       if(!q) return items;
-
       return items.filter(it => {
         const hay = norm(it.id) + " " + norm(it.name) + " " + norm(it.description);
         return hay.includes(q);
@@ -442,16 +459,99 @@
       }).join("");
     }
 
-    // -------- app ----------
+    // ---------- prices ----------
+    function arrowCell(n){
+      if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
+        return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
+      }
+      const v = Number(n);
+      if(v > 0) return { sym:"▲", col:"rgba(125,211,252,.95)", txt:`+${v}` };
+      if(v < 0) return { sym:"▼", col:"rgba(255,160,160,.95)", txt:`${v}` };
+      return { sym:"—", col:"rgba(234,240,255,.70)", txt:"0" };
+    }
+
+    function renderCashTable(rows){
+      const tbl = document.getElementById("cashTable");
+      const header = `
+        <tr>
+          <th>Surowiec</th>
+          <th class="right">Cena</th>
+          <th class="right">Zmiana tyg.</th>
+          <th class="right">Zmiana mies.</th>
+        </tr>
+      `;
+      const body = rows.map(r=>{
+        const w = arrowCell(r.w);
+        const m = arrowCell(r.m);
+        return `
+          <tr>
+            <td>${r.name ?? ""}</td>
+            <td class="right" style="font-weight:700">${r.price ?? ""}</td>
+            <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
+            <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
+          </tr>
+        `;
+      }).join("");
+      tbl.innerHTML = header + body;
+    }
+
+    function renderFuturesTable(rows){
+      const tbl = document.getElementById("futuresTable");
+      const header = `
+        <tr>
+          <th>Instrument</th>
+          <th class="right">Close</th>
+          <th class="right">D-1</th>
+          <th class="right">Zmiana tyg.</th>
+          <th class="right">Zmiana mies.</th>
+        </tr>
+      `;
+      const body = rows.map(r=>{
+        const w = arrowCell(r.w);
+        const m = arrowCell(r.m);
+        return `
+          <tr>
+            <td>${r.name ?? ""}</td>
+            <td class="right" style="font-weight:700">${r.close ?? ""}</td>
+            <td class="right">${r.d1 ?? ""}</td>
+            <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
+            <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
+          </tr>
+        `;
+      }).join("");
+      tbl.innerHTML = header + body;
+    }
+
+    async function loadPrices(){
+      try{
+        const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
+        if(!res.ok) throw new Error("prices.json (" + res.status + ")");
+        const data = await res.json();
+
+        document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + (data.asof || "—");
+
+        const cashRows = Array.isArray(data.cash) ? data.cash : [];
+        const futRows  = Array.isArray(data.futures) ? data.futures : [];
+
+        renderCashTable(cashRows);
+        renderFuturesTable(futRows);
+
+      } catch(e){
+        const cash = document.getElementById("cashPanel");
+        if(cash) cash.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
+        const fut = document.getElementById("futuresPanel");
+        if(fut) fut.innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
+      }
+    }
+
+    // ---------- app ----------
     let ALL = [];
 
     function refresh(){
       const q = document.getElementById("q").value;
       const sortKey = document.getElementById("sort").value;
-
       const filtered = applyFilter(ALL, q);
       const sorted = applySort(filtered, sortKey);
-
       render(sorted);
     }
 
@@ -466,102 +566,13 @@
         document.getElementById("sort").addEventListener("change", refresh);
 
         refresh();
+        loadPrices();
       } catch(e){
         const err = document.getElementById("err");
         err.style.display = "block";
         err.textContent = "Błąd panelu: " + e.message + ". Sprawdź czy manifest.json jest w root repo i ma poprawny JSON.";
       }
     })();
-
-function arrowCell(n){
-  if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
-    return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
-  }
-  const v = Number(n);
-  if(v > 0) return { sym:"▲", col:"rgba(125,211,252,.95)", txt:`+${v}` };
-  if(v < 0) return { sym:"▼", col:"rgba(255,160,160,.95)", txt:`${v}` };
-  return { sym:"—", col:"rgba(234,240,255,.70)", txt:"0" };
-}
-
-function renderCashTable(rows){
-  const tbl = document.getElementById("cashTable");
-  const header = `
-    <tr>
-      <th>Surowiec</th>
-      <th style="text-align:right">Cena</th>
-      <th style="text-align:right">Tydz.</th>
-      <th style="text-align:right">Mies.</th>
-    </tr>
-  `;
-  const body = rows.map(r=>{
-    const w = arrowCell(r.w);
-    const m = arrowCell(r.m);
-    return `
-      <tr>
-        <td>${r.name ?? ""}</td>
-        <td style="text-align:right;font-weight:700">${r.price ?? ""}</td>
-        <td style="text-align:right;color:${w.col}">${w.sym} ${w.txt}</td>
-        <td style="text-align:right;color:${m.col}">${m.sym} ${m.txt}</td>
-      </tr>
-    `;
-  }).join("");
-  tbl.innerHTML = header + body;
-}
-
-function renderFuturesTable(rows){
-  const tbl = document.getElementById("futuresTable");
-  const header = `
-    <tr>
-      <th>Instrument</th>
-      <th style="text-align:right">Close</th>
-      <th style="text-align:right">D-1</th>
-      <th style="text-align:right">Tydz.</th>
-      <th style="text-align:right">Mies.</th>
-    </tr>
-  `;
-  const body = rows.map(r=>{
-    const w = arrowCell(r.w);
-    const m = arrowCell(r.m);
-    return `
-      <tr>
-        <td>${r.name ?? ""}</td>
-        <td style="text-align:right;font-weight:700">${r.close ?? ""}</td>
-        <td style="text-align:right">${r.d1 ?? ""}</td>
-        <td style="text-align:right;color:${w.col}">${w.sym} ${w.txt}</td>
-        <td style="text-align:right;color:${m.col}">${m.sym} ${m.txt}</td>
-      </tr>
-    `;
-  }).join("");
-  tbl.innerHTML = header + body;
-}
-
-async function loadPrices(){
-  try{
-    const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
-    if(!res.ok) throw new Error("prices.json (" + res.status + ")");
-    const data = await res.json();
-
-    document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + (data.asof || "—");
-    const cashRows = Array.isArray(data.cash) ? data.cash : [];
-    const futRows  = Array.isArray(data.futures) ? data.futures : [];
-
-    renderCashTable(cashRows);
-    renderFuturesTable(futRows);
-
-  } catch(e){
-    const cash = document.getElementById("cashPanel");
-    if(cash) cash.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
-    const fut = document.getElementById("futuresPanel");
-    if(fut) fut.innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
-  }
-}
-
-// uruchom przy starcie
-loadPrices();
-
-
-    
   </script>
 </body>
 </html>
-
