@@ -35,7 +35,6 @@
     header{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px}
     .brand{display:flex; gap:14px; align-items:center}
 
-    /* ✅ LOGO z głównego folderu */
     .logo{
       height:56px;
       width:auto;
@@ -68,6 +67,10 @@
       cursor:pointer;
       box-shadow: var(--shadow);
       font-size:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
 
@@ -139,15 +142,18 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <!-- ✅ logo.png z głównego folderu -->
       <img src="logo.png" alt="ACE Group" class="logo">
       <div>
         <h1>ACE – Poranny Skan Rynku</h1>
-        <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów.</p>
+        <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów (bez dzisiejszego).</p>
       </div>
     </div>
 
-    <div class="pill" id="asof">Aktualizacja: —</div>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+      <a class="btn" id="btnHome" href="../index.html" title="Wróć do panelu">← Panel główny</a>
+      <div class="pill" id="asof">Aktualizacja: —</div>
+      <div class="pill" id="next">Kolejne wydanie: —</div>
+    </div>
   </header>
 
   <div class="topbar">
@@ -178,14 +184,15 @@
     LANG = lang;
     document.getElementById("btnPL").classList.toggle("active", lang==="pl");
     document.getElementById("btnEN").classList.toggle("active", lang==="en");
+    updateHeaderFromToday();
     render();
   }
 
-  function fmtDatePL(iso){
+  function fmtDate(iso){
     if(!iso) return "—";
     const p = iso.split("-");
     if(p.length!==3) return iso;
-    return `${p[2]}.${p[1]}.${p[0]}`;
+    return (LANG==="pl") ? `${p[2]}.${p[1]}.${p[0]}` : `${p[0]}-${p[1]}-${p[2]}`;
   }
 
   function esc(s){
@@ -195,15 +202,99 @@
       .replaceAll(">","&gt;");
   }
 
+  function parseISODate(iso){
+    const p = (iso||"").split("-");
+    if(p.length!==3) return null;
+    const y = Number(p[0]), m = Number(p[1])-1, d = Number(p[2]);
+    const dt = new Date(y, m, d);
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+
+  // next business day (Mon–Fri); without holidays
+  function nextBusinessDay(dateObj){
+    const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+    do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+    return d;
+  }
+
+  function fmtDatePretty(dt){
+    if(!(dt instanceof Date)) return "—";
+    if(LANG==="pl"){
+      return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
+    }
+    return dt.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+  }
+
+  function isNonEmptyText(x){
+    return (x||"").toString().trim().length > 0;
+  }
+  function isNonEmptyArray(a){
+    return Array.isArray(a) && a.some(x => (x||"").toString().trim().length>0);
+  }
+
+  function section(icon, title, bodyHtml){
+    return `
+      <div class="sec">
+        <h2><span class="icon">${icon}</span> ${esc(title)}</h2>
+        ${bodyHtml}
+      </div>
+    `;
+  }
+
+  // Supports dynamic blocks:
+  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"..."}, {icon:"🌾", title:"Soymeal", text:"..."}]
+  function renderBlocksFromDynamic(t){
+    const blocks = Array.isArray(t.blocks) ? t.blocks : [];
+    let html = "";
+
+    for(const b of blocks){
+      const title = (b && b.title) ? b.title : "";
+      const icon  = (b && b.icon)  ? b.icon  : "🧩";
+      const text  = (b && b.text)  ? b.text  : "";
+
+      if(isNonEmptyText(title) && isNonEmptyText(text)){
+        html += section(icon, title, `<p class="text">${esc(text)}</p>`);
+      }
+      // Optional: list support in a block:
+      const list = (b && Array.isArray(b.list)) ? b.list.filter(x=>isNonEmptyText(x)) : [];
+      if(isNonEmptyText(title) && list.length){
+        html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+      }
+    }
+    return html;
+  }
+
   function renderMain(item){
     const t = item[LANG] || {};
-    const dateLine = `${fmtDatePL(item.date)} | ${item.time || "—"}`;
-    const title = t.title || "ACE – Poranny Skan Rynku";
-    const lead = t.lead || "";
+    const dateLine = `${fmtDate(item.date)} | ${item.time || "—"}`;
+    const title = t.title || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
+    const lead = (t.lead||"").trim();
 
-    const fx = t.fx || "";
-    const agri = t.agri || "";
-    const focus = Array.isArray(t.focus) ? t.focus : [];
+    const leadBlock = isNonEmptyText(lead) ? `<p class="lead">${esc(lead)}</p>` : "";
+
+    // Prefer dynamic blocks if present
+    let blocksHtml = renderBlocksFromDynamic(t);
+
+    // Fallback to classic sections (auto-hide)
+    if(!blocksHtml){
+      const fx = (t.fx||"").trim();
+      const agri = (t.agri||"").trim();
+      const focus = Array.isArray(t.focus) ? t.focus.filter(x => isNonEmptyText(x)) : [];
+
+      if(isNonEmptyText(agri)){
+        blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), `<p class="text">${esc(agri)}</p>`);
+      }
+      if(isNonEmptyText(fx)){
+        blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), `<p class="text">${esc(fx)}</p>`);
+      }
+      if(isNonEmptyArray(focus)){
+        blocksHtml += section("🎯", (LANG==="pl"?"Na co zwrócić uwagę dziś":"What to watch"), `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+      }
+    }
+
+    if(!blocksHtml){
+      blocksHtml = `<p class="text">—</p>`;
+    }
 
     document.getElementById("main").innerHTML = `
       <div>
@@ -215,24 +306,8 @@
           <div class="pill">ID: <strong>${esc(item.id)}</strong></div>
         </div>
 
-        <p class="lead">${esc(lead)}</p>
-
-       
-
-        <div class="sec">
-          <h2><span class="icon">🌾</span> Zboża i oleiste</h2>
-          <p class="text">${esc(agri)}</p>
-        </div>
-
-       <div class="sec">
-          <h2><span class="icon">💵</span> FX / Makro</h2>
-          <p class="text">${esc(fx)}</p>
-        </div>
-
-        <div class="sec">
-          <h2><span class="icon">🎯</span> Na co zwrócić uwagę dziś</h2>
-          ${focus.length ? `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="text muted">—</p>`}
-        </div>
+        ${leadBlock}
+        ${blocksHtml}
       </div>
     `;
   }
@@ -240,25 +315,29 @@
   function renderArchive(){
     const box = document.getElementById("archive");
     const t = (LANG==="pl")
-      ? {h:"Archiwum (ostatnie 10)", open:"Otwórz"}
-      : {h:"Archive (last 10)", open:"Open"};
+      ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum."}
+      : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet."};
+
+    const archItems = ITEMS.slice(1, 11); // skip TODAY (0), take next 10
 
     box.innerHTML = `
       <h3>${t.h}</h3>
-      <div class="archgrid">
-        ${ITEMS.slice(0,10).map(it => {
-          const tt = it[LANG] || {};
-          return `
-            <div class="architem" data-id="${esc(it.id)}">
-              <div style="font-weight:700">${esc(tt.title || "Poranny Skan")}</div>
-              <div class="archmeta">
-                <span>${fmtDatePL(it.date)} | ${it.time || "—"}</span>
-                <span>${t.open} →</span>
+      ${archItems.length ? `
+        <div class="archgrid">
+          ${archItems.map(it => {
+            const tt = it[LANG] || {};
+            return `
+              <div class="architem" data-id="${esc(it.id)}">
+                <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+                <div class="archmeta">
+                  <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
+                  <span>${t.open} →</span>
+                </div>
               </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
+            `;
+          }).join("")}
+        </div>
+      ` : `<p class="text">${t.empty}</p>`}
     `;
 
     box.querySelectorAll(".architem").forEach(el=>{
@@ -277,14 +356,38 @@
     renderArchive();
   }
 
+  function updateHeaderFromToday(){
+    const today = ITEMS[0];
+    if(!today){
+      document.getElementById("asof").textContent = (LANG==="pl") ? "Aktualizacja: —" : "Updated: —";
+      document.getElementById("next").textContent = (LANG==="pl") ? "Kolejne wydanie: —" : "Next edition: —";
+      return;
+    }
+
+    document.getElementById("asof").textContent =
+      (LANG==="pl")
+        ? `Aktualizacja: ${fmtDate(today.date)} | ${today.time || "—"}`
+        : `Updated: ${today.date || "—"} | ${today.time || "—"}`;
+
+    const dt = parseISODate(today.date);
+    if(dt){
+      const nxt = nextBusinessDay(dt);
+      document.getElementById("next").textContent =
+        (LANG==="pl") ? `Kolejne wydanie: ${fmtDatePretty(nxt)}` : `Next edition: ${fmtDatePretty(nxt)}`;
+    } else {
+      document.getElementById("next").textContent =
+        (LANG==="pl") ? "Kolejne wydanie: —" : "Next edition: —";
+    }
+  }
+
   async function init(){
     try{
       const res = await fetch(DATA_URL, {cache:"no-store"});
       if(!res.ok) throw new Error("Nie mogę wczytać scan.json");
       const data = await res.json();
       ITEMS = Array.isArray(data.items) ? data.items : [];
-      document.getElementById("asof").textContent =
-        "Aktualizacja: " + new Date().toLocaleString("pl-PL");
+
+      updateHeaderFromToday();
       render();
     } catch(e){
       const err = document.getElementById("err");
