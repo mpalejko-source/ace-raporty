@@ -97,6 +97,7 @@
       background: rgba(255,255,255,.06);
       box-shadow: var(--shadow);
       font-size:16px;
+      flex:0 0 auto;
     }
     .text{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
     .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
@@ -134,6 +135,7 @@
       padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
       box-shadow: var(--shadow);
       font-size:13px;
+      white-space:pre-wrap;
     }
   </style>
 </head>
@@ -150,7 +152,7 @@
     </div>
 
     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-     <a class="btn" id="btnHome" href="/ace-raporty/" title="Wróć do panelu">← Panel główny</a>
+      <a class="btn" id="btnHome" href="/ace-raporty/" title="Wróć do panelu">← Panel główny</a>
       <div class="pill" id="asof">Aktualizacja: —</div>
       <div class="pill" id="next">Kolejne wydanie: —</div>
     </div>
@@ -233,55 +235,60 @@
   }
 
   function section(icon, title, bodyHtml){
+    const hasIcon = (icon||"").toString().trim().length > 0;
     return `
       <div class="sec">
-        <h2><span class="icon">${icon}</span> ${esc(title)}</h2>
+        <h2>
+          ${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}
+          ${esc(title)}
+        </h2>
         ${bodyHtml}
       </div>
     `;
   }
 
-  // Supports dynamic blocks:
-  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"..."}, {icon:"🌾", title:"Soymeal", text:"..."}]
+  // Dynamic blocks:
+  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"..."}, ...]
   function renderBlocksFromDynamic(t){
-  const blocks = Array.isArray(t.blocks) ? t.blocks : [];
-  let html = "";
+    const blocks = Array.isArray(t.blocks) ? t.blocks : [];
+    if(!blocks.length) return "";
 
-  const pageTitle = (t.title || "").toString().trim();
-  const pageLead  = (t.lead  || "").toString().trim();
+    let html = "";
 
-  for (let i = 0; i < blocks.length; i++){
-    const b = blocks[i] || {};
-    const title = (b.title || "").toString().trim();
-    const text  = (b.text  || "").toString().trim();
-    const icon  = (b.icon  || "").toString().trim(); // puste = brak ikonki
+    const pageTitle = (t.title || "").toString().trim();
+    const pageLead  = (t.lead  || "").toString().trim();
 
-    // ✅ 1) Pomijaj blok, jeśli powtarza tytuł/lead (typowy "Wprowadzenie" wpisany drugi raz)
-    // - najczęstszy przypadek: pierwszy block ma tekst równy tytułowi (albo leadowi)
-    const isDup =
-      (text.length > 0 && (text === pageTitle || text === pageLead)) &&
-      (title.length === 0 || title.toLowerCase() === "tytuł" || title.toLowerCase() === "wprowadzenie" || title.toLowerCase() === "co dziś ważnego ?");
+    for (let i = 0; i < blocks.length; i++){
+      const b = blocks[i] || {};
+      const title = (b.title || "").toString().trim();
+      const text  = (b.text  || "").toString().trim();
+      const icon  = (b.icon  || "").toString().trim();
 
-    // ✅ 2) Dodatkowo: jeśli to jest pierwszy blok i jest bardzo krótki oraz wygląda jak nagłówek, też pomijamy
-    const looksLikeHeaderOnly = (i === 0 && text.length > 0 && text === pageTitle);
+      // pomiń blok jeśli dubluje tytuł lub lead
+      const tl = title.toLowerCase();
+      const isIntroLike = (tl === "tytuł" || tl === "wprowadzenie" || tl === "co dziś ważnego ?" || tl === "co dziś ważnego");
+      const isDup =
+        (text.length > 0 && (text === pageTitle || text === pageLead)) &&
+        (title.length === 0 || isIntroLike);
 
-    if (isDup || looksLikeHeaderOnly) continue;
+      const looksLikeHeaderOnly = (i === 0 && text.length > 0 && text === pageTitle);
 
-    // buduj sekcję tylko gdy title i text są niepuste
-    if (title.length > 0 && text.length > 0){
-      html += section(icon, title, `<p class="text">${esc(text)}</p>`);
+      if (isDup || looksLikeHeaderOnly) continue;
+
+      // render text block
+      if (title.length > 0 && text.length > 0){
+        html += section(icon, title, `<p class="text">${esc(text)}</p>`);
+        continue;
+      }
+
+      // render list block (optional future)
+      const list = Array.isArray(b.list) ? b.list.filter(x => isNonEmptyText(x)) : [];
+      if (title.length > 0 && list.length){
+        html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+      }
     }
 
-    // opcjonalnie obsługa list, jeśli kiedyś dodasz
-    const list = Array.isArray(b.list) ? b.list.filter(x => (x||"").toString().trim().length>0) : [];
-    if (title.length > 0 && list.length){
-      html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
-    }
-  }
-
-  return html;
-}
-
+    return html;
   }
 
   function renderMain(item){
@@ -339,11 +346,11 @@
       : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet."};
 
     const todayId = ITEMS[0]?.id;
-  const archItems = ITEMS
-  .slice(1) // archiwum startuje od drugiego elementu
-  .filter(x => x && x.id !== todayId) // usuń duplikat dzisiejszego
-  .slice(0, 10); // weź max 10
 
+    const archItems = ITEMS
+      .slice(1)
+      .filter(x => x && x.id !== todayId)
+      .slice(0, 10);
 
     box.innerHTML = `
       <h3>${t.h}</h3>
@@ -417,7 +424,7 @@
     } catch(e){
       const err = document.getElementById("err");
       err.style.display = "block";
-      err.textContent = "Błąd: " + e.message;
+      err.textContent = "Błąd: " + (e && e.message ? e.message : e);
     }
   }
 
