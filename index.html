@@ -39,7 +39,6 @@
                   var(--bg);
       color:var(--text);
 
-      /* sticky bottom layout */
       min-height:100vh;
       display:flex;
       flex-direction:column;
@@ -50,8 +49,6 @@
       margin:0 auto;
       padding:26px 18px 44px;
       width:100%;
-
-      /* sticky bottom layout */
       flex:1;
       display:flex;
       flex-direction:column;
@@ -64,7 +61,6 @@
 
     .brand{display:flex; gap:14px; align-items:center;}
 
-    /* logo.png obok index.html */
     .logo{
       height:56px;
       width:auto;
@@ -157,38 +153,61 @@
     }
     .card > *{ position:relative; }
 
-    .kicker{
-      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    /* NEW: card header row */
+    .cardTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
       margin-bottom:10px;
+      padding-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .tag{
-      display:inline-flex; gap:6px; align-items:center;
-      padding:5px 9px; border-radius:999px;
-      background: rgba(125,211,252,.10);
-      border: 1px solid rgba(125,211,252,.22);
-      color: rgba(225,245,255,.95);
+    .asof{
       font-size:12px;
+      color: var(--muted2);
+      display:flex;
+      gap:6px;
+      align-items:center;
+      white-space:nowrap;
     }
-    .tag.purple{
-      background: rgba(167,139,250,.10);
-      border: 1px solid rgba(167,139,250,.22);
-      color: rgba(243,236,255,.95);
+    .asof strong{ color: rgba(234,240,255,.90); font-weight:800; }
+    .badges{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color: rgba(234,240,255,.88);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 26px rgba(0,0,0,.20);
+      white-space:nowrap;
+    }
+    .badge.freq{
+      border-color: rgba(125,211,252,.22);
+      background: rgba(125,211,252,.10);
+      color: rgba(225,245,255,.95);
     }
 
-    .title{margin:0; font-size:16px; font-weight:700}
-    .desc{margin:8px 0 12px 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .meta{
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      color:var(--muted2); font-size:12px;
-      padding-top:10px;
+    .title{margin:0; font-size:16px; font-weight:800; line-height:1.2}
+    .desc{margin:8px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+
+    .nextLine{
+      margin-top:12px;
+      color: var(--muted2);
+      font-size:12px;
       border-top:1px solid rgba(255,255,255,.08);
+      padding-top:10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
-    .meta code{
-      background: rgba(255,255,255,.06);
-      padding:2px 6px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.10)
-    }
+    .nextLine strong{ color: rgba(234,240,255,.90); font-weight:800; }
 
     .muted{color:var(--muted2)}
     .error{
@@ -201,30 +220,25 @@
     }
     footer{margin-top:16px; color:var(--muted2); font-size:12px}
 
-    /* FEATURED TILE */
+    /* FEATURED TILE (Poranny Skan) – bardziej premium, bez plakietek */
     a.card.featured{
-      border: 2px solid rgba(125,211,252,.70);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      border: 2px solid rgba(125,211,252,.85);
+      background:
+        radial-gradient(900px 420px at 15% 0%, rgba(125,211,252,.22), transparent 60%),
+        radial-gradient(800px 380px at 85% 10%, rgba(167,139,250,.18), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow:
+        0 20px 55px rgba(0,0,0,.55),
+        0 0 0 1px rgba(255,255,255,.08) inset;
       transform: translateY(-2px);
     }
     a.card.featured:hover{
-      transform: translateY(-4px);
-      border-color: rgba(125,211,252,.90);
+      transform: translateY(-5px);
+      border-color: rgba(125,211,252,.95);
     }
-    a.card.featured::after{
-      content: "PORANNY SKAN • DAILY";
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(15,23,42,.88);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.12);
-      letter-spacing: .04em;
-      z-index: 3;
+    a.card.featured .title{
+      font-size:18px;
+      letter-spacing:.2px;
     }
 
     /* panels */
@@ -242,7 +256,7 @@
       flex-direction:column;
       justify-content:center;
       gap:6px;
-      min-height:56px; /* równy nagłówek (2 linie) */
+      min-height:56px;
       margin-bottom:10px;
     }
     .panelTitle{
@@ -256,7 +270,7 @@
       font-size:12px;
       opacity:.75;
       line-height:1.2;
-      min-height:14px; /* druga linia nawet jak pusta */
+      min-height:14px;
     }
 
     /* prices layout */
@@ -401,10 +415,18 @@
       return (s || "").toString().toLowerCase().trim();
     }
 
-    function tagFor(i){
-      return i % 2 === 0
-        ? { cls: "tag", txt: "Raport" }
-        : { cls: "tag purple", txt: "Wykresy" };
+    function daysUntil(iso){
+      if(!iso || typeof iso !== "string") return null;
+      const t = Date.parse(iso + "T00:00:00Z");
+      if(isNaN(t)) return null;
+      const now = new Date();
+      const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+      const diff = Math.round((t - todayUTC) / (24*60*60*1000));
+      return diff;
+    }
+
+    function safeText(s){
+      return (s === null || s === undefined) ? "" : String(s);
     }
 
     async function loadManifest(){
@@ -421,13 +443,18 @@
         name: r.name || id,
         description: r.description || "",
         path: r.path || ("raporty/" + id + "/"),
-        updated: r.updated || ""
+        updated: r.updated || "",
+
+        // NOWE (opcjonalne, dodasz później z makra):
+        frequency: r.frequency || r.freq || "",     // "dziennie/tygodniowo/miesięcznie"
+        nextIssue: r.next_issue || r.nextIssue || r.next || "" // "YYYY-MM-DD"
       }));
     }
 
     function applySort(items, sortKey){
       const arr = items.slice();
       arr.sort((A,B) => {
+        // Poranny skan zawsze pierwszy
         if (A.id === "poranny-skan") return -1;
         if (B.id === "poranny-skan") return 1;
 
@@ -448,7 +475,7 @@
       const q = norm(query);
       if(!q) return items;
       return items.filter(it => {
-        const hay = norm(it.id) + " " + norm(it.name) + " " + norm(it.description);
+        const hay = norm(it.id) + " " + norm(it.name) + " " + norm(it.description) + " " + norm(it.frequency);
         return hay.includes(q);
       });
     }
@@ -463,27 +490,53 @@
         return;
       }
 
-      grid.innerHTML = items.map((r, i) => {
-        const t = (r.id === "poranny-skan")
-          ? { cls: "tag", txt: "Poranny skan" }
-          : tagFor(i);
-
+      grid.innerHTML = items.map((r) => {
         const updated = fmtDatePL(r.updated);
         const safePath = (r.path || "").replace(/^\/+/, "");
         const isFeatured = (r.id === "poranny-skan");
 
-        return `
-          <a class="card ${isFeatured ? "featured" : ""}" href="${safePath}">
-            <div class="kicker">
-              <span class="${t.cls}">${t.txt}</span>
+        // badge frequency tylko dla "nie-poranny-skan"
+        const freq = safeText(r.frequency).trim();
+        const freqBadge = (!isFeatured && freq)
+          ? `<span class="badge freq">${freq}</span>`
+          : "";
+
+        // next issue (opcjonalnie)
+        let nextHtml = "";
+        const nextISO = safeText(r.nextIssue).trim();
+        if(nextISO){
+          const d = daysUntil(nextISO);
+          const dTxt = (d === null) ? "" : (d === 0 ? " (dziś)" : (d > 0 ? ` (za ${d} dni)` : ` (${Math.abs(d)} dni temu)`));
+          nextHtml = `
+            <div class="nextLine">
+              <span><strong>Kolejne wydanie:</strong> ${fmtDatePL(nextISO)}${dTxt}</span>
               <span class="muted">ID: <code>${r.id}</code></span>
             </div>
+          `;
+        } else {
+          // jeśli nie ma next issue, zostawiamy tylko ID dyskretnie w linii
+          nextHtml = `
+            <div class="nextLine" style="justify-content:flex-end">
+              <span class="muted">ID: <code>${r.id}</code></span>
+            </div>
+          `;
+        }
+
+        return `
+          <a class="card ${isFeatured ? "featured" : ""}" href="${safePath}">
+            <div class="cardTop">
+              <div class="asof">
+                <strong>Ostatnia aktualizacja:</strong> ${updated}
+              </div>
+              <div class="badges">
+                ${freqBadge}
+              </div>
+            </div>
+
             <p class="title">${r.name}</p>
             <p class="desc">${r.description}</p>
-            <div class="meta">
-              <span>Ścieżka: <code>/${safePath}</code></span>
-              <span><strong>Last updated:</strong> ${updated}</span>
-            </div>
+
+            ${nextHtml}
           </a>
         `;
       }).join("");
@@ -559,7 +612,7 @@
         const asof = (data.asof || "—");
         document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + asof;
 
-        // żeby nagłówki były równe: druga linia zawsze istnieje
+        // wyrównanie nagłówków paneli: druga linia zawsze istnieje
         document.getElementById("futuresAsOf").innerHTML = "&nbsp;";
 
         const cashRows = Array.isArray(data.cash) ? data.cash : [];
