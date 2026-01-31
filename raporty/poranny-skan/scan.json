@@ -1,89 +1,97 @@
-{
-  "items": [
-        {
-      "id": "2026-01-30",
-      "date": "2026-01-30",
-      "time": "08:30",
-      "pl": {
-         "title": "ACE – Poranny Skan Rynku",
-  "lead": "Płynność, handel i logistyka w centrum uwagi: oleiste reagują na przetasowania handlowe, a zboża korzystają ze słabszego dolara i aktywności funduszy, przy wciąż wysokiej podaży globalnej.",
-  "fx": "Dolar pozostaje słabszy, wspierany oczekiwaniami obniżek stóp w USA i niepewnością wokół ceł oraz polityki fiskalnej. Słabszy USD poprawia konkurencyjność eksportową zbóż i soi z USA, wspierając nastroje na rynkach surowcowych.",
-  "agri": "Oleiste w centrum zmian handlowych: Chiny dopuszczają australijski rzepak i zwiększają zakupy canoli z Australii oraz Kanady, co wpływa na bilans rzepaku i relacje cenowe olejów. Zboża korzystają z osłabienia dolara i short-coveringu funduszy na CBOT, choć wzrosty ogranicza wysoka globalna podaż. Logistyka pozostaje kluczowym czynnikiem na rynku śruty sojowej w USA.",
-  "focus": [
-    "płynność finansowa w łańcuchu agro i jej wpływ na podaż (lekcja z rynku kakao)",
-    "przetargi i sygnały popytowe: Tunezja (pszenica), Jordania (jęczmień, pszenica)",
-    "handel oleistymi: Chiny–Australia–Kanada, pierwsze ceny rzepaku 2026 z Ukrainy",
-    "logistyka i pogoda w USA jako czynnik ryzyka dla śruty sojowej",
-    "kurs dolara i aktywność funduszy jako krótkoterminowy driver cen zbóż i soi"
-        ]
-      },
-      "en": {
-        "title": "ACE – Morning Market Scan",
-  "lead": "Liquidity, trade flows and logistics take center stage: oilseeds react to shifting trade patterns, while grains draw support from a weaker dollar and fund activity despite ample global supply.",
-  "fx": "The U.S. dollar remains soft, driven by expectations of rate cuts in the U.S. and uncertainty around tariffs and fiscal policy. A weaker USD improves the export competitiveness of U.S. grains and soybeans, supporting commodity sentiment.",
-  "agri": "Oilseeds in focus as trade routes shift: China clears Australian rapeseed for processing and expands canola purchases from Australia and Canada, impacting rapeseed balances and vegetable oil price relationships. Grains benefit from a weaker dollar and fund short-covering on CBOT, though gains are capped by abundant global supply. Logistics remain the key short-term constraint in the U.S. soymeal market.",
-  "focus": [
-    "liquidity risks in the agri supply chain and implications for future supply (lessons from cocoa)",
-    "tenders and demand signals: Tunisia (wheat), Jordan (barley, wheat)",
-    "oilseed trade shifts: China–Australia–Canada, first 2026 rapeseed price indications from Ukraine",
-    "U.S. logistics and weather as near-term risks for soymeal deliveries",
-    "USD dynamics and fund positioning as key short-term drivers for grain and soybean prices"
-        ]
-      }
+{"items":[
+  {
+    "id":"2026-01-31",
+    "date":"2026-01-31",
+    "time":"0.913194444444444",
+    "pl":{
+      "title":"ACE – Poranny Skan Rynku",
+      "lead":"Rynek startuje spokojnie, ale pod powierzchnią narasta presja: śruta sojowa pozostaje cenowo „zamrożona” mimo nerwowej gry importerów, a rzepak reaguje na globalne przetasowania handlowe. Słabszy dolar stabilizuje nastroje w agro, ograniczając dziś zarówno potencjał wzrostów, jak i gwałtownych spadków.",
+      "fx":"W piątek napisaliśmy: „Rekomendacje: Cały czas zakupy spot – duża szansa przełamania 3.57 w dół i wtedy pierwsze zakupy w przód”\nI faktycznie w piątek wieczór doszło, po próbie wybicia w górę za dnia, do przełamania linii wsparcia z października. \nDolar z hukiem przebił te bariere i obecnie mamy poziomy okolic 3.54.  \n\nTak jak wczoraj pisaliśmy na watsupp kupiliśmy na 2 tygodnie waluty. Po tak silnym ruchu nie wykluczamy krótkoterminowej korekty w górę. Jednak trend spadkowy jest silny i nie wychylamy się bardziej z zakupami. Obserwujemy, ale też czujnie – bo nie wiadomo kiedy się to zmieni… i może kupimy trochę więcej rozłożone w czasie aby w razie wyskoku w górę móc rolować i zjadać. Ale to jeszcze nie dziś. Damy ewentualnie znać. ",
+      "agri":"Śruta sojowa – komentarz dnia\nŚruta sojowa pozostaje wyjątkowo stabilna cenowo: giełda utrzymuje się poniżej 300 USD/t, a zmienność w ostatnim tygodniu ogranicza się do ±3 USD. Na rynku fizycznym uwagę zwracają zawyżone cenniki importerów – przy ofertach w okolicach 400 USD realne transakcje możliwe są nawet o 10 USD/t niżej, co sugeruje dobrą dostępność towaru w portach przy słabszym krajowym zużyciu oraz wyraźną konkurencję między importerami. Fundamentalnie presja pozostaje lekko spadkowa, ale rynek blokują spekulacje i działania dużych graczy, a silnie słabnący dolar wspiera amerykańskie surowce. Bazowy scenariusz to stabilizacja z potencjałem spadkowym – zakupy nadal głównie spotowe.\nRzepak / canola – depesza rynkowa\nRynek rzepaku reaguje na przetasowania handlowe między Azją, Ameryką Północną i Australią. Porozumienie handlowe Chiny–Kanada przywróciło konkurencyjność kanadyjskiej canoli po obniżeniu ceł, co szybko przełożyło się na wzrost sprzedaży do Chin. W efekcie Australia, mimo bardzo konkurencyjnych cen i powrotu na rynek chiński, traci część impetu. Rosnąca konkurencja między dostawcami zwiększa presję na globalne relacje cenowe rzepaku i ogranicza potencjał dynamicznych wzrostów, zwłaszcza przy zmienności na rynku olejów roślinnych i energii.",
+      "focus":[]
     },
-    {
-      "id": "2026-01-29",
-      "date": "2026-01-29",
-      "time": "07:30",
-      "pl": {
-        "title": "ACE – Poranny Skan Rynku",
-        "lead": "Start dnia spokojny: FX trzyma kierunek po wczorajszej sesji, a agro pozostaje w konsolidacji i czeka na bodźce z eksportu i pogody.",
-        "fx": "EUR/USD stabilnie po ostatnim ruchu, dolar bez wyraźnego impulsu. PLN spokojny — wahania ograniczone, rynek bardziej reaguje na nastroje globalne niż na lokalne czynniki.",
-        "agri": "Zboża w Europie bez kierunku: MATIF w wąskim zakresie, kupujący selektywni. Oleiste wrażliwe na sentyment w olejach roślinnych i na sygnały popytowe.",
-        "focus": [
-          "kalendarz makro (USA / strefa euro)",
-          "komentarze banków centralnych i ryzyko dla USD",
-          "sygnały eksportowe / przetargi (agro) + pogoda w kluczowych regionach"
-        ]
-      },
-      "en": {
-        "title": "ACE – Morning Market Scan",
-        "lead": "A calm start: FX holds direction after yesterday’s session, while agri markets stay range-bound awaiting fresh export and weather catalysts.",
-        "fx": "EUR/USD steadies after recent moves; the dollar lacks a clear trigger. PLN remains stable — moves are contained with sentiment driven mainly by global risk tone.",
-        "agri": "European grains lack direction: MATIF trades in a tight range with selective buying. Oilseeds track vegetable oil sentiment and demand signals.",
-        "focus": [
-          "macro calendar (US / Eurozone)",
-          "central bank commentary and USD risks",
-          "export signals / tenders (agri) + key weather developments"
-        ]
-      }
-    },
-    {
-      "id": "2026-01-28",
-      "date": "2026-01-28",
-      "time": "07:30",
-      "pl": {
-        "title": "ACE – Poranny Skan Rynku",
-        "lead": "Wczorajsza sesja przyniosła ostrożny handel: rynek FX obserwował dolara, a agro koncentrowało się na podaży z Ameryki Płd. i konkurencji eksportowej.",
-        "fx": "Dolar miesza kierunki, euro utrzymuje przewagę. PLN stabilny; rynek czeka na nowe sygnały z USA i odczyty makro, które mogą podbić zmienność.",
-        "agri": "Zboża: spokojniej po wcześniejszych ruchach, ale podaż z kierunków konkurencyjnych utrzymuje presję. Oleiste: wrażliwe na zmienność w kompleksie olejów.",
-        "focus": [
-          "odczyty makro z USA i ich wpływ na USD",
-          "wątki handlowe / polityczne (ryzyko nagłówków)",
-          "tempo eksportu i konkurencja cenowa w przetargach"
-        ]
-      },
-      "en": {
-        "title": "ACE – Morning Market Scan",
-        "lead": "Yesterday was cautious: FX watched the dollar, while agri focused on South American supply and export competition.",
-        "fx": "USD traded mixed while EUR kept an edge. PLN stayed stable; markets waited for fresh US signals and data that could lift volatility.",
-        "agri": "Grains: calmer after prior moves, though competitive supply keeps pressure on prices. Oilseeds: sensitive to swings in the vegetable oils complex.",
-        "focus": [
-          "US data prints and USD reaction",
-          "trade/policy headlines risk",
-          "export pace and tender price competition"
-        ]
-      }
+    "en":{
+      "title":"ACE – Morning Market Scan",
+      "lead":"The market opens calmly, but pressure is building beneath the surface. Soybean meal remains price-frozen despite increasingly aggressive importer tactics, while rapeseed reacts to global trade realignments. A sharply weaker U.S. dollar stabilizes agri sentiment, limiting both upside and downside risks for now.\n\nFX / USD",
+      "fx":"On Friday we highlighted spot-only FX purchases, pointing to a high probability of a break below 3.57. That scenario materialized late Friday after a failed intraday upside attempt, with USD/PLN decisively breaking long-term support and sliding toward 3.54. Following the move, short-term corrective risk exists, but the broader downtrend remains intact. FX coverage has been secured short-term; further buying remains cautious and phased.",
+      "agri":"Soybean meal – daily note\nSoybean meal prices remain unusually stable, with futures holding below USD 300/t and very limited weekly volatility. Physical market offers from importers appear inflated, suggesting ample port availability and intensified competition. Fundamentals still lean slightly bearish, but speculative positioning and USD weakness continue to cap downside. Base case remains consolidation with downside bias; purchases stay predominantly spot.\n\nRapeseed / canola – market brief\nRapeseed markets are adjusting to shifting trade flows between Asia, North America and Australia. Improved trade terms between China and Canada have restored competitiveness for Canadian canola, boosting exports to China. Australia remains price-competitive but is losing momentum. Rising supplier competition limits upside potential, particularly amid ongoing volatility in vegetable oils and energy markets.",
+      "focus":[]
     }
-  ]
-}
+  },
+  {
+    "id":"2026-01-31",
+    "date":"2026-01-31",
+    "time":"22",
+    "pl":{
+      "title":"ACE – Poranny Skan Rynku",
+      "lead":"",
+      "fx":"",
+      "agri":"",
+      "focus":[]
+    },
+    "en":{
+      "title":"ACE – Morning Market Scan",
+      "lead":"",
+      "fx":"",
+      "agri":"",
+      "focus":[]
+    }
+  },
+  {
+    "id":"2026-01-30",
+    "date":"2026-01-30",
+    "time":"08:30",
+    "pl":{
+      "title":"ACE – Poranny Skan Rynku",
+      "lead":"Płynność, handel i logistyka w centrum uwagi: oleiste reagują na przetasowania handlowe, a zboża korzystają ze słabszego dolara i aktywności funduszy, przy wciąż wysokiej podaży globalnej.",
+      "fx":"Dolar pozostaje słabszy, wspierany oczekiwaniami obniżek stóp w USA i niepewnością wokół ceł oraz polityki fiskalnej. Słabszy USD poprawia konkurencyjność eksportową zbóż i soi z USA, wspierając nastroje na rynkach surowcowych.",
+      "agri":"Oleiste w centrum zmian handlowych: Chiny dopuszczają australijski rzepak i zwiększają zakupy canoli z Australii oraz Kanady, co wpływa na bilans rzepaku i relacje cenowe olejów. Zboża korzystają z osłabienia dolara i short-coveringu funduszy na CBOT, choć wzrosty ogranicza wysoka globalna podaż. Logistyka pozostaje kluczowym czynnikiem na rynku śruty sojowej w USA.",
+      "focus":["płynność finansowa w łańcuchu agro i jej wpływ na podaż (lekcja z rynku kakao)","przetargi i sygnały popytowe: Tunezja (pszenica), Jordania (jęczmień, pszenica)","handel oleistymi: Chiny–Australia–Kanada, pierwsze ceny rzepaku 2026 z Ukrainy","logistyka i pogoda w USA jako czynnik ryzyka dla śruty sojowej","kurs dolara i aktywność funduszy jako krótkoterminowy driver cen zbóż i soi"]
+    },
+    "en":{
+      "title":"ACE – Morning Market Scan",
+      "lead":"Liquidity, trade flows and logistics take center stage: oilseeds react to shifting trade patterns, while grains draw support from a weaker dollar and fund activity despite ample global supply.",
+      "fx":"The U.S. dollar remains soft, driven by expectations of rate cuts in the U.S. and uncertainty around tariffs and fiscal policy. A weaker USD improves the export competitiveness of U.S. grains and soybeans, supporting commodity sentiment.",
+      "agri":"Oilseeds in focus as trade routes shift: China clears Australian rapeseed for processing and expands canola purchases from Australia and Canada, impacting rapeseed balances and vegetable oil price relationships. Grains benefit from a weaker dollar and fund short-covering on CBOT, though gains are capped by abundant global supply. Logistics remain the key short-term constraint in the U.S. soymeal market.",
+      "focus":["liquidity risks in the agri supply chain and implications for future supply (lessons from cocoa)","tenders and demand signals: Tunisia (wheat), Jordan (barley, wheat)","oilseed trade shifts: China–Australia–Canada, first 2026 rapeseed price indications from Ukraine","U.S. logistics and weather as near-term risks for soymeal deliveries","USD dynamics and fund positioning as key short-term drivers for grain and soybean prices"]
+    }
+  },
+  {
+    "id":"2026-01-29",
+    "date":"2026-01-29",
+    "time":"07:30",
+    "pl":{
+      "title":"ACE – Poranny Skan Rynku",
+      "lead":"Start dnia spokojny: FX trzyma kierunek po wczorajszej sesji, a agro pozostaje w konsolidacji i czeka na bodźce z eksportu i pogody.",
+      "fx":"EUR/USD stabilnie po ostatnim ruchu, dolar bez wyraźnego impulsu. PLN spokojny — wahania ograniczone, rynek bardziej reaguje na nastroje globalne niż na lokalne czynniki.",
+      "agri":"Zboża w Europie bez kierunku: MATIF w wąskim zakresie, kupujący selektywni. Oleiste wrażliwe na sentyment w olejach roślinnych i na sygnały popytowe.",
+      "focus":["kalendarz makro (USA / strefa euro)","komentarze banków centralnych i ryzyko dla USD","sygnały eksportowe / przetargi (agro) + pogoda w kluczowych regionach"]
+    },
+    "en":{
+      "title":"ACE – Morning Market Scan",
+      "lead":"A calm start: FX holds direction after yesterday’s session, while agri markets stay range-bound awaiting fresh export and weather catalysts.",
+      "fx":"EUR/USD steadies after recent moves; the dollar lacks a clear trigger. PLN remains stable — moves are contained with sentiment driven mainly by global risk tone.",
+      "agri":"European grains lack direction: MATIF trades in a tight range with selective buying. Oilseeds track vegetable oil sentiment and demand signals.",
+      "focus":["macro calendar (US / Eurozone)","central bank commentary and USD risks","export signals / tenders (agri) + key weather developments"]
+    }
+  },
+  {
+    "id":"2026-01-28",
+    "date":"2026-01-28",
+    "time":"07:30",
+    "pl":{
+      "title":"ACE – Poranny Skan Rynku",
+      "lead":"Wczorajsza sesja przyniosła ostrożny handel: rynek FX obserwował dolara, a agro koncentrowało się na podaży z Ameryki Płd. i konkurencji eksportowej.",
+      "fx":"Dolar miesza kierunki, euro utrzymuje przewagę. PLN stabilny; rynek czeka na nowe sygnały z USA i odczyty makro, które mogą podbić zmienność.",
+      "agri":"Zboża: spokojniej po wcześniejszych ruchach, ale podaż z kierunków konkurencyjnych utrzymuje presję. Oleiste: wrażliwe na zmienność w kompleksie olejów.",
+      "focus":["odczyty makro z USA i ich wpływ na USD","wątki handlowe / polityczne (ryzyko nagłówków)","tempo eksportu i konkurencja cenowa w przetargach"]
+    },
+    "en":{
+      "title":"ACE – Morning Market Scan",
+      "lead":"Yesterday was cautious: FX watched the dollar, while agri focused on South American supply and export competition.",
+      "fx":"USD traded mixed while EUR kept an edge. PLN stayed stable; markets waited for fresh US signals and data that could lift volatility.",
+      "agri":"Grains: calmer after prior moves, though competitive supply keeps pressure on prices. Oilseeds: sensitive to swings in the vegetable oils complex.",
+      "focus":["US data prints and USD reaction","trade/policy headlines risk","export pace and tender price competition"]
+    }
+  }
+]}
