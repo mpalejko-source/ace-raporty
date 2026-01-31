@@ -244,24 +244,44 @@
   // Supports dynamic blocks:
   // t.blocks = [{icon:"💵", title:"USD/PLN", text:"..."}, {icon:"🌾", title:"Soymeal", text:"..."}]
   function renderBlocksFromDynamic(t){
-    const blocks = Array.isArray(t.blocks) ? t.blocks : [];
-    let html = "";
+  const blocks = Array.isArray(t.blocks) ? t.blocks : [];
+  let html = "";
 
-    for(const b of blocks){
-      const title = (b && b.title) ? b.title : "";
-      const icon  = (b && b.icon)  ? b.icon  : "";
-      const text  = (b && b.text)  ? b.text  : "";
+  const pageTitle = (t.title || "").toString().trim();
+  const pageLead  = (t.lead  || "").toString().trim();
 
-      if(isNonEmptyText(title) && isNonEmptyText(text)){
-        html += section(icon, title, `<p class="text">${esc(text)}</p>`);
-      }
-      // Optional: list support in a block:
-      const list = (b && Array.isArray(b.list)) ? b.list.filter(x=>isNonEmptyText(x)) : [];
-      if(isNonEmptyText(title) && list.length){
-        html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
-      }
+  for (let i = 0; i < blocks.length; i++){
+    const b = blocks[i] || {};
+    const title = (b.title || "").toString().trim();
+    const text  = (b.text  || "").toString().trim();
+    const icon  = (b.icon  || "").toString().trim(); // puste = brak ikonki
+
+    // ✅ 1) Pomijaj blok, jeśli powtarza tytuł/lead (typowy "Wprowadzenie" wpisany drugi raz)
+    // - najczęstszy przypadek: pierwszy block ma tekst równy tytułowi (albo leadowi)
+    const isDup =
+      (text.length > 0 && (text === pageTitle || text === pageLead)) &&
+      (title.length === 0 || title.toLowerCase() === "tytuł" || title.toLowerCase() === "wprowadzenie" || title.toLowerCase() === "co dziś ważnego ?");
+
+    // ✅ 2) Dodatkowo: jeśli to jest pierwszy blok i jest bardzo krótki oraz wygląda jak nagłówek, też pomijamy
+    const looksLikeHeaderOnly = (i === 0 && text.length > 0 && text === pageTitle);
+
+    if (isDup || looksLikeHeaderOnly) continue;
+
+    // buduj sekcję tylko gdy title i text są niepuste
+    if (title.length > 0 && text.length > 0){
+      html += section(icon, title, `<p class="text">${esc(text)}</p>`);
     }
-    return html;
+
+    // opcjonalnie obsługa list, jeśli kiedyś dodasz
+    const list = Array.isArray(b.list) ? b.list.filter(x => (x||"").toString().trim().length>0) : [];
+    if (title.length > 0 && list.length){
+      html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+    }
+  }
+
+  return html;
+}
+
   }
 
   function renderMain(item){
