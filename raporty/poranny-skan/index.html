@@ -339,46 +339,65 @@
     `;
   }
 
-  function renderArchive(){
-    const box = document.getElementById("archive");
-    const t = (LANG==="pl")
-      ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum."}
-      : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet."};
+ function renderArchive(){
+  const box = document.getElementById("archive");
+  const t = (LANG==="pl")
+    ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
+    : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet.", today:"TODAY"};
 
-    const todayId = ITEMS[0]?.id;
+  const today = ITEMS[0] || null;
+  const todayId = today ? today.id : null;
 
-    const archItems = ITEMS
-      .slice(1)
-      .filter(x => x && x.id !== todayId)
-      .slice(0, 10);
+  const archItems = ITEMS
+    .slice(1)
+    .filter(x => x && x.id !== todayId)
+    .slice(0, 10);
 
-    box.innerHTML = `
-      <h3>${t.h}</h3>
-      ${archItems.length ? `
-        <div class="archgrid">
-          ${archItems.map(it => {
-            const tt = it[LANG] || {};
-            return `
-              <div class="architem" data-id="${esc(it.id)}">
-                <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
-                <div class="archmeta">
-                  <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
-                  <span>${t.open} →</span>
-                </div>
-              </div>
-            `;
-          }).join("")}
+  // kafelek "DZIŚ" zawsze na górze
+  const todayTile = today ? `
+    <div class="architem" data-id="${esc(today.id)}" data-today="1">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
+        <div style="font-weight:700">${esc((today[LANG]||{}).title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+        <div class="pill" style="padding:4px 8px; font-size:11px; box-shadow:none; background: rgba(125,211,252,.10); border-color: rgba(125,211,252,.35); color: rgba(234,240,255,.9)">
+          ${t.today}
         </div>
-      ` : `<p class="text">${t.empty}</p>`}
-    `;
+      </div>
+      <div class="archmeta">
+        <span>${fmtDate(today.date)} | ${today.time || "—"}</span>
+        <span>${t.open} →</span>
+      </div>
+    </div>
+  ` : "";
 
-    box.querySelectorAll(".architem").forEach(el=>{
-      el.addEventListener("click",()=>{
-        ACTIVE_ID = el.dataset.id;
-        render();
-      });
+  box.innerHTML = `
+    <h3>${t.h}</h3>
+    ${todayTile}
+    ${archItems.length ? `
+      <div class="archgrid" style="margin-top:10px">
+        ${archItems.map(it => {
+          const tt = it[LANG] || {};
+          return `
+            <div class="architem" data-id="${esc(it.id)}">
+              <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+              <div class="archmeta">
+                <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
+                <span>${t.open} →</span>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    ` : `<p class="text">${t.empty}</p>`}
+  `;
+
+  box.querySelectorAll(".architem").forEach(el=>{
+    el.addEventListener("click",()=>{
+      ACTIVE_ID = el.dataset.id;   // klik „DZIŚ” ustawi id dzisiejsze
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" }); // fajny UX: wraca do góry
     });
-  }
+  });
+}
 
   function render(){
     const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
