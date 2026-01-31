@@ -119,23 +119,22 @@
     }
     a.card > *, a.cat > *{ position:relative; }
 
-    /* ===== Featured (Poranny Skan) full width ===== */
+    /* ===== FEATURED banner (Poranny Skan) — długi i niski ===== */
     .featuredWrap{ margin-top:14px; }
     a.featured{
-      border: 2px solid rgba(125,211,252,.70);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
-      box-shadow: 0 18px 46px rgba(0,0,0,.48);
-      transform: translateY(-1px);
-      padding:18px;
+      border: 2px solid rgba(125,211,252,.62);
+      background: linear-gradient(135deg, rgba(125,211,252,.16), rgba(167,139,250,.08));
+      box-shadow: 0 18px 46px rgba(0,0,0,.46);
+      padding:14px 16px;
     }
     a.featured:hover{
-      transform: translateY(-3px);
-      border-color: rgba(125,211,252,.90);
+      transform: translateY(-2px);
+      border-color: rgba(125,211,252,.85);
     }
     a.featured:after{
       content:"PORANNY SKAN";
       position:absolute;
-      top:12px; right:12px;
+      top:10px; right:10px;
       font-size:11px;
       padding:6px 10px;
       border-radius:999px;
@@ -145,24 +144,27 @@
       letter-spacing:.06em;
       z-index:3;
     }
-    .fTop{
+
+    .fRow{
       display:flex;
       justify-content:space-between;
       gap:12px;
+      align-items:flex-start;
       flex-wrap:wrap;
-      align-items:center;
-      padding-bottom:12px;
-      border-bottom:1px solid rgba(255,255,255,.10);
     }
-    .fAsOf{
-      font-size:12px;
-      color: rgba(234,240,255,.78);
+
+    .fLeft{
+      min-width:260px;
+      flex: 1 1 520px;
+    }
+    .fRight{
       display:flex;
-      gap:8px;
       align-items:center;
-      white-space:nowrap;
+      gap:10px;
+      flex: 0 0 auto;
+      margin-top:2px;
     }
-    .fAsOf strong{ color: rgba(234,240,255,.95); font-weight:900; }
+
     .badge{
       display:inline-flex;
       align-items:center;
@@ -173,75 +175,49 @@
       color: rgba(234,240,255,.90);
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 26px rgba(0,0,0,.20);
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
       white-space:nowrap;
     }
-    .fGrid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap:14px;
-      align-items:start;
+    .badge.accent{
+      border-color: rgba(125,211,252,.28);
+      background: rgba(125,211,252,.10);
     }
-    @media (max-width: 980px){
-      .fGrid{ grid-template-columns: 1fr; }
+
+    .fMetaLine{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:8px;
+      color: rgba(234,240,255,.78);
+      font-size:12px;
     }
-    .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.18; }
-    .fDesc{ margin:10px 0 0 0; color: var(--muted); font-size:13px; line-height:1.45; }
-    .fMeta{
-      margin-top:12px;
+    .fMetaLine strong{ color: rgba(234,240,255,.95); font-weight:900; }
+
+    .fTitle{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      line-height:1.15;
+    }
+    .fToday{
+      margin:8px 0 0 0;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .fNext{
+      margin-top:10px;
       padding-top:10px;
       border-top:1px solid rgba(255,255,255,.10);
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      color: var(--muted2);
       font-size:12px;
+      color: var(--muted2);
     }
-    .fMeta strong{ color: rgba(234,240,255,.92); font-weight:900; }
-    .cta{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      justify-content:flex-start;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      border-radius: 14px;
-      padding:12px;
-    }
-    .ctaLine{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      color: rgba(234,240,255,.86);
-      font-size:13px;
-    }
-    .ctaLine span{ color: var(--muted2); }
-    .ctaBtnRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:6px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.92);
-      font-size:13px;
-      text-decoration:none;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-    }
-    .btn:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.20); }
-    .btn.primary{
-      border-color: rgba(125,211,252,.35);
-      background: rgba(125,211,252,.12);
-    }
+    .fNext strong{ color: rgba(234,240,255,.90); font-weight:900; }
 
     /* ===== Categories grid ===== */
     .cats{
@@ -348,13 +324,13 @@
         <img src="logo.png" alt="ACE Group" class="logo">
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">Poranny skan wyróżniony na górze. Niżej: kategorie raportów (Netflixowy układ).</p>
+          <p class="sub">Poranny skan jako banner na górze. Niżej: kategorie raportów.</p>
         </div>
       </div>
       <div class="pill" id="asof">Aktualizacja: —</div>
     </header>
 
-    <!-- ===== FEATURED: PORANNY SKAN (FULL WIDTH) ===== -->
+    <!-- ===== FEATURED: PORANNY SKAN (FULL WIDTH BANNER) ===== -->
     <div class="sectionHead">
       <p class="h2">Poranny skan</p>
       <p class="hint">Najważniejszy punkt wejścia – zawsze na górze</p>
@@ -397,7 +373,7 @@
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
-      Kategorie działają po polu <code>category</code> w <code>manifest.json</code>. Poranny skan jest wyciągany po ID: <code>poranny-skan</code>.
+      Kategorie działają po polu <code>category</code> w <code>manifest.json</code>. Poranny skan jest wyciągany po ID: <code>poranny-skan</code>. Zdanie na dziś pobierane z <code>scan.json</code>.
     </footer>
   </div>
 
@@ -448,6 +424,18 @@
       return await res.json();
     }
 
+    async function loadScan(){
+      // scan.json w root (obok index.html)
+      // jeśli nie istnieje — nie wywalamy strony
+      try{
+        const res = await fetch("scan.json?ts=" + Date.now(), { cache:"no-store" });
+        if(!res.ok) return null;
+        return await res.json();
+      }catch(_){
+        return null;
+      }
+    }
+
     function toItems(manifest){
       return Object.entries(manifest).map(([id, r]) => ({
         id,
@@ -461,7 +449,7 @@
       }));
     }
 
-    function renderFeatured(items){
+    function renderFeatured(items, scan){
       const wrap = document.getElementById("featuredWrap");
       const ps = items.find(x => x.id === "poranny-skan");
 
@@ -480,34 +468,32 @@
         nextTxt = fmtDatePL(nextISO) + dTxt;
       }
 
+      // Zdanie na dziś z scan.json
+      // Obsługujemy pola: headline / title / lead (bierze pierwsze znalezione)
+      const todayLine =
+        (scan && (scan.headline || scan.title || scan.lead)) ? String(scan.headline || scan.title || scan.lead) : "";
+
       const safePath = (ps.path || "").replace(/^\/+/, "");
 
       wrap.innerHTML = `
         <a class="featured" href="${safePath}">
-          <div class="fTop">
-            <div class="fAsOf"><strong>Ostatnia aktualizacja:</strong> ${updated}</div>
-            <div class="badge">${freq}</div>
-          </div>
+          <div class="fRow">
+            <div class="fLeft">
+              <div class="fMetaLine">
+                <span><strong>Ostatnia aktualizacja:</strong> ${updated}</span>
+                <span class="badge accent">${freq}</span>
+              </div>
 
-          <div class="fGrid">
-            <div>
               <p class="fTitle">${ps.name}</p>
-              <p class="fDesc">${ps.description}</p>
+              ${todayLine ? `<p class="fToday">${todayLine}</p>` : `<p class="fToday">${ps.description}</p>`}
 
-              <div class="fMeta">
+              <div class="fNext">
                 <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
               </div>
             </div>
 
-            <div class="cta">
-              <div class="ctaLine"><strong>Szybki start</strong> <span>kliknij i przejdź do skanu</span></div>
-              <div class="ctaBtnRow">
-                <span class="btn primary">▶ Otwórz poranny skan</span>
-                <span class="btn">⌁ Archiwum w środku</span>
-              </div>
-              <div class="ctaLine" style="margin-top:2px">
-                <span>PL/EN • news + komentarz • gotowe do decyzji zakupowych</span>
-              </div>
+            <div class="fRight">
+              <span class="badge">Kliknij, aby wejść</span>
             </div>
           </div>
         </a>
@@ -517,12 +503,11 @@
     function renderCategories(items){
       const wrap = document.getElementById("cats");
 
-      // stats per category
       const stats = {};
       for(const it of items){
         const k = it.category || "";
-        if(!k) continue;                 // poranny-skan i inne bez kategorii pomijamy w kategoriach
-        if(k === "dedyk") continue;      // dedykowane nie pokazujemy na wspólnej stronie
+        if(!k) continue;                 // bez kategorii pomijamy
+        if(k === "dedyk") continue;      // dedykowane ukryte
         if(!stats[k]) stats[k] = { count:0, last:"" };
         stats[k].count += 1;
         if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
@@ -543,7 +528,7 @@
       }).join("");
     }
 
-    // ===== prices (Twoja logika, futures bez kolumny D-1) =====
+    // ===== prices (futures bez kolumny D-1) =====
     function arrowCell(n){
       if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
         return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
@@ -632,10 +617,10 @@
         document.getElementById("asof").textContent =
           "Aktualizacja: " + new Date().toLocaleString("pl-PL");
 
-        const manifest = await loadManifest();
+        const [manifest, scan] = await Promise.all([loadManifest(), loadScan()]);
         const items = toItems(manifest);
 
-        renderFeatured(items);
+        renderFeatured(items, scan);
         renderCategories(items);
         loadPrices();
       } catch(e){
