@@ -119,105 +119,103 @@
     }
     a.card > *, a.cat > *{ position:relative; }
 
-    /* ===== FEATURED banner (Poranny Skan) — długi i niski ===== */
-    .featuredWrap{ margin-top:14px; }
-    a.featured{
-      border: 2px solid rgba(125,211,252,.62);
-      background: linear-gradient(135deg, rgba(125,211,252,.16), rgba(167,139,250,.08));
-      box-shadow: 0 18px 46px rgba(0,0,0,.46);
-      padding:14px 16px;
-    }
-    a.featured:hover{
-      transform: translateY(-2px);
-      border-color: rgba(125,211,252,.85);
-    }
-    a.featured:after{
-      content:"PORANNY SKAN";
-      position:absolute;
-      top:10px; right:10px;
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(15,23,42,.88);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      letter-spacing:.06em;
-      z-index:3;
-    }
+    /* ===== FEATURED (Poranny Skan) — większy, wycentrowany kafel ===== */
+.featuredWrap{
+  margin-top:14px;
+  display:flex;
+  justify-content:center;  /* centrowanie kafla */
+}
 
-    .fRow{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
+a.featured{
+  width:100%;
+  max-width:820px;         /* <<< TU regulujesz „połowę długości” (np. 760–900) */
+  border: 2px solid rgba(125,211,252,.70);
+  background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
+  box-shadow: 0 18px 46px rgba(0,0,0,.48);
+  padding:18px 18px 16px;
+  transform:none;          /* żeby nie „pływał” jak baner */
+}
 
-    .fLeft{
-      min-width:260px;
-      flex: 1 1 520px;
-    }
-    .fRight{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 0 0 auto;
-      margin-top:2px;
-    }
+a.featured:hover{
+  transform: translateY(-2px);
+  border-color: rgba(125,211,252,.92);
+}
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color: rgba(234,240,255,.90);
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      white-space:nowrap;
-    }
-    .badge.accent{
-      border-color: rgba(125,211,252,.28);
-      background: rgba(125,211,252,.10);
-    }
+a.featured:after{
+  content:"PORANNY SKAN";
+  position:absolute;
+  top:12px; right:12px;
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:999px;
+  background: rgba(15,23,42,.88);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  letter-spacing:.06em;
+  z-index:3;
+}
 
-    .fMetaLine{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:8px;
-      color: rgba(234,240,255,.78);
-      font-size:12px;
-    }
-    .fMetaLine strong{ color: rgba(234,240,255,.95); font-weight:900; }
+.fMetaLine{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:10px;
+  color: rgba(234,240,255,.78);
+  font-size:12px;
+}
 
-    .fTitle{
-      margin:0;
-      font-size:18px;
-      font-weight:950;
-      line-height:1.15;
-    }
-    .fToday{
-      margin:8px 0 0 0;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.35;
-    }
+.fMetaLine strong{
+  color: rgba(234,240,255,.95);
+  font-weight:900;
+}
 
-    .fNext{
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.10);
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      font-size:12px;
-      color: var(--muted2);
-    }
-    .fNext strong{ color: rgba(234,240,255,.90); font-weight:900; }
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  color: rgba(234,240,255,.90);
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 10px 24px rgba(0,0,0,.20);
+  white-space:nowrap;
+}
+
+.badge.accent{
+  border-color: rgba(125,211,252,.30);
+  background: rgba(125,211,252,.12);
+}
+
+.fTitle{
+  margin:0;
+  font-size:20px;          /* większy niż zwykłe kafle */
+  font-weight:950;
+  line-height:1.15;
+}
+
+.fToday{
+  margin:10px 0 0 0;
+  color: var(--muted);
+  font-size:14px;          /* czytelniej */
+  line-height:1.4;
+}
+
+.fNext{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.10);
+  font-size:12px;
+  color: var(--muted2);
+}
+
+.fNext strong{
+  color: rgba(234,240,255,.92);
+  font-weight:900;
+}
+
 
     /* ===== Categories grid ===== */
     .cats{
@@ -454,7 +452,21 @@
       const ps = items.find(x => x.id === "poranny-skan");
 
       if(!ps){
-        wrap.innerHTML = `<div class="error">Brak wpisu <strong>poranny-skan</strong> w manifest.json.</div>`;
+       wrap.innerHTML = `
+  <a class="featured" href="${safePath}">
+    <div class="fMetaLine">
+      <span><strong>Ostatnia aktualizacja:</strong> ${updated}</span>
+      <span class="badge accent">${freq}</span>
+    </div>
+
+    <p class="fTitle">${ps.name}</p>
+    ${todayLine ? `<p class="fToday">${todayLine}</p>` : `<p class="fToday">${ps.description}</p>`}
+
+    <div class="fNext">
+      <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
+    </div>
+  </a>
+`;
         return;
       }
 
