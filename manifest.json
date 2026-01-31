@@ -3,24 +3,32 @@
     "name": "ACE – Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-01-29"
+    "updated": "2026-01-29",
+      "frequency": "tygodniowo",
+  "next_issue": "2026-02-07"
   },
   "chart-pack": {
     "name": "ACE – Chart Pack",
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
-    "updated": "2026-01-29"
+    "updated": "2026-01-29",
+      "frequency": "tygodniowo",
+  "next_issue": "2026-02-07"
   },
 "poranny-skan": {
   "name": "ACE – Poranny Skan Rynku",
   "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
   "path": "raporty/poranny-skan/",
-  "updated": "2026-01-29"
+  "updated": "2026-01-29",
+    "frequency": "dziennie",
+  "next_issue": "2026-01-30"
     },
 "weather-watch": {
   "name": "ACE – Weather Watch (Pogoda)",
   "description": "Mapki pogodowe z krótką prognozą",
   "path": "raporty/weather-watch/",
-  "updated": "2026-01-29"
+  "updated": "2026-01-29",
+    "frequency": "tygodniowo",
+  "next_issue": "2026-02-07"
 }
 }
