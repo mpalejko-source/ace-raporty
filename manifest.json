@@ -6,7 +6,7 @@
     "updated": "2026-01-29",
       "frequency": "tygodniowo",
   "next_issue": "2026-02-07",
-    "category": "specjalne"
+    "category": "fx"
   },
   "chart-pack": {
     "name": "ACE – Chart Pack",
@@ -15,7 +15,7 @@
     "updated": "2026-01-29",
       "frequency": "tygodniowo",
   "next_issue": "2026-02-07",
-    "category": "specjalne"
+    "category": "bialko"
   },
 "poranny-skan": {
   "name": "ACE – Poranny Skan Rynku",
@@ -24,7 +24,6 @@
   "updated": "2026-01-29",
     "frequency": "dziennie",
   "next_issue": "2026-01-30",
-  "category": "poranny"
     },
 "weather-watch": {
   "name": "ACE – Weather Watch (Pogoda)",
@@ -33,6 +32,6 @@
   "updated": "2026-01-29",
     "frequency": "tygodniowo",
   "next_issue": "2026-02-07",
-  "category": "indeksy"
+  "category": "zboza"
 }
 }
