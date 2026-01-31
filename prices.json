@@ -7,10 +7,10 @@
 {"name":"Śruta słonecznikowa – granica PL–UA [PLN/t]","price":870,"w":-20,"m":-60}
 ],
 "futures":[
-{"name":"Wheat MATIF","close":189,"d1":187,"w":-3,"m":-11},
-{"name":"Corn MATIF","close":189,"d1":187,"w":-3,"m":-11},
-{"name":"Rapeseed MATIF","close":475,"d1":474,"w":-12,"m":43},
-{"name":"Soymeal CBOT","close":295,"d1":299,"w":-2,"m":8},
-{"name":"Rapemeal Neuss/Spyck","close":242,"d1":232,"w":40,"m":55}
+{"name":"Wheat MATIF [EUR/t]","close":189,"d1":187,"w":-3,"m":-11},
+{"name":"Corn MATIF [EUR/t]","close":189,"d1":187,"w":-3,"m":-11},
+{"name":"Rapeseed MATIF [EUR/t]","close":475,"d1":474,"w":-12,"m":43},
+{"name":"Soymeal CBOT [USD/st]","close":295,"d1":299,"w":-2,"m":8},
+{"name":"Rapemeal Neuss/Spyck [EUR/t]","close":242,"d1":232,"w":40,"m":55}
 ]
 }
