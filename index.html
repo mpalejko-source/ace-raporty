@@ -495,9 +495,9 @@
         const safePath = (r.path || "").replace(/^\/+/, "");
         const isFeatured = (r.id === "poranny-skan");
 
-        // badge frequency tylko dla "nie-poranny-skan"
+        // badge frequency dla raportow
         const freq = safeText(r.frequency).trim();
-        const freqBadge = (!isFeatured && freq)
+        const freqBadge = (freq)
           ? `<span class="badge freq">${freq}</span>`
           : "";
 
@@ -510,14 +510,11 @@
           nextHtml = `
             <div class="nextLine">
               <span><strong>Kolejne wydanie:</strong> ${fmtDatePL(nextISO)}${dTxt}</span>
-              <span class="muted">ID: <code>${r.id}</code></span>
             </div>
           `;
         } else {
           // jeśli nie ma next issue, zostawiamy tylko ID dyskretnie w linii
           nextHtml = `
-            <div class="nextLine" style="justify-content:flex-end">
-              <span class="muted">ID: <code>${r.id}</code></span>
             </div>
           `;
         }
