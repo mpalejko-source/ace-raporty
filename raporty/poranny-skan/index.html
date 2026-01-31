@@ -198,7 +198,7 @@
   function renderMain(item){
     const t = item[LANG] || {};
     const dateLine = `${fmtDatePL(item.date)} | ${item.time || "—"}`;
-    const title = t.title || "ACE – Poranny Skan Rynku  |  class="date">${esc(dateLine)}";
+    const title = t.title || "ACE – Poranny Skan Rynku  |  date>${esc(dateLine)";
     const lead = t.lead || "";
 
     const fx = t.fx || "";
