@@ -318,7 +318,12 @@
       ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum."}
       : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet."};
 
-    const archItems = ITEMS.slice(1, 11); // skip TODAY (0), take next 10
+    const todayId = ITEMS[0]?.id;
+  const archItems = ITEMS
+  .slice(1) // archiwum startuje od drugiego elementu
+  .filter(x => x && x.id !== todayId) // usuń duplikat dzisiejszego
+  .slice(0, 10); // weź max 10
+
 
     box.innerHTML = `
       <h3>${t.h}</h3>
