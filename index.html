@@ -187,11 +187,6 @@
       box-shadow: 0 10px 26px rgba(0,0,0,.20);
       white-space:nowrap;
     }
-    .badge.freq{
-      border-color: rgba(125,211,252,.22);
-      background: rgba(125,211,252,.10);
-      color: rgba(225,245,255,.95);
-    }
 
     .title{margin:0; font-size:16px; font-weight:800; line-height:1.2}
     .desc{margin:8px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
@@ -220,7 +215,7 @@
     }
     footer{margin-top:16px; color:var(--muted2); font-size:12px}
 
-    /* FEATURED TILE (Poranny Skan) – bardziej premium, bez plakietek */
+    /* FEATURED TILE (Poranny Skan) – premium, bez dodatkowych plakietek */
     a.card.featured{
       border: 2px solid rgba(125,211,252,.85);
       background:
@@ -239,6 +234,71 @@
     a.card.featured .title{
       font-size:18px;
       letter-spacing:.2px;
+    }
+
+    /* ============================================================
+       ACE: KAFELKI wg CZĘSTOTLIWOŚCI (frequency)
+       ZMIENIASZ KOLORY TUTAJ:
+       - tło/gradient: background
+       - obramowanie: border-color
+       - “glow”: box-shadow
+       Klasy są dodawane w JS: freq-daily / freq-weekly / freq-biweekly / freq-monthly / freq-other
+       ============================================================ */
+
+    /* kafelki wg częstotliwości */
+    a.card.freq-daily{
+      border-color: rgba(125,211,252,.22);
+      background:
+        radial-gradient(700px 320px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    a.card.freq-weekly{
+      border-color: rgba(167,139,250,.22);
+      background:
+        radial-gradient(700px 320px at 90% 0%, rgba(167,139,250,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    a.card.freq-biweekly{
+      border-color: rgba(255,200,120,.22);
+      background:
+        radial-gradient(700px 320px at 50% 0%, rgba(255,200,120,.13), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    a.card.freq-monthly{
+      border-color: rgba(110,231,183,.22);
+      background:
+        radial-gradient(700px 320px at 50% 0%, rgba(110,231,183,.13), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    a.card.freq-other{
+      border-color: rgba(255,255,255,.14);
+    }
+
+    a.card.freq-daily:hover{ border-color: rgba(125,211,252,.35); }
+    a.card.freq-weekly:hover{ border-color: rgba(167,139,250,.35); }
+    a.card.freq-biweekly:hover{ border-color: rgba(255,200,120,.35); }
+    a.card.freq-monthly:hover{ border-color: rgba(110,231,183,.35); }
+
+    /* Badge częstotliwości – warianty kolorów */
+    .badge.freq.daily{
+      border-color: rgba(125,211,252,.28);
+      background: rgba(125,211,252,.12);
+      color: rgba(225,245,255,.95);
+    }
+    .badge.freq.weekly{
+      border-color: rgba(167,139,250,.28);
+      background: rgba(167,139,250,.12);
+      color: rgba(243,236,255,.95);
+    }
+    .badge.freq.biweekly{
+      border-color: rgba(255,200,120,.28);
+      background: rgba(255,200,120,.12);
+      color: rgba(255,245,225,.95);
+    }
+    .badge.freq.monthly{
+      border-color: rgba(110,231,183,.28);
+      background: rgba(110,231,183,.12);
+      color: rgba(230,255,245,.95);
     }
 
     /* panels */
@@ -495,13 +555,26 @@
         const safePath = (r.path || "").replace(/^\/+/, "");
         const isFeatured = (r.id === "poranny-skan");
 
-        // badge frequency dla raportow
-        const freq = safeText(r.frequency).trim();
-        const freqBadge = (freq)
-          ? `<span class="badge freq">${freq}</span>`
+        // --- frequency styling (kafelki wg częstotliwości) ---
+        const freqRaw = safeText(r.frequency).trim();
+        const f = freqRaw.toLowerCase();
+
+        let freqKey = ""; // daily / weekly / biweekly / monthly / other
+        if (f.includes("dzien") || f.includes("daily")) freqKey = "daily";
+        else if (f.includes("2") || f.includes("dwutyg") || f.includes("biweek") || f.includes("fortnight")) freqKey = "biweekly";
+        else if (f.includes("tygod") || f.includes("weekly")) freqKey = "weekly";
+        else if (f.includes("mies") || f.includes("monthly")) freqKey = "monthly";
+        else if (freqRaw) freqKey = "other";
+
+        // klasa kafelka: NIE nakładamy freq-... na Poranny Skan (on ma swój “premium look”)
+        const freqCardClass = (!isFeatured && freqKey) ? `freq-${freqKey}` : "";
+
+        // badge częstotliwości: pokazujemy wszędzie (także Poranny Skan)
+        const freqBadge = (freqRaw)
+          ? `<span class="badge freq ${freqKey ? freqKey : ""}">${freqRaw}</span>`
           : "";
 
-        // next issue (opcjonalnie)
+        // next issue (opcjonalnie) – bez ID na dole
         let nextHtml = "";
         const nextISO = safeText(r.nextIssue).trim();
         if(nextISO){
@@ -513,14 +586,11 @@
             </div>
           `;
         } else {
-          // jeśli nie ma next issue, zostawiamy tylko ID dyskretnie w linii
-          nextHtml = `
-            </div>
-          `;
+          nextHtml = "";
         }
 
         return `
-          <a class="card ${isFeatured ? "featured" : ""}" href="${safePath}">
+          <a class="card ${isFeatured ? "featured" : ""} ${freqCardClass}" href="${safePath}">
             <div class="cardTop">
               <div class="asof">
                 <strong>Ostatnia aktualizacja:</strong> ${updated}
