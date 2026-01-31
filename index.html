@@ -194,6 +194,7 @@ a.featured:after{
   font-size:20px;          /* większy niż zwykłe kafle */
   font-weight:950;
   line-height:1.15;
+  color:#ffffff;              /* ⬅ biały, bez akcentu */
 }
 
 .fToday{
@@ -329,10 +330,7 @@ a.featured:after{
     </header>
 
     <!-- ===== FEATURED: PORANNY SKAN (FULL WIDTH BANNER) ===== -->
-    <div class="sectionHead">
-      <p class="h2">Poranny skan</p>
-      <p class="hint">Najważniejszy punkt wejścia – zawsze na górze</p>
-    </div>
+    
     <div class="featuredWrap" id="featuredWrap"></div>
 
     <!-- ===== CATEGORIES ===== -->
@@ -452,20 +450,29 @@ a.featured:after{
       const ps = items.find(x => x.id === "poranny-skan");
 
       if(!ps){
-       wrap.innerHTML = `
+wrap.innerHTML = `
   <a class="featured" href="${safePath}">
+    
+    <!-- LABEL WEWNĄTRZ RAMKI -->
     <div class="fMetaLine">
+      <span class="badge">Poranny skan</span>
       <span><strong>Ostatnia aktualizacja:</strong> ${updated}</span>
       <span class="badge accent">${freq}</span>
     </div>
 
     <p class="fTitle">${ps.name}</p>
-    ${todayLine ? `<p class="fToday">${todayLine}</p>` : `<p class="fToday">${ps.description}</p>`}
+
+    ${todayLine 
+      ? `<p class="fToday">${todayLine}</p>` 
+      : `<p class="fToday">${ps.description}</p>`}
 
     <div class="fNext">
       <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
     </div>
+
   </a>
+`;
+
 `;
         return;
       }
