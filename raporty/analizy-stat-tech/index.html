@@ -239,12 +239,13 @@
 <script>
   // ======== USTAWIENIA SEKCJI (Twoje grupy) ========
   // id muszą istnieć w manifest.json
-  const GROUPS = [
-    { key:"waluty", title:"Waluty", icon:"💱", hint:"USD/PLN, EUR/PLN, EUR/USD", ids:["usdpln","eurpln","eurusd"] },
-    { key:"zboza",  title:"Zboża",  icon:"🌾", hint:"Pszenica, kukurydza, rzepak", ids:["pszenica","kukurydza","rzepak"] },
-    { key:"sruty",  title:"Śruty",  icon:"🧩", hint:"Sojowa i rzepakowa", ids:["sruta-sojowa","sruta-rzepakowa"] },
-    { key:"energia",title:"Energia",icon:"⚡", hint:"Prąd i gaz", ids:["prad","gaz"] }
-  ];
+const GROUPS = [
+  { key:"waluty", title:"Waluty", icon:"💱", hint:"USD/PLN, EUR/PLN, EUR/USD", ids:["usdpln","eurpln","eurusd"] },
+  { key:"zboza",  title:"Zboża",  icon:"🌾", hint:"Pszenica, kukurydza, rzepak", ids:["pszenica","kukurydza","rzepak"] },
+  { key:"sruty",  title:"Śruty",  icon:"🧩", hint:"Sojowa i rzepakowa", ids:["sojowa","rzepakowa"] },
+  { key:"energia",title:"Energia",icon:"⚡", hint:"Prąd i gaz", ids:["prad","gaz"] }
+];
+
 
   function showErr(msg){
     const box = document.getElementById("err");
