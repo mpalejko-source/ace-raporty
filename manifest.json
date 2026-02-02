@@ -146,3 +146,47 @@
     "group": "analizy-stat-tech",
     "section": "Energia"
   }
+    "wasde": {
+    "name": "WASDE",
+    "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
+    "path": "raporty/raporty-fundamentalne/wasde/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "next_issue": "2026-02-10",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "igc": {
+    "name": "IGC",
+    "description": "International Grain Council: bilanse, handel, prognozy.",
+    "path": "raporty/raporty-fundamentalne/igc/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "next_issue": "2026-02-10",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "fao": {
+    "name": "FAO",
+    "description": "FAO: dane i trendy globalne w agro.",
+    "path": "raporty/raporty-fundamentalne/fao/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "next_issue": "2026-02-07",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "ace-indexy-swiatowe": {
+    "name": "ACE Indexy Światowe",
+    "description": "Indeksy światowe i kontekst makro dla agro.",
+    "path": "raporty/raporty-fundamentalne/ace-indexy-swiatowe/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "next_issue": "2026-02-07",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  }
+
