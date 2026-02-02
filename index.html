@@ -93,7 +93,7 @@
     }
 
     /* ===== cards base ===== */
-    a.card, a.cat{
+    a.card, a.cat, a.qcard, a.folder{
       display:block;
       text-decoration:none;
       color:inherit;
@@ -106,20 +106,20 @@
       overflow:hidden;
       transition: transform .08s ease, border-color .08s ease;
     }
-    a.card:hover, a.cat:hover{
+    a.card:hover, a.cat:hover, a.qcard:hover, a.folder:hover{
       transform: translateY(-1px);
       border-color: rgba(255,255,255,.18);
     }
-    a.card:before, a.cat:before{
+    a.card:before, a.cat:before, a.qcard:before, a.folder:before{
       content:"";
       position:absolute; inset:-1px;
       background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
                   radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
       pointer-events:none;
     }
-    a.card > *, a.cat > *{ position:relative; }
+    a.card > *, a.cat > *, a.qcard > *, a.folder > *{ position:relative; }
 
-    /* ===== FEATURED (Poranny Skan) — większy, wycentrowany kafel ===== */
+    /* ===== FEATURED (Poranny Skan) ===== */
     .featuredWrap{
       margin-top:14px;
       display:flex;
@@ -230,16 +230,114 @@
       font-weight:900;
     }
 
-    /* ===== Categories grid ===== */
-    .cats{
+    /* ===== Szybkie raporty (5 kafli w 1 linii) ===== */
+    .quickGrid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+    @media (max-width: 1100px){
+      .quickGrid{ grid-template-columns: repeat(3, minmax(160px, 1fr)); }
+    }
+    @media (max-width: 720px){
+      .quickGrid{ grid-template-columns: repeat(1, 1fr); }
+    }
+
+    a.qcard{
+      padding:14px 14px 12px;
+      min-height:96px; /* trochę wyższe, węższe */
+    }
+    .qTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .qIcon{
+      width:34px; height:34px;
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+      flex:0 0 auto;
+      font-size:16px;
+    }
+    .qTitle{
+      margin:0;
+      font-weight:950;
+      font-size:14px;
+      line-height:1.2;
+      color: rgba(234,240,255,.96);
+    }
+    .qMeta{
+      margin:10px 0 0 0;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color: var(--muted2);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .qMeta strong{ color: rgba(234,240,255,.92); font-weight:900; }
+
+    /* ===== Foldery (2 duże kafle w 1 linii) ===== */
+    .foldersGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:14px;
       margin-top:14px;
     }
-    .catTitle{margin:0; font-size:16px; font-weight:950}
-    .catDesc{margin:8px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .catMeta{
+    @media (max-width: 980px){
+      .foldersGrid{ grid-template-columns: 1fr; }
+    }
+
+    a.folder{
+      padding:18px;
+      min-height:120px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    .folderTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .folderTitle{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      line-height:1.2;
+    }
+    .folderDesc{
+      margin:8px 0 0 0;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.35;
+      max-width:58ch;
+    }
+    .folderBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.9);
+      white-space:nowrap;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .folderBadge .ic{ font-size:14px; }
+    .folderMeta{
       margin-top:12px;
       padding-top:10px;
       border-top:1px solid rgba(255,255,255,.08);
@@ -250,7 +348,7 @@
       color:var(--muted2);
       font-size:12px;
     }
-    .catMeta strong{ color: rgba(234,240,255,.90); font-weight:950; }
+    .folderMeta strong{ color: rgba(234,240,255,.90); font-weight:950; }
 
     /* ===== CENNIKI ===== */
     .panel{
@@ -348,12 +446,12 @@
     <!-- ===== FEATURED ===== -->
     <div class="featuredWrap" id="featuredWrap"></div>
 
-    <!-- ===== CATEGORIES ===== -->
+    <!-- ===== QUICK REPORTS (5) ===== -->
     <div class="sectionHead">
-      <p class="h2">Kategorie raportów</p>
-      <p class="hint">Kliknij kategorię → lista raportów w tej grupie</p>
+      <p class="h2">Szybkie raporty</p>
+      <p class="hint">Najczęściej aktualizowane • wejście bezpośrednio do raportu</p>
     </div>
-    <section class="cats" id="cats"></section>
+    <section class="quickGrid" id="quickGrid"></section>
 
     <!-- ===== PRICES ===== -->
     <div class="sectionHead">
@@ -381,6 +479,13 @@
       </section>
     </section>
 
+    <!-- ===== FOLDERS (2) ===== -->
+    <div class="sectionHead">
+      <p class="h2">Biblioteka raportów</p>
+      <p class="hint">Wejście do folderu → dopiero wewnątrz lista raportów</p>
+    </div>
+    <section class="foldersGrid" id="foldersGrid"></section>
+
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
@@ -392,27 +497,21 @@
   <script>
     // ===== CONFIG (miasto + ikony) =====
     const ACE_CONFIG = {
-      // "auto" lub "manual"
-      cityMode: "manual",
+      cityMode: "manual",       // "auto" lub "manual"
       cityManual: "Olsztyn",
-
-      // auto mapuje host -> miasto
       cityByHost: {
         "mpalejko-source.github.io": "Olsztyn",
         "ace-group.pl": "Warszawa",
         "www.ace-group.pl": "Warszawa"
       },
-
       iconLocation: "📍",
       iconTime: "🕒"
     };
 
     function getConfiguredCity(){
       if (ACE_CONFIG.cityMode === "manual") return ACE_CONFIG.cityManual;
-
       const host = (window.location && window.location.hostname) ? window.location.hostname : "";
       if (host && ACE_CONFIG.cityByHost[host]) return ACE_CONFIG.cityByHost[host];
-
       return ACE_CONFIG.cityManual || "Olsztyn";
     }
 
@@ -421,24 +520,39 @@
       const date = now.toLocaleDateString("pl-PL");
       const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
       const city = getConfiguredCity();
-
       const el = document.getElementById("asof");
       if (el){
         el.textContent = `${ACE_CONFIG.iconLocation} ${city} | ${ACE_CONFIG.iconTime} ${date} ${time}`;
       }
     }
 
-    // ===== helpers =====
-    const CATEGORY_META = [
-      { key:"zboza",     title:"Zboża i oleiste – rynki",           desc:"Pszenica, kukurydza, rzepak, soja/śruta, MATIF/CBOT, Black Sea." },
-      { key:"bialko",    title:"Białko paszowe i dodatki",          desc:"Śruty, aminokwasy, witaminy, dodatki – ceny i fundamenty." },
-      { key:"indeksy",   title:"Indeksy kosztów pasz / dashboardy", desc:"Indeksy, koszty wytworzenia, portfolio snapshot, feed dashboards." },
-      { key:"energia",   title:"Energia",                          desc:"Gaz, prąd, ropa – wpływ na koszty i sentyment." },
-      { key:"fx",        title:"FX & Makro",                        desc:"EUR/USD, USD/PLN, EUR/PLN, DXY, stopy, risk-on/off." },
-      { key:"specjalne", title:"Raporty specjalne / tematyczne",    desc:"Konferencje, duże opracowania, jednorazowe publikacje." },
-      { key:"arch",      title:"Archiwum",                          desc:"Starsze wydania i zestawienia historyczne." }
+    // ===== QUICK REPORTS – 5 kafli =====
+    const QUICK_REPORTS = [
+      { id:"ace-chart-pack",        title:"ACE Chart Pack",          icon:"📊" },
+      { id:"pozycje-funduszy",      title:"Pozycje Funduszy",        icon:"🏦" },
+      { id:"ace-benchmark-tygodnia",title:"ACE Benchmark Tygodnia",  icon:"🏁" },
+      { id:"ace-decision-quadrants",title:"ACE Decision Quadrants",  icon:"🧭" },
+      { id:"ace-weather-watch",     title:"ACE Weather Watch",       icon:"🌦️" }
     ];
 
+    // ===== FOLDERS – 2 kafle =====
+    // Licznik raportów opiera się o manifest.json -> pole "category"
+    const FOLDER_CARDS = [
+      {
+        key:"stat-tech",
+        title:"Analizy Statystyczno-Techniczne",
+        desc:"Modele, statystyka, technika i sygnały rynkowe.",
+        href:"kategoria.html?cat=stat-tech"
+      },
+      {
+        key:"fundamentalne",
+        title:"Raporty Fundamentalne",
+        desc:"Fundamenty, bilanse, eksport, pogoda, polityka i geopolityka.",
+        href:"kategoria.html?cat=fundamentalne"
+      }
+    ];
+
+    // ===== helpers =====
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
       const parts = iso.split("-");
@@ -535,7 +649,7 @@
       const freq = (ps.frequency || "").trim() || "dziennie";
       const safePath = (ps.path || "").replace(/^\/+/, "");
 
-      // UWAGA: brak lead/news na banerze (zgodnie z Twoim wymaganiem)
+      // bez lead/news — tylko tytuł + daty
       wrap.innerHTML = `
         <a class="featured" href="${safePath}">
           <div class="fMetaLine">
@@ -553,9 +667,34 @@
       `;
     }
 
-    function renderCategories(items){
-      const wrap = document.getElementById("cats");
+    function renderQuick(items){
+      const wrap = document.getElementById("quickGrid");
 
+      const byId = {};
+      for(const it of items) byId[it.id] = it;
+
+      wrap.innerHTML = QUICK_REPORTS.map(q => {
+        const it = byId[q.id];
+        const href = it ? (it.path || ("raporty/" + q.id + "/")) : ("raporty/" + q.id + "/");
+        const upd = it && it.updated ? fmtDatePL(it.updated) : "—";
+
+        return `
+          <a class="qcard" href="${href.replace(/^\/+/, "")}">
+            <div class="qTop">
+              <span class="qIcon">${q.icon}</span>
+              <span class="badge accent" style="padding:4px 8px; font-size:11px; box-shadow:none">LIVE</span>
+            </div>
+            <p class="qTitle">${q.title}</p>
+            <div class="qMeta">
+              <span>Ostatnia:</span>
+              <span><strong>${upd}</strong></span>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    function buildCategoryStats(items){
       const stats = {};
       for(const it of items){
         const k = it.category || "";
@@ -564,14 +703,28 @@
         stats[k].count += 1;
         if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
       }
+      return stats;
+    }
 
-      wrap.innerHTML = CATEGORY_META.map(c => {
-        const s = stats[c.key] || { count:0, last:"" };
+    function renderFolders(items){
+      const wrap = document.getElementById("foldersGrid");
+      const stats = buildCategoryStats(items);
+
+      wrap.innerHTML = FOLDER_CARDS.map(f => {
+        const s = stats[f.key] || { count:0, last:"" };
         return `
-          <a class="cat" href="kategoria.html?cat=${encodeURIComponent(c.key)}">
-            <p class="catTitle">${c.title}</p>
-            <p class="catDesc">${c.desc}</p>
-            <div class="catMeta">
+          <a class="folder" href="${f.href}">
+            <div class="folderTop">
+              <div>
+                <p class="folderTitle">${f.title}</p>
+                <p class="folderDesc">${f.desc}</p>
+              </div>
+              <div class="folderBadge">
+                <span class="ic">📁</span>
+                <span>Folder</span>
+              </div>
+            </div>
+            <div class="folderMeta">
               <span><strong>${s.count}</strong> raportów</span>
               <span>Ostatnia: <strong>${fmtDatePL(s.last)}</strong></span>
             </div>
@@ -671,7 +824,6 @@
       }
 
       try{
-        // pill w prawym górnym rogu (miasto + czas)
         updateHeaderPill();
         setInterval(updateHeaderPill, 60 * 1000);
 
@@ -681,8 +833,9 @@
         const scan = await loadScanFromPorannySkan();
 
         renderFeatured(items, scan);
-        renderCategories(items);
+        renderQuick(items);
         loadPrices();
+        renderFolders(items);
       } catch(e){
         showErr("Błąd panelu: " + (e && e.message ? e.message : e));
       }
