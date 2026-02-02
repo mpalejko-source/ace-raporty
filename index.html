@@ -74,7 +74,11 @@
       font-size:12px;
       box-shadow: var(--shadow);
       white-space:nowrap;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
     }
+    .pill .ico{opacity:.9}
 
     .sectionHead{
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
@@ -93,7 +97,7 @@
     }
 
     /* ===== cards base ===== */
-    a.card, a.cat, a.qcard, a.folder{
+    a.card{
       display:block;
       text-decoration:none;
       color:inherit;
@@ -106,84 +110,23 @@
       overflow:hidden;
       transition: transform .08s ease, border-color .08s ease;
     }
-    a.card:hover, a.cat:hover, a.qcard:hover, a.folder:hover{
+    a.card:hover{
       transform: translateY(-1px);
       border-color: rgba(255,255,255,.18);
     }
-    a.card:before, a.cat:before, a.qcard:before, a.folder:before{
+    a.card:before{
       content:"";
       position:absolute; inset:-1px;
       background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
                   radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
       pointer-events:none;
     }
-    a.card > *, a.cat > *, a.qcard > *, a.folder > *{ position:relative; }
+    a.card > *{ position:relative; }
 
-    /* ===== FEATURED (Poranny Skan) ===== */
-    .featuredWrap{
-      margin-top:14px;
-      display:flex;
-      justify-content:center;
+    .topMeta{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-bottom:10px; color: rgba(234,240,255,.78); font-size:12px;
     }
-
-    a.featured{
-      width:100%;
-      max-width:820px;
-      border: 2px solid rgba(125,211,252,.70);
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
-      box-shadow: 0 18px 46px rgba(0,0,0,.48);
-      padding:18px 18px 16px;
-      position:relative;
-      overflow:hidden;
-      text-decoration:none;
-      color:inherit;
-      transition: transform .08s ease, border-color .08s ease;
-      display:block;
-    }
-
-    a.featured:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
-                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
-      pointer-events:none;
-    }
-    a.featured > *{ position:relative; }
-
-    a.featured:hover{
-      transform: translateY(-2px);
-      border-color: rgba(125,211,252,.92);
-    }
-
-    a.featured:after{
-      content:"PORANNY SKAN";
-      position:absolute;
-      top:12px; right:12px;
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(15,23,42,.88);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      letter-spacing:.06em;
-      z-index:3;
-    }
-
-    .fMetaLine{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:10px;
-      color: rgba(234,240,255,.78);
-      font-size:12px;
-    }
-    .fMetaLine strong{
-      color: rgba(234,240,255,.95);
-      font-weight:900;
-    }
-
     .badge{
       display:inline-flex;
       align-items:center;
@@ -203,21 +146,83 @@
       color:#ffffff;
       font-weight:800;
     }
-    .badge.accent{
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
+    .badge.folder{
+      border-color: rgba(167,139,250,.45);
+      background: rgba(167,139,250,.14);
       color:#ffffff;
-      font-weight:700;
+      font-weight:800;
     }
 
-    .fTitle{
-      margin:0;
-      font-size:20px;
-      font-weight:950;
-      line-height:1.15;
-      color:#ffffff;
-    }
+    .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
+    .desc{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
 
+    .metaLine{
+      margin-top:12px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.10);
+      font-size:12px;
+      color: var(--muted2);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .metaLine strong{color: rgba(234,240,255,.92); font-weight:900;}
+
+    /* ===== FEATURED (Poranny Skan) ===== */
+    .featuredWrap{
+      margin-top:14px;
+      display:flex;
+      justify-content:center;
+    }
+    a.featured{
+      width:100%;
+      max-width:820px;
+      border: 2px solid rgba(125,211,252,.70);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
+      box-shadow: 0 18px 46px rgba(0,0,0,.48);
+      padding:18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+      text-decoration:none;
+      color:inherit;
+      transition: transform .08s ease, border-color .08s ease;
+      display:block;
+    }
+    a.featured:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
+    a.featured > *{ position:relative; }
+    a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
+    a.featured:after{
+      content:"PORANNY SKAN";
+      position:absolute;
+      top:12px; right:12px;
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(15,23,42,.88);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      letter-spacing:.06em;
+      z-index:3;
+    }
+    .fMetaLine{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:10px;
+      color: rgba(234,240,255,.78);
+      font-size:12px;
+    }
+    .fMetaLine strong{ color: rgba(234,240,255,.95); font-weight:900; }
+    .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.15; color:#ffffff; }
     .fNext{
       margin-top:12px;
       padding-top:10px;
@@ -225,132 +230,29 @@
       font-size:12px;
       color: var(--muted2);
     }
-    .fNext strong{
-      color: rgba(234,240,255,.92);
-      font-weight:900;
-    }
+    .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* ===== Szybkie raporty (5 kafli w 1 linii) ===== */
+    /* ===== QUICK grid (5 w jednej linii na desktop) ===== */
     .quickGrid{
       display:grid;
-      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap:12px;
       margin-top:14px;
     }
+    .quickCard{
+      padding:14px;
+      min-height:140px;
+    }
+    .quickCard .title{ font-size:14px; }
+    .quickCard .desc{ font-size:12.5px; }
     @media (max-width: 1100px){
-      .quickGrid{ grid-template-columns: repeat(3, minmax(160px, 1fr)); }
+      .quickGrid{ grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 720px){
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
     }
 
-    a.qcard{
-      padding:14px 14px 12px;
-      min-height:96px; /* trochę wyższe, węższe */
-    }
-    .qTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .qIcon{
-      width:34px; height:34px;
-      display:inline-flex;
-      align-items:center; justify-content:center;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      box-shadow: var(--shadow);
-      flex:0 0 auto;
-      font-size:16px;
-    }
-    .qTitle{
-      margin:0;
-      font-weight:950;
-      font-size:14px;
-      line-height:1.2;
-      color: rgba(234,240,255,.96);
-    }
-    .qMeta{
-      margin:10px 0 0 0;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.08);
-      color: var(--muted2);
-      font-size:12px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .qMeta strong{ color: rgba(234,240,255,.92); font-weight:900; }
-
-    /* ===== Foldery (2 duże kafle w 1 linii) ===== */
-    .foldersGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 980px){
-      .foldersGrid{ grid-template-columns: 1fr; }
-    }
-
-    a.folder{
-      padding:18px;
-      min-height:120px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    }
-    .folderTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .folderTitle{
-      margin:0;
-      font-size:16px;
-      font-weight:950;
-      line-height:1.2;
-    }
-    .folderDesc{
-      margin:8px 0 0 0;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.35;
-      max-width:58ch;
-    }
-    .folderBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.9);
-      white-space:nowrap;
-      box-shadow: 0 10px 24px rgba(0,0,0,.18);
-    }
-    .folderBadge .ic{ font-size:14px; }
-    .folderMeta{
-      margin-top:12px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.08);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      color:var(--muted2);
-      font-size:12px;
-    }
-    .folderMeta strong{ color: rgba(234,240,255,.90); font-weight:950; }
-
-    /* ===== CENNIKI ===== */
+    /* ===== PRICES ===== */
     .panel{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
@@ -415,6 +317,30 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
+    /* ===== FOLDERS grid (2 duże kafle na linię) ===== */
+    .folderGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .folderGrid{ grid-template-columns: 1fr; }
+    }
+    .folderIcon{
+      display:inline-flex;
+      width:22px;
+      height:22px;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
+      margin-right:6px;
+      font-size:14px;
+    }
+
     .error{
       border:1px solid rgba(255,120,120,.25);
       background: rgba(255,120,120,.08);
@@ -440,16 +366,18 @@
           <p class="sub">System raportów Agri Commodity Experts</p>
         </div>
       </div>
-      <div class="pill" id="asof">📍 — | 🕒 —</div>
+
+      <!-- PILL z lokalizacją + czasem -->
+      <div class="pill" id="asof"><span class="ico">📍</span> <span>Olsztyn —</span></div>
     </header>
 
-    <!-- ===== FEATURED ===== -->
+    <!-- ===== FEATURED (Poranny Skan) ===== -->
     <div class="featuredWrap" id="featuredWrap"></div>
 
-    <!-- ===== QUICK REPORTS (5) ===== -->
+    <!-- ===== QUICK (5 raportów) ===== -->
     <div class="sectionHead">
-      <p class="h2">Szybkie raporty</p>
-      <p class="hint">Najczęściej aktualizowane • wejście bezpośrednio do raportu</p>
+      <p class="h2">Szybki dostęp</p>
+      <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
@@ -479,77 +407,39 @@
       </section>
     </section>
 
-    <!-- ===== FOLDERS (2) ===== -->
+    <!-- ===== FOLDERS (2 duże) ===== -->
     <div class="sectionHead">
       <p class="h2">Biblioteka raportów</p>
-      <p class="hint">Wejście do folderu → dopiero wewnątrz lista raportów</p>
+      <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
     </div>
-    <section class="foldersGrid" id="foldersGrid"></section>
+    <section class="folderGrid" id="folderGrid"></section>
 
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
-      Agri Commodity Experts Sp. z o.o. <code>mail</code> : <code>biuro@ace-group.pl</code>.
-      <span style="opacity:.75">ACE Reserved 2026</span>.
+      Agri Commodity Experts Sp. z o.o. • <code>biuro@ace-group.pl</code> • <code>ACE Reserved 2026</code>
     </footer>
   </div>
 
   <script>
-    // ===== CONFIG (miasto + ikony) =====
-    const ACE_CONFIG = {
-      cityMode: "manual",       // "auto" lub "manual"
-      cityManual: "Olsztyn",
-      cityByHost: {
-        "mpalejko-source.github.io": "Olsztyn",
-        "ace-group.pl": "Warszawa",
-        "www.ace-group.pl": "Warszawa"
-      },
-      iconLocation: "📍",
-      iconTime: "🕒"
+    // ===== CONFIG =====
+    const CONFIG = {
+      location: "Olsztyn"
+      // jak kiedyś chcesz przełączać: location: "Warszawa"
     };
 
-    function getConfiguredCity(){
-      if (ACE_CONFIG.cityMode === "manual") return ACE_CONFIG.cityManual;
-      const host = (window.location && window.location.hostname) ? window.location.hostname : "";
-      if (host && ACE_CONFIG.cityByHost[host]) return ACE_CONFIG.cityByHost[host];
-      return ACE_CONFIG.cityManual || "Olsztyn";
-    }
-
-    function updateHeaderPill(){
-      const now = new Date();
-      const date = now.toLocaleDateString("pl-PL");
-      const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
-      const city = getConfiguredCity();
-      const el = document.getElementById("asof");
-      if (el){
-        el.textContent = `${ACE_CONFIG.iconLocation} ${city} | ${ACE_CONFIG.iconTime} ${date} ${time}`;
-      }
-    }
-
-    // ===== QUICK REPORTS – 5 kafli =====
-    const QUICK_REPORTS = [
-      { id:"ace-chart-pack",        title:"ACE Chart Pack",          icon:"📊" },
-      { id:"pozycje-funduszy",      title:"Pozycje Funduszy",        icon:"🏦" },
-      { id:"ace-benchmark-tygodnia",title:"ACE Benchmark Tygodnia",  icon:"🏁" },
-      { id:"ace-decision-quadrants",title:"ACE Decision Quadrants",  icon:"🧭" },
-      { id:"ace-weather-watch",     title:"ACE Weather Watch",       icon:"🌦️" }
+    // Klucze kafli
+    const FEATURED_KEY = "poranny-skan";
+    const QUICK_KEYS = [
+      "chart-pack",
+      "pozycje-funduszy",
+      "benchmark-tygodnia",
+      "decision-quadrants",
+      "weather-watch"
     ];
-
-    // ===== FOLDERS – 2 kafle =====
-    // Licznik raportów opiera się o manifest.json -> pole "category"
-    const FOLDER_CARDS = [
-      {
-        key:"stat-tech",
-        title:"Analizy Statystyczno-Techniczne",
-        desc:"Modele, statystyka, technika i sygnały rynkowe.",
-        href:"kategoria.html?cat=stat-tech"
-      },
-      {
-        key:"fundamentalne",
-        title:"Raporty Fundamentalne",
-        desc:"Fundamenty, bilanse, eksport, pogoda, polityka i geopolityka.",
-        href:"kategoria.html?cat=fundamentalne"
-      }
+    const FOLDER_KEYS = [
+      "analizy-stat-tech",
+      "raporty-fundamentalne"
     ];
 
     // ===== helpers =====
@@ -592,15 +482,18 @@
       return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
     }
 
-    // ===== data loaders =====
+    function safePath(p){
+      return (p || "").toString().replace(/^\/+/, "");
+    }
+
+    // ===== loaders =====
     async function loadManifest(){
-      const url = "manifest.json?ts=" + Date.now();
-      const res = await fetch(url, { cache:"no-store" });
+      const res = await fetch("manifest.json?ts=" + Date.now(), { cache:"no-store" });
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
       return await res.json();
     }
 
-    async function loadScanFromPorannySkan(){
+    async function loadPorannyScanJSON(){
       const res = await fetch("raporty/poranny-skan/scan.json?ts=" + Date.now(), { cache:"no-store" });
       if(!res.ok) return null;
       return await res.json();
@@ -609,26 +502,23 @@
     function toItems(manifest){
       return Object.entries(manifest).map(([id, r]) => ({
         id,
+        type: (r.type || "report").toString(),
         name: r.name || id,
         description: r.description || "",
         path: r.path || ("raporty/" + id + "/"),
         updated: r.updated || "",
-        category: (r.category || "").toString().trim().toLowerCase(),
-        frequency: (r.frequency || r.freq || "").toString()
+        frequency: (r.frequency || "").toString(),
+        next_issue: (r.next_issue || "").toString()
       }));
     }
 
     // ===== renderers =====
     function renderFeatured(items, scan){
       const wrap = document.getElementById("featuredWrap");
-      const ps = items.find(x => x.id === "poranny-skan");
+      const ps = items.find(x => x.id === FEATURED_KEY);
 
       if(!ps){
-        wrap.innerHTML = `
-          <div class="error" style="max-width:820px;width:100%">
-            Brak wpisu <code>poranny-skan</code> w <code>manifest.json</code>.
-          </div>
-        `;
+        wrap.innerHTML = `<div class="error" style="max-width:820px;width:100%">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
         return;
       }
 
@@ -644,18 +534,18 @@
       if(today && today.date){
         const dt = parseISODateLocal(today.date);
         if(dt) nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
+      } else if ((ps.next_issue || "").trim()){
+        nextTxt = fmtDatePL(ps.next_issue.trim());
       }
 
       const freq = (ps.frequency || "").trim() || "dziennie";
-      const safePath = (ps.path || "").replace(/^\/+/, "");
 
-      // bez lead/news — tylko tytuł + daty
       wrap.innerHTML = `
-        <a class="featured" href="${safePath}">
+        <a class="featured" href="${safePath(ps.path)}">
           <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
             <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
-            <span class="badge accent">${freq}</span>
+            <span class="badge">${freq}</span>
           </div>
 
           <p class="fTitle">${ps.name}</p>
@@ -669,68 +559,69 @@
 
     function renderQuick(items){
       const wrap = document.getElementById("quickGrid");
+      const map = Object.fromEntries(items.map(x => [x.id, x]));
+      const list = QUICK_KEYS.map(k => map[k]).filter(Boolean);
 
-      const byId = {};
-      for(const it of items) byId[it.id] = it;
-
-      wrap.innerHTML = QUICK_REPORTS.map(q => {
-        const it = byId[q.id];
-        const href = it ? (it.path || ("raporty/" + q.id + "/")) : ("raporty/" + q.id + "/");
-        const upd = it && it.updated ? fmtDatePL(it.updated) : "—";
+      wrap.innerHTML = list.map(r => {
+        const upd = r.updated ? fmtDatePL(r.updated) : "—";
+        const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
+        const freq = (r.frequency || "raport").trim();
 
         return `
-          <a class="qcard" href="${href.replace(/^\/+/, "")}">
-            <div class="qTop">
-              <span class="qIcon">${q.icon}</span>
-              <span class="badge accent" style="padding:4px 8px; font-size:11px; box-shadow:none">LIVE</span>
+          <a class="card quickCard" href="${safePath(r.path)}">
+            <div class="topMeta">
+              <span class="badge">${freq}</span>
+              <span class="badge">Aktualizacja: ${upd}</span>
             </div>
-            <p class="qTitle">${q.title}</p>
-            <div class="qMeta">
-              <span>Ostatnia:</span>
-              <span><strong>${upd}</strong></span>
+            <p class="title">${r.name}</p>
+            <p class="desc">${r.description}</p>
+            <div class="metaLine">
+              <span><strong>Kolejne:</strong> ${nxt}</span>
             </div>
           </a>
         `;
       }).join("");
-    }
 
-    function buildCategoryStats(items){
-      const stats = {};
-      for(const it of items){
-        const k = it.category || "";
-        if(!k) continue;
-        if(!stats[k]) stats[k] = { count:0, last:"" };
-        stats[k].count += 1;
-        if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
+      // jeśli coś brakuje w manifeście — pokaż błąd czytelnie (zamiast ciszy)
+      const missing = QUICK_KEYS.filter(k => !map[k]);
+      if(missing.length){
+        wrap.insertAdjacentHTML("beforeend",
+          `<div class="error">Brak w <code>manifest.json</code>: ${missing.map(x=>`<code>${x}</code>`).join(" ")}</div>`
+        );
       }
-      return stats;
     }
 
     function renderFolders(items){
-      const wrap = document.getElementById("foldersGrid");
-      const stats = buildCategoryStats(items);
+      const wrap = document.getElementById("folderGrid");
+      const map = Object.fromEntries(items.map(x => [x.id, x]));
+      const list = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
 
-      wrap.innerHTML = FOLDER_CARDS.map(f => {
-        const s = stats[f.key] || { count:0, last:"" };
+      wrap.innerHTML = list.map(r => {
+        const upd = r.updated ? fmtDatePL(r.updated) : "—";
+        // licznik zrobimy w kolejnym kroku (po dodaniu relacji co należy do folderu)
+        const count = "—";
+
         return `
-          <a class="folder" href="${f.href}">
-            <div class="folderTop">
-              <div>
-                <p class="folderTitle">${f.title}</p>
-                <p class="folderDesc">${f.desc}</p>
-              </div>
-              <div class="folderBadge">
-                <span class="ic">📁</span>
-                <span>Folder</span>
-              </div>
+          <a class="card" href="${safePath(r.path)}">
+            <div class="topMeta">
+              <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
+              <span class="badge">W środku: ${count} raportów</span>
             </div>
-            <div class="folderMeta">
-              <span><strong>${s.count}</strong> raportów</span>
-              <span>Ostatnia: <strong>${fmtDatePL(s.last)}</strong></span>
+            <p class="title">${r.name}</p>
+            <p class="desc">${r.description}</p>
+            <div class="metaLine">
+              <span><strong>Ostatnia zmiana:</strong> ${upd}</span>
             </div>
           </a>
         `;
       }).join("");
+
+      const missing = FOLDER_KEYS.filter(k => !map[k]);
+      if(missing.length){
+        wrap.insertAdjacentHTML("beforeend",
+          `<div class="error">Brak w <code>manifest.json</code>: ${missing.map(x=>`<code>${x}</code>`).join(" ")}</div>`
+        );
+      }
     }
 
     // ===== prices =====
@@ -818,24 +709,26 @@
     // ===== init =====
     (async () => {
       const errBox = document.getElementById("err");
-      function showErr(msg){
-        errBox.style.display = "block";
-        errBox.textContent = msg;
-      }
+      const showErr = (msg) => { errBox.style.display = "block"; errBox.textContent = msg; };
 
       try{
-        updateHeaderPill();
-        setInterval(updateHeaderPill, 60 * 1000);
+        // pill: lokalizacja + czas + ikony
+        const now = new Date();
+        const date = now.toLocaleDateString("pl-PL");
+        const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+        document.getElementById("asof").innerHTML =
+          `<span class="ico">📍</span><strong>${CONFIG.location}</strong> <span class="ico">🕒</span>${date} ${time}`;
 
         const manifest = await loadManifest();
         const items = toItems(manifest);
 
-        const scan = await loadScanFromPorannySkan();
+        const scan = await loadPorannyScanJSON();
 
         renderFeatured(items, scan);
         renderQuick(items);
         loadPrices();
         renderFolders(items);
+
       } catch(e){
         showErr("Błąd panelu: " + (e && e.message ? e.message : e));
       }
