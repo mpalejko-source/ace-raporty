@@ -62,6 +62,15 @@
     "type": "folder"
   },
 
+  "usdpln": {
+    "name": "USD/PLN",
+    "description": "Analiza statystyczno-techniczna pary USD/PLN.",
+    "path": "raporty/analizy-stat-tech/waluty/usdpln/",
+    "updated": "2026-02-02",
+    "frequency": "dziennie",
+    "group": "analizy-stat-tech",
+    "section": "Waluty"
+  },
   "eurpln": {
     "name": "EUR/PLN",
     "description": "Analiza statystyczno-techniczna pary EUR/PLN.",
