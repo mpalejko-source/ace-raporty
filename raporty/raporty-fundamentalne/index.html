@@ -1,1 +1,215 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <script>
+    if (sessionStorage.getItem("ace_access") !== "1") {
+      window.location.href = "../../login.html";
+    }
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ACE – Raporty Fundamentalne</title>
+
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --border:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --muted2:rgba(234,240,255,.55);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px;}
+    header{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px;}
+    .brand{display:flex; gap:14px; align-items:center;}
+    .logo{height:54px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));}
+    h1{margin:0; font-size:22px}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px;}
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding:8px 12px;
+      border-radius:999px;
+      color:var(--muted2);
+      font-size:12px;
+      box-shadow: var(--shadow);
+      white-space:nowrap;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+    .btn{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.92);
+      font-size:13px; text-decoration:none;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap:14px;
+      margin-top:12px;
+    }
+
+    a.card{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      transition: transform .08s ease, border-color .08s ease;
+      min-height:140px;
+    }
+    a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
+    a.card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(700px 220px at 10% 0%, rgba(125,211,252,.16), transparent 60%),
+                  radial-gradient(700px 260px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
+      pointer-events:none;
+    }
+    a.card > *{ position:relative; }
+    .title{margin:0; font-size:18px; font-weight:950; line-height:1.15}
+    .desc{margin:10px 0 0; color:var(--muted); font-size:13px; line-height:1.4}
+    .meta{
+      margin-top:14px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      color:var(--muted2); font-size:12px;
+    }
+    .meta strong{color:rgba(234,240,255,.92); font-weight:900;}
+
+    .error{
+      border:1px solid rgba(255,120,120,.25);
+      background: rgba(255,120,120,.08);
+      padding:12px 14px;
+      border-radius:14px;
+      color:rgba(255,220,220,.92);
+      margin-top:14px;
+      font-size:13px;
+      box-shadow: var(--shadow);
+      white-space:pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="../../logo.png" class="logo" alt="ACE Group">
+        <div>
+          <h1>Raporty Fundamentalne</h1>
+          <p class="sub">WASDE, IGC, FAO oraz ACE Indexy Światowe.</p>
+        </div>
+      </div>
+      <div class="pill" id="asof">📍 Olsztyn • ⏱️ —</div>
+    </header>
+
+    <div class="row">
+      <a class="btn" href="../../index.html">← Panel główny</a>
+    </div>
+
+    <section class="grid" id="grid"></section>
+    <div id="err" class="error" style="display:none"></div>
+  </div>
+
+<script>
+  function fmtNowPL(){
+    const now = new Date();
+    const date = now.toLocaleDateString("pl-PL");
+    const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
+    return `📍 Olsztyn • ⏱️ ${date} ${time}`;
+  }
+
+  function fmtDatePL(iso){
+    if(!iso || typeof iso !== "string") return "—";
+    const p = iso.split("-");
+    if(p.length!==3) return iso;
+    return `${p[2]}.${p[1]}.${p[0]}`;
+  }
+
+  async function loadManifest(){
+    const res = await fetch("../../manifest.json?ts=" + Date.now(), { cache:"no-store" });
+    if(!res.ok) throw new Error("manifest.json (" + res.status + ")");
+    return await res.json();
+  }
+
+  function normalizeItems(manifest){
+    return Object.entries(manifest).map(([id, r]) => ({
+      id,
+      name: r.name || id,
+      description: r.description || "",
+      path: (r.path || "").replace(/^\/+/, ""),
+      updated: r.updated || "",
+      frequency: r.frequency || "",
+      group: r.group || ""
+    }));
+  }
+
+  (async ()=>{
+    document.getElementById("asof").textContent = fmtNowPL();
+
+    const errBox = document.getElementById("err");
+    const grid = document.getElementById("grid");
+    try{
+      const manifest = await loadManifest();
+      const all = normalizeItems(manifest);
+
+      const items = all.filter(x => x.group === "raporty-fundamentalne");
+
+      // sort najnowsze pierwsze
+      items.sort((a,b)=> (b.updated||"").localeCompare(a.updated||""));
+
+      if(!items.length){
+        grid.innerHTML = `<div class="error">Brak raportów fundamentalnych. Dodaj wpisy w manifest.json (group="raporty-fundamentalne") i foldery raportów.</div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(it => `
+        <a class="card" href="../../${it.path}">
+          <p class="title">${it.name}</p>
+          <p class="desc">${it.description}</p>
+          <div class="meta">
+            <span><strong>Aktualizacja:</strong> ${fmtDatePL(it.updated)}</span>
+            <span><strong>Tryb:</strong> ${it.frequency || "—"}</span>
+          </div>
+        </a>
+      `).join("");
+
+    }catch(e){
+      errBox.style.display="block";
+      errBox.textContent = "Błąd: " + (e && e.message ? e.message : e);
+    }
+  })();
+</script>
+</body>
+</html>
 
