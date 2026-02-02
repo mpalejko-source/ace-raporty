@@ -62,7 +62,7 @@
     "type": "folder"
   },
 
-   "eurpln": {
+  "eurpln": {
     "name": "EUR/PLN",
     "description": "Analiza statystyczno-techniczna pary EUR/PLN.",
     "path": "raporty/analizy-stat-tech/waluty/eurpln/",
@@ -145,8 +145,9 @@
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Energia"
-  }
-    "wasde": {
+  },
+
+  "wasde": {
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
     "path": "raporty/raporty-fundamentalne/wasde/",
@@ -156,7 +157,6 @@
     "group": "raporty-fundamentalne",
     "section": "Raporty"
   },
-
   "igc": {
     "name": "IGC",
     "description": "International Grain Council: bilanse, handel, prognozy.",
@@ -167,7 +167,6 @@
     "group": "raporty-fundamentalne",
     "section": "Raporty"
   },
-
   "fao": {
     "name": "FAO",
     "description": "FAO: dane i trendy globalne w agro.",
@@ -178,7 +177,6 @@
     "group": "raporty-fundamentalne",
     "section": "Raporty"
   },
-
   "ace-indexy-swiatowe": {
     "name": "ACE Indexy Światowe",
     "description": "Indeksy światowe i kontekst makro dla agro.",
@@ -189,4 +187,4 @@
     "group": "raporty-fundamentalne",
     "section": "Raporty"
   }
-
+}
