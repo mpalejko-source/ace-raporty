@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
   <script>
+    // UWAGA: jesteśmy w /raporty/analizy-stat-tech/ więc login jest 2 poziomy wyżej
     if (sessionStorage.getItem("ace_access") !== "1") {
       window.location.href = "../../login.html";
     }
@@ -18,6 +19,7 @@
   <style>
     :root{
       --bg:#0b1220;
+      --card:#0f1a33;
       --border:rgba(255,255,255,.10);
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
@@ -37,95 +39,81 @@
       color:var(--text);
       min-height:100vh;
     }
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:26px 18px 44px;
-    }
+    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px}
     header{
-      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
-      margin-bottom:14px;
-      align-items:flex-start;
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      flex-wrap:wrap; margin-bottom:14px
     }
-    .brand{display:flex; gap:14px; align-items:center;}
+    .brand{display:flex; gap:14px; align-items:center}
     .logo{
-      height:54px;
-      width:auto;
-      display:block;
+      height:56px; width:auto; display:block; flex:0 0 auto;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
-    h1{margin:0; font-size:22px}
-    .sub{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    h1{margin:0; font-size:22px; letter-spacing:.2px}
+    .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
 
-    .topRow{
-      margin:10px 0 18px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
     .pill{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
-      padding:8px 12px;
+      padding:8px 10px;
       border-radius:999px;
       color:var(--muted2);
       font-size:12px;
       box-shadow: var(--shadow);
       white-space:nowrap;
-      display:inline-flex; gap:8px; align-items:center;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
     }
     .btn{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:8px 10px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.92);
-      font-size:13px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      font-size:12px;
       text-decoration:none;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-    }
-    .btn:hover{ background: rgba(255,255,255,.10); }
-
-    .sectionTitle{
-      margin:18px 0 10px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .sectionTitle .tag{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.90);
-      box-shadow: var(--shadow);
-    }
-    .sectionTitle h2{
-      margin:0;
-      font-size:16px;
-      font-weight:950;
-      letter-spacing:.2px;
-    }
-    .sectionTitle p{
-      margin:0;
-      color:var(--muted2);
-      font-size:12px;
     }
 
+    .section{
+      margin-top:18px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .sectionTitle{
+      margin:0 0 10px 0;
+      font-size:14px;
+      font-weight:950;
+      color: rgba(234,240,255,.92);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin:10px 0 12px;
+    }
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap:12px;
     }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
     a.card{
       display:block;
       text-decoration:none;
@@ -138,66 +126,50 @@
       position:relative;
       overflow:hidden;
       transition: transform .08s ease, border-color .08s ease;
-      min-height:110px;
+      min-height:104px;
     }
     a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
     a.card:before{
       content:"";
       position:absolute; inset:-1px;
-      background: radial-gradient(520px 160px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
-                  radial-gradient(520px 200px at 90% 0%, rgba(167,139,250,.12), transparent 60%);
+      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.12), transparent 60%),
+                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.10), transparent 60%);
       pointer-events:none;
     }
     a.card > *{ position:relative; }
 
-    .cardTop{
+    .topMeta{
       display:flex;
       justify-content:space-between;
       gap:10px;
       align-items:center;
-      flex-wrap:wrap;
       margin-bottom:8px;
+      flex-wrap:wrap;
     }
     .badge{
       display:inline-flex;
-      align-items:center;
       gap:6px;
-      padding:6px 10px;
+      align-items:center;
+      padding:5px 9px;
       border-radius:999px;
-      font-size:12px;
+      font-size:11px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       color: rgba(234,240,255,.90);
       white-space:nowrap;
     }
-    .badge.accent{
-      border-color: rgba(125,211,252,.40);
-      background: rgba(125,211,252,.12);
-    }
     .title{
       margin:0;
-      font-size:15px;
+      font-size:14px;
       font-weight:950;
-      line-height:1.2;
+      line-height:1.15;
     }
     .desc{
-      margin:8px 0 0;
+      margin:7px 0 0;
       color:var(--muted);
-      font-size:13px;
+      font-size:12px;
       line-height:1.35;
     }
-    .meta{
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.08);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      font-size:12px;
-      color:var(--muted2);
-    }
-    .meta strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
     .error{
       border:1px solid rgba(255,120,120,.25);
@@ -217,40 +189,53 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <img src="../../logo.png" class="logo" alt="ACE Group">
+      <!-- logo jest w katalogu głównym -->
+      <img src="../../logo.png" alt="ACE Group" class="logo">
       <div>
-        <h1>ACE – Analizy Statystyczno-Techniczne</h1>
-        <p class="sub">Waluty, zboża, śruty i energia — raporty w układzie sekcji z kafelkami.</p>
+        <h1>Analizy Statystyczno-Techniczne</h1>
+        <p class="sub">Waluty • Zboża • Śruty • Energia</p>
       </div>
     </div>
 
-    <div class="pill" id="asof">📍 Olsztyn • ⏱ —</div>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+      <a class="btn" href="../../index.html">← Panel główny</a>
+      <div class="pill" id="asof">📍 Olsztyn • 🕒 —</div>
+    </div>
   </header>
-
-  <div class="topRow">
-    <a class="btn" href="../../index.html">← Panel główny</a>
-    <div class="pill">📁 Folder: <strong>analizy-stat-tech</strong></div>
-  </div>
 
   <div id="content"></div>
   <div id="err" class="error" style="display:none"></div>
 </div>
 
 <script>
-  // ======== USTAWIENIA SEKCJI (Twoje grupy) ========
-  // id muszą istnieć w manifest.json
-const GROUPS = [
-  { key:"waluty", title:"Waluty", icon:"💱", hint:"USD/PLN, EUR/PLN, EUR/USD", ids:["usdpln","eurpln","eurusd"] },
-  { key:"zboza",  title:"Zboża",  icon:"🌾", hint:"Pszenica, kukurydza, rzepak", ids:["pszenica","kukurydza","rzepak"] },
-  { key:"sruty",  title:"Śruty",  icon:"🧩", hint:"Sojowa i rzepakowa", ids:["sojowa","rzepakowa"] },
-  { key:"energia",title:"Energia",icon:"⚡", hint:"Prąd i gaz", ids:["prad","gaz"] }
-];
-
-
+  // FAILSAFE: pokaż błąd JS na ekranie (żeby nie było "białej strony")
+  const errBox = document.getElementById("err");
   function showErr(msg){
-    const box = document.getElementById("err");
-    box.style.display = "block";
-    box.textContent = msg;
+    errBox.style.display = "block";
+    errBox.textContent = msg;
+  }
+  window.addEventListener("error", (e)=> showErr("Błąd JS: " + (e.message || e.error || e)));
+  window.addEventListener("unhandledrejection", (e)=> showErr("Promise error: " + (e.reason && e.reason.message ? e.reason.message : e.reason)));
+
+  function setHeaderClock(){
+    const now = new Date();
+    const date = now.toLocaleDateString("pl-PL");
+    const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
+    document.getElementById("asof").textContent = `📍 Olsztyn • 🕒 ${date} ${time}`;
+  }
+  setHeaderClock();
+
+  async function loadManifest(){
+    // manifest jest w katalogu głównym => 2 poziomy wyżej
+    const res = await fetch("../../manifest.json?ts=" + Date.now(), { cache:"no-store" });
+    if(!res.ok) throw new Error("Nie mogę wczytać ../../manifest.json (" + res.status + ")");
+    return await res.json();
+  }
+
+  function parseISO(iso){
+    if(!iso || typeof iso !== "string") return -Infinity;
+    const t = Date.parse(iso + "T00:00:00Z");
+    return isNaN(t) ? -Infinity : t;
   }
 
   function fmtDatePL(iso){
@@ -260,108 +245,74 @@ const GROUPS = [
     return `${p[2]}.${p[1]}.${p[0]}`;
   }
 
-  function parseISO(iso){
-    if(!iso) return -Infinity;
-    const t = Date.parse(iso + "T00:00:00Z");
-    return isNaN(t) ? -Infinity : t;
+  function groupBySection(items){
+    const out = {};
+    for(const it of items){
+      const sec = (it.section || "Inne").toString().trim();
+      if(!out[sec]) out[sec] = [];
+      out[sec].push(it);
+    }
+    // sort w sekcjach po updated desc
+    for(const k of Object.keys(out)){
+      out[k].sort((a,b)=> parseISO(b.updated) - parseISO(a.updated));
+    }
+    return out;
   }
 
-  function daysUntil(iso){
-    if(!iso) return null;
-    const t = Date.parse(iso + "T00:00:00Z");
-    if(isNaN(t)) return null;
-    const now = new Date();
-    const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-    return Math.round((t - today)/(24*60*60*1000));
+  function render(sectionsMap){
+    const order = ["Waluty", "Zboża", "Śruty", "Energia"];
+    const cont = document.getElementById("content");
+
+    const blocks = order
+      .filter(k => sectionsMap[k] && sectionsMap[k].length)
+      .map(k => {
+        const arr = sectionsMap[k];
+
+        return `
+          <section class="section">
+            <p class="sectionTitle">📌 ${k}</p>
+            <div class="divider"></div>
+            <div class="grid">
+              ${arr.map(r => `
+                <a class="card" href="../${r.path.replace(/^\/+/,'')}">
+                  <div class="topMeta">
+                    <span class="badge">🗓 ${fmtDatePL(r.updated)}</span>
+                    <span class="badge">⏱ ${r.frequency || "raport"}</span>
+                  </div>
+                  <p class="title">${r.name}</p>
+                  <p class="desc">${r.description || ""}</p>
+                </a>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+
+    cont.innerHTML = blocks || `<div class="error">Brak raportów w tej sekcji (sprawdź "group":"analizy-stat-tech").</div>`;
   }
 
-  async function loadManifest(){
-    // UWAGA: jesteśmy 2 poziomy niżej -> ../../manifest.json
-    const url = "../../manifest.json?ts=" + Date.now();
-    const res = await fetch(url, { cache:"no-store" });
-    if(!res.ok) throw new Error("Nie mogę wczytać ../../manifest.json (" + res.status + ")");
-    return await res.json();
-  }
-
-  function esc(s){
-    return (s||"").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
-  }
-
-  function render(groups, byId){
-    const host = document.getElementById("content");
-
-    host.innerHTML = groups.map(g=>{
-      const cards = g.ids
-        .map(id => ({ id, r: byId[id] }))
-        .filter(x => !!x.r);
-
-      const missing = g.ids.filter(id => !byId[id]);
-
-      return `
-        <div class="sectionTitle">
-          <span class="tag">${esc(g.icon)} <strong>${esc(g.title)}</strong></span>
-          <div>
-            <h2>${esc(g.title)}</h2>
-            <p>${esc(g.hint)}</p>
-          </div>
-        </div>
-
-        ${missing.length ? `
-          <div class="error" style="margin:0 0 12px 0">
-            Brak w manifest.json ID: ${missing.map(esc).join(", ")}
-          </div>
-        ` : ""}
-
-        <section class="grid">
-          ${cards.map(x=>{
-            const r = x.r;
-            const next = (r.next_issue || r.nextIssue || r.next || "").toString().trim();
-            let nextTxt = "—";
-            if(next){
-              const d = daysUntil(next);
-              nextTxt = fmtDatePL(next) + (d!==null ? ` (za ${d} dni)` : "");
-            }
-            const freq = (r.frequency || r.freq || "").toString().trim() || "raport";
-            const path = (r.path || ("../" + x.id + "/")).replace(/^\/+/, "");
-
-            return `
-              <a class="card" href="../../${path}">
-                <div class="cardTop">
-                  <span class="badge accent">${esc(freq)}</span>
-                  <span class="badge">Aktualizacja: ${esc(fmtDatePL(r.updated || ""))}</span>
-                </div>
-                <p class="title">${esc(r.name || x.id)}</p>
-                <p class="desc">${esc(r.description || "")}</p>
-                <div class="meta">
-                  <span><strong>Kolejne wydanie:</strong> ${esc(nextTxt)}</span>
-                </div>
-              </a>
-            `;
-          }).join("")}
-        </section>
-      `;
-    }).join("");
-  }
-
-  (async ()=>{
+  (async () => {
     try{
-      const now = new Date();
-      const date = now.toLocaleDateString("pl-PL");
-      const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
-      document.getElementById("asof").textContent = `📍 Olsztyn • ⏱ ${date} ${time}`;
-
       const manifest = await loadManifest();
-      const byId = {};
-      for(const [id, r] of Object.entries(manifest)){
-        byId[id] = r || {};
-      }
 
-      render(GROUPS, byId);
-    } catch(e){
-      showErr("Błąd strony folderu: " + (e && e.message ? e.message : e));
+      const items = Object.entries(manifest)
+        .map(([id,r]) => ({
+          id,
+          name: r.name || id,
+          description: r.description || "",
+          path: r.path || "",
+          updated: r.updated || "",
+          frequency: r.frequency || "",
+          group: r.group || "",
+          section: r.section || ""
+        }))
+        .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
+
+      const sections = groupBySection(items);
+      render(sections);
+
+    }catch(e){
+      showErr("Błąd: " + (e && e.message ? e.message : e));
     }
   })();
 </script>
