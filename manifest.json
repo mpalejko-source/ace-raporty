@@ -1,37 +1,76 @@
 {
-  "pozycje-funduszy": {
-    "name": "ACE – Pozycje Funduszy",
-    "description": "Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.",
-    "path": "raporty/pozycje-funduszy/",
+  "poranny-skan": {
+    "type": "report",
+    "name": "ACE – Poranny Skan Rynku",
+    "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
+    "path": "raporty/poranny-skan/",
     "updated": "2026-01-29",
-      "frequency": "tygodniowo",
-  "next_issue": "2026-02-07",
-    "category": "fx"
+    "frequency": "dziennie",
+    "next_issue": "2026-01-30"
   },
+
   "chart-pack": {
+    "type": "report",
     "name": "ACE – Chart Pack",
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
     "updated": "2026-01-29",
-      "frequency": "tygodniowo",
-  "next_issue": "2026-02-07",
-    "category": "bialko"
-  },
-"poranny-skan": {
-  "name": "ACE – Poranny Skan Rynku",
-  "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
-  "path": "raporty/poranny-skan/",
-  "updated": "2026-01-29",
-    "frequency": "dziennie",
-  "next_issue": "2026-01-30"
-    },
-"weather-watch": {
-  "name": "ACE – Weather Watch (Pogoda)",
-  "description": "Mapki pogodowe z krótką prognozą",
-  "path": "raporty/weather-watch/",
-  "updated": "2026-01-29",
     "frequency": "tygodniowo",
-  "next_issue": "2026-02-07",
-  "category": "zboza"
-}
+    "next_issue": "2026-02-07"
+  },
+  "pozycje-funduszy": {
+    "type": "report",
+    "name": "ACE – Pozycje Funduszy",
+    "description": "Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.",
+    "path": "raporty/pozycje-funduszy/",
+    "updated": "2026-01-29",
+    "frequency": "tygodniowo",
+    "next_issue": "2026-02-07"
+  },
+  "benchmark-tygodnia": {
+    "type": "report",
+    "name": "ACE – Benchmark Tygodnia",
+    "description": "Najważniejsze porównanie tygodnia + wnioski pod decyzje zakupowe/ryzyko.",
+    "path": "raporty/benchmark-tygodnia/",
+    "updated": "",
+    "frequency": "tygodniowo",
+    "next_issue": ""
+  },
+  "decision-quadrants": {
+    "type": "report",
+    "name": "ACE – Decision Quadrants",
+    "description": "Macierze decyzyjne: momentum vs ryzyko / sygnały vs kontekst.",
+    "path": "raporty/decision-quadrants/",
+    "updated": "",
+    "frequency": "tygodniowo",
+    "next_issue": ""
+  },
+  "weather-watch": {
+    "type": "report",
+    "name": "ACE – Weather Watch (Pogoda)",
+    "description": "Mapki pogodowe z krótką prognozą.",
+    "path": "raporty/weather-watch/",
+    "updated": "2026-01-29",
+    "frequency": "tygodniowo",
+    "next_issue": "2026-02-07"
+  },
+
+  "analizy-stat-tech": {
+    "type": "folder",
+    "name": "Analizy Statystyczno-Techniczne",
+    "description": "Folder: wykresy, statystyki, technika, sezonowości, pozycjonowanie, sygnały.",
+    "path": "raporty/analizy-stat-tech/",
+    "updated": "",
+    "frequency": "folder",
+    "next_issue": ""
+  },
+  "raporty-fundamentalne": {
+    "type": "folder",
+    "name": "Raporty Fundamentalne",
+    "description": "Folder: podaż/popyt, bilanse, eksport, przetargi, pogoda, geopolityka i makro.",
+    "path": "raporty/raporty-fundamentalne/",
+    "updated": "",
+    "frequency": "folder",
+    "next_issue": ""
+  }
 }
