@@ -1,703 +1,281 @@
-<!doctype html>
-<html lang="pl">
-<head>
-  <script>
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "./login.html";
-    }
-  </script>
+<script>
+  const CATEGORY_META = [
+    { key:"zboza",     title:"Zboża i oleiste – rynki",           desc:"Pszenica, kukurydza, rzepak, soja/śruta, MATIF/CBOT, Black Sea." },
+    { key:"bialko",    title:"Białko paszowe i dodatki",          desc:"Śruty, aminokwasy, witaminy, dodatki – ceny i fundamenty." },
+    { key:"indeksy",   title:"Indeksy kosztów pasz / dashboardy", desc:"Indeksy, koszty wytworzenia, portfolio snapshot, feed dashboards." },
+    { key:"energia",   title:"Energia",                          desc:"Gaz, prąd, ropa – wpływ na koszty i sentyment." },
+    { key:"fx",        title:"FX & Makro",                        desc:"EUR/USD, USD/PLN, EUR/PLN, DXY, stopy, risk-on/off." },
+    { key:"specjalne", title:"Raporty specjalne / tematyczne",    desc:"Konferencje, duże opracowania, jednorazowe publikacje." },
+    { key:"arch",      title:"Archiwum",                          desc:"Starsze wydania i zestawienia historyczne." }
+  ];
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ACE – Panel raportów</title>
+  function fmtDatePL(iso){
+    if(!iso || typeof iso !== "string") return "—";
+    const parts = iso.split("-");
+    if(parts.length !== 3) return iso;
+    const [y,m,d] = parts;
+    return `${d}.${m}.${y}`;
+  }
 
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+  function parseISO(iso){
+    if(!iso || typeof iso !== "string") return -Infinity;
+    const t = Date.parse(iso + "T00:00:00Z");
+    return isNaN(t) ? -Infinity : t;
+  }
 
-  <style>
-    :root{
-      --bg:#0b1220;
-      --border:rgba(255,255,255,.10);
-      --text:#eaf0ff;
-      --muted:rgba(234,240,255,.72);
-      --muted2:rgba(234,240,255,.55);
-      --accent:#7dd3fc;
-      --accent2:#a78bfa;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:16px;
-      --input: rgba(255,255,255,.06);
-      --inputb: rgba(255,255,255,.14);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
+  // ===== "jak w porannym skanie": next business day (Mon–Fri) =====
+  function parseISODateLocal(iso){
+    const p = (iso || "").split("-");
+    if(p.length !== 3) return null;
+    const y = Number(p[0]), m = Number(p[1]) - 1, d = Number(p[2]);
+    const dt = new Date(y, m, d);
+    return isNaN(dt.getTime()) ? null : dt;
+  }
 
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:26px 18px 44px;
-      width:100%;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-    }
+  function nextBusinessDay(dateObj){
+    const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+    do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+    return d;
+  }
 
-    header{
-      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
-      flex-wrap:wrap; margin-bottom:14px
-    }
-    .brand{display:flex; gap:14px; align-items:center;}
-    .logo{
-      height:56px; width:auto; display:block; flex:0 0 auto;
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
-    }
+  function fmtDatePrettyPL(dt){
+    if(!(dt instanceof Date)) return "—";
+    return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
+  }
 
-    h1{margin:0; font-size:24px; letter-spacing:.2px}
-    .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+  function pickTodayFromScan(scan){
+    const items = scan && Array.isArray(scan.items) ? scan.items : [];
+    if(!items.length) return null;
+    return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
+  }
 
-    .pill{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      padding:8px 10px;
-      border-radius:999px;
-      color:var(--muted2);
-      font-size:12px;
-      box-shadow: var(--shadow);
-      white-space:nowrap;
-    }
-
-    .sectionHead{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      margin-top:18px;
-    }
-    .h2{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .hint{
-      margin:0;
-      color: var(--muted2);
-      font-size:12px;
-    }
-
-    /* ===== cards base ===== */
-    a.card, a.cat{
-      display:block;
-      text-decoration:none;
-      color:inherit;
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-      transition: transform .08s ease, border-color .08s ease;
-    }
-    a.card:hover, a.cat:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
-    }
-    a.card:before, a.cat:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
-                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
-      pointer-events:none;
-    }
-    a.card > *, a.cat > *{ position:relative; }
-
-    /* ===== FEATURED (Poranny Skan) — większy, wycentrowany kafel ===== */
-    .featuredWrap{
-      margin-top:14px;
-      display:flex;
-      justify-content:center;
-    }
-
-    a.featured{
-      width:100%;
-      max-width:820px; /* szerokość hero */
-      border: 2px solid rgba(125,211,252,.70);
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
-      box-shadow: 0 18px 46px rgba(0,0,0,.48);
-      padding:18px 18px 16px;
-      position:relative;
-      overflow:hidden;
-      text-decoration:none;
-      color:inherit;
-      transition: transform .08s ease, border-color .08s ease;
-      display:block;
-    }
-
-    a.featured:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
-                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
-      pointer-events:none;
-    }
-    a.featured > *{ position:relative; }
-
-    a.featured:hover{
-      transform: translateY(-2px);
-      border-color: rgba(125,211,252,.92);
-    }
-
-    a.featured:after{
-      content:"PORANNY SKAN";
-      position:absolute;
-      top:12px; right:12px;
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(15,23,42,.88);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      letter-spacing:.06em;
-      z-index:3;
-    }
-
-    .fMetaLine{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:10px;
-      color: rgba(234,240,255,.78);
-      font-size:12px;
-    }
-    .fMetaLine strong{
-      color: rgba(234,240,255,.95);
-      font-weight:900;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color: rgba(234,240,255,.92);
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      white-space:nowrap;
-    }
-    .badge.primary{
-      border-color: rgba(125,211,252,.45);
-      background: rgba(125,211,252,.16);
-      color:#ffffff;
-      font-weight:800;
-    }
-    .badge.accent{
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color:#ffffff;
-      font-weight:700;
-    }
-
-    .fTitle{
-      margin:0;
-      font-size:20px;
-      font-weight:950;
-      line-height:1.15;
-      color:#ffffff;
-    }
-
-    .fToday{
-      margin:10px 0 0 0;
-      color: var(--muted);
-      font-size:14px;
-      line-height:1.4;
-    }
-
-    .fNext{
-      margin-top:12px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.10);
-      font-size:12px;
-      color: var(--muted2);
-    }
-    .fNext strong{
-      color: rgba(234,240,255,.92);
-      font-weight:900;
-    }
-
-    /* ===== Categories grid ===== */
-    .cats{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap:14px;
-      margin-top:14px;
-    }
-    .catTitle{margin:0; font-size:16px; font-weight:950}
-    .catDesc{margin:8px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .catMeta{
-      margin-top:12px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.08);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      color:var(--muted2);
-      font-size:12px;
-    }
-    .catMeta strong{ color: rgba(234,240,255,.90); font-weight:950; }
-
-    /* ===== CENNIKI ===== */
-    .panel{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:16px;
-      margin-top:14px;
-    }
-    .panelHead{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:6px;
-      min-height:56px;
-      margin-bottom:10px;
-    }
-    .panelTitle{
-      margin:0;
-      font-weight:950;
-      font-size:16px;
-      line-height:1.15;
-    }
-    .panelSub{
-      margin:0;
-      font-size:12px;
-      opacity:.75;
-      line-height:1.2;
-      min-height:14px;
-    }
-    .pricesGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 980px){
-      .pricesGrid{ grid-template-columns: 1fr; }
-      a.featured{ max-width:100%; }
-    }
-
-    table.prTable{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0 8px;
-    }
-    table.prTable th{
-      text-align:left;
-      font-size:12px;
-      color: var(--muted2);
-      padding: 0 10px 6px;
-      font-weight:900;
-    }
-    table.prTable td{
-      padding:12px 10px;
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      font-size:13px;
-      color: rgba(234,240,255,.92);
-      vertical-align:middle;
-    }
-    table.prTable tr td:first-child{ border-radius:14px 0 0 14px; }
-    table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
-    .right{text-align:right}
-
-    .error{
-      border:1px solid rgba(255,120,120,.25);
-      background: rgba(255,120,120,.08);
-      padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
-      margin-top:14px;
-      font-size:13px;
-      box-shadow: var(--shadow);
-    }
-
-    footer{margin-top:18px; color:var(--muted2); font-size:12px}
-    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <img src="logo.png" alt="ACE Group" class="logo">
-        <div>
-          <h1>ACE – Panel raportów</h1>
-          <p class="sub">Poranny skrót newsów: A Niżej: kategorie raportów.</p>
-        </div>
-      </div>
-      <div class="pill" id="asof">Aktualizacja: —</div>
-    </header>
-
-    <!-- ===== FEATURED ===== -->
-    <div class="featuredWrap" id="featuredWrap"></div>
-
-    <!-- ===== CATEGORIES ===== -->
-    <div class="sectionHead">
-      <p class="h2">Kategorie raportów</p>
-      <p class="hint">Kliknij kategorię → lista raportów w tej grupie</p>
-    </div>
-    <section class="cats" id="cats"></section>
-
-    <!-- ===== PRICES ===== -->
-    <div class="sectionHead">
-      <p class="h2">Cenniki</p>
-      <p class="hint">Szybki podgląd cen spot i giełdowych</p>
-    </div>
-
-    <section class="pricesGrid">
-      <section class="panel" id="cashPanel">
-        <div class="panelHead">
-          <div class="panelTitle">Ceny najważniejszych surowców do produkcji pasz</div>
-          <div class="panelSub" id="pricesAsOf">Aktualizacja: —</div>
-        </div>
-        <table id="cashTable" class="prTable"></table>
-        <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • rynek spot</div>
-      </section>
-
-      <section class="panel" id="futuresPanel">
-        <div class="panelHead">
-          <div class="panelTitle">Ceny giełdowe (close)</div>
-          <div class="panelSub" id="futuresAsOf">&nbsp;</div>
-        </div>
-        <table id="futuresTable" class="prTable"></table>
-        <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
-      </section>
-    </section>
-
-    <div id="err" class="error" style="display:none"></div>
-
-    <footer>
-      All rights Reserved 2026 <code>ACE</code></code>.
-
-    </footer>
-  </div>
-
-  <script>
-    const CATEGORY_META = [
-      { key:"zboza",     title:"Zboża i oleiste – rynki",          desc:"Pszenica, kukurydza, rzepak, soja/śruta, MATIF/CBOT, Black Sea." },
-      { key:"bialko",    title:"Białko paszowe i dodatki",         desc:"Śruty, aminokwasy, witaminy, dodatki – ceny i fundamenty." },
-      { key:"indeksy",   title:"Indeksy kosztów pasz / dashboardy",desc:"Indeksy, koszty wytworzenia, portfolio snapshot, feed dashboards." },
-      { key:"energia",   title:"Energia",                          desc:"Gaz, prąd, ropa – wpływ na koszty i sentyment." },
-      { key:"fx",        title:"FX & Makro",                       desc:"EUR/USD, USD/PLN, EUR/PLN, DXY, stopy, risk-on/off." },
-      { key:"specjalne", title:"Raporty specjalne / tematyczne",   desc:"Konferencje, duże opracowania, jednorazowe publikacje." },
-      { key:"arch",      title:"Archiwum",                         desc:"Starsze wydania i zestawienia historyczne." }
-    ];
-
-    function fmtDatePL(iso){
-      if(!iso || typeof iso !== "string") return "—";
-      const parts = iso.split("-");
-      if(parts.length !== 3) return iso;
-      const [y,m,d] = parts;
-      return `${d}.${m}.${y}`;
-    }
-
-    function parseISO(iso){
-      if(!iso || typeof iso !== "string") return -Infinity;
-      const t = Date.parse(iso + "T00:00:00Z");
-      return isNaN(t) ? -Infinity : t;
-    }
-
-    function daysUntil(iso){
-      if(!iso || typeof iso !== "string") return null;
-      const t = Date.parse(iso + "T00:00:00Z");
-      if(isNaN(t)) return null;
-      const now = new Date();
-      const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-      return Math.round((t - todayUTC) / (24*60*60*1000));
-    }
-
-    async function loadManifest(){
-      const url = "manifest.json?ts=" + Date.now();
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
-      return await res.json();
-    }
-
-    async function loadScan(scanBasePath){
-  try{
-    // scanBasePath np. "raporty/poranny-skan/"
-    const base = (scanBasePath || "").replace(/^\/+/, "").replace(/\/?$/, "/");
-    const res = await fetch(base + "scan.json?ts=" + Date.now(), { cache:"no-store" });
-    if(!res.ok) return null;
+  async function loadManifest(){
+    const url = "manifest.json?ts=" + Date.now();
+    const res = await fetch(url, { cache:"no-store" });
+    if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
     return await res.json();
-  }catch(_){
-    return null;
-  }
-}
-
-    function toItems(manifest){
-      return Object.entries(manifest).map(([id, r]) => ({
-        id,
-        name: r.name || id,
-        description: r.description || "",
-        path: r.path || ("raporty/" + id + "/"),
-        updated: r.updated || "",
-        category: (r.category || "").toString().trim().toLowerCase(),
-        frequency: (r.frequency || r.freq || "").toString(),
-        nextIssue: (r.next_issue || r.nextIssue || r.next || "").toString()
-      }));
-    }
-
-    function renderFeatured(items, scan){
-      const wrap = document.getElementById("featuredWrap");
-      const ps = items.find(x => x.id === "poranny-skan");
-
-      if(!ps){
-        wrap.innerHTML = `
-          <div class="error" style="max-width:820px;width:100%">
-            Brak wpisu <code>poranny-skan</code> w <code>manifest.json</code>.
-          </div>
-        `;
-        return;
-      }
-
-        // === DATY Z scan.json (tak samo jak na podstronie Poranny Skan) ===
-  const itemsFromScan = (scan && Array.isArray(scan.items)) ? scan.items : [];
-  const today = itemsFromScan.length
-    ? [...itemsFromScan].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0]
-    : null;
-
-  // "Aktualizacja: DD.MM.RRRR | HH:MM" (jak w porannym skanie)
-  const updatedISO = today ? today.date : (ps.updated || "");
-  const updatedTime = today ? (today.time || "") : "";
-  const updatedLabel = updatedISO
-    ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
-    : "—";
-
-  // "Kolejne wydanie" = następny dzień roboczy (Mon–Fri)
-  let nextTxt = "—";
-  if(today && today.date){
-    const p = today.date.split("-");
-    if(p.length === 3){
-      const dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
-      if(!isNaN(dt.getTime())){
-        // nextBusinessDay inline
-        const d = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
-        nextTxt = d.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
-      }
-    }
-  } else if ((ps.nextIssue || "").trim()){
-    // fallback z manifestu jeśli scan.json pusty
-    nextTxt = fmtDatePL((ps.nextIssue || "").trim());
   }
 
-  const freq = (ps.frequency || "").trim() || "dziennie";
+  async function loadScan(scanBasePath){
+    try{
+      // scanBasePath np. "raporty/poranny-skan/"
+      const base = (scanBasePath || "").replace(/^\/+/, "").replace(/\/?$/, "/");
+      const res = await fetch(base + "scan.json?ts=" + Date.now(), { cache:"no-store" });
+      if(!res.ok) return null;
+      return await res.json();
+    }catch(_){
+      return null;
+    }
+  }
 
-      let nextTxt = "—";
-      if(nextISO){
-        const d = daysUntil(nextISO);
-        const dTxt = (d === null) ? "" : (d === 0 ? " (dziś)" : (d > 0 ? ` (za ${d} dni)` : ` (${Math.abs(d)} dni temu)`));
-        nextTxt = fmtDatePL(nextISO) + dTxt;
-      }
+  function toItems(manifest){
+    return Object.entries(manifest).map(([id, r]) => ({
+      id,
+      name: r.name || id,
+      description: r.description || "",
+      path: r.path || ("raporty/" + id + "/"),
+      updated: r.updated || "",
+      category: (r.category || "").toString().trim().toLowerCase(),
+      frequency: (r.frequency || r.freq || "").toString(),
+      nextIssue: (r.next_issue || r.nextIssue || r.next || "").toString()
+    }));
+  }
 
-      const todayLine =
-        (scan && (scan.headline || scan.title || scan.lead)) ? String(scan.headline || scan.title || scan.lead) : "";
+  function renderFeatured(items, scan){
+    const wrap = document.getElementById("featuredWrap");
+    const ps = items.find(x => x.id === "poranny-skan");
 
-      const safePath = (ps.path || "").replace(/^\/+/, "");
-
+    if(!ps){
       wrap.innerHTML = `
-        <a class="featured" href="${safePath}">
-          <div class="fMetaLine">
-            <span class="badge primary">Poranny skan</span>
-           <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
-            <span class="badge accent">${freq}</span>
-          </div>
+        <div class="error" style="max-width:820px;width:100%">
+          Brak wpisu <code>poranny-skan</code> w <code>manifest.json</code>.
+        </div>
+      `;
+      return;
+    }
 
-          <p class="fTitle">${ps.name}</p>
-          ${todayLine ? `<p class="fToday">${todayLine}</p>` : `<p class="fToday">${ps.description}</p>`}
+    const today = pickTodayFromScan(scan);
 
-          <div class="fNext">
-            <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
+    // "Aktualizacja: DD.MM.RRRR | HH:MM" jak w porannym skanie
+    const updatedISO  = (today && today.date) ? today.date : (ps.updated || "");
+    const updatedTime = (today && today.time) ? today.time : "";
+    const updatedLabel = updatedISO
+      ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
+      : "—";
+
+    // Kolejne wydanie = następny dzień roboczy od today.date
+    let nextTxt = "—";
+    if(today && today.date){
+      const dt = parseISODateLocal(today.date);
+      if(dt){
+        nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
+      }
+    } else if ((ps.nextIssue || "").trim()){
+      nextTxt = fmtDatePL((ps.nextIssue || "").trim());
+    }
+
+    const freq = (ps.frequency || "").trim() || "dziennie";
+
+    // linia "na dziś" — bierzemy z dzisiejszego itema (PL lead / title / fallback)
+    let todayLine = "";
+    if(today && today.pl){
+      todayLine = String(today.pl.lead || today.pl.title || "").trim();
+    }
+    if(!todayLine && today && today.en){
+      // awaryjnie jeśli brak PL
+      todayLine = String(today.en.lead || today.en.title || "").trim();
+    }
+
+    const safePath = (ps.path || "").replace(/^\/+/, "");
+
+    wrap.innerHTML = `
+      <a class="featured" href="${safePath}">
+        <div class="fMetaLine">
+          <span class="badge primary">Poranny skan</span>
+          <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
+          <span class="badge accent">${freq}</span>
+        </div>
+
+        <p class="fTitle">${ps.name}</p>
+        ${todayLine ? `<p class="fToday">${todayLine}</p>` : `<p class="fToday">${ps.description}</p>`}
+
+        <div class="fNext">
+          <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
+        </div>
+      </a>
+    `;
+  }
+
+  function renderCategories(items){
+    const wrap = document.getElementById("cats");
+
+    const stats = {};
+    for(const it of items){
+      const k = it.category || "";
+      if(!k) continue;
+      if(k === "dedyk") continue;
+      if(!stats[k]) stats[k] = { count:0, last:"" };
+      stats[k].count += 1;
+      if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
+    }
+
+    wrap.innerHTML = CATEGORY_META.map(c => {
+      const s = stats[c.key] || { count:0, last:"" };
+      return `
+        <a class="cat" href="kategoria.html?cat=${encodeURIComponent(c.key)}">
+          <p class="catTitle">${c.title}</p>
+          <p class="catDesc">${c.desc}</p>
+          <div class="catMeta">
+            <span><strong>${s.count}</strong> raportów</span>
+            <span>Ostatnia: <strong>${fmtDatePL(s.last)}</strong></span>
           </div>
         </a>
       `;
+    }).join("");
+  }
+
+  // ===== prices =====
+  function arrowCell(n){
+    if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
+      return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
     }
+    const v = Number(n);
+    if(v > 0) return { sym:"▲", col:"rgba(125,211,252,.95)", txt:`+${v}` };
+    if(v < 0) return { sym:"▼", col:"rgba(255,160,160,.95)", txt:`${v}` };
+    return { sym:"—", col:"rgba(234,240,255,.70)", txt:"0" };
+  }
 
-    function renderCategories(items){
-      const wrap = document.getElementById("cats");
-
-      const stats = {};
-      for(const it of items){
-        const k = it.category || "";
-        if(!k) continue;
-        if(k === "dedyk") continue;
-        if(!stats[k]) stats[k] = { count:0, last:"" };
-        stats[k].count += 1;
-        if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
-      }
-
-function parseISODateLocal(iso){
-  const p = (iso || "").split("-");
-  if(p.length !== 3) return null;
-  const y = Number(p[0]), m = Number(p[1]) - 1, d = Number(p[2]);
-  const dt = new Date(y, m, d);
-  return isNaN(dt.getTime()) ? null : dt;
-}
-
-function nextBusinessDay(dateObj){
-  const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
-  do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
-  return d;
-}
-
-function fmtDatePrettyPL(dt){
-  if(!(dt instanceof Date)) return "—";
-  return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
-}
-
-// wybiera "today" tak jak u Ciebie w porannym skanie: ITEMS[0] po sortowaniu
-function pickTodayFromScan(scan){
-  const items = scan && Array.isArray(scan.items) ? scan.items : [];
-  if(!items.length) return null;
-  const sorted = [...items].sort((a,b) => parseISO(b.date) - parseISO(a.date));
-  return sorted[0] || null;
-}
-
-      
-      wrap.innerHTML = CATEGORY_META.map(c => {
-        const s = stats[c.key] || { count:0, last:"" };
-        return `
-          <a class="cat" href="kategoria.html?cat=${encodeURIComponent(c.key)}">
-            <p class="catTitle">${c.title}</p>
-            <p class="catDesc">${c.desc}</p>
-            <div class="catMeta">
-              <span><strong>${s.count}</strong> raportów</span>
-              <span>Ostatnia: <strong>${fmtDatePL(s.last)}</strong></span>
-            </div>
-          </a>
-        `;
-      }).join("");
-    }
-
-    // ===== prices =====
-    function arrowCell(n){
-      if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
-        return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
-      }
-      const v = Number(n);
-      if(v > 0) return { sym:"▲", col:"rgba(125,211,252,.95)", txt:`+${v}` };
-      if(v < 0) return { sym:"▼", col:"rgba(255,160,160,.95)", txt:`${v}` };
-      return { sym:"—", col:"rgba(234,240,255,.70)", txt:"0" };
-    }
-
-    function renderCashTable(rows){
-      const tbl = document.getElementById("cashTable");
-      const header = `
+  function renderCashTable(rows){
+    const tbl = document.getElementById("cashTable");
+    const header = `
+      <tr>
+        <th>Surowiec</th>
+        <th class="right">Cena</th>
+        <th class="right">Zmiana tyg.</th>
+        <th class="right">Zmiana mies.</th>
+      </tr>
+    `;
+    const body = rows.map(r=>{
+      const w = arrowCell(r.w);
+      const m = arrowCell(r.m);
+      return `
         <tr>
-          <th>Surowiec</th>
-          <th class="right">Cena</th>
-          <th class="right">Zmiana tyg.</th>
-          <th class="right">Zmiana mies.</th>
+          <td>${r.name ?? ""}</td>
+          <td class="right" style="font-weight:900">${r.price ?? ""}</td>
+          <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
+          <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
         </tr>
       `;
-      const body = rows.map(r=>{
-        const w = arrowCell(r.w);
-        const m = arrowCell(r.m);
-        return `
-          <tr>
-            <td>${r.name ?? ""}</td>
-            <td class="right" style="font-weight:900">${r.price ?? ""}</td>
-            <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
-            <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
-          </tr>
-        `;
-      }).join("");
-      tbl.innerHTML = header + body;
-    }
+    }).join("");
+    tbl.innerHTML = header + body;
+  }
 
-    function renderFuturesTable(rows){
-      const tbl = document.getElementById("futuresTable");
-      const header = `
+  function renderFuturesTable(rows){
+    const tbl = document.getElementById("futuresTable");
+    const header = `
+      <tr>
+        <th>Instrument</th>
+        <th class="right">Close</th>
+        <th class="right">Zmiana tyg.</th>
+        <th class="right">Zmiana mies.</th>
+      </tr>
+    `;
+    const body = rows.map(r=>{
+      const w = arrowCell(r.w);
+      const m = arrowCell(r.m);
+      return `
         <tr>
-          <th>Instrument</th>
-          <th class="right">Close</th>
-          <th class="right">Zmiana tyg.</th>
-          <th class="right">Zmiana mies.</th>
+          <td>${r.name ?? ""}</td>
+          <td class="right" style="font-weight:900">${r.close ?? ""}</td>
+          <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
+          <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
         </tr>
       `;
-      const body = rows.map(r=>{
-        const w = arrowCell(r.w);
-        const m = arrowCell(r.m);
-        return `
-          <tr>
-            <td>${r.name ?? ""}</td>
-            <td class="right" style="font-weight:900">${r.close ?? ""}</td>
-            <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
-            <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
-          </tr>
-        `;
-      }).join("");
-      tbl.innerHTML = header + body;
+    }).join("");
+    tbl.innerHTML = header + body;
+  }
+
+  async function loadPrices(){
+    try{
+      const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
+      if(!res.ok) throw new Error("prices.json (" + res.status + ")");
+      const data = await res.json();
+
+      const asof = (data.asof || "—");
+      document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + asof;
+      document.getElementById("futuresAsOf").innerHTML = "&nbsp;";
+
+      const cashRows = Array.isArray(data.cash) ? data.cash : [];
+      const futRows  = Array.isArray(data.futures) ? data.futures : [];
+
+      renderCashTable(cashRows);
+      renderFuturesTable(futRows);
+    } catch(e){
+      const cash = document.getElementById("cashPanel");
+      if(cash) cash.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
+      const fut = document.getElementById("futuresPanel");
+      if(fut) fut.innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
     }
+  }
 
-    async function loadPrices(){
-      try{
-        const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
-        if(!res.ok) throw new Error("prices.json (" + res.status + ")");
-        const data = await res.json();
+  (async () => {
+    try{
+      document.getElementById("asof").textContent =
+        "Aktualizacja: " + new Date().toLocaleString("pl-PL");
 
-        const asof = (data.asof || "—");
-        document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + asof;
-        document.getElementById("futuresAsOf").innerHTML = "&nbsp;";
+      const manifest = await loadManifest();
+      const items = toItems(manifest);
 
-        const cashRows = Array.isArray(data.cash) ? data.cash : [];
-        const futRows  = Array.isArray(data.futures) ? data.futures : [];
+      const ps = items.find(x => x.id === "poranny-skan");
+      const scan = ps ? await loadScan(ps.path) : null;
 
-        renderCashTable(cashRows);
-        renderFuturesTable(futRows);
-      } catch(e){
-        const cash = document.getElementById("cashPanel");
-        if(cash) cash.innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
-        const fut = document.getElementById("futuresPanel");
-        if(fut) fut.innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
-      }
+      renderFeatured(items, scan);
+      renderCategories(items);
+      loadPrices();
+    } catch(e){
+      const err = document.getElementById("err");
+      err.style.display = "block";
+      err.textContent = "Błąd panelu: " + e.message + " (sprawdź Console w DevTools)";
     }
-
-    (async () => {
-      try{
-        document.getElementById("asof").textContent =
-          "Aktualizacja: " + new Date().toLocaleString("pl-PL");
-
-       const manifest = await loadManifest();
-        const items = toItems(manifest);
-        
-        const ps = items.find(x => x.id === "poranny-skan");
-        const scan = ps ? await loadScan(ps.path) : null;
-        
-        renderFeatured(items, scan);
-        renderCategories(items);
-        loadPrices();
-    
-      } catch(e){
-        const err = document.getElementById("err");
-        err.style.display = "block";
-        err.textContent = "Błąd panelu: " + e.message + " (sprawdź Console w DevTools)";
-      }
-    })();
-  </script>
-</body>
-</html>
+  })();
+</script>
