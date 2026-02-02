@@ -2,6 +2,12 @@
 <html lang="pl">
 <head>
   <script>
+  if (sessionStorage.getItem("ace_access") !== "1") {
+    const next = encodeURIComponent(window.location.pathname);
+    window.location.href = "/ace-raporty/login.html?next=" + next;
+  }
+</script>
+  <script>
     if (sessionStorage.getItem("ace_access") !== "1") {
       window.location.href = "/ace-raporty/login.html";
     }
