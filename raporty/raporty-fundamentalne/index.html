@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
   <script>
+    // jesteśmy w /raporty/raporty-fundamentalne/
     if (sessionStorage.getItem("ace_access") !== "1") {
       window.location.href = "../../login.html";
     }
@@ -35,46 +36,54 @@
       color:var(--text);
       min-height:100vh;
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px;}
-    header{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px; align-items:flex-start;}
-    .brand{display:flex; gap:14px; align-items:center;}
-    .logo{height:54px; width:auto; display:block; filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));}
+    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 44px}
+    header{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      flex-wrap:wrap; margin-bottom:14px
+    }
+    .brand{display:flex; gap:14px; align-items:center}
+    .logo{
+      height:56px; width:auto;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
+    }
     h1{margin:0; font-size:22px}
-    .sub{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:13px}
 
     .pill{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
-      padding:8px 12px;
+      padding:8px 10px;
       border-radius:999px;
       color:var(--muted2);
       font-size:12px;
       box-shadow: var(--shadow);
       white-space:nowrap;
-      display:inline-flex; gap:8px; align-items:center;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
     }
     .btn{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:8px 12px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
+      border:1px solid var(--border);
       background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.92);
-      font-size:13px;
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      font-size:12px;
       text-decoration:none;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-    .btn:hover{ background: rgba(255,255,255,.10); }
 
     .grid{
       display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap:14px;
-      margin-top:14px;
+      margin-top:12px;
     }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 560px){
+    @media (max-width: 820px){
       .grid{ grid-template-columns: 1fr; }
     }
 
@@ -84,38 +93,58 @@
       color:inherit;
       border:1px solid var(--border);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding:16px;
+      background: linear-gradient(135deg, rgba(125,211,252,.14), rgba(167,139,250,.08));
+      box-shadow: 0 18px 46px rgba(0,0,0,.45);
+      padding:18px;
       position:relative;
       overflow:hidden;
       transition: transform .08s ease, border-color .08s ease;
-      min-height:140px;
+      min-height:120px;
     }
     a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
     a.card:before{
       content:"";
       position:absolute; inset:-1px;
-      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
-                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.16), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
       pointer-events:none;
     }
     a.card > *{ position:relative; }
 
-    .title{margin:0; font-size:16px; font-weight:950; line-height:1.2}
-    .desc{margin:10px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .meta{
-      margin-top:12px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.08);
+    .metaRow{
       display:flex;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
+      margin-bottom:10px;
+      color: rgba(234,240,255,.78);
       font-size:12px;
-      color:var(--muted2);
     }
-    .meta strong{ color: rgba(234,240,255,.92); font-weight:900; }
+    .badge{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.92);
+      white-space:nowrap;
+    }
+    .title{
+      margin:0;
+      font-size:18px;
+      font-weight:950;
+      line-height:1.15;
+      color:#fff;
+    }
+    .desc{
+      margin:10px 0 0;
+      color: rgba(234,240,255,.78);
+      font-size:13px;
+      line-height:1.4;
+      max-width:900px;
+    }
 
     .error{
       border:1px solid rgba(255,120,120,.25);
@@ -135,33 +164,45 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <img src="../../logo.png" class="logo" alt="ACE Group">
+      <img src="../../logo.png" alt="ACE Group" class="logo">
       <div>
-        <h1>ACE – Raporty Fundamentalne</h1>
-        <p class="sub">4 główne źródła: WASDE, IGC, FAO oraz ACE Indexy Światowe.</p>
+        <h1>Raporty Fundamentalne</h1>
+        <p class="sub">WASDE • IGC • FAO • ACE Indexy Światowe</p>
       </div>
     </div>
-    <div class="pill" id="asof">📍 Olsztyn • ⏱ —</div>
-  </header>
 
-  <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;">
-    <a class="btn" href="../../index.html">← Panel główny</a>
-    <div class="pill">📁 Folder: <strong>raporty-fundamentalne</strong></div>
-  </div>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+      <a class="btn" href="../../index.html">← Panel główny</a>
+      <div class="pill" id="asof">📍 Olsztyn • 🕒 —</div>
+    </div>
+  </header>
 
   <section class="grid" id="grid"></section>
   <div id="err" class="error" style="display:none"></div>
 </div>
 
 <script>
-  const IDS = ["wasde","igc","fao","ace-indexy-swiatowe"];
-
+  const errBox = document.getElementById("err");
   function showErr(msg){
-    const box = document.getElementById("err");
-    box.style.display = "block";
-    box.textContent = msg;
+    errBox.style.display = "block";
+    errBox.textContent = msg;
   }
+  window.addEventListener("error", (e)=> showErr("Błąd JS: " + (e.message || e.error || e)));
+  window.addEventListener("unhandledrejection", (e)=> showErr("Promise error: " + (e.reason && e.reason.message ? e.reason.message : e.reason)));
 
+  function setHeaderClock(){
+    const now = new Date();
+    const date = now.toLocaleDateString("pl-PL");
+    const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
+    document.getElementById("asof").textContent = `📍 Olsztyn • 🕒 ${date} ${time}`;
+  }
+  setHeaderClock();
+
+  function parseISO(iso){
+    if(!iso || typeof iso !== "string") return -Infinity;
+    const t = Date.parse(iso + "T00:00:00Z");
+    return isNaN(t) ? -Infinity : t;
+  }
   function fmtDatePL(iso){
     if(!iso || typeof iso !== "string") return "—";
     const p = iso.split("-");
@@ -170,48 +211,51 @@
   }
 
   async function loadManifest(){
-    const url = "../../manifest.json?ts=" + Date.now();
-    const res = await fetch(url, { cache:"no-store" });
+    const res = await fetch("../../manifest.json?ts=" + Date.now(), { cache:"no-store" });
     if(!res.ok) throw new Error("Nie mogę wczytać ../../manifest.json (" + res.status + ")");
     return await res.json();
   }
 
-  function esc(s){
-    return (s||"").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
+  function render(items){
+    const grid = document.getElementById("grid");
+    const order = ["wasde","igc","fao","ace-indexy-swiatowe"];
+
+    const map = new Map(items.map(x=>[x.id, x]));
+    const arranged = order.map(id => map.get(id)).filter(Boolean);
+
+    grid.innerHTML = arranged.map(r => `
+      <a class="card" href="../${r.path.replace(/^\/+/,'')}">
+        <div class="metaRow">
+          <span class="badge">🗓 ${fmtDatePL(r.updated)}</span>
+          <span class="badge">⏱ ${r.frequency || "raport"}</span>
+        </div>
+        <p class="title">${r.name}</p>
+        <p class="desc">${r.description || ""}</p>
+      </a>
+    `).join("") || `<div class="error">Brak raportów fundamentalnych w manifeście.</div>`;
   }
 
-  (async ()=>{
+  (async () => {
     try{
-      const now = new Date();
-      const date = now.toLocaleDateString("pl-PL");
-      const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
-      document.getElementById("asof").textContent = `📍 Olsztyn • ⏱ ${date} ${time}`;
-
       const manifest = await loadManifest();
+      const items = Object.entries(manifest)
+        .map(([id,r]) => ({
+          id,
+          name: r.name || id,
+          description: r.description || "",
+          path: r.path || "",
+          updated: r.updated || "",
+          frequency: r.frequency || "",
+          group: (r.group || "").toLowerCase()
+        }))
+        .filter(x => x.group === "raporty-fundamentalne");
 
-      const grid = document.getElementById("grid");
-      grid.innerHTML = IDS.map(id=>{
-        const r = manifest[id];
-        if(!r){
-          return `<div class="error">Brak w manifest.json ID: ${esc(id)}</div>`;
-        }
-        const path = (r.path || ("raporty/" + id + "/")).replace(/^\/+/, "");
-        return `
-          <a class="card" href="../../${path}">
-            <p class="title">${esc(r.name || id)}</p>
-            <p class="desc">${esc(r.description || "")}</p>
-            <div class="meta">
-              <span><strong>Aktualizacja:</strong> ${esc(fmtDatePL(r.updated || ""))}</span>
-              <span><strong>Częstotliwość:</strong> ${esc((r.frequency || "").toString() || "—")}</span>
-            </div>
-          </a>
-        `;
-      }).join("");
-    } catch(e){
-      showErr("Błąd strony folderu: " + (e && e.message ? e.message : e));
+      // sort ogólny (nie jest krytyczny, ale ok)
+      items.sort((a,b)=> parseISO(b.updated) - parseISO(a.updated));
+      render(items);
+
+    }catch(e){
+      showErr("Błąd: " + (e && e.message ? e.message : e));
     }
   })();
 </script>
