@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <script>
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "../../login.html";
-    }
-  </script>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Analizy Statystyczno-Techniczne</title>
@@ -22,8 +16,6 @@
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
       --muted2:rgba(234,240,255,.55);
-      --accent:#7dd3fc;
-      --accent2:#a78bfa;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
     }
@@ -67,7 +59,7 @@
     }
     .btn:hover{ background: rgba(255,255,255,.10); }
 
-    .sec{margin-top:16px;}
+    .sec{margin-top:16px}
     .secHead{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; flex-wrap:wrap;
@@ -92,7 +84,6 @@
       gap:14px;
       margin-top:12px;
     }
-
     a.card{
       display:block;
       text-decoration:none;
@@ -102,25 +93,11 @@
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
       padding:16px;
-      position:relative;
-      overflow:hidden;
-      transition: transform .08s ease, border-color .08s ease;
     }
-    a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
-    a.card:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
-                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
-      pointer-events:none;
-    }
-    a.card > *{ position:relative; }
-
     .title{margin:0; font-size:16px; font-weight:900; line-height:1.2}
     .desc{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
     .meta{
-      margin-top:12px;
-      padding-top:10px;
+      margin-top:12px; padding-top:10px;
       border-top:1px solid rgba(255,255,255,.08);
       display:flex; justify-content:space-between;
       gap:10px; flex-wrap:wrap;
@@ -136,7 +113,6 @@
       color:rgba(255,220,220,.92);
       margin-top:14px;
       font-size:13px;
-      box-shadow: var(--shadow);
       white-space:pre-wrap;
     }
   </style>
@@ -146,7 +122,7 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <img src="../../logo.png" class="logo" alt="ACE Group">
+        <img src="../../logo.png" class="logo" alt="ACE Group" onerror="this.style.display='none'">
         <div>
           <h1>Analizy Statystyczno-Techniczne</h1>
           <p class="sub">Waluty, zboża, śruty, energia — sekcje + kafelki raportów.</p>
@@ -157,6 +133,7 @@
 
     <div class="row">
       <a class="btn" href="../../index.html">← Panel główny</a>
+      <a class="btn" id="btnLogin" href="../../login.html" style="display:none">↪ Przejdź do logowania</a>
     </div>
 
     <div id="content"></div>
@@ -183,7 +160,7 @@
 
   async function loadManifest(){
     const res = await fetch("../../manifest.json?ts=" + Date.now(), { cache:"no-store" });
-    if(!res.ok) throw new Error("manifest.json (" + res.status + ")");
+    if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
     return await res.json();
   }
 
@@ -224,59 +201,58 @@
     `;
   }
 
+  function showErr(msg){
+    const err = document.getElementById("err");
+    err.style.display = "block";
+    err.textContent = msg;
+  }
+
   (async ()=>{
     document.getElementById("asof").textContent = fmtNowPL();
 
-    const errBox = document.getElementById("err");
-    const content = document.getElementById("content");
-    try{
-      const manifest = await loadManifest();
-      const all = normalizeItems(manifest);
-
-      const items = all.filter(x => x.group === "analizy-stat-tech");
-
-      // grupowanie po section
-      const bySection = {};
-      for(const it of items){
-        const s = (it.section || "Inne").trim();
-        if(!bySection[s]) bySection[s] = [];
-        bySection[s].push(it);
-      }
-
-      // sortowanie w sekcjach po updated desc
-      for(const k of Object.keys(bySection)){
-        bySection[k].sort((a,b)=> (b.updated||"").localeCompare(a.updated||""));
-      }
-
-      // render w ustalonej kolejności
-      let html = "";
-      for(const s of SECTION_ORDER){
-        if(bySection[s] && bySection[s].length){
-          html += renderSection(s, bySection[s]);
-        }else{
-          // sekcja istnieje, ale jeszcze pusta — pokażemy placeholder
-          html += `
-            <div class="sec">
-              <div class="secHead">
-                <p class="secTitle"><span class="ico">${SECTION_ICON[s]||"📌"}</span>${s}</p>
-                <p class="secHint">0 raportów</p>
-              </div>
-              <div class="grid">
-                <div class="error">Brak raportów w sekcji „${s}”. Dodaj wpisy w manifest.json (group + section) i foldery raportów.</div>
-              </div>
-            </div>
-          `;
-        }
-      }
-
-      content.innerHTML = html;
-
-    }catch(e){
-      errBox.style.display = "block";
-      errBox.textContent = "Błąd: " + (e && e.message ? e.message : e);
+    // zamiast “białej strony” — pokaż info, jeśli brak sesji
+    if (sessionStorage.getItem("ace_access") !== "1") {
+      document.getElementById("btnLogin").style.display = "inline-flex";
+      showErr("Brak aktywnej sesji (sessionStorage). Wejdź przez login.html (ta sama karta), albo zaloguj się ponownie.");
+      // i nie ładujemy manifestu dalej
+      return;
     }
-  })();
+
+    const content = document.getElementById("content");
+    const manifest = await loadManifest();
+    const all = normalizeItems(manifest);
+    const items = all.filter(x => x.group === "analizy-stat-tech");
+
+    const bySection = {};
+    for(const it of items){
+      const s = (it.section || "Inne").trim();
+      if(!bySection[s]) bySection[s] = [];
+      bySection[s].push(it);
+    }
+    for(const k of Object.keys(bySection)){
+      bySection[k].sort((a,b)=> (b.updated||"").localeCompare(a.updated||""));
+    }
+
+    let html = "";
+    for(const s of SECTION_ORDER){
+      if(bySection[s] && bySection[s].length){
+        html += renderSection(s, bySection[s]);
+      } else {
+        html += `
+          <div class="sec">
+            <div class="secHead">
+              <p class="secTitle"><span class="ico">${SECTION_ICON[s]||"📌"}</span>${s}</p>
+              <p class="secHint">0 raportów</p>
+            </div>
+            <div class="grid">
+              <div class="error">Brak raportów w sekcji „${s}”. Dodaj wpisy w manifest.json (group + section) i foldery raportów.</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+    content.innerHTML = html;
+  })().catch(e => showErr("Błąd JS: " + (e && e.message ? e.message : e)));
 </script>
 </body>
 </html>
-
