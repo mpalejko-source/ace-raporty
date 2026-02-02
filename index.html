@@ -2,8 +2,9 @@
 <html lang="pl">
 <head>
   <script>
+    // ✅ działa z każdego podfolderu
     if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "./login.html";
+      window.location.href = "/login.html";
     }
   </script>
 
@@ -232,7 +233,7 @@
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* ===== QUICK grid (5 w jednej linii na desktop) ===== */
+    /* ===== QUICK grid ===== */
     .quickGrid{
       display:grid;
       grid-template-columns: repeat(5, 1fr);
@@ -317,7 +318,7 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
-    /* ===== FOLDERS grid (2 duże kafle na linię) ===== */
+    /* ===== FOLDERS grid (2 duże) ===== */
     .folderGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -360,28 +361,27 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <img src="logo.png" alt="ACE Group" class="logo">
+        <img src="/logo.png" alt="ACE Group" class="logo">
         <div>
           <h1>ACE – Panel raportów</h1>
           <p class="sub">System raportów Agri Commodity Experts</p>
         </div>
       </div>
 
-      <!-- PILL z lokalizacją + czasem -->
       <div class="pill" id="asof"><span class="ico">📍</span> <span>Olsztyn —</span></div>
     </header>
 
-    <!-- ===== FEATURED (Poranny Skan) ===== -->
+    <!-- FEATURED -->
     <div class="featuredWrap" id="featuredWrap"></div>
 
-    <!-- ===== QUICK (5 raportów) ===== -->
+    <!-- QUICK -->
     <div class="sectionHead">
       <p class="h2">Szybki dostęp</p>
       <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
-    <!-- ===== PRICES ===== -->
+    <!-- PRICES -->
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych</p>
@@ -407,7 +407,7 @@
       </section>
     </section>
 
-    <!-- ===== FOLDERS (2 duże) ===== -->
+    <!-- FOLDERS -->
     <div class="sectionHead">
       <p class="h2">Biblioteka raportów</p>
       <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
@@ -423,12 +423,8 @@
 
   <script>
     // ===== CONFIG =====
-    const CONFIG = {
-      location: "Olsztyn"
-      // jak kiedyś chcesz przełączać: location: "Warszawa"
-    };
+    const CONFIG = { location: "Olsztyn" };
 
-    // Klucze kafli
     const FEATURED_KEY = "poranny-skan";
     const QUICK_KEYS = [
       "chart-pack",
@@ -442,7 +438,10 @@
       "raporty-fundamentalne"
     ];
 
-    // ===== helpers =====
+    // ✅ helper: zawsze w root (niezależnie od folderu)
+    const ROOT = "/";
+    const abs = (p) => (p.startsWith("/") ? p : (ROOT + p.replace(/^\/+/, "")));
+
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
       const parts = iso.split("-");
@@ -483,18 +482,20 @@
     }
 
     function safePath(p){
-      return (p || "").toString().replace(/^\/+/, "");
+      // jeśli ktoś dał pełny URL, nie ruszamy
+      const s = (p || "").toString();
+      if(/^https?:\/\//i.test(s)) return s;
+      return abs(s.replace(/^\/+/, ""));
     }
 
-    // ===== loaders =====
     async function loadManifest(){
-      const res = await fetch("manifest.json?ts=" + Date.now(), { cache:"no-store" });
+      const res = await fetch(abs("manifest.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
       return await res.json();
     }
 
     async function loadPorannyScanJSON(){
-      const res = await fetch("raporty/poranny-skan/scan.json?ts=" + Date.now(), { cache:"no-store" });
+      const res = await fetch(abs("raporty/poranny-skan/scan.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) return null;
       return await res.json();
     }
@@ -502,7 +503,7 @@
     function toItems(manifest){
       return Object.entries(manifest).map(([id, r]) => ({
         id,
-        type: (r.type || "report").toString(),
+        type: (r.type || "report").toString().toLowerCase(),
         name: r.name || id,
         description: r.description || "",
         path: r.path || ("raporty/" + id + "/"),
@@ -512,7 +513,6 @@
       }));
     }
 
-    // ===== renderers =====
     function renderFeatured(items, scan){
       const wrap = document.getElementById("featuredWrap");
       const ps = items.find(x => x.id === FEATURED_KEY);
@@ -547,9 +547,7 @@
             <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
             <span class="badge">${freq}</span>
           </div>
-
           <p class="fTitle">${ps.name}</p>
-
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
           </div>
@@ -582,7 +580,6 @@
         `;
       }).join("");
 
-      // jeśli coś brakuje w manifeście — pokaż błąd czytelnie (zamiast ciszy)
       const missing = QUICK_KEYS.filter(k => !map[k]);
       if(missing.length){
         wrap.insertAdjacentHTML("beforeend",
@@ -598,11 +595,13 @@
 
       wrap.innerHTML = list.map(r => {
         const upd = r.updated ? fmtDatePL(r.updated) : "—";
-        // licznik zrobimy w kolejnym kroku (po dodaniu relacji co należy do folderu)
         const count = "—";
 
+        // ✅ foldery prowadzą do kategorie.html, a nie do "gołego katalogu"
+        const href = abs(`kategorie.html?cat=${encodeURIComponent(r.id)}`);
+
         return `
-          <a class="card" href="${safePath(r.path)}">
+          <a class="card" href="${href}">
             <div class="topMeta">
               <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
               <span class="badge">W środku: ${count} raportów</span>
@@ -624,7 +623,6 @@
       }
     }
 
-    // ===== prices =====
     function arrowCell(n){
       if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
         return { sym:"—", col:"rgba(234,240,255,.70)", txt:"—" };
@@ -687,7 +685,7 @@
 
     async function loadPrices(){
       try{
-        const res = await fetch("prices.json?ts=" + Date.now(), { cache:"no-store" });
+        const res = await fetch(abs("prices.json?ts=" + Date.now()), { cache:"no-store" });
         if(!res.ok) throw new Error("prices.json (" + res.status + ")");
         const data = await res.json();
 
@@ -706,13 +704,11 @@
       }
     }
 
-    // ===== init =====
     (async () => {
       const errBox = document.getElementById("err");
       const showErr = (msg) => { errBox.style.display = "block"; errBox.textContent = msg; };
 
       try{
-        // pill: lokalizacja + czas + ikony
         const now = new Date();
         const date = now.toLocaleDateString("pl-PL");
         const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
@@ -726,8 +722,8 @@
 
         renderFeatured(items, scan);
         renderQuick(items);
-        loadPrices();
         renderFolders(items);
+        loadPrices();
 
       } catch(e){
         showErr("Błąd panelu: " + (e && e.message ? e.message : e));
