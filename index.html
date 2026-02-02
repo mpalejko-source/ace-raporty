@@ -218,13 +218,6 @@
       color:#ffffff;
     }
 
-    .fToday{
-      margin:10px 0 0 0;
-      color: var(--muted);
-      font-size:14px;
-      line-height:1.4;
-    }
-
     .fNext{
       margin-top:12px;
       padding-top:10px;
@@ -349,7 +342,7 @@
           <p class="sub">System raportów Agri Commodity Experts</p>
         </div>
       </div>
-      <div class="pill" id="asof">Aktualizacja: —</div>
+      <div class="pill" id="asof">📍 — | 🕒 —</div>
     </header>
 
     <!-- ===== FEATURED ===== -->
@@ -392,11 +385,49 @@
 
     <footer>
       Agri Commodity Experts Sp. z o.o. <code>mail</code> : <code>biuro@ace-group.pl</code>.
-      Napisz aby spytać o ofertę <code>ACE Reserved 2026</code>.
+      <span style="opacity:.75">ACE Reserved 2026</span>.
     </footer>
   </div>
 
   <script>
+    // ===== CONFIG (miasto + ikony) =====
+    const ACE_CONFIG = {
+      // "auto" lub "manual"
+      cityMode: "manual",
+      cityManual: "Olsztyn",
+
+      // auto mapuje host -> miasto
+      cityByHost: {
+        "mpalejko-source.github.io": "Olsztyn",
+        "ace-group.pl": "Warszawa",
+        "www.ace-group.pl": "Warszawa"
+      },
+
+      iconLocation: "📍",
+      iconTime: "🕒"
+    };
+
+    function getConfiguredCity(){
+      if (ACE_CONFIG.cityMode === "manual") return ACE_CONFIG.cityManual;
+
+      const host = (window.location && window.location.hostname) ? window.location.hostname : "";
+      if (host && ACE_CONFIG.cityByHost[host]) return ACE_CONFIG.cityByHost[host];
+
+      return ACE_CONFIG.cityManual || "Olsztyn";
+    }
+
+    function updateHeaderPill(){
+      const now = new Date();
+      const date = now.toLocaleDateString("pl-PL");
+      const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
+      const city = getConfiguredCity();
+
+      const el = document.getElementById("asof");
+      if (el){
+        el.textContent = `${ACE_CONFIG.iconLocation} ${city} | ${ACE_CONFIG.iconTime} ${date} ${time}`;
+      }
+    }
+
     // ===== helpers =====
     const CATEGORY_META = [
       { key:"zboza",     title:"Zboża i oleiste – rynki",           desc:"Pszenica, kukurydza, rzepak, soja/śruta, MATIF/CBOT, Black Sea." },
@@ -456,7 +487,6 @@
     }
 
     async function loadScanFromPorannySkan(){
-      // twardo: zawsze z folderu porannego skanu
       const res = await fetch("raporty/poranny-skan/scan.json?ts=" + Date.now(), { cache:"no-store" });
       if(!res.ok) return null;
       return await res.json();
@@ -503,13 +533,9 @@
       }
 
       const freq = (ps.frequency || "").trim() || "dziennie";
-
-      let todayLine = "";
-      if(today && today.pl) todayLine = String(today.pl.lead || today.pl.title || "").trim();
-      if(!todayLine) todayLine = (ps.description || "").trim();
-
       const safePath = (ps.path || "").replace(/^\/+/, "");
 
+      // UWAGA: brak lead/news na banerze (zgodnie z Twoim wymaganiem)
       wrap.innerHTML = `
         <a class="featured" href="${safePath}">
           <div class="fMetaLine">
@@ -519,7 +545,6 @@
           </div>
 
           <p class="fTitle">${ps.name}</p>
-        
 
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
@@ -646,13 +671,9 @@
       }
 
       try{
-        document.getElementById("asof").textContent =
-         const now = new Date();
-          const date = now.toLocaleDateString("pl-PL");
-          const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
-          
-          document.getElementById("asof").textContent =
-            `Olsztyn, ${date} ${time}`;
+        // pill w prawym górnym rogu (miasto + czas)
+        updateHeaderPill();
+        setInterval(updateHeaderPill, 60 * 1000);
 
         const manifest = await loadManifest();
         const items = toItems(manifest);
