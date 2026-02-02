@@ -345,7 +345,7 @@
         <img src="logo.png" alt="ACE Group" class="logo">
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">Poranny skan jako banner na górze. Niżej: kategorie raportów.</p>
+          <p class="sub">Poranny skrót newsów: A Niżej: kategorie raportów.</p>
         </div>
       </div>
       <div class="pill" id="asof">Aktualizacja: —</div>
@@ -390,9 +390,8 @@
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
-      Kategorie działają po polu <code>category</code> w <code>manifest.json</code>.
-      Poranny skan jest wyciągany po ID: <code>poranny-skan</code>.
-      Zdanie na dziś pobierane z <code>scan.json</code>.
+      All rights Reserved 2026 <code>ACE</code></code>.
+
     </footer>
   </div>
 
@@ -437,10 +436,11 @@
       return await res.json();
     }
 
-    async function loadScan(basePath){
+    async function loadScan(scanBasePath){
   try{
-    const p = (basePath || "").replace(/\/?$/, "/"); // gwarantuje trailing slash
-    const res = await fetch(p + "scan.json?ts=" + Date.now(), { cache:"no-store" });
+    // scanBasePath np. "raporty/poranny-skan/"
+    const base = (scanBasePath || "").replace(/^\/+/, "").replace(/\/?$/, "/");
+    const res = await fetch(base + "scan.json?ts=" + Date.now(), { cache:"no-store" });
     if(!res.ok) return null;
     return await res.json();
   }catch(_){
@@ -474,10 +474,39 @@
         return;
       }
 
-      const updated = fmtDatePL(ps.updated);
-      const freq = (ps.frequency || "").trim() || "dziennie";
+        // === DATY Z scan.json (tak samo jak na podstronie Poranny Skan) ===
+  const itemsFromScan = (scan && Array.isArray(scan.items)) ? scan.items : [];
+  const today = itemsFromScan.length
+    ? [...itemsFromScan].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0]
+    : null;
 
-      const nextISO = (ps.nextIssue || "").trim();
+  // "Aktualizacja: DD.MM.RRRR | HH:MM" (jak w porannym skanie)
+  const updatedISO = today ? today.date : (ps.updated || "");
+  const updatedTime = today ? (today.time || "") : "";
+  const updatedLabel = updatedISO
+    ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
+    : "—";
+
+  // "Kolejne wydanie" = następny dzień roboczy (Mon–Fri)
+  let nextTxt = "—";
+  if(today && today.date){
+    const p = today.date.split("-");
+    if(p.length === 3){
+      const dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+      if(!isNaN(dt.getTime())){
+        // nextBusinessDay inline
+        const d = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+        nextTxt = d.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
+      }
+    }
+  } else if ((ps.nextIssue || "").trim()){
+    // fallback z manifestu jeśli scan.json pusty
+    nextTxt = fmtDatePL((ps.nextIssue || "").trim());
+  }
+
+  const freq = (ps.frequency || "").trim() || "dziennie";
+
       let nextTxt = "—";
       if(nextISO){
         const d = daysUntil(nextISO);
@@ -494,7 +523,7 @@
         <a class="featured" href="${safePath}">
           <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
-            <span><strong>Ostatnia aktualizacja:</strong> ${updated}</span>
+           <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
             <span class="badge accent">${freq}</span>
           </div>
 
@@ -521,6 +550,34 @@
         if(parseISO(it.updated) > parseISO(stats[k].last)) stats[k].last = it.updated;
       }
 
+function parseISODateLocal(iso){
+  const p = (iso || "").split("-");
+  if(p.length !== 3) return null;
+  const y = Number(p[0]), m = Number(p[1]) - 1, d = Number(p[2]);
+  const dt = new Date(y, m, d);
+  return isNaN(dt.getTime()) ? null : dt;
+}
+
+function nextBusinessDay(dateObj){
+  const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+  do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+  return d;
+}
+
+function fmtDatePrettyPL(dt){
+  if(!(dt instanceof Date)) return "—";
+  return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
+}
+
+// wybiera "today" tak jak u Ciebie w porannym skanie: ITEMS[0] po sortowaniu
+function pickTodayFromScan(scan){
+  const items = scan && Array.isArray(scan.items) ? scan.items : [];
+  if(!items.length) return null;
+  const sorted = [...items].sort((a,b) => parseISO(b.date) - parseISO(a.date));
+  return sorted[0] || null;
+}
+
+      
       wrap.innerHTML = CATEGORY_META.map(c => {
         const s = stats[c.key] || { count:0, last:"" };
         return `
@@ -625,12 +682,16 @@
         document.getElementById("asof").textContent =
           "Aktualizacja: " + new Date().toLocaleString("pl-PL");
 
-        const [manifest, scan] = await Promise.all([loadManifest(), loadScan()]);
+       const manifest = await loadManifest();
         const items = toItems(manifest);
-
+        
+        const ps = items.find(x => x.id === "poranny-skan");
+        const scan = ps ? await loadScan(ps.path) : null;
+        
         renderFeatured(items, scan);
         renderCategories(items);
         loadPrices();
+    
       } catch(e){
         const err = document.getElementById("err");
         err.style.display = "block";
