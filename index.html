@@ -437,15 +437,16 @@
       return await res.json();
     }
 
-    async function loadScan(){
-      try{
-        const res = await fetch("scan.json?ts=" + Date.now(), { cache:"no-store" });
-        if(!res.ok) return null;
-        return await res.json();
-      }catch(_){
-        return null;
-      }
-    }
+    async function loadScan(basePath){
+  try{
+    const p = (basePath || "").replace(/\/?$/, "/"); // gwarantuje trailing slash
+    const res = await fetch(p + "scan.json?ts=" + Date.now(), { cache:"no-store" });
+    if(!res.ok) return null;
+    return await res.json();
+  }catch(_){
+    return null;
+  }
+}
 
     function toItems(manifest){
       return Object.entries(manifest).map(([id, r]) => ({
