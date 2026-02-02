@@ -62,53 +62,87 @@
     "type": "folder"
   },
 
-  "usdpln": {
-    "name": "USD/PLN",
-    "description": "Analiza statystyczno-techniczna pary USD/PLN.",
-    "path": "raporty/analizy-stat-tech/waluty/usdpln/",
+   "eurpln": {
+    "name": "EUR/PLN",
+    "description": "Analiza statystyczno-techniczna pary EUR/PLN.",
+    "path": "raporty/analizy-stat-tech/waluty/eurpln/",
+    "updated": "2026-02-02",
+    "frequency": "dziennie",
+    "group": "analizy-stat-tech",
+    "section": "Waluty"
+  },
+  "eurusd": {
+    "name": "EUR/USD",
+    "description": "Analiza statystyczno-techniczna pary EUR/USD.",
+    "path": "raporty/analizy-stat-tech/waluty/eurusd/",
     "updated": "2026-02-02",
     "frequency": "dziennie",
     "group": "analizy-stat-tech",
     "section": "Waluty"
   },
 
-  "wasde": {
-    "name": "WASDE",
-    "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
-    "path": "raporty/raporty-fundamentalne/wasde/",
-    "updated": "2026-02-02",
-    "frequency": "miesięcznie",
-    "group": "raporty-fundamentalne",
-    "section": "Raporty"
-  },
-
-  "igc": {
-    "name": "IGC",
-    "description": "International Grain Council: bilanse, handel, prognozy.",
-    "path": "raporty/raporty-fundamentalne/igc/",
-    "updated": "2026-02-02",
-    "frequency": "miesięcznie",
-    "group": "raporty-fundamentalne",
-    "section": "Raporty"
-  },
-
-  "fao": {
-    "name": "FAO",
-    "description": "FAO: dane i trendy globalne w agro.",
-    "path": "raporty/raporty-fundamentalne/fao/",
-    "updated": "2026-02-02",
-    "frequency": "miesięcznie",
-    "group": "raporty-fundamentalne",
-    "section": "Raporty"
-  },
-
-  "ace-indexy-swiatowe": {
-    "name": "ACE Indexy Światowe",
-    "description": "Indeksy światowe i kontekst makro dla agro.",
-    "path": "raporty/raporty-fundamentalne/ace-indexy-swiatowe/",
+  "pszenica": {
+    "name": "Pszenica",
+    "description": "Analiza statystyczno-techniczna pszenicy.",
+    "path": "raporty/analizy-stat-tech/zboza/pszenica/",
     "updated": "2026-02-02",
     "frequency": "tygodniowo",
-    "group": "raporty-fundamentalne",
-    "section": "Raporty"
+    "group": "analizy-stat-tech",
+    "section": "Zboża"
+  },
+  "kukurydza": {
+    "name": "Kukurydza",
+    "description": "Analiza statystyczno-techniczna kukurydzy.",
+    "path": "raporty/analizy-stat-tech/zboza/kukurydza/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Zboża"
+  },
+  "rzepak": {
+    "name": "Rzepak",
+    "description": "Analiza statystyczno-techniczna rzepaku.",
+    "path": "raporty/analizy-stat-tech/zboza/rzepak/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Zboża"
+  },
+
+  "sojowa": {
+    "name": "Śruta sojowa",
+    "description": "Analiza statystyczno-techniczna śruty sojowej.",
+    "path": "raporty/analizy-stat-tech/sruty/sojowa/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Śruty"
+  },
+  "rzepakowa": {
+    "name": "Śruta rzepakowa",
+    "description": "Analiza statystyczno-techniczna śruty rzepakowej.",
+    "path": "raporty/analizy-stat-tech/sruty/rzepakowa/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Śruty"
+  },
+
+  "gaz": {
+    "name": "Gaz",
+    "description": "Analiza statystyczno-techniczna rynku gazu.",
+    "path": "raporty/analizy-stat-tech/energia/gaz/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Energia"
+  },
+  "prad": {
+    "name": "Prąd",
+    "description": "Analiza statystyczno-techniczna rynku energii elektrycznej.",
+    "path": "raporty/analizy-stat-tech/energia/prad/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "analizy-stat-tech",
+    "section": "Energia"
   }
-}
