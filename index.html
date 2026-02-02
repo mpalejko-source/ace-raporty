@@ -598,7 +598,7 @@
         const count = "—";
 
         // ✅ foldery prowadzą do kategorie.html, a nie do "gołego katalogu"
-        const href = abs(`kategorie.html?cat=${encodeURIComponent(r.id)}`);
+        const href = abs(`/kategorie.html?cat=${encodeURIComponent(r.id)}`);
 
         return `
           <a class="card" href="${href}">
