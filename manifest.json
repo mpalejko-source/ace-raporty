@@ -1,76 +1,114 @@
 {
   "poranny-skan": {
-    "type": "report",
     "name": "ACE – Poranny Skan Rynku",
-    "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum ostatnich dni.",
+    "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-01-29",
+    "updated": "2026-02-02",
     "frequency": "dziennie",
-    "next_issue": "2026-01-30"
+    "next_issue": "2026-02-03"
   },
 
   "chart-pack": {
-    "type": "report",
     "name": "ACE – Chart Pack",
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
-    "updated": "2026-01-29",
+    "updated": "2026-02-02",
     "frequency": "tygodniowo",
     "next_issue": "2026-02-07"
   },
   "pozycje-funduszy": {
-    "type": "report",
     "name": "ACE – Pozycje Funduszy",
-    "description": "Pozycjonowanie spekulantów / funduszy i kluczowe wnioski pod rynek.",
+    "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-01-29",
+    "updated": "2026-02-02",
     "frequency": "tygodniowo",
     "next_issue": "2026-02-07"
   },
   "benchmark-tygodnia": {
-    "type": "report",
     "name": "ACE – Benchmark Tygodnia",
-    "description": "Najważniejsze porównanie tygodnia + wnioski pod decyzje zakupowe/ryzyko.",
+    "description": "Szybkie porównania i wnioski tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "",
+    "updated": "2026-02-02",
     "frequency": "tygodniowo",
-    "next_issue": ""
+    "next_issue": "2026-02-07"
   },
   "decision-quadrants": {
-    "type": "report",
     "name": "ACE – Decision Quadrants",
-    "description": "Macierze decyzyjne: momentum vs ryzyko / sygnały vs kontekst.",
+    "description": "Macierze decyzyjne i sygnały risk-management.",
     "path": "raporty/decision-quadrants/",
-    "updated": "",
+    "updated": "2026-02-02",
     "frequency": "tygodniowo",
-    "next_issue": ""
+    "next_issue": "2026-02-07"
   },
   "weather-watch": {
-    "type": "report",
-    "name": "ACE – Weather Watch (Pogoda)",
-    "description": "Mapki pogodowe z krótką prognozą.",
+    "name": "ACE – Weather Watch",
+    "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-01-29",
+    "updated": "2026-02-02",
     "frequency": "tygodniowo",
     "next_issue": "2026-02-07"
   },
 
   "analizy-stat-tech": {
-    "type": "folder",
     "name": "Analizy Statystyczno-Techniczne",
-    "description": "Folder: wykresy, statystyki, technika, sezonowości, pozycjonowanie, sygnały.",
+    "description": "Waluty, zboża, śruty i energia – przeglądy i sygnały.",
     "path": "raporty/analizy-stat-tech/",
-    "updated": "",
-    "frequency": "folder",
-    "next_issue": ""
+    "type": "folder"
   },
   "raporty-fundamentalne": {
-    "type": "folder",
     "name": "Raporty Fundamentalne",
-    "description": "Folder: podaż/popyt, bilanse, eksport, przetargi, pogoda, geopolityka i makro.",
+    "description": "WASDE, IGC, FAO i ACE Indexy Światowe – kluczowe wnioski.",
     "path": "raporty/raporty-fundamentalne/",
-    "updated": "",
-    "frequency": "folder",
-    "next_issue": ""
+    "type": "folder"
+  },
+
+  "usdpln": {
+    "name": "USD/PLN",
+    "description": "Analiza statystyczno-techniczna pary USD/PLN.",
+    "path": "raporty/analizy-stat-tech/waluty/usdpln/",
+    "updated": "2026-02-02",
+    "frequency": "dziennie",
+    "group": "analizy-stat-tech",
+    "section": "Waluty"
+  },
+
+  "wasde": {
+    "name": "WASDE",
+    "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
+    "path": "raporty/raporty-fundamentalne/wasde/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "igc": {
+    "name": "IGC",
+    "description": "International Grain Council: bilanse, handel, prognozy.",
+    "path": "raporty/raporty-fundamentalne/igc/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "fao": {
+    "name": "FAO",
+    "description": "FAO: dane i trendy globalne w agro.",
+    "path": "raporty/raporty-fundamentalne/fao/",
+    "updated": "2026-02-02",
+    "frequency": "miesięcznie",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
+  },
+
+  "ace-indexy-swiatowe": {
+    "name": "ACE Indexy Światowe",
+    "description": "Indeksy światowe i kontekst makro dla agro.",
+    "path": "raporty/raporty-fundamentalne/ace-indexy-swiatowe/",
+    "updated": "2026-02-02",
+    "frequency": "tygodniowo",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty"
   }
 }
