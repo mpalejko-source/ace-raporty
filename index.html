@@ -346,7 +346,7 @@
         <img src="logo.png" alt="ACE Group" class="logo">
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">Poranny skan jako banner na górze. Niżej: kategorie raportów.</p>
+          <p class="sub">System raportów Agri Commodity Experts</p>
         </div>
       </div>
       <div class="pill" id="asof">Aktualizacja: —</div>
@@ -391,8 +391,8 @@
     <div id="err" class="error" style="display:none"></div>
 
     <footer>
-      Kategorie działają po polu <code>category</code> w <code>manifest.json</code>.
-      Poranny skan pobiera daty i lead z <code>raporty/poranny-skan/scan.json</code>.
+      Agri Commodity Experts Sp. z o.o. <code>mail</code> : <code>biuro@ace-group.pl</code>.
+      Napisz aby spytać o ofertę <code>ACE Reserved 2026</code>.
     </footer>
   </div>
 
@@ -519,7 +519,7 @@
           </div>
 
           <p class="fTitle">${ps.name}</p>
-          <p class="fToday">${todayLine}</p>
+        
 
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
@@ -647,7 +647,12 @@
 
       try{
         document.getElementById("asof").textContent =
-          "Aktualizacja: " + new Date().toLocaleString("pl-PL");
+         const now = new Date();
+          const date = now.toLocaleDateString("pl-PL");
+          const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+          
+          document.getElementById("asof").textContent =
+            `Olsztyn, ${date} ${time}`;
 
         const manifest = await loadManifest();
         const items = toItems(manifest);
