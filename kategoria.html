@@ -88,14 +88,8 @@
     }
     .backBtn:hover{ background: rgba(255,255,255,.10); }
 
-    .catHead{
-      margin-bottom:18px;
-    }
-    .catTitle{
-      margin:0;
-      font-size:20px;
-      font-weight:950;
-    }
+    .catHead{ margin-bottom:18px; }
+    .catTitle{ margin:0; font-size:20px; font-weight:950; }
     .catDesc{
       margin:8px 0 0;
       color:var(--muted);
@@ -104,7 +98,6 @@
       line-height:1.45;
     }
 
-    /* cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -153,18 +146,8 @@
       color: rgba(234,240,255,.90);
     }
 
-    .title{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      line-height:1.2;
-    }
-    .desc{
-      margin:8px 0 10px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
-    }
+    .title{ margin:0; font-size:16px; font-weight:900; line-height:1.2; }
+    .desc{ margin:8px 0 10px; color:var(--muted); font-size:13px; line-height:1.35; }
 
     .meta{
       display:flex;
@@ -218,15 +201,20 @@
 </div>
 
 <script>
-/* ===== KATEGORIE — EDYTUJ TU JEŚLI KIEDYKOLWIEK ===== */
+/* ===== KATEGORIE = GRUPY/FOLDERY Z manifest.json ===== */
 const CATEGORY_META = {
-  zboza:     { title:"Zboża i oleiste – rynki", desc:"Pszenica, kukurydza, rzepak, soja/śruta, MATIF/CBOT, Black Sea." },
-  bialko:    { title:"Białko paszowe i dodatki", desc:"Śruty, aminokwasy, witaminy, dodatki – ceny i fundamenty." },
-  indeksy:   { title:"Indeksy kosztów pasz / dashboardy", desc:"Indeksy, koszty wytworzenia, portfolio snapshot." },
-  energia:   { title:"Energia", desc:"Gaz, prąd, ropa – wpływ na koszty." },
-  fx:        { title:"FX & Makro", desc:"EUR/USD, USD/PLN, EUR/PLN, DXY, stopy, risk-on/off." },
-  specjalne: { title:"Raporty specjalne / tematyczne", desc:"Konferencje, duże opracowania, publikacje jednorazowe." },
-  arch:      { title:"Archiwum", desc:"Starsze wydania i zestawienia historyczne." }
+  glowne: {
+    title: "Raporty główne",
+    desc: "Stałe produkty ACE (Skan, Chart Pack, Quadrants, Weather Watch itd.)."
+  },
+  "analizy-stat-tech": {
+    title: "Analizy statystyczno-techniczne",
+    desc: "Waluty, zboża, śruty i energia — w układzie sekcji."
+  },
+  "raporty-fundamentalne": {
+    title: "Raporty fundamentalne",
+    desc: "WASDE, IGC, FAO oraz ACE Indexy Światowe."
+  }
 };
 
 function qs(name){
@@ -260,46 +248,85 @@ async function loadManifest(){
   return await res.json();
 }
 
+function normalizeEntry(id, r){
+  return {
+    id,
+    name: r.name || id,
+    description: r.description || "",
+    path: (r.path || ("raporty/"+id+"/")).replace(/^\/+/,''),
+    updated: r.updated || "",
+    frequency: r.frequency || "",
+    next: r.next_issue || "",
+    group: (r.group || "").toLowerCase(),
+    section: r.section || "",
+    type: (r.type || "").toLowerCase()
+  };
+}
+
+/*
+  Filtr kategorii:
+  - cat=glowne => wszystkie pozycje bez group (i nie-foldery)
+  - cat=<groupId> => wszystkie pozycje z group == cat (i nie-foldery)
+  - opcjonalnie: &section=Waluty/Zboża/Śruty/Energia/Raporty => zawęża
+*/
+function matchesCategory(entry, cat, section){
+  const isFolder = entry.type === "folder";
+  if(isFolder) return false; // <- jeśli chcesz, mogę to włączyć
+
+  if(cat === "glowne"){
+    return !entry.group && true;
+  }
+  if(entry.group === cat){
+    if(section) return (entry.section || "") === section;
+    return true;
+  }
+  return false;
+}
+
 (async ()=>{
   try{
     document.getElementById("asof").textContent =
       "Aktualizacja: " + new Date().toLocaleString("pl-PL");
 
-    const cat = qs("cat");
-    if(!cat || !CATEGORY_META[cat]) throw new Error("Nieznana kategoria");
+    const cat = (qs("cat") || "").toLowerCase();
+    const section = qs("section"); // opcjonalnie
+
+    if(!cat || !CATEGORY_META[cat]) throw new Error("Nieznana kategoria (cat)");
 
     const meta = CATEGORY_META[cat];
-    document.getElementById("catTitle").textContent = meta.title;
+    document.getElementById("catTitle").textContent = meta.title + (section ? ` — ${section}` : "");
     document.getElementById("catDesc").textContent = meta.desc;
     document.getElementById("pageTitle").textContent = meta.title;
 
-    const manifest = await loadManifest();
-    let items = Object.entries(manifest)
-      .map(([id,r]) => ({
-        id,
-        name: r.name || id,
-        description: r.description || "",
-        path: r.path || ("raporty/"+id+"/"),
-        updated: r.updated || "",
-        category: (r.category || "").toLowerCase(),
-        frequency: r.frequency || "",
-        next: r.next_issue || ""
-      }))
-      .filter(r => r.category === cat);
+    const manifestRaw = await loadManifest();
+    let items = Object.entries(manifestRaw)
+      .map(([id, r]) => normalizeEntry(id, r))
+      .filter(e => matchesCategory(e, cat, section));
 
-    items.sort((a,b)=> parseISO(b.updated)-parseISO(a.updated));
+    items.sort((a,b)=> parseISO(b.updated) - parseISO(a.updated));
 
     const grid = document.getElementById("grid");
+
+    if(items.length === 0){
+      grid.innerHTML = `<div class="error">Brak raportów w tej kategorii${section ? " / sekcji" : ""}.</div>`;
+      return;
+    }
+
     grid.innerHTML = items.map(r=>{
       let nextTxt = "—";
       if(r.next){
         const d = daysUntil(r.next);
         nextTxt = fmtDatePL(r.next) + (d!==null ? ` (za ${d} dni)`:"");
       }
+
+      // lekki dopisek sekcji (tylko jeśli istnieje i nie jesteśmy już w filtrze sekcji)
+      const secBadge = (r.section && !section) ? `<span class="badge">${r.section}</span>` : "";
+
       return `
-        <a class="card" href="${r.path.replace(/^\/+/,'')}">
+        <a class="card" href="${r.path}">
           <div class="topMeta">
             <span class="badge">${r.frequency || "raport"}</span>
+            ${secBadge}
             <span class="badge">Aktualizacja: ${fmtDatePL(r.updated)}</span>
           </div>
           <p class="title">${r.name}</p>
@@ -310,10 +337,6 @@ async function loadManifest(){
         </a>
       `;
     }).join("");
-
-    if(items.length===0){
-      grid.innerHTML = `<div class="error">Brak raportów w tej kategorii.</div>`;
-    }
 
   }catch(e){
     const err = document.getElementById("err");
