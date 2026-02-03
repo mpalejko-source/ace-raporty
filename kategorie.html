@@ -9,19 +9,9 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-
-<script>
-  const p = new URLSearchParams(location.search);
-  const cat = (p.get("cat") || "").toLowerCase();
-
-  if(cat === "analizy-stat-tech"){
-    location.replace("/raporty/analizy-stat-tech/index.html");
-  }
-</script>
-  
   <script>
     // Jedno źródło prawdy dla ścieżek:
-    // - GitHub Pages project site: /ace-raporty/
+    // - GitHub Pages project site: /{repo}/
     // - własna domena/subdomena: /
     const ROOT = location.hostname.endsWith("github.io")
       ? "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/"
@@ -29,6 +19,14 @@
 
     function url(path){
       return ROOT + String(path || "").replace(/^\/+/, "");
+    }
+
+    // Redirect: analizy-stat-tech -> nowa strona sekcyjna
+    const p = new URLSearchParams(location.search);
+    const cat = (p.get("cat") || "").trim().toLowerCase();
+
+    if(cat === "analizy-stat-tech"){
+      location.replace(url("raporty/analizy-stat-tech/index.html"));
     }
   </script>
 
@@ -262,7 +260,6 @@ function daysUntil(iso){
   return Math.round((t - today)/(24*60*60*1000));
 }
 
-// ✅ manifest zawsze przez url()
 async function loadManifest(){
   const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
   if(!res.ok) throw new Error("manifest.json ("+res.status+")");
@@ -307,7 +304,6 @@ function safeHrefPath(p){
 
 (async ()=> {
   try{
-    // dynamiczne linki zależne od ROOT
     document.getElementById("logoImg").src = url("logo.png");
     document.getElementById("backBtn").href = url("index.html");
 
