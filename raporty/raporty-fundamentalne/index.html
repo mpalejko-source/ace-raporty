@@ -1,17 +1,15 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <script>
-  if (sessionStorage.getItem("ace_access") !== "1") {
-    const next = encodeURIComponent(window.location.pathname);
-    window.location.href = "/ace-raporty/login.html?next=" + next;
+<script>
+  // BASE działa i na GitHub Pages, i na subdomenie
+  const BASE = "/";
+
+  function url(path){
+    return BASE + String(path || "").replace(/^\/+/, "");
   }
 </script>
-  <script>
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "/ace-raporty/login.html";
-    }
-  </script>
+
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
