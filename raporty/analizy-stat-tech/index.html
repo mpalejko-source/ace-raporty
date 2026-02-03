@@ -10,8 +10,6 @@
   }
 </script>
 
-
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Analizy Statystyczno-Techniczne</title>
@@ -90,17 +88,37 @@
       font-weight:950;
       display:flex;align-items:center;gap:10px;
       color: rgba(234,240,255,.92);
+      letter-spacing:.2px;
     }
     .divider{
-      height:1px;background: rgba(255,255,255,.10);
+      height:1px;
+      background: linear-gradient(90deg, rgba(125,211,252,.35), rgba(167,139,250,.25), rgba(255,255,255,.08));
       margin:10px 0 14px;
+      opacity:.9;
     }
 
-    .grid{
+    /* --- Sekcyjne układy siatki --- */
+    .sectionGrid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap:12px;
+      grid-template-columns: 1fr; /* mobile */
     }
+
+    @media (min-width: 720px){
+      .sectionGrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* tablet */
+      }
+    }
+
+    @media (min-width: 1020px){
+      .sectionGrid.three{
+        grid-template-columns: repeat(3, minmax(0, 1fr)); /* desktop: 3 */
+      }
+      .sectionGrid.two{
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* desktop: 2 */
+      }
+    }
+
     a.card{
       display:block;text-decoration:none;color:inherit;
       border:1px solid var(--border);
@@ -196,8 +214,12 @@
     if(!items.length) return;
 
     const sorted = [...items].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+
+    // desktop: 3 kolumny dla Waluty i Zboża, 2 kolumny dla reszty
+    const colsClass = (title === "Waluty" || title === "Zboża") ? "three" : "two";
+
     const grid = `
-      <div class="grid">
+      <div class="sectionGrid ${colsClass}">
         ${sorted.map(r => `
           <a class="card" href="/ace-raporty/${r.path.replace(/^\/+/,'')}">
             <div class="topMeta">
@@ -247,7 +269,7 @@
 
       const items = all.filter(x => x.group === "analizy-stat-tech");
 
-      // grupy/sekcje w kolejności jak chcesz
+      // kolejność sekcji
       const sectionsOrder = [
         { key:"Waluty", icon:"💱" },
         { key:"Zboża",  icon:"🌾" },
