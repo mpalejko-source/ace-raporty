@@ -160,7 +160,6 @@ h1{
 <body>
 <div class="wrap">
 
-  <!-- TYTUŁ CAŁOŚCI -->
   <h1>Analizy Statystyczno-Techniczne</h1>
   <div class="subtitle">
     Waluty, zboża, śruty i energia – uporządkowane analizy ACE
@@ -168,31 +167,33 @@ h1{
 
   <div class="divider"></div>
 
-  <!-- WALUTY -->
   <div class="sectionTitle">💱 WALUTY</div>
   <div class="grid-3" id="sec-waluty"></div>
 
   <div class="divider"></div>
 
-  <!-- ZBOŻA -->
   <div class="sectionTitle">🌾 ZBOŻA</div>
   <div class="grid-3" id="sec-zboza"></div>
 
   <div class="divider"></div>
 
-  <!-- ŚRUTY -->
   <div class="sectionTitle">🧩 ŚRUTY</div>
   <div class="grid-2" id="sec-sruty"></div>
 
   <div class="divider"></div>
 
-  <!-- ENERGIA -->
   <div class="sectionTitle">⚡ ENERGIA</div>
   <div class="grid-2" id="sec-energia"></div>
 
 </div>
 
 <script>
+function parseUpdated(iso){
+  if(!iso) return -Infinity;
+  const t = Date.parse(iso + "T00:00:00");
+  return isNaN(t) ? -Infinity : t;
+}
+
 function isNew(dateStr){
   if(!dateStr) return false;
   const d = new Date(dateStr + "T00:00:00");
@@ -223,20 +224,35 @@ async function load(){
   const res = await fetch(url("manifest.json") + "?t=" + Date.now(), {cache:"no-store"});
   const data = await res.json();
 
-  const items = Object.values(data)
+  const all = Object.values(data)
     .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
 
-  items.forEach(r=>{
+  // podział na sekcje
+  const waluty = [];
+  const zboza  = [];
+  const sruty  = [];
+  const energia= [];
+
+  all.forEach(r=>{
     const sec = (r.section || "").toLowerCase();
-    if(sec==="waluty")
-      document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="zboża" || sec==="zboza")
-      document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="śruty" || sec==="sruty")
-      document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="energia")
-      document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="waluty") waluty.push(r);
+    else if(sec==="zboża" || sec==="zboza") zboza.push(r);
+    else if(sec==="śruty" || sec==="sruty") sruty.push(r);
+    else if(sec==="energia") energia.push(r);
   });
+
+  // sortowanie: najnowsze pierwsze
+  const sortByDateDesc = (a,b)=>parseUpdated(b.updated)-parseUpdated(a.updated);
+  waluty.sort(sortByDateDesc);
+  zboza.sort(sortByDateDesc);
+  sruty.sort(sortByDateDesc);
+  energia.sort(sortByDateDesc);
+
+  // render
+  waluty.forEach(r => document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r)));
+  zboza.forEach(r  => document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r)));
+  sruty.forEach(r  => document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r)));
+  energia.forEach(r=> document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r)));
 }
 
 load();
