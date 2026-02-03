@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>ACE – dostęp do raportów</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
     body {
       margin: 0;
@@ -22,15 +23,18 @@
       width: 100%;
       max-width: 360px;
       box-shadow: 0 20px 50px rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.08);
     }
     h1 {
       margin: 0 0 8px;
       font-size: 20px;
+      letter-spacing: .2px;
     }
     p {
       margin: 0 0 20px;
       color: #94a3b8;
       font-size: 14px;
+      line-height: 1.35;
     }
     input {
       width: 100%;
@@ -41,6 +45,11 @@
       color: #e5e7eb;
       font-size: 14px;
       margin-bottom: 12px;
+      outline: none;
+    }
+    input:focus{
+      border-color: rgba(37, 99, 235, .75);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
     }
     button {
       width: 100%;
@@ -51,50 +60,104 @@
       color: white;
       font-size: 14px;
       cursor: pointer;
+      font-weight: 700;
     }
+    button:hover{ filter: brightness(1.05); }
     .error {
       margin-top: 10px;
       color: #f87171;
       font-size: 13px;
       display: none;
     }
+    .hint{
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(148,163,184,.85);
+    }
+    code{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
   </style>
+
+  <script>
+    // ===== BASE dla GitHub Pages project site (np. /ace-raporty/) =====
+    const BASE = "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/";
+
+    function url(path){
+      return BASE + String(path || "").replace(/^\/+/, "");
+    }
+
+    // jeśli już zalogowany → od razu dalej
+    if (sessionStorage.getItem("ace_access") === "1") {
+      const u = new URL(window.location.href);
+      const next = u.searchParams.get("next");
+      if (next && next.startsWith(BASE)) {
+        window.location.replace(next);
+      } else {
+        window.location.replace(url("index.html"));
+      }
+    }
+  </script>
 </head>
+
 <body>
   <div class="box">
     <h1>ACE – raporty</h1>
     <p>Dostęp tylko dla klientów</p>
 
-    <input type="password" id="password" placeholder="Hasło dostępu" />
-    <button onclick="login()">Wejdź</button>
+    <input type="password" id="password" placeholder="Hasło dostępu" autocomplete="current-password" />
+    <button id="btn">Wejdź</button>
 
     <div class="error" id="error">Nieprawidłowe hasło</div>
+    <div class="hint">Po zalogowaniu zapisujemy dostęp w <code>sessionStorage</code> (do zamknięcia przeglądarki).</div>
   </div>
 
   <script>
-  const PASSWORD = "ACE2026"; // <<< ZMIEŃ HASŁO
+    const PASSWORD = "ACE2026"; // <<< ZMIEŃ HASŁO
 
-  function getNext(){
-    const u = new URL(window.location.href);
-    const next = u.searchParams.get("next");
-    // tylko bezpieczne ścieżki w ramach tej strony
-    if(next && next.startsWith("/ace-raporty/")) return next;
-    return "/ace-raporty/index.html";
-  }
+    function normalizeNext(raw){
+      // pozwalamy tylko na ścieżki w obrębie tej strony (BASE)
+      if (!raw || typeof raw !== "string") return url("index.html");
 
-  function login() {
-    const val = document.getElementById("password").value;
-    if (val === PASSWORD) {
-      sessionStorage.setItem("ace_access", "1");
-      window.location.href = getNext();
-    } else {
-      document.getElementById("error").style.display = "block";
+      // raw może być pełnym URL — spróbujmy go sparsować
+      try{
+        const parsed = new URL(raw, window.location.origin);
+        if (parsed.pathname.startsWith(BASE)) {
+          return parsed.pathname + parsed.search + parsed.hash;
+        }
+      } catch(e){}
+
+      // raw jako ścieżka
+      if (raw.startsWith(BASE)) return raw;
+
+      // awaryjnie na panel
+      return url("index.html");
     }
-  }
 
-  document.getElementById("password").addEventListener("keydown", e => {
-    if (e.key === "Enter") login();
-  });
-</script>
+    function getNext(){
+      const u = new URL(window.location.href);
+      const next = u.searchParams.get("next");
+      return normalizeNext(next);
+    }
+
+    function login() {
+      const val = document.getElementById("password").value || "";
+      if (val === PASSWORD) {
+        sessionStorage.setItem("ace_access", "1");
+        window.location.replace(getNext());
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+
+    document.getElementById("btn").addEventListener("click", login);
+    document.getElementById("password").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") login();
+    });
+  </script>
 </body>
 </html>
