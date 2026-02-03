@@ -2,7 +2,6 @@
 <html lang="pl">
 <head>
 <script>
-  // BASE działa i na GitHub Pages, i na subdomenie
   const BASE = "/";
 
   function url(path){
@@ -10,288 +9,200 @@
   }
 </script>
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ACE – Analizy Statystyczno-Techniczne</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ACE – Analizy Statystyczno-Techniczne</title>
 
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 
-  <style>
-    :root{
-      --bg:#0b1220;
-      --border:rgba(255,255,255,.10);
-      --text:#eaf0ff;
-      --muted:rgba(234,240,255,.72);
-      --muted2:rgba(234,240,255,.55);
-      --accent:#7dd3fc;
-      --accent2:#a78bfa;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      min-height:100vh;
-    }
-    .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 44px}
-    header{
-      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px;
-      align-items:flex-start;
-    }
-    .brand{display:flex;gap:14px;align-items:center}
-    .logo{height:54px;filter: drop-shadow(0 10px 24px rgba(0,0,0,.45))}
-    h1{margin:0;font-size:22px}
-    .sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35;max-width:720px}
+<style>
+:root{
+  --bg:#0b1220;
+  --card:#0f1a33;
+  --border:rgba(255,255,255,.10);
+  --text:#eaf0ff;
+  --muted:rgba(234,240,255,.72);
+  --muted2:rgba(234,240,255,.55);
+  --accent:#7dd3fc;
+  --accent2:#a78bfa;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:16px;
+}
 
-    .pill{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      padding:8px 12px;
-      border-radius:999px;
-      color:var(--muted2);
-      font-size:12px;
-      box-shadow: var(--shadow);
-      white-space:nowrap;
-      display:inline-flex;gap:8px;align-items:center;
-    }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
+    var(--bg);
+}
 
-    .backRow{margin:8px 0 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .backBtn{
-      display:inline-flex;gap:8px;align-items:center;
-      padding:8px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.92);
-      font-size:13px;text-decoration:none;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-    }
-    .backBtn:hover{background: rgba(255,255,255,.10)}
+.wrap{max-width:1100px;margin:0 auto;padding:26px 18px 60px}
 
-    .section{
-      margin-top:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:14px;
-    }
-    .sectionTitle{
-      margin:0 0 10px;
-      font-size:15px;
-      font-weight:950;
-      display:flex;align-items:center;gap:10px;
-      color: rgba(234,240,255,.92);
-      letter-spacing:.2px;
-    }
-    .divider{
-      height:1px;
-      background: linear-gradient(90deg, rgba(125,211,252,.35), rgba(167,139,250,.25), rgba(255,255,255,.08));
-      margin:10px 0 14px;
-      opacity:.9;
-    }
+h1{
+  margin:0;
+  font-size:26px;
+  font-weight:900;
+}
 
-    /* --- Sekcyjne układy siatki --- */
-    .sectionGrid{
-      display:grid;
-      gap:12px;
-      grid-template-columns: 1fr; /* mobile */
-    }
+.subtitle{
+  margin-top:6px;
+  font-size:14px;
+  color:var(--muted);
+}
 
-    @media (min-width: 720px){
-      .sectionGrid{
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* tablet */
-      }
-    }
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,
+    rgba(125,211,252,.45),
+    rgba(167,139,250,.35),
+    rgba(255,255,255,.08)
+  );
+  margin:26px 0;
+}
 
-    @media (min-width: 1020px){
-      .sectionGrid.three{
-        grid-template-columns: repeat(3, minmax(0, 1fr)); /* desktop: 3 */
-      }
-      .sectionGrid.two{
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* desktop: 2 */
-      }
-    }
+.sectionTitle{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:14px;
+  letter-spacing:.3px;
+}
 
-    a.card{
-      display:block;text-decoration:none;color:inherit;
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding:14px;
-      position:relative;overflow:hidden;
-      transition: transform .08s ease, border-color .08s ease;
-    }
-    a.card:hover{transform: translateY(-1px);border-color: rgba(255,255,255,.18)}
-    a.card:before{
-      content:"";position:absolute;inset:-1px;
-      background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
-                  radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.12), transparent 60%);
-      pointer-events:none;
-    }
-    a.card > *{position:relative}
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
 
-    .topMeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-    .badge{
-      display:inline-flex;gap:6px;align-items:center;
-      padding:6px 10px;border-radius:999px;
-      font-size:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.90);
-      white-space:nowrap;
-    }
-    .title{margin:0;font-size:16px;font-weight:950;line-height:1.2}
-    .desc{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
 
-    .error{
-      border:1px solid rgba(255,120,120,.25);
-      background: rgba(255,120,120,.08);
-      padding:12px 14px;border-radius:14px;
-      color:rgba(255,220,220,.92);
-      margin-top:14px;font-size:13px;
-      box-shadow: var(--shadow);
-      white-space:pre-wrap;
-      display:none;
-    }
-  </style>
+@media(max-width:900px){
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .grid-3,.grid-2{grid-template-columns:1fr}
+}
+
+.card{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:var(--shadow);
+  transition:.15s ease;
+}
+.card:hover{
+  background:rgba(255,255,255,.07);
+  transform:translateY(-1px);
+}
+
+.badges{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+  flex-wrap:wrap;
+}
+.badge{
+  font-size:12px;
+  padding:5px 9px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.06);
+  color:var(--muted2);
+}
+
+.cardTitle{
+  font-size:15px;
+  font-weight:900;
+  margin:0 0 6px;
+}
+.cardDesc{
+  font-size:13px;
+  color:var(--muted);
+  margin:0;
+}
+</style>
 </head>
 
 <body>
 <div class="wrap">
-  <header>
-    <div class="brand">
-      <img src="/ace-raporty/logo.png" class="logo" alt="ACE Group">
-      <div>
-        <h1>Analizy Statystyczno-Techniczne</h1>
-        <p class="sub">Waluty, zboża, śruty i energia – układ sekcyjny + kafelki do raportów.</p>
-      </div>
-    </div>
-    <div class="pill" id="asof">📍 Olsztyn • 🕒 —</div>
-  </header>
 
-  <div class="backRow">
-    <a class="backBtn" href="/ace-raporty/index.html">← Panel główny</a>
+  <!-- TYTUŁ CAŁOŚCI -->
+  <h1>Analizy Statystyczno-Techniczne</h1>
+  <div class="subtitle">
+    Waluty, zboża, śruty i energia – uporządkowane analizy ACE
   </div>
 
-  <div id="sections"></div>
-  <div id="err" class="error"></div>
+  <div class="divider"></div>
+
+  <!-- WALUTY -->
+  <div class="sectionTitle">💱 WALUTY</div>
+  <div class="grid-3" id="sec-waluty"></div>
+
+  <div class="divider"></div>
+
+  <!-- ZBOŻA -->
+  <div class="sectionTitle">🌾 ZBOŻA</div>
+  <div class="grid-3" id="sec-zboza"></div>
+
+  <div class="divider"></div>
+
+  <!-- ŚRUTY -->
+  <div class="sectionTitle">🧩 ŚRUTY</div>
+  <div class="grid-2" id="sec-sruty"></div>
+
+  <div class="divider"></div>
+
+  <!-- ENERGIA -->
+  <div class="sectionTitle">⚡ ENERGIA</div>
+  <div class="grid-2" id="sec-energia"></div>
+
 </div>
 
 <script>
-  function fmtDatePL(iso){
-    if(!iso || typeof iso !== "string") return "—";
-    const p = iso.split("-");
-    if(p.length !== 3) return iso;
-    return `${p[2]}.${p[1]}.${p[0]}`;
-  }
-  function parseISO(iso){
-    if(!iso) return -Infinity;
-    const t = Date.parse(iso + "T00:00:00Z");
-    return isNaN(t) ? -Infinity : t;
-  }
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
-  }
+async function load(){
+  const res = await fetch(url("manifest.json") + "?t=" + Date.now(), {cache:"no-store"});
+  const data = await res.json();
 
-  async function loadManifest(){
-    const res = await fetch("/ace-raporty/manifest.json?ts=" + Date.now(), { cache:"no-store" });
-    if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
-    return await res.json();
+  const items = Object.values(data)
+    .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
+
+  function card(r){
+    return `
+      <a class="card" href="${url(r.path)}">
+        <div class="badges">
+          <span class="badge">${r.frequency || "raport"}</span>
+          <span class="badge">${r.updated || ""}</span>
+        </div>
+        <p class="cardTitle">${r.name}</p>
+        <p class="cardDesc">${r.description || ""}</p>
+      </a>`;
   }
 
-  function renderSection(container, title, icon, items){
-    if(!items.length) return;
+  items.forEach(r=>{
+    const sec = (r.section || "").toLowerCase();
+    if(sec==="waluty")   document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="zboża"||sec==="zboza") document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="śruty"||sec==="sruty") document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="energia")  document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r));
+  });
+}
 
-    const sorted = [...items].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
-
-    // desktop: 3 kolumny dla Waluty i Zboża, 2 kolumny dla reszty
-    const colsClass = (title === "Waluty" || title === "Zboża") ? "three" : "two";
-
-    const grid = `
-      <div class="sectionGrid ${colsClass}">
-        ${sorted.map(r => `
-          <a class="card" href="/ace-raporty/${r.path.replace(/^\/+/,'')}">
-            <div class="topMeta">
-              <span class="badge">${esc(r.frequency || "raport")}</span>
-              <span class="badge">Aktualizacja: ${esc(fmtDatePL(r.updated))}</span>
-            </div>
-            <p class="title">${esc(r.name)}</p>
-            <p class="desc">${esc(r.description)}</p>
-          </a>
-        `).join("")}
-      </div>
-    `;
-
-    const html = `
-      <section class="section">
-        <p class="sectionTitle">${esc(icon)} ${esc(title)}</p>
-        <div class="divider"></div>
-        ${grid}
-      </section>
-    `;
-    container.insertAdjacentHTML("beforeend", html);
-  }
-
-  (async ()=>{
-    const err = document.getElementById("err");
-    const showErr = (msg) => { err.style.display="block"; err.textContent = msg; };
-
-    // pill: Olsztyn + data/godz
-    const now = new Date();
-    const date = now.toLocaleDateString("pl-PL");
-    const time = now.toLocaleTimeString("pl-PL", { hour:"2-digit", minute:"2-digit" });
-    document.getElementById("asof").textContent = `📍 Olsztyn • 🕒 ${date} ${time}`;
-
-    try{
-      const manifest = await loadManifest();
-
-      const all = Object.entries(manifest).map(([id, r]) => ({
-        id,
-        name: r.name || id,
-        description: r.description || "",
-        path: r.path || "",
-        updated: r.updated || "",
-        frequency: r.frequency || "",
-        group: (r.group || "").toString().trim().toLowerCase(),
-        section: (r.section || "").toString().trim()
-      }));
-
-      const items = all.filter(x => x.group === "analizy-stat-tech");
-
-      // kolejność sekcji
-      const sectionsOrder = [
-        { key:"Waluty", icon:"💱" },
-        { key:"Zboża",  icon:"🌾" },
-        { key:"Śruty",  icon:"🧩" },
-        { key:"Energia",icon:"⚡" }
-      ];
-
-      const host = document.getElementById("sections");
-      if(!items.length){
-        showErr("Brak pozycji w manifest.json z group = \"analizy-stat-tech\".");
-        return;
-      }
-
-      sectionsOrder.forEach(s=>{
-        const arr = items.filter(x => x.section === s.key);
-        renderSection(host, s.key, s.icon, arr);
-      });
-
-    }catch(e){
-      showErr("Błąd: " + (e && e.message ? e.message : e));
-    }
-  })();
+load();
 </script>
+
 </body>
 </html>
