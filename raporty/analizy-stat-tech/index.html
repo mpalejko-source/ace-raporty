@@ -32,6 +32,7 @@
 }
 
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
@@ -42,7 +43,11 @@ body{
     var(--bg);
 }
 
-.wrap{max-width:1100px;margin:0 auto;padding:26px 18px 60px}
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:28px 18px 60px;
+}
 
 h1{
   margin:0;
@@ -58,7 +63,8 @@ h1{
 
 .divider{
   height:1px;
-  background:linear-gradient(90deg,
+  background:linear-gradient(
+    90deg,
     rgba(125,211,252,.45),
     rgba(167,139,250,.35),
     rgba(255,255,255,.08)
@@ -103,6 +109,7 @@ h1{
   box-shadow:var(--shadow);
   transition:.15s ease;
 }
+
 .card:hover{
   background:rgba(255,255,255,.07);
   transform:translateY(-1px);
@@ -115,6 +122,7 @@ h1{
   margin-bottom:8px;
   flex-wrap:wrap;
 }
+
 .badge{
   font-size:12px;
   padding:5px 9px;
@@ -124,11 +132,23 @@ h1{
   color:var(--muted2);
 }
 
+.badgeNew{
+  font-size:11px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-weight:900;
+  letter-spacing:.3px;
+  color:#081018;
+  background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+  box-shadow:0 6px 18px rgba(125,211,252,.35);
+}
+
 .cardTitle{
   font-size:15px;
   font-weight:900;
   margin:0 0 6px;
 }
+
 .cardDesc{
   font-size:13px;
   color:var(--muted);
@@ -173,6 +193,32 @@ h1{
 </div>
 
 <script>
+function isNew(dateStr){
+  if(!dateStr) return false;
+  const d = new Date(dateStr + "T00:00:00");
+  if(isNaN(d)) return false;
+  const now = new Date();
+  const diffDays = (now - d) / (1000*60*60*24);
+  return diffDays <= 1.5; // dziś / wczoraj
+}
+
+function card(r){
+  const newBadge = isNew(r.updated)
+    ? `<span class="badgeNew">NOWE</span>`
+    : "";
+
+  return `
+    <a class="card" href="${url(r.path)}">
+      <div class="badges">
+        ${newBadge}
+        <span class="badge">${r.frequency || "raport"}</span>
+        <span class="badge">${r.updated || ""}</span>
+      </div>
+      <p class="cardTitle">${r.name}</p>
+      <p class="cardDesc">${r.description || ""}</p>
+    </a>`;
+}
+
 async function load(){
   const res = await fetch(url("manifest.json") + "?t=" + Date.now(), {cache:"no-store"});
   const data = await res.json();
@@ -180,24 +226,16 @@ async function load(){
   const items = Object.values(data)
     .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
 
-  function card(r){
-    return `
-      <a class="card" href="${url(r.path)}">
-        <div class="badges">
-          <span class="badge">${r.frequency || "raport"}</span>
-          <span class="badge">${r.updated || ""}</span>
-        </div>
-        <p class="cardTitle">${r.name}</p>
-        <p class="cardDesc">${r.description || ""}</p>
-      </a>`;
-  }
-
   items.forEach(r=>{
     const sec = (r.section || "").toLowerCase();
-    if(sec==="waluty")   document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="zboża"||sec==="zboza") document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="śruty"||sec==="sruty") document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r));
-    if(sec==="energia")  document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="waluty")
+      document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="zboża" || sec==="zboza")
+      document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="śruty" || sec==="sruty")
+      document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r));
+    if(sec==="energia")
+      document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r));
   });
 }
 
