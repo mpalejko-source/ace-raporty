@@ -9,6 +9,16 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
+
+<script>
+  const p = new URLSearchParams(location.search);
+  const cat = (p.get("cat") || "").toLowerCase();
+
+  if(cat === "analizy-stat-tech"){
+    location.replace("/raporty/analizy-stat-tech/index.html");
+  }
+</script>
+  
   <script>
     // Jedno źródło prawdy dla ścieżek:
     // - GitHub Pages project site: /ace-raporty/
