@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <script>
-    // ✅ działa z każdego podfolderu
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "/login.html";
-    }
-  </script>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Panel raportów</title>
@@ -15,6 +8,21 @@
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+
+  <script>
+    // ===== BASE dla GitHub Pages project site =====
+    // np. https://mpalejko-source.github.io/ace-raporty/  => BASE="/ace-raporty/"
+    const BASE = "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/";
+
+    function url(path){
+      return BASE + String(path || "").replace(/^\/+/, "");
+    }
+
+    // ===== Guard (login) — działa z każdego miejsca =====
+    if (sessionStorage.getItem("ace_access") !== "1") {
+      window.location.replace(url("login.html"));
+    }
+  </script>
 
   <style>
     :root{
@@ -318,7 +326,7 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
-    /* ===== FOLDERS grid (2 duże) ===== */
+    /* ===== FOLDERS grid ===== */
     .folderGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -361,7 +369,7 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <img src="/logo.png" alt="ACE Group" class="logo">
+        <img src="" alt="ACE Group" class="logo" id="logoImg">
         <div>
           <h1>ACE – Panel raportów</h1>
           <p class="sub">System raportów Agri Commodity Experts</p>
@@ -371,17 +379,14 @@
       <div class="pill" id="asof"><span class="ico">📍</span> <span>Olsztyn —</span></div>
     </header>
 
-    <!-- FEATURED -->
     <div class="featuredWrap" id="featuredWrap"></div>
 
-    <!-- QUICK -->
     <div class="sectionHead">
       <p class="h2">Szybki dostęp</p>
       <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
-    <!-- PRICES -->
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych</p>
@@ -407,7 +412,6 @@
       </section>
     </section>
 
-    <!-- FOLDERS -->
     <div class="sectionHead">
       <p class="h2">Biblioteka raportów</p>
       <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
@@ -422,32 +426,20 @@
   </div>
 
   <script>
-    // ===== CONFIG =====
+    // ustaw logo poprawnie (bez /logo.png)
+    document.getElementById("logoImg").src = url("logo.png");
+
     const CONFIG = { location: "Olsztyn" };
 
     const FEATURED_KEY = "poranny-skan";
-    const QUICK_KEYS = [
-      "chart-pack",
-      "pozycje-funduszy",
-      "benchmark-tygodnia",
-      "decision-quadrants",
-      "weather-watch"
-    ];
-    const FOLDER_KEYS = [
-      "analizy-stat-tech",
-      "raporty-fundamentalne"
-    ];
-
-    // ✅ helper: zawsze w root (niezależnie od folderu)
-    const ROOT = "/";
-    const abs = (p) => (p.startsWith("/") ? p : (ROOT + p.replace(/^\/+/, "")));
+    const QUICK_KEYS = ["chart-pack","pozycje-funduszy","benchmark-tygodnia","decision-quadrants","weather-watch"];
+    const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
-      const parts = iso.split("-");
-      if(parts.length !== 3) return iso;
-      const [y,m,d] = parts;
-      return `${d}.${m}.${y}`;
+      const p = iso.split("-");
+      if(p.length !== 3) return iso;
+      return `${p[2]}.${p[1]}.${p[0]}`;
     }
 
     function parseISO(iso){
@@ -459,8 +451,7 @@
     function parseISODateLocal(iso){
       const p = (iso || "").split("-");
       if(p.length !== 3) return null;
-      const y = Number(p[0]), m = Number(p[1]) - 1, d = Number(p[2]);
-      const dt = new Date(y, m, d);
+      const dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
       return isNaN(dt.getTime()) ? null : dt;
     }
 
@@ -482,20 +473,19 @@
     }
 
     function safePath(p){
-      // jeśli ktoś dał pełny URL, nie ruszamy
       const s = (p || "").toString();
       if(/^https?:\/\//i.test(s)) return s;
-      return abs(s.replace(/^\/+/, ""));
+      return url(s);
     }
 
     async function loadManifest(){
-      const res = await fetch(abs("manifest.json?ts=" + Date.now()), { cache:"no-store" });
+      const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
       return await res.json();
     }
 
     async function loadPorannyScanJSON(){
-      const res = await fetch(abs("raporty/poranny-skan/scan.json?ts=" + Date.now()), { cache:"no-store" });
+      const res = await fetch(url("raporty/poranny-skan/scan.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) return null;
       return await res.json();
     }
@@ -547,7 +537,9 @@
             <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
             <span class="badge">${freq}</span>
           </div>
+
           <p class="fTitle">${ps.name}</p>
+
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
           </div>
@@ -595,10 +587,8 @@
 
       wrap.innerHTML = list.map(r => {
         const upd = r.updated ? fmtDatePL(r.updated) : "—";
+        const href = url(`kategorie.html?cat=${encodeURIComponent(r.id)}`);
         const count = "—";
-
-        // ✅ foldery prowadzą do kategorie.html, a nie do "gołego katalogu"
-        const href = abs(`/kategorie.html?cat=${encodeURIComponent(r.id)}`);
 
         return `
           <a class="card" href="${href}">
@@ -685,7 +675,7 @@
 
     async function loadPrices(){
       try{
-        const res = await fetch(abs("prices.json?ts=" + Date.now()), { cache:"no-store" });
+        const res = await fetch(url("prices.json?ts=" + Date.now()), { cache:"no-store" });
         if(!res.ok) throw new Error("prices.json (" + res.status + ")");
         const data = await res.json();
 
