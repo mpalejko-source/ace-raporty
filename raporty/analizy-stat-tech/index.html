@@ -61,6 +61,31 @@ h1{
   color:var(--muted);
 }
 
+/* === PRZYCISK POWROT DO PANELU === */
+.backRow{
+  margin:10px 0 18px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.backBtn{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(234,240,255,.92);
+  font-size:13px;
+  text-decoration:none;
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+.backBtn:hover{
+  background: rgba(255,255,255,.10);
+}
+
 .divider{
   height:1px;
   background:linear-gradient(
@@ -163,6 +188,11 @@ h1{
   <h1>Analizy Statystyczno-Techniczne</h1>
   <div class="subtitle">
     Waluty, zboża, śruty i energia – uporządkowane analizy ACE
+  </div>
+
+  <!-- ✅ PRZYCISK POWROT DO PANELU -->
+  <div class="backRow">
+    <a class="backBtn" href="/index.html">← Panel główny</a>
   </div>
 
   <div class="divider"></div>
