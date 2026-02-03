@@ -1,23 +1,6 @@
 <!doctype html>
 <html lang="pl">
 <head>
-
-  // BASE działa i na GitHub Pages, i na subdomenie
-  <script>
-  // Jedno źródło prawdy dla ścieżek:
-  // - na GitHub Pages project site: /ace-raporty/
-  // - na własnej domenie/subdomenie: /
-  const ROOT = location.hostname.endsWith("github.io")
-    ? "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/"
-    : "/";
-
-  function url(path){
-    return ROOT + String(path || "").replace(/^\/+/, "");
-  }
-</script>
-
-
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ACE – Kategorie raportów</title>
@@ -25,6 +8,19 @@
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+
+  <script>
+    // Jedno źródło prawdy dla ścieżek:
+    // - GitHub Pages project site: /ace-raporty/
+    // - własna domena/subdomena: /
+    const ROOT = location.hostname.endsWith("github.io")
+      ? "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/"
+      : "/";
+
+    function url(path){
+      return ROOT + String(path || "").replace(/^\/+/, "");
+    }
+  </script>
 
   <style>
     :root{
@@ -184,6 +180,7 @@
       box-shadow: var(--shadow);
       white-space:pre-wrap;
     }
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
   </style>
 </head>
 
@@ -191,7 +188,7 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <img src="/ace-raporty/logo.png" class="logo" alt="ACE Group">
+      <img id="logoImg" src="" class="logo" alt="ACE Group">
       <div>
         <h1 id="pageTitle">Kategoria</h1>
         <p class="sub" id="pageSub">Lista raportów</p>
@@ -201,7 +198,7 @@
   </header>
 
   <div class="backRow">
-    <a class="backBtn" href="/ace-raporty/index.html">← Panel główny</a>
+    <a class="backBtn" id="backBtn" href="#">← Panel główny</a>
   </div>
 
   <div class="catHead">
@@ -230,10 +227,6 @@ const CATEGORY_META = {
   }
 };
 
-// ✅ ROOT projektu na GitHub Pages
-const BASE = "/ace-raporty/";
-const abs = (p) => BASE + String(p || "").replace(/^\/+/, "");
-
 // ===== helpers =====
 function qs(name){
   return new URLSearchParams(window.location.search).get(name);
@@ -259,9 +252,9 @@ function daysUntil(iso){
   return Math.round((t - today)/(24*60*60*1000));
 }
 
-// ✅ manifest zawsze z root
+// ✅ manifest zawsze przez url()
 async function loadManifest(){
-  const res = await fetch(abs("manifest.json?ts=" + Date.now()), { cache:"no-store" });
+  const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
   if(!res.ok) throw new Error("manifest.json ("+res.status+")");
   return await res.json();
 }
@@ -281,12 +274,6 @@ function normalizeEntry(id, r){
   };
 }
 
-/*
-  Filtr kategorii:
-  - cat=glowne => wszystkie pozycje bez group (i nie-foldery)
-  - cat=<groupId> => wszystkie pozycje z group == cat (i nie-foldery)
-  - opcjonalnie: &section=Waluty/Zboża/Śruty/Energia/Raporty => zawęża
-*/
 function matchesCategory(entry, cat, section){
   const isFolder = entry.type === "folder";
   if(isFolder) return false;
@@ -303,15 +290,17 @@ function matchesCategory(entry, cat, section){
 }
 
 function safeHrefPath(p){
-  const s = (p || "").toString().replace(/^\/+/, "");
-  // jeśli ktoś poda pełny URL, to zostawiamy
+  const s = (p || "").toString();
   if(/^https?:\/\//i.test(s)) return s;
-  // p w manifeście masz bez /ace-raporty/, więc doklejamy BASE
-  return abs(s);
+  return url(s.replace(/^\/+/, ""));
 }
 
 (async ()=> {
   try{
+    // dynamiczne linki zależne od ROOT
+    document.getElementById("logoImg").src = url("logo.png");
+    document.getElementById("backBtn").href = url("index.html");
+
     document.getElementById("asof").textContent =
       "Aktualizacja: " + new Date().toLocaleString("pl-PL");
 
@@ -348,7 +337,7 @@ function safeHrefPath(p){
 
       const secBadge = (r.section && !section) ? `<span class="badge">${r.section}</span>` : "";
       const upd = r.updated ? fmtDatePL(r.updated) : "—";
-      const freq = r.frequency || "raport";
+      const freq = (r.frequency || "raport").toString().trim() || "raport";
 
       return `
         <a class="card" href="${safeHrefPath(r.path)}">
