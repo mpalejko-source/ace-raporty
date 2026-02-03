@@ -2,9 +2,13 @@
 <html lang="pl">
 <head>
   <script>
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.href = "./login.html";
-    }
+    // ✅ login działa z każdego miejsca + wraca na aktualną stronę
+    (function () {
+      if (sessionStorage.getItem("ace_access") !== "1") {
+        const next = location.pathname + location.search + location.hash;
+        window.location.href = "/ace-raporty/login.html?next=" + encodeURIComponent(next);
+      }
+    })();
   </script>
 
   <meta charset="utf-8" />
@@ -144,6 +148,7 @@
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       color: rgba(234,240,255,.90);
+      white-space:nowrap;
     }
 
     .title{ margin:0; font-size:16px; font-weight:900; line-height:1.2; }
@@ -170,6 +175,7 @@
       margin-top:14px;
       font-size:13px;
       box-shadow: var(--shadow);
+      white-space:pre-wrap;
     }
   </style>
 </head>
@@ -178,7 +184,7 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <img src="logo.png" class="logo" alt="ACE Group">
+      <img src="/ace-raporty/logo.png" class="logo" alt="ACE Group">
       <div>
         <h1 id="pageTitle">Kategoria</h1>
         <p class="sub" id="pageSub">Lista raportów</p>
@@ -188,7 +194,7 @@
   </header>
 
   <div class="backRow">
-    <a class="backBtn" href="/index.html">← Panel główny</a>
+    <a class="backBtn" href="/ace-raporty/index.html">← Panel główny</a>
   </div>
 
   <div class="catHead">
@@ -217,22 +223,26 @@ const CATEGORY_META = {
   }
 };
 
+// ✅ ROOT projektu na GitHub Pages
+const BASE = "/ace-raporty/";
+const abs = (p) => BASE + String(p || "").replace(/^\/+/, "");
+
+// ===== helpers =====
 function qs(name){
   return new URLSearchParams(window.location.search).get(name);
 }
-
 function fmtDatePL(iso){
   if(!iso || typeof iso !== "string") return "—";
-  const [y,m,d] = iso.split("-");
+  const parts = iso.split("-");
+  if(parts.length !== 3) return iso;
+  const [y,m,d] = parts;
   return `${d}.${m}.${y}`;
 }
-
 function parseISO(iso){
   if(!iso) return -Infinity;
   const t = Date.parse(iso + "T00:00:00Z");
   return isNaN(t) ? -Infinity : t;
 }
-
 function daysUntil(iso){
   if(!iso) return null;
   const t = Date.parse(iso + "T00:00:00Z");
@@ -242,8 +252,9 @@ function daysUntil(iso){
   return Math.round((t - today)/(24*60*60*1000));
 }
 
+// ✅ manifest zawsze z root
 async function loadManifest(){
-  const res = await fetch("manifest.json?ts=" + Date.now(), { cache:"no-store" });
+  const res = await fetch(abs("manifest.json?ts=" + Date.now()), { cache:"no-store" });
   if(!res.ok) throw new Error("manifest.json ("+res.status+")");
   return await res.json();
 }
@@ -253,13 +264,13 @@ function normalizeEntry(id, r){
     id,
     name: r.name || id,
     description: r.description || "",
-    path: (r.path || ("raporty/"+id+"/")).replace(/^\/+/,''),
+    path: (r.path || ("raporty/"+id+"/")).toString(),
     updated: r.updated || "",
     frequency: r.frequency || "",
     next: r.next_issue || "",
-    group: (r.group || "").toLowerCase(),
-    section: r.section || "",
-    type: (r.type || "").toLowerCase()
+    group: (r.group || "").toString().toLowerCase(),
+    section: (r.section || "").toString(),
+    type: (r.type || "").toString().toLowerCase()
   };
 }
 
@@ -271,10 +282,11 @@ function normalizeEntry(id, r){
 */
 function matchesCategory(entry, cat, section){
   const isFolder = entry.type === "folder";
-  if(isFolder) return false; // <- jeśli chcesz, mogę to włączyć
+  if(isFolder) return false;
 
   if(cat === "glowne"){
-    return !entry.group && true;
+    if(entry.group) return false;
+    return true;
   }
   if(entry.group === cat){
     if(section) return (entry.section || "") === section;
@@ -283,7 +295,15 @@ function matchesCategory(entry, cat, section){
   return false;
 }
 
-(async ()=>{
+function safeHrefPath(p){
+  const s = (p || "").toString().replace(/^\/+/, "");
+  // jeśli ktoś poda pełny URL, to zostawiamy
+  if(/^https?:\/\//i.test(s)) return s;
+  // p w manifeście masz bez /ace-raporty/, więc doklejamy BASE
+  return abs(s);
+}
+
+(async ()=> {
   try{
     document.getElementById("asof").textContent =
       "Aktualizacja: " + new Date().toLocaleString("pl-PL");
@@ -312,22 +332,23 @@ function matchesCategory(entry, cat, section){
       return;
     }
 
-    grid.innerHTML = items.map(r=>{
+    grid.innerHTML = items.map(r => {
       let nextTxt = "—";
       if(r.next){
         const d = daysUntil(r.next);
         nextTxt = fmtDatePL(r.next) + (d!==null ? ` (za ${d} dni)`:"");
       }
 
-      // lekki dopisek sekcji (tylko jeśli istnieje i nie jesteśmy już w filtrze sekcji)
       const secBadge = (r.section && !section) ? `<span class="badge">${r.section}</span>` : "";
+      const upd = r.updated ? fmtDatePL(r.updated) : "—";
+      const freq = r.frequency || "raport";
 
       return `
-        <a class="card" href="${r.path}">
+        <a class="card" href="${safeHrefPath(r.path)}">
           <div class="topMeta">
-            <span class="badge">${r.frequency || "raport"}</span>
+            <span class="badge">${freq}</span>
             ${secBadge}
-            <span class="badge">Aktualizacja: ${fmtDatePL(r.updated)}</span>
+            <span class="badge">Aktualizacja: ${upd}</span>
           </div>
           <p class="title">${r.name}</p>
           <p class="desc">${r.description}</p>
@@ -338,10 +359,10 @@ function matchesCategory(entry, cat, section){
       `;
     }).join("");
 
-  }catch(e){
+  } catch(e){
     const err = document.getElementById("err");
     err.style.display="block";
-    err.textContent = "Błąd: " + e.message;
+    err.textContent = "Błąd: " + (e && e.message ? e.message : e);
   }
 })();
 </script>
