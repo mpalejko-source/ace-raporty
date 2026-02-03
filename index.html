@@ -9,20 +9,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <script>
-    // ===== BASE dla GitHub Pages project site =====
-    // np. https://mpalejko-source.github.io/ace-raporty/  => BASE="/ace-raporty/"
-    const BASE = "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/";
-
-    function url(path){
-      return BASE + String(path || "").replace(/^\/+/, "");
-    }
-
-    // ===== Guard (login) — działa z każdego miejsca =====
-    if (sessionStorage.getItem("ace_access") !== "1") {
-      window.location.replace(url("login.html"));
-    }
-  </script>
+  
 
   <style>
     :root{
