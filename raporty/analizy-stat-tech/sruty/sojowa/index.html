@@ -1,1 +1,462 @@
-<!doctype html><html><body style="font-family:Arial">TEST: sojowa w budowie</body></html>
+Option Explicit
+
+' ==========================
+'  ACE: Single-file HTML Report (UTF-8, PL znaki) — DARK THEME
+'  - Wszystko z CONTROL
+'  - PNG:  \{ReportTitle_safe}\wykresy\
+'  - Logo: \{ReportTitle_safe}\logo.png
+'  - Output HTML: z CONTROL albo domyślnie z tytułu raportu
+'  - Kolumny: CONTROL!B10
+'  - Strony: CONTROL!B6 (max 15)
+'  - Tytuły/prefixy/liczba wykresów: tabela od baseRow (domyślnie 18) kolumny B/C/D
+'  - PRZYCISK POWRÓT NA OKŁADCE: CONTROL!B35 (pełny URL lub /ścieżka)
+'  - KOMENTARZ NA OKŁADCE: CONTROL!B45 (puste => brak ramki)
+'  - NA STRONACH RAPORTU: przycisk wraca do okładki (#top)
+' ==========================
+
+Sub Build_ACE_Report_HTML_From_CONTROL()
+
+    Const CTRL_SHEET As String = "CONTROL"
+    Const MAX_PAGES As Long = 15
+    Const baseRow As Long = 18 ' <<< jeśli w Twoim CONTROL tabela stron zaczyna się gdzie indziej, zmień tę jedną liczbę
+
+    Dim ctrl As Worksheet
+    Set ctrl = ThisWorkbook.Worksheets(CTRL_SHEET)
+
+    If ThisWorkbook.Path = "" Then
+        MsgBox "Najpierw zapisz plik Excel (musi mieć ścieżkę).", vbExclamation
+        Exit Sub
+    End If
+
+    ' ====== 1) Odczyt ustawień ======
+    Dim ReportTitle As String, ReportDateText As String
+    Dim PagesCount As Long, ReportCols As Long
+    Dim OutputName As String
+
+    ReportTitle = Trim$(CStr(ctrl.Range("B4").Value))
+    If Len(ReportTitle) = 0 Then ReportTitle = "Raport"
+
+    ReportDateText = Trim$(CStr(ctrl.Range("B5").Value))
+    If Len(ReportDateText) = 0 Then
+        ReportDateText = "Z dnia: " & Format(Date - 1, "dd.mm.yyyy")
+    End If
+
+    PagesCount = CLng(Val(ctrl.Range("B6").Value))
+    If PagesCount < 1 Then PagesCount = 1
+    If PagesCount > MAX_PAGES Then PagesCount = MAX_PAGES
+
+    ReportCols = CLng(Val(ctrl.Range("B10").Value))
+    If ReportCols < 1 Then ReportCols = 2
+    If ReportCols > 4 Then ReportCols = 4
+
+    OutputName = Trim$(CStr(ctrl.Range("B9").Value)) ' może być puste
+
+    ' ====== LINK POWROTU NA OKŁADCE (CONTROL!B35) ======
+    ' - może być pełny URL: https://raporty.ace-group.pl/kategorie.html?cat=analizy-stat-tech
+    ' - albo ścieżka: /kategorie.html?cat=analizy-stat-tech
+    Dim BackUrl As String
+    BackUrl = Trim$(CStr(ctrl.Range("B35").Value))
+    If Len(BackUrl) = 0 Then
+        BackUrl = "/kategorie.html"
+    End If
+
+    ' ====== KOMENTARZ NA OKŁADCE (CONTROL!B45) ======
+    Dim CoverNote As String
+    CoverNote = Trim$(CStr(ctrl.Range("B45").Value))
+
+    ' ====== 2) Foldery per raport ======
+    Dim safeTitle As String
+    safeTitle = SafeFolderName(ReportTitle)
+
+    Dim reportRoot As String, ChartsFolder As String, LogoPath As String
+    reportRoot = ThisWorkbook.Path & "\" & safeTitle & "\"
+    ChartsFolder = reportRoot & "wykresy\"
+    LogoPath = reportRoot & "logo.png"
+
+    If Dir(ChartsFolder, vbDirectory) = "" Then
+        MsgBox "Brak folderu z PNG: " & ChartsFolder & vbCrLf & _
+               "Najpierw uruchom eksport PNG (ten co tworzy folder raportu).", vbExclamation
+        Exit Sub
+    End If
+
+    Dim OutHtmlPath As String
+    If Len(OutputName) = 0 Then
+        OutHtmlPath = reportRoot & safeTitle & ".html"
+    Else
+        If LCase$(Right$(OutputName, 5)) <> ".html" Then OutputName = OutputName & ".html"
+        OutHtmlPath = reportRoot & OutputName
+    End If
+
+    ' ====== 3) Logo base64 (opcjonalnie) ======
+    Dim LogoB64 As String: LogoB64 = ""
+    If Dir(LogoPath) <> "" Then LogoB64 = Base64EncodeFile(LogoPath)
+
+    ' ====== 4) Dane stron (tabela w CONTROL) ======
+    Dim PageTitles(1 To MAX_PAGES) As String
+    Dim PagePrefix(1 To MAX_PAGES) As String
+    Dim PageChartCount(1 To MAX_PAGES) As Long
+
+    Dim i As Long
+    For i = 1 To PagesCount
+        PageTitles(i) = Trim$(CStr(ctrl.Cells(baseRow + (i - 1), "B").Value)) ' Title
+        PagePrefix(i) = Trim$(CStr(ctrl.Cells(baseRow + (i - 1), "C").Value)) ' Prefix (np s1_)
+        PageChartCount(i) = CLng(Val(ctrl.Cells(baseRow + (i - 1), "D").Value)) ' Count
+
+        If Len(PageTitles(i)) = 0 Then PageTitles(i) = "Strona " & i
+        If Len(PagePrefix(i)) = 0 Then PagePrefix(i) = "s" & i & "_"
+        If PageChartCount(i) < 1 Then PageChartCount(i) = 4
+    Next i
+
+    ' ====== 5) Generuj HTML do stringa ======
+    Dim html As String: html = ""
+    Dim Warnings As String: Warnings = ""
+
+    AddLine html, "<!doctype html>"
+    AddLine html, "<html lang='pl'>"
+    AddLine html, "<head>"
+    AddLine html, "  <meta charset='utf-8'>"
+    AddLine html, "  <meta name='viewport' content='width=device-width, initial-scale=1'>"
+    AddLine html, "  <title>" & HtmlEscape(ReportTitle) & "</title>"
+
+    ' ===== CSS (ACE DARK THEME) =====
+    AddLine html, "  <style>"
+    AddLine html, "  :root{"
+    AddLine html, "    --bg:#0b1220;"
+    AddLine html, "    --card:#0f1a33;"
+    AddLine html, "    --border:rgba(255,255,255,.10);"
+    AddLine html, "    --text:#eaf0ff;"
+    AddLine html, "    --muted:rgba(234,240,255,.72);"
+    AddLine html, "    --muted2:rgba(234,240,255,.55);"
+    AddLine html, "    --accent:#7dd3fc;"
+    AddLine html, "    --accent2:#a78bfa;"
+    AddLine html, "    --shadow:0 10px 30px rgba(0,0,0,.35);"
+    AddLine html, "    --radius:18px;"
+    AddLine html, "  }"
+    AddLine html, "  html,body{height:100%}"
+    AddLine html, "  *{box-sizing:border-box}"
+    AddLine html, "  body{"
+    AddLine html, "    margin:0;"
+    AddLine html, "    font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;"
+    AddLine html, "    color:var(--text);"
+    AddLine html, "    background:"
+    AddLine html, "      radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),"
+    AddLine html, "      radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),"
+    AddLine html, "      var(--bg);"
+    AddLine html, "    scroll-snap-type:y mandatory;"
+    AddLine html, "    scroll-behavior:smooth;"
+    AddLine html, "  }"
+    AddLine html, "  .wrap{max-width:1700px;margin:0 auto;padding:18px 22px 42px;}"
+    AddLine html, "  .cover,.page{min-height:100vh;scroll-snap-align:start;position:relative;padding:18px 0;}"
+    AddLine html, "  .coverInner{padding-top:6px;}"
+    AddLine html, ""
+    AddLine html, "  .title{font-size:56px;line-height:1.05;font-weight:900;color:rgba(234,240,255,.95);text-align:center;margin:26px 0 10px;}"
+    AddLine html, "  .logoRow{display:flex;justify-content:center;align-items:center;margin:10px 0 12px;}"
+    AddLine html, "  .logo{height:62px;width:auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.45));}"
+    AddLine html, "  .dateBox{margin:0 auto 14px;max-width:980px;border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-size:22px;"
+    AddLine html, "          color:rgba(234,240,255,.92);text-align:center;background:rgba(255,255,255,.04);box-shadow:var(--shadow);}"
+    AddLine html, ""
+    AddLine html, "  .coverTop{max-width:980px;margin:0 auto 10px;display:flex;justify-content:center;gap:10px;}"
+    AddLine html, "  .coverBack{display:inline-flex;align-items:center;gap:8px;"
+    AddLine html, "            border:1px solid rgba(255,255,255,.14);"
+    AddLine html, "            background:rgba(255,255,255,.06);"
+    AddLine html, "            color:rgba(234,240,255,.92);"
+    AddLine html, "            padding:10px 12px;border-radius:14px;"
+    AddLine html, "            text-decoration:none;font-size:14px;"
+    AddLine html, "            box-shadow:0 10px 24px rgba(0,0,0,.25);}"
+    AddLine html, "  .coverBack:hover{background:rgba(255,255,255,.10)}"
+    AddLine html, ""
+    AddLine html, "  .toc{max-width:980px;margin:10px auto 0;}"
+    AddLine html, "  .tocBox{border:1px solid var(--border);border-radius:var(--radius);padding:12px 12px 8px;background:rgba(255,255,255,.04);box-shadow:var(--shadow);}"
+    AddLine html, "  .tocItem{display:flex;justify-content:space-between;gap:14px;padding:12px 12px;border-radius:14px;text-decoration:none;color:rgba(234,240,255,.92);font-size:16px;}"
+    AddLine html, "  .tocItem:hover{background:rgba(255,255,255,.06);}"
+    AddLine html, "  .tocItem .pno{min-width:140px;text-align:right;color:var(--muted2);font-size:12px;}"
+    AddLine html, ""
+    AddLine html, "  .noteWrap{max-width:980px;margin:12px auto 0;}"
+    AddLine html, "  .noteBox{border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;background:rgba(255,255,255,.04);box-shadow:var(--shadow);}"
+    AddLine html, "  .noteTitle{margin:0 0 6px;font-size:14px;font-weight:900;color:rgba(234,240,255,.92);}"
+    AddLine html, "  .noteText{margin:0;font-size:14px;line-height:1.45;color:var(--muted);white-space:pre-wrap;}"
+    AddLine html, ""
+    AddLine html, "  .sheet{position:relative;width:100%;border:1px solid var(--border);border-radius:var(--radius);"
+    AddLine html, "         background:rgba(255,255,255,.04);box-shadow:var(--shadow);"
+    AddLine html, "         margin:14px auto;max-width:1700px;padding:16px 16px 72px;min-height:calc(100vh - 28px);}"
+    AddLine html, "  .pageHead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin:6px 0 12px;}"
+    AddLine html, "  .pageTitle{grid-column:2;justify-self:center;text-align:center;font-size:20px;color:rgba(234,240,255,.95);font-weight:900;margin:0;}"
+    AddLine html, "  .backWrap{grid-column:3;justify-self:end;display:flex;align-items:center;gap:10px;}"
+    AddLine html, "  .back{color:rgba(234,240,255,.92);text-decoration:none;font-size:14px;"
+    AddLine html, "        border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.06);line-height:1;"
+    AddLine html, "        box-shadow:0 10px 24px rgba(0,0,0,.20);}"
+    AddLine html, "  .back:hover{background:rgba(255,255,255,.10)}"
+    AddLine html, "  .backTxt{font-size:12px;color:var(--muted2);}"
+    AddLine html, ""
+    AddLine html, "  .tiles{display:grid;grid-template-columns:repeat(" & ReportCols & ",minmax(0,1fr));gap:14px;width:100%;}"
+    AddLine html, "  .card{width:100%;border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:8px;background:rgba(255,255,255,.03);}"
+    AddLine html, "  .card img{width:100%;height:auto;border-radius:12px;cursor:zoom-in;display:block;}"
+    AddLine html, ""
+    AddLine html, "  .footer{position:absolute;left:16px;right:16px;bottom:14px;display:flex;justify-content:space-between;align-items:center;"
+    AddLine html, "          color:var(--muted2);font-size:12px;border-top:1px solid rgba(255,255,255,.10);padding-top:10px;}"
+    AddLine html, "  .footerRight{display:flex;align-items:center;gap:10px;}"
+    AddLine html, "  .footLogo{height:18px;width:auto;opacity:.9;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));}"
+    AddLine html, ""
+    AddLine html, "  #ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;padding:0;margin:0}"
+    AddLine html, "  #ov{align-items:center;justify-content:center}"
+    AddLine html, "  #ov img{width:99vw;height:99vh;object-fit:contain;border-radius:0}"
+    AddLine html, "  #ov .x{position:fixed;top:12px;right:16px;color:#fff;font-size:26px;cursor:pointer;user-select:none;padding:6px 10px;border-radius:10px;background:rgba(0,0,0,.35)}"
+    AddLine html, ""
+    AddLine html, "  @media (max-width:1200px){"
+    AddLine html, "    .title{font-size:44px}"
+    AddLine html, "    .dateBox{font-size:18px}"
+    AddLine html, "  }"
+    AddLine html, "  @media (max-width:1100px){"
+    AddLine html, "    .tiles{grid-template-columns:1fr;}"
+    AddLine html, "  }"
+    AddLine html, "  </style>"
+
+    ' ===== JS =====
+    AddLine html, "  <script>"
+    AddLine html, "    function show(src){document.getElementById('ovimg').src=src;document.getElementById('ov').style.display='flex'}"
+    AddLine html, "    function hide(){document.getElementById('ov').style.display='none';document.getElementById('ovimg').src=''}"
+    AddLine html, "  </script>"
+
+    AddLine html, "</head>"
+    AddLine html, "<body>"
+    AddLine html, "  <div class='wrap' id='top'>"
+
+    ' ===== OKŁADKA / TOC =====
+    AddLine html, "    <section class='cover'>"
+    AddLine html, "      <div class='coverInner'>"
+    AddLine html, "        <div class='title'>" & HtmlEscape(ReportTitle) & "</div>"
+    If Len(LogoB64) > 0 Then
+        AddLine html, "        <div class='logoRow'><img class='logo' alt='ACE logo' src='data:image/png;base64," & LogoB64 & "'></div>"
+    End If
+    AddLine html, "        <div class='dateBox'>" & HtmlEscape(ReportDateText) & "</div>"
+
+    ' --- PRZYCISK POWRÓT NA OKŁADCE (B35) ---
+    AddLine html, "        <div class='coverTop'>"
+    AddLine html, "          <a class='coverBack' href='" & HtmlEscape(BackUrl) & "' title='Powrót'>← Powrót</a>"
+    AddLine html, "        </div>"
+
+    AddLine html, "        <div class='toc'><div class='tocBox'>"
+    For i = 1 To PagesCount
+        AddLine html, "          <a class='tocItem' href='#p" & i & "'><span>" & HtmlEscape(PageTitles(i)) & "</span><span class='pno'>strona " & i & "</span></a>"
+    Next i
+    AddLine html, "        </div></div>"
+
+    ' --- KOMENTARZ POD TOC (B45) tylko jeśli niepuste ---
+    If Len(CoverNote) > 0 Then
+        AddLine html, "        <div class='noteWrap'>"
+        AddLine html, "          <div class='noteBox'>"
+        AddLine html, "            <p class='noteTitle'>Komentarz:</p>"
+        AddLine html, "            <p class='noteText'>" & HtmlEscape(CoverNote) & "</p>"
+        AddLine html, "          </div>"
+        AddLine html, "        </div>"
+    End If
+
+    AddLine html, "      </div>"
+    AddLine html, "    </section>"
+
+    ' ===== STRONY =====
+    For i = 1 To PagesCount
+        AddLine html, "    <section class='page' id='p" & i & "'>"
+        AddLine html, "      <div class='sheet'>"
+        AddLine html, "        <div class='pageHead'>"
+        AddLine html, "          <div></div>"
+        AddLine html, "          <h2 class='pageTitle'>" & HtmlEscape(PageTitles(i)) & "</h2>"
+
+        ' NA STRONACH: wraca do okładki (TOC) — jak w oryginale
+        AddLine html, "          <div class='backWrap'><a class='back' href='#top' title='Powrót do menu'>^</a><span class='backTxt'>powrót do menu</span></div>"
+
+        AddLine html, "        </div>"
+        AddLine html, "        <div class='tiles'>"
+
+        Dim files() As String
+        files = ListFilesSorted(ChartsFolder, PagePrefix(i))
+
+        Dim takeN As Long: takeN = PageChartCount(i)
+        Dim foundN As Long: foundN = CountFiles(ChartsFolder, PagePrefix(i))
+
+        If foundN <> takeN Then
+            Warnings = Warnings & _
+                "Strona " & i & ": " & PageTitles(i) & vbCrLf & _
+                "Prefix: " & PagePrefix(i) & vbCrLf & _
+                "Oczekiwano: " & takeN & " | Znaleziono: " & foundN & vbCrLf & _
+                "W raporcie użyto: " & MinLong(foundN, takeN) & vbCrLf & vbCrLf
+        End If
+
+        Dim used As Long: used = 0
+        Dim k As Long
+        If (Not Not files) <> 0 Then
+            For k = LBound(files) To UBound(files)
+                If used >= takeN Then Exit For
+                Dim imgB64 As String
+                imgB64 = Base64EncodeFile(ChartsFolder & files(k))
+                If Len(imgB64) > 0 Then
+                    used = used + 1
+                    AddLine html, "          <div class='card'><img alt='" & HtmlEscape(files(k)) & "' src='data:image/png;base64," & imgB64 & "' onclick=""show(this.src)""></div>"
+                End If
+            Next k
+        End If
+
+        AddLine html, "        </div>"
+
+        ' stopka
+        AddLine html, "        <div class='footer'>"
+        AddLine html, "          <div>" & HtmlEscape(ReportTitle) & "</div>"
+        AddLine html, "          <div class='footerRight'><div>Strona " & i & "/" & PagesCount & "</div>"
+        If Len(LogoB64) > 0 Then
+            AddLine html, "            <img class='footLogo' alt='ACE logo' src='data:image/png;base64," & LogoB64 & "'>"
+        End If
+        AddLine html, "          </div>"
+        AddLine html, "        </div>"
+
+        AddLine html, "      </div>"
+        AddLine html, "    </section>"
+    Next i
+
+    ' ===== OVERLAY =====
+    AddLine html, "    <div id='ov' onclick='hide()'>"
+    AddLine html, "      <div class='x' onclick='hide();event.stopPropagation();'>x</div>"
+    AddLine html, "      <img id='ovimg' alt=''>"
+    AddLine html, "    </div>"
+
+    AddLine html, "  </div>"
+    AddLine html, "</body></html>"
+
+    ' ====== 6) zapis UTF-8 ======
+    SaveTextUtf8 OutHtmlPath, html
+
+    ' warnings tylko jak coś się nie zgadza
+    If Len(Warnings) > 0 Then
+        MsgBox "Uwaga: niezgodność liczby wykresów vs CONTROL" & vbCrLf & vbCrLf & _
+               Warnings & vbCrLf & "Raport został wygenerowany mimo to.", vbExclamation, "ACE – kontrola wykresów"
+    Else
+        MsgBox "Gotowe: " & OutHtmlPath, vbInformation, "ACE – raport HTML"
+    End If
+
+End Sub
+
+' ===== Helpers =====
+
+Private Sub AddLine(ByRef s As String, ByVal line As String)
+    s = s & line & vbCrLf
+End Sub
+
+Private Function MinLong(ByVal a As Long, ByVal b As Long) As Long
+    If a < b Then MinLong = a Else MinLong = b
+End Function
+
+Private Function CountFiles(ByVal folderPath As String, ByVal prefix As String) As Long
+    Dim f As String, n As Long
+    n = 0
+    f = Dir(folderPath & prefix & "*.png")
+    Do While f <> ""
+        n = n + 1
+        f = Dir()
+    Loop
+    CountFiles = n
+End Function
+
+Private Function ListFilesSorted(ByVal folderPath As String, ByVal prefix As String) As String()
+    Dim f As String
+    Dim arr() As String
+    Dim n As Long
+
+    n = 0
+    f = Dir(folderPath & prefix & "*.png")
+    Do While f <> ""
+        n = n + 1
+        ReDim Preserve arr(1 To n)
+        arr(n) = f
+        f = Dir()
+    Loop
+
+    If n = 0 Then Exit Function
+
+    QuickSortStrings arr, LBound(arr), UBound(arr)
+    ListFilesSorted = arr
+End Function
+
+Private Sub QuickSortStrings(ByRef arr() As String, ByVal first As Long, ByVal last As Long)
+    Dim low As Long, high As Long
+    Dim mid As String, temp As String
+
+    low = first
+    high = last
+    mid = arr((first + last) \ 2)
+
+    Do While low <= high
+        Do While arr(low) < mid
+            low = low + 1
+        Loop
+        Do While arr(high) > mid
+            high = high - 1
+        Loop
+        If low <= high Then
+            temp = arr(low)
+            arr(low) = arr(high)
+            arr(high) = temp
+            low = low + 1
+            high = high - 1
+        End If
+    Loop
+
+    If first < high Then QuickSortStrings arr, first, high
+    If low < last Then QuickSortStrings arr, low, last
+End Sub
+
+Private Function Base64EncodeFile(ByVal filePath As String) As String
+    On Error GoTo EH
+
+    Dim stm As Object, bytes() As Byte
+    Dim xml As Object, node As Object
+
+    Set stm = CreateObject("ADODB.Stream")
+    stm.Type = 1
+    stm.Open
+    stm.LoadFromFile filePath
+    bytes = stm.Read
+    stm.Close
+
+    Set xml = CreateObject("MSXML2.DOMDocument")
+    Set node = xml.createElement("b64")
+    node.DataType = "bin.base64"
+    node.nodeTypedValue = bytes
+
+    Base64EncodeFile = Replace(node.text, vbLf, "")
+    Exit Function
+EH:
+    Base64EncodeFile = ""
+End Function
+
+Private Function HtmlEscape(ByVal s As String) As String
+    s = Replace(s, "&", "&amp;")
+    s = Replace(s, "<", "&lt;")
+    s = Replace(s, ">", "&gt;")
+    s = Replace(s, """", "&quot;")
+    HtmlEscape = s
+End Function
+
+Private Sub SaveTextUtf8(ByVal filePath As String, ByVal text As String)
+    Dim stm As Object
+    Set stm = CreateObject("ADODB.Stream")
+    stm.Type = 2
+    stm.Charset = "utf-8"
+    stm.Open
+    stm.WriteText ChrW(&HFEFF) & text
+    stm.SaveToFile filePath, 2
+    stm.Close
+End Sub
+
+Private Function SafeFolderName(ByVal s As String) As String
+    Dim bad As Variant, i As Long
+    s = Trim$(s)
+    If Len(s) = 0 Then s = "Raport"
+    s = Replace(s, "–", "-")
+    s = Replace(s, "—", "-")
+    s = Replace(s, " ", "_")
+    bad = Array("\", "/", ":", "*", "?", """", "<", ">", "|")
+    For i = LBound(bad) To UBound(bad)
+        s = Replace(s, bad(i), "")
+    Next i
+    If Len(s) > 80 Then s = Left$(s, 80)
+    SafeFolderName = s
+End Function
