@@ -3,7 +3,6 @@
 <head>
 <script>
   const BASE = "/";
-
   function url(path){
     return BASE + String(path || "").replace(/^\/+/, "");
   }
@@ -29,6 +28,10 @@
   --accent2:#a78bfa;
   --shadow:0 10px 30px rgba(0,0,0,.35);
   --radius:16px;
+
+  /* żółty "Aktualizacja" jak NOWE (dziś/wczoraj) */
+  --todayYellow: rgba(250,204,21,.95);
+  --todayYellowText: #0b1220;
 }
 
 *{box-sizing:border-box}
@@ -82,9 +85,7 @@ h1{
   text-decoration:none;
   box-shadow: 0 10px 24px rgba(0,0,0,.25);
 }
-.backBtn:hover{
-  background: rgba(255,255,255,.10);
-}
+.backBtn:hover{ background: rgba(255,255,255,.10); }
 
 .divider{
   height:1px;
@@ -109,13 +110,11 @@ h1{
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
-
 .grid-2{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
-
 @media(max-width:900px){
   .grid-3{grid-template-columns:repeat(2,1fr)}
 }
@@ -134,7 +133,6 @@ h1{
   box-shadow:var(--shadow);
   transition:.15s ease;
 }
-
 .card:hover{
   background:rgba(255,255,255,.07);
   transform:translateY(-1px);
@@ -146,6 +144,7 @@ h1{
   gap:8px;
   margin-bottom:8px;
   flex-wrap:wrap;
+  align-items:center;
 }
 
 .badge{
@@ -155,8 +154,10 @@ h1{
   border:1px solid var(--border);
   background:rgba(255,255,255,.06);
   color:var(--muted2);
+  white-space:nowrap;
 }
 
+/* NOWE (gradient) */
 .badgeNew{
   font-size:11px;
   padding:5px 9px;
@@ -166,6 +167,26 @@ h1{
   color:#081018;
   background:linear-gradient(90deg,#7dd3fc,#a78bfa);
   box-shadow:0 6px 18px rgba(125,211,252,.35);
+  white-space:nowrap;
+}
+
+/* ŻÓŁTA RAMKA dla "Aktualizacja: data" gdy NOWE (dziś/wczoraj) */
+.badgeUpdToday{
+  font-size:12px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-weight:950;
+  border:1px solid rgba(250,204,21,.70);
+  background: var(--todayYellow);
+  color: var(--todayYellowText);
+  box-shadow: 0 10px 24px rgba(0,0,0,.20);
+  white-space:nowrap;
+}
+
+/* wyśrodkowanie żółtej daty w wierszu badge */
+.badges .badgeUpdToday{
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .cardTitle{
@@ -173,7 +194,6 @@ h1{
   font-weight:900;
   margin:0 0 6px;
 }
-
 .cardDesc{
   font-size:13px;
   color:var(--muted);
@@ -190,7 +210,6 @@ h1{
     Waluty, zboża, śruty i energia – uporządkowane analizy ACE
   </div>
 
-  <!-- ✅ PRZYCISK POWROT DO PANELU -->
   <div class="backRow">
     <a class="backBtn" href="/index.html">← Panel główny</a>
   </div>
@@ -224,26 +243,41 @@ function parseUpdated(iso){
   return isNaN(t) ? -Infinity : t;
 }
 
+// zostawiamy "NOWE" jak było: dziś / wczoraj (<= 1.5 dnia)
 function isNew(dateStr){
   if(!dateStr) return false;
   const d = new Date(dateStr + "T00:00:00");
   if(isNaN(d)) return false;
   const now = new Date();
   const diffDays = (now - d) / (1000*60*60*24);
-  return diffDays <= 1.5; // dziś / wczoraj
+  return diffDays <= 1.5;
+}
+
+// format 2026-02-04 -> 04.02.2026
+function fmtDatePL(iso){
+  if(!iso) return "";
+  const p = String(iso).split("-");
+  if(p.length !== 3) return String(iso);
+  return `${p[2]}.${p[1]}.${p[0]}`;
 }
 
 function card(r){
-  const newBadge = isNew(r.updated)
-    ? `<span class="badgeNew">NOWE</span>`
-    : "";
+  const isnew = isNew(r.updated);
+
+  const newBadge = isnew ? `<span class="badgeNew">NOWE</span>` : "";
+
+  // data w żółtej ramce gdy NOWE, w zwykłej gdy nie
+  const dateBadge = (r.updated || "")
+    ? (isnew
+        ? `<span class="badgeUpdToday">Aktualizacja: ${fmtDatePL(r.updated)}</span>`
+        : `<span class="badge">Aktualizacja: ${fmtDatePL(r.updated)}</span>`)
+    : `<span class="badge">Aktualizacja: —</span>`;
 
   return `
     <a class="card" href="${url(r.path)}">
       <div class="badges">
         ${newBadge}
-        <span class="badge">${r.frequency || "raport"}</span>
-        <span class="badge">${r.updated || ""}</span>
+        ${dateBadge}
       </div>
       <p class="cardTitle">${r.name}</p>
       <p class="cardDesc">${r.description || ""}</p>
@@ -257,7 +291,6 @@ async function load(){
   const all = Object.values(data)
     .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
 
-  // podział na sekcje
   const waluty = [];
   const zboza  = [];
   const sruty  = [];
@@ -271,14 +304,12 @@ async function load(){
     else if(sec==="energia") energia.push(r);
   });
 
-  // sortowanie: najnowsze pierwsze
   const sortByDateDesc = (a,b)=>parseUpdated(b.updated)-parseUpdated(a.updated);
   waluty.sort(sortByDateDesc);
   zboza.sort(sortByDateDesc);
   sruty.sort(sortByDateDesc);
   energia.sort(sortByDateDesc);
 
-  // render
   waluty.forEach(r => document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r)));
   zboza.forEach(r  => document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r)));
   sruty.forEach(r  => document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r)));
