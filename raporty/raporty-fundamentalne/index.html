@@ -169,7 +169,7 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <img src="/ace-raporty/logo.png" class="logo" alt="ACE Group">
+     <img src="" class="logo" alt="ACE Group" id="logoImg">
       <div>
         <h1>Raporty Fundamentalne</h1>
         <p class="sub">WASDE, IGC, FAO, ACE Indexy Światowe – kafelki do raportów.</p>
@@ -179,7 +179,7 @@
   </header>
 
   <div class="backRow">
-    <a class="backBtn" href="/ace-raporty/index.html">← Panel główny</a>
+    <a class="backBtn" href="/index.html">← Panel główny</a>
   </div>
 
   <section class="grid" id="grid"></section>
@@ -187,6 +187,8 @@
 </div>
 
 <script>
+
+  document.getElementById("logoImg").src = url("logo.png");
   function fmtDatePL(iso){
     if(!iso || typeof iso !== "string") return "—";
     const p = iso.split("-");
@@ -216,7 +218,7 @@
   }
 
   async function loadManifest(){
-    const res = await fetch("/ace-raporty/manifest.json?ts=" + Date.now(), { cache:"no-store" });
+  const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
     if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
     return await res.json();
   }
@@ -258,7 +260,7 @@
           : `<span class="badge">Aktualizacja: ${esc(fmtDatePL(r.updated))}</span>`;
 
         return `
-          <a class="card" href="/ace-raporty/${String(r.path || "").replace(/^\/+/,'')}">
+         <a class="card" href="${url(String(r.path || '').replace(/^\/+/,''))}">
             <div class="topMeta">
               ${newBadge}
               ${updBadge}
