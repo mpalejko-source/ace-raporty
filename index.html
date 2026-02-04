@@ -278,49 +278,63 @@
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
     /* ===== TICKER (TVN-like) ===== */
-    .ticker{
-      margin-top:10px;
-      border:1px solid rgba(250,204,21,.45);
-      background: rgba(15,23,42,.78);
-      border-radius: 999px;
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      height:38px;
-      display:flex;
-      align-items:center;
-    }
-    .ticker .label{
-      flex:0 0 auto;
-      padding:0 12px;
-      color:#0b1220;
-      background: rgba(250,204,21,.95);
-      font-weight: 950;
-      letter-spacing:.04em;
-      height:100%;
-      display:flex;
-      align-items:center;
-    }
-    .ticker .track{
-      position:relative;
-      flex:1 1 auto;
-      overflow:hidden;
-      height:100%;
-    }
-    .ticker .marquee{
-      position:absolute;
-      white-space:nowrap;
-      will-change: transform;
-      display:inline-block;
-      padding-left: 100%;
-      animation: aceTicker 18s linear infinite;
-      color: rgba(234,240,255,.92);
-      font-size: 13px;
-    }
-    .ticker .marquee strong{ color: rgba(250,204,21,.95); }
-    @keyframes aceTicker{
-      0%{ transform: translateX(0); }
-      100%{ transform: translateX(-100%); }
-    }
+.ticker{
+  margin-top:10px;
+  border:1px solid rgba(250,204,21,.45);
+  background: rgba(15,23,42,.78);
+  border-radius: 999px;
+  overflow:hidden;
+  box-shadow: var(--shadow);
+  height:42px;                 /* trochę wyżej */
+  display:flex;
+  align-items:center;          /* pionowo środek dla całego paska */
+}
+
+.ticker .label{
+  flex:0 0 auto;
+  padding:0 14px;
+  color:#0b1220;
+  background: rgba(250,204,21,.95);
+  font-weight: 950;
+  letter-spacing:.04em;
+  height:100%;
+  display:flex;
+  align-items:center;          /* pionowo środek */
+  justify-content:center;      /* poziomo środek */
+  font-size:13px;              /* większa */
+}
+
+.ticker .track{
+  position:relative;
+  flex:1 1 auto;
+  overflow:hidden;
+  height:100%;
+  display:flex;
+  align-items:center;          /* pionowo środek */
+  justify-content:center;      /* poziomo środek (dla przypadku gdyby tekst był krótki) */
+}
+
+.ticker .marquee{
+  position:absolute;
+  white-space:nowrap;
+  will-change: transform;
+  display:inline-flex;         /* łatwiej centrować pionowo */
+  align-items:center;          /* pionowo środek */
+  height:100%;
+  padding-left: 100%;
+  animation: aceTicker 36s linear infinite; /* 2x wolniej (było 18s) */
+  color: rgba(234,240,255,.92);
+  font-size: 14.5px;           /* większa czcionka */
+  line-height: 1;
+}
+
+.ticker .marquee strong{ color: rgba(250,204,21,.95); }
+
+@keyframes aceTicker{
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-100%); }
+}
+    
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -655,7 +669,7 @@
       const text = `DZISIEJSZE AKTUALIZACJE: <strong>${names.join(" • ")}</strong>`;
       box.style.display = "flex";
       box.innerHTML = `
-        <div class="label">DZISIAJ</div>
+        <div class="label">NOWE DZISIAJ</div>
         <div class="track">
           <div class="marquee">${text} &nbsp;&nbsp;&nbsp; ${text}</div>
         </div>
