@@ -28,16 +28,13 @@
       --accent2:#a78bfa;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
-      --input: rgba(255,255,255,.06);
-      --inputb: rgba(255,255,255,.14);
 
-      /* TODAY highlight (delikatne – ramka + tło) */
+      /* TODAY highlight (delikatne – ramka + odcień) */
       --todayBorder: rgba(125,211,252,.55);
       --todayBg: rgba(125,211,252,.10);
 
       /* Żółty tylko dla "Aktualizacja: data" gdy dziś */
       --todayYellow: rgba(250,204,21,.95);
-      --todayYellowBg: rgba(250,204,21,.22);
       --todayYellowText: #0b1220;
     }
 
@@ -73,7 +70,6 @@
       height:56px; width:auto; display:block; flex:0 0 auto;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
-
     h1{margin:0; font-size:24px; letter-spacing:.2px}
     .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
 
@@ -96,17 +92,8 @@
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
       margin-top:18px;
     }
-    .h2{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .hint{
-      margin:0;
-      color: var(--muted2);
-      font-size:12px;
-    }
+    .h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
+    .hint{ margin:0; color: var(--muted2); font-size:12px; }
 
     /* ===== cards base ===== */
     a.card{
@@ -122,10 +109,7 @@
       overflow:hidden;
       transition: transform .08s ease, border-color .08s ease;
     }
-    a.card:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
-    }
+    a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
     a.card:before{
       content:"";
       position:absolute; inset:-1px;
@@ -140,13 +124,17 @@
       border: 1px solid var(--todayBorder);
       background: linear-gradient(180deg, var(--todayBg), rgba(255,255,255,.03));
     }
-    a.card.today:hover{
-      border-color: rgba(125,211,252,.80);
-    }
+    a.card.today:hover{ border-color: rgba(125,211,252,.80); }
 
     .topMeta{
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
-      margin-bottom:10px; color: rgba(234,240,255,.78); font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:10px;
+      color: rgba(234,240,255,.78);
+      font-size:12px;
     }
     .badge{
       display:inline-flex;
@@ -182,6 +170,12 @@
       font-weight: 950;
     }
 
+    /* wyśrodkowanie żółtej ramki "Aktualizacja: dziś" w kafelkach */
+    .topMeta .badge.updToday{
+      margin-left:auto;
+      margin-right:auto;
+    }
+
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
     .desc{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
 
@@ -198,15 +192,85 @@
     }
     .metaLine strong{color: rgba(234,240,255,.92); font-weight:900;}
 
-    /* ===== FEATURED (Poranny Skan) ===== */
-    .featuredWrap{
-      margin-top:14px;
+    /* ===== TICKER ===== */
+    .ticker{
+      margin-top:10px;
+      border:1px solid rgba(250,204,21,.45);
+      background: rgba(15,23,42,.78);
+      border-radius: 999px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      height:42px;
       display:flex;
+      align-items:center;
+    }
+    .ticker .label{
+      flex:0 0 auto;
+      padding:0 14px;
+      color:#0b1220;
+      background: rgba(250,204,21,.95);
+      font-weight: 950;
+      letter-spacing:.04em;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:13px;
+    }
+    .ticker .track{
+      position:relative;
+      flex:1 1 auto;
+      overflow:hidden;
+      height:100%;
+      display:flex;
+      align-items:center;
       justify-content:center;
     }
+    .ticker .marquee{
+      position:absolute;
+      white-space:nowrap;
+      will-change: transform;
+      display:inline-flex;
+      align-items:center;
+      height:100%;
+      padding-left: 100%;
+      animation: aceTicker 36s linear infinite; /* 2x wolniej */
+      color: rgba(234,240,255,.92);
+      font-size: 14.5px;
+      line-height: 1;
+    }
+    .ticker .marquee strong{ color: rgba(250,204,21,.95); }
+    @keyframes aceTicker{
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-100%); }
+    }
+
+    /* ===== TOP ROW: Poranny skan (3 kol) + 2 kafelki kalendarza ===== */
+    .topRowGrid{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:12px;
+      margin-top:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 1100px){
+      .topRowGrid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 720px){
+      .topRowGrid{ grid-template-columns: 1fr; }
+    }
+
+    /* ===== FEATURED (Poranny Skan) – 3 kolumny ===== */
+    #featuredWrap{ grid-column: span 3; }
+    @media (max-width: 1100px){
+      #featuredWrap{ grid-column: span 3; } /* w 3-kolumnowym układzie zajmie cały rząd */
+    }
+    @media (max-width: 720px){
+      #featuredWrap{ grid-column: auto; }
+    }
+
     a.featured{
       width:100%;
-      max-width:820px;
       border: 2px solid rgba(125,211,252,.70);
       border-radius: var(--radius);
       background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
@@ -218,6 +282,7 @@
       color:inherit;
       transition: transform .08s ease, border-color .08s ease;
       display:block;
+      height:100%;
     }
     a.featured:before{
       content:"";
@@ -228,10 +293,12 @@
     }
     a.featured > *{ position:relative; }
     a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
+
+    /* Baner PORANNY SKAN – do lewej */
     a.featured:after{
       content:"PORANNY SKAN";
       position:absolute;
-      top:12px; right:12px;
+      top:12px; left:12px;
       font-size:11px;
       padding:6px 10px;
       border-radius:999px;
@@ -241,6 +308,7 @@
       letter-spacing:.06em;
       z-index:3;
     }
+
     .fMetaLine{
       display:flex;
       gap:10px;
@@ -249,10 +317,10 @@
       margin-bottom:10px;
       color: rgba(234,240,255,.78);
       font-size:12px;
+      padding-right:10px;
     }
-    .fMetaLine strong{ color: rgba(234,240,255,.95); font-weight:900; }
 
-    /* żółty tylko gdy dziś – dla "Ostatnia aktualizacja" w Porannym Skanie */
+    /* żółty tylko gdy dziś – dla "Ostatnia aktualizacja" */
     .fUpdToday{
       display:inline-flex;
       align-items:center;
@@ -277,64 +345,30 @@
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* ===== TICKER (TVN-like) ===== */
-.ticker{
-  margin-top:10px;
-  border:1px solid rgba(250,204,21,.45);
-  background: rgba(15,23,42,.78);
-  border-radius: 999px;
-  overflow:hidden;
-  box-shadow: var(--shadow);
-  height:42px;                 /* trochę wyżej */
-  display:flex;
-  align-items:center;          /* pionowo środek dla całego paska */
-}
-
-.ticker .label{
-  flex:0 0 auto;
-  padding:0 14px;
-  color:#0b1220;
-  background: rgba(250,204,21,.95);
-  font-weight: 950;
-  letter-spacing:.04em;
-  height:100%;
-  display:flex;
-  align-items:center;          /* pionowo środek */
-  justify-content:center;      /* poziomo środek */
-  font-size:13px;              /* większa */
-}
-
-.ticker .track{
-  position:relative;
-  flex:1 1 auto;
-  overflow:hidden;
-  height:100%;
-  display:flex;
-  align-items:center;          /* pionowo środek */
-  justify-content:center;      /* poziomo środek (dla przypadku gdyby tekst był krótki) */
-}
-
-.ticker .marquee{
-  position:absolute;
-  white-space:nowrap;
-  will-change: transform;
-  display:inline-flex;         /* łatwiej centrować pionowo */
-  align-items:center;          /* pionowo środek */
-  height:100%;
-  padding-left: 100%;
-  animation: aceTicker 36s linear infinite; /* 2x wolniej (było 18s) */
-  color: rgba(234,240,255,.92);
-  font-size: 14.5px;           /* większa czcionka */
-  line-height: 1;
-}
-
-.ticker .marquee strong{ color: rgba(250,204,21,.95); }
-
-@keyframes aceTicker{
-  0%{ transform: translateX(0); }
-  100%{ transform: translateX(-100%); }
-}
-    
+    /* ===== Calendar cards – 1 kolumna każdy ===== */
+    .calCard{
+      height:100%;
+      padding:14px;
+      min-height:140px;
+    }
+    .calTitle{
+      margin:0 0 10px 0;
+      font-size:14px;
+      font-weight:950;
+      color:#fff;
+      letter-spacing:.2px;
+    }
+    .calLine{
+      margin:6px 0;
+      font-size:13px;
+      color: rgba(234,240,255,.86);
+      line-height:1.25;
+    }
+    .calLine span{
+      color: var(--muted2);
+      font-weight:900;
+      margin-right:6px;
+    }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -343,10 +377,7 @@
       gap:12px;
       margin-top:14px;
     }
-    .quickCard{
-      padding:14px;
-      min-height:140px;
-    }
+    .quickCard{ padding:14px; min-height:140px; }
     .quickCard .title{ font-size:14px; }
     .quickCard .desc{ font-size:12.5px; }
     @media (max-width: 1100px){
@@ -365,7 +396,6 @@
     }
     @media (max-width: 980px){
       .folderGrid{ grid-template-columns: 1fr; }
-      a.featured{ max-width:100%; }
     }
     .folderIcon{
       display:inline-flex;
@@ -398,19 +428,8 @@
       min-height:56px;
       margin-bottom:10px;
     }
-    .panelTitle{
-      margin:0;
-      font-weight:950;
-      font-size:16px;
-      line-height:1.15;
-    }
-    .panelSub{
-      margin:0;
-      font-size:12px;
-      opacity:.75;
-      line-height:1.2;
-      min-height:14px;
-    }
+    .panelTitle{ margin:0; font-weight:950; font-size:16px; line-height:1.15; }
+    .panelSub{ margin:0; font-size:12px; opacity:.75; line-height:1.2; min-height:14px; }
     .pricesGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -491,8 +510,12 @@
     <!-- TICKER: dzisiejsze aktualizacje -->
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
-    <!-- FEATURED -->
-    <div class="featuredWrap" id="featuredWrap"></div>
+    <!-- TOP ROW: Poranny skan (3 kafelki) + 2 kafelki kalendarza -->
+    <section class="topRowGrid">
+      <div id="featuredWrap"></div>
+      <div id="calCard1"></div>
+      <div id="calCard2"></div>
+    </section>
 
     <!-- QUICK -->
     <div class="sectionHead">
@@ -501,14 +524,14 @@
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
-    <!-- FOLDERS (PRZENIESIONE NAD CENNIKI) -->
+    <!-- FOLDERS -->
     <div class="sectionHead">
       <p class="h2">Biblioteka raportów</p>
       <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
     </div>
     <section class="folderGrid" id="folderGrid"></section>
 
-    <!-- PRICES (NIŻEJ) -->
+    <!-- PRICES -->
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych</p>
@@ -550,6 +573,15 @@
     const FEATURED_KEY = "poranny-skan";
     const QUICK_KEYS = ["chart-pack","pozycje-funduszy","benchmark-tygodnia","decision-quadrants","weather-watch"];
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
+
+    // publikacje tygodnia (klucze z manifest)
+    const CAL = [
+      { day:"poniedziałek", key:"weather-watch" },
+      { day:"wtorek",      key:"pozycje-funduszy" },
+      { day:"środa",       key:"chart-pack" },
+      { day:"czwartek",    key:"decision-quadrants" },
+      { day:"piątek",      key:"benchmark-tygodnia" },
+    ];
 
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
@@ -625,7 +657,6 @@
         description: r.description || "",
         path: r.path || ("raporty/" + id + "/"),
         updated: r.updated || "",
-        frequency: (r.frequency || "").toString(),
         next_issue: (r.next_issue || "").toString(),
         group: (r.group || "").toString(),
         section: (r.section || "").toString(),
@@ -681,22 +712,23 @@
       const ps = items.find(x => x.id === FEATURED_KEY);
 
       if(!ps){
-        wrap.innerHTML = `<div class="error" style="max-width:820px;width:100%">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
+        wrap.innerHTML = `<div class="error">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
         return;
       }
 
       const todayScan = pickTodayFromScan(scan);
 
+      // UWAGA: Poranny bierze datę z scan.json, a manifest to fallback
       const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
       const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
       const updatedLabel = updatedISO
         ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
         : "—";
 
-      // ŻÓŁTA ramka "Ostatnia aktualizacja" tylko gdy dzisiaj
+      // ŻÓŁTY tylko gdy dzisiaj
       const updChunk = isToday(updatedISO)
         ? `<span class="fUpdToday">Ostatnia aktualizacja: ${updatedLabel}</span>`
-        : `<span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>`;
+        : `<span style="color:rgba(234,240,255,.78)"><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>`;
 
       let nextTxt = "—";
       if(todayScan && todayScan.date){
@@ -706,20 +738,51 @@
         nextTxt = fmtDatePL(ps.next_issue.trim());
       }
 
-      const freq = (ps.frequency || "").trim() || "dziennie";
-
       wrap.innerHTML = `
         <a class="featured" href="${safePath(ps.path)}">
           <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
             ${updChunk}
-            <span class="badge">${freq}</span>
           </div>
 
           <p class="fTitle">${ps.name}</p>
 
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderCalendarCards(items){
+      const map = Object.fromEntries(items.map(x => [x.id, x]));
+      const nameOf = (key, fallback) => (map[key] && map[key].name) ? map[key].name : fallback;
+
+      // podział na 2 kafelki: (pon-śr) i (czw-pt)
+      const left = CAL.slice(0,3);
+      const right = CAL.slice(3);
+
+      const htmlBlock = (rows) => rows.map(r=>{
+        const nm = nameOf(r.key, r.key);
+        return `<div class="calLine"><span>${r.day}:</span>${nm}</div>`;
+      }).join("");
+
+      document.getElementById("calCard1").innerHTML = `
+        <a class="card calCard" href="javascript:void(0)" onclick="return false;">
+          <p class="calTitle">Kalendarz publikacji</p>
+          ${htmlBlock(left)}
+          <div class="metaLine" style="margin-top:12px">
+            <span><strong>Stały rozkład</strong></span>
+          </div>
+        </a>
+      `;
+
+      document.getElementById("calCard2").innerHTML = `
+        <a class="card calCard" href="javascript:void(0)" onclick="return false;">
+          <p class="calTitle">Kalendarz publikacji</p>
+          ${htmlBlock(right)}
+          <div class="metaLine" style="margin-top:12px">
+            <span><strong>Stały rozkład</strong></span>
           </div>
         </a>
       `;
@@ -737,7 +800,6 @@
         const updISO = (r.updated || "").trim();
         const upd = updISO ? fmtDatePL(updISO) : "—";
         const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
-        const freq = (r.frequency || "raport").trim();
 
         const clsToday = isToday(updISO) ? "today" : "";
 
@@ -749,7 +811,6 @@
         return `
           <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
             <div class="topMeta">
-              <span class="badge">${freq}</span>
               ${updBadge}
             </div>
             <p class="title">${r.name}</p>
@@ -792,7 +853,7 @@
 
         const clsToday = hasToday ? "today" : "";
 
-        // żółty badge tylko gdy dziś w folderze (czyli todayCount>0)
+        // żółty badge tylko gdy dziś w folderze
         const todayBadge = hasToday
           ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
           : `<span class="badge">Aktualizacje dziś: 0</span>`;
@@ -917,11 +978,11 @@
 
         const manifest = await loadManifest();
         const items = toItems(manifest);
-
         const scan = await loadPorannyScanJSON();
 
         renderTodayTicker(items, scan);
         renderFeatured(items, scan);
+        renderCalendarCards(items);
         renderQuick(items);
         renderFolders(items);
         loadPrices();
