@@ -10,10 +10,10 @@
   },
 
   "chart-pack": {
-    "name": "ACE – Chart Pack",
+    "name": "ACE – Wykresy cenowe",
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
-    "updated": "2026-02-02",
+    "updated": "2026-02-03",
     "frequency": "tygodniowo",
     "next_issue": "2026-02-07",
     "category": "zboza"
