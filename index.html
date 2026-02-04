@@ -10,7 +10,6 @@
   <meta http-equiv="Expires" content="0" />
 
   <script>
-    // BASE działa i na GitHub Pages, i na subdomenie
     const BASE = "/";
     function url(path){
       return BASE + String(path || "").replace(/^\/+/, "");
@@ -36,6 +35,10 @@
       /* Żółty tylko dla "Aktualizacja: data" gdy dziś */
       --todayYellow: rgba(250,204,21,.95);
       --todayYellowText: #0b1220;
+
+      /* Kalendarz: highlight dzisiejszego dnia */
+      --calTodayBorder: rgba(250,204,21,.65);
+      --calTodayBg: rgba(250,204,21,.12);
     }
 
     *{box-sizing:border-box}
@@ -86,7 +89,6 @@
       gap:8px;
       align-items:center;
     }
-    .pill .ico{opacity:.9}
 
     .sectionHead{
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
@@ -96,7 +98,7 @@
     .hint{ margin:0; color: var(--muted2); font-size:12px; }
 
     /* ===== cards base ===== */
-    a.card{
+    a.card, .cardStatic{
       display:block;
       text-decoration:none;
       color:inherit;
@@ -107,24 +109,24 @@
       padding:16px;
       position:relative;
       overflow:hidden;
-      transition: transform .08s ease, border-color .08s ease;
     }
+    a.card{ transition: transform .08s ease, border-color .08s ease; }
     a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
-    a.card:before{
+
+    a.card:before, .cardStatic:before{
       content:"";
       position:absolute; inset:-1px;
       background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
                   radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
       pointer-events:none;
     }
-    a.card > *{ position:relative; }
+    a.card > *, .cardStatic > *{ position:relative; }
 
     /* dzisiejsze raporty/foldery – delikatna ramka + odcień */
     a.card.today{
       border: 1px solid var(--todayBorder);
       background: linear-gradient(180deg, var(--todayBg), rgba(255,255,255,.03));
     }
-    a.card.today:hover{ border-color: rgba(125,211,252,.80); }
 
     .topMeta{
       display:flex;
@@ -148,6 +150,7 @@
       background: rgba(255,255,255,.06);
       box-shadow: 0 10px 24px rgba(0,0,0,.20);
       white-space:nowrap;
+      max-width:100%;
     }
     .badge.primary{
       border-color: rgba(125,211,252,.45);
@@ -169,7 +172,6 @@
       color: var(--todayYellowText);
       font-weight: 950;
     }
-
     /* wyśrodkowanie żółtej ramki "Aktualizacja: dziś" w kafelkach */
     .topMeta .badge.updToday{
       margin-left:auto;
@@ -245,7 +247,7 @@
       100%{ transform: translateX(-100%); }
     }
 
-    /* ===== TOP ROW: Poranny skan (3 kol) + 2 kafelki kalendarza ===== */
+    /* ===== TOP ROW: Poranny skan (3 kol) + Kalendarz (2 kol) ===== */
     .topRowGrid{
       display:grid;
       grid-template-columns: repeat(5, 1fr);
@@ -260,15 +262,17 @@
       .topRowGrid{ grid-template-columns: 1fr; }
     }
 
-    /* ===== FEATURED (Poranny Skan) – 3 kolumny ===== */
     #featuredWrap{ grid-column: span 3; }
+    #calWrap{ grid-column: span 2; }
     @media (max-width: 1100px){
-      #featuredWrap{ grid-column: span 3; } /* w 3-kolumnowym układzie zajmie cały rząd */
+      #featuredWrap{ grid-column: span 3; }
+      #calWrap{ grid-column: span 3; }
     }
     @media (max-width: 720px){
-      #featuredWrap{ grid-column: auto; }
+      #featuredWrap, #calWrap{ grid-column:auto; }
     }
 
+    /* ===== FEATURED (Poranny Skan) ===== */
     a.featured{
       width:100%;
       border: 2px solid rgba(125,211,252,.70);
@@ -309,16 +313,19 @@
       z-index:3;
     }
 
+    /* Meta Poranny: lewo/prawo, bez nachodzenia */
     .fMetaLine{
       display:flex;
+      align-items:center;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
       margin-bottom:10px;
-      color: rgba(234,240,255,.78);
       font-size:12px;
+      color: rgba(234,240,255,.78);
       padding-right:10px;
     }
+    .fMetaLine .spacer{ flex:1 1 auto; min-width:10px; }
+    .fMetaLine .rightBox{ margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
 
     /* żółty tylko gdy dziś – dla "Ostatnia aktualizacja" */
     .fUpdToday{
@@ -333,6 +340,7 @@
       font-weight:950;
       box-shadow: 0 10px 24px rgba(0,0,0,.20);
       white-space:nowrap;
+      max-width:100%;
     }
 
     .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.15; color:#ffffff; }
@@ -345,11 +353,11 @@
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* ===== Calendar cards – 1 kolumna każdy ===== */
-    .calCard{
+    /* ===== KALENDARZ (jeden panel) ===== */
+    .calPanel{
       height:100%;
       padding:14px;
-      min-height:140px;
+      min-height:160px;
     }
     .calTitle{
       margin:0 0 10px 0;
@@ -358,16 +366,41 @@
       color:#fff;
       letter-spacing:.2px;
     }
-    .calLine{
-      margin:6px 0;
-      font-size:13px;
-      color: rgba(234,240,255,.86);
-      line-height:1.25;
+    .calGrid{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
     }
-    .calLine span{
-      color: var(--muted2);
-      font-weight:900;
-      margin-right:6px;
+    .calItem{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      line-height:1.15;
+    }
+    .calItem .d{
+      min-width:38px;           /* skrót dnia */
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-weight:950;
+      font-size:12px;
+      color: rgba(234,240,255,.82);
+    }
+    .calItem .n{
+      font-size:12.5px;
+      color: rgba(234,240,255,.92);
+      font-weight:800;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .calItem.today{
+      border-color: var(--calTodayBorder);
+      background: var(--calTodayBg);
+      box-shadow: 0 12px 26px rgba(0,0,0,.28);
     }
 
     /* ===== QUICK grid ===== */
@@ -492,10 +525,7 @@
       </div>
 
       <div style="display:flex; align-items:center; gap:10px;">
-        <a href="/cdn-cgi/access/logout"
-           class="pill"
-           style="text-decoration:none; opacity:.85;"
-           title="Wyloguj się">
+        <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
           <span class="ico">🚪</span>
           <span>Wyloguj</span>
         </a>
@@ -510,11 +540,10 @@
     <!-- TICKER: dzisiejsze aktualizacje -->
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
-    <!-- TOP ROW: Poranny skan (3 kafelki) + 2 kafelki kalendarza -->
+    <!-- TOP ROW -->
     <section class="topRowGrid">
       <div id="featuredWrap"></div>
-      <div id="calCard1"></div>
-      <div id="calCard2"></div>
+      <div id="calWrap"></div>
     </section>
 
     <!-- QUICK -->
@@ -565,22 +594,19 @@
   </div>
 
   <script>
-    // ustaw logo poprawnie (bez /logo.png)
     document.getElementById("logoImg").src = url("logo.png");
-
     const CONFIG = { location: "Olsztyn" };
 
     const FEATURED_KEY = "poranny-skan";
     const QUICK_KEYS = ["chart-pack","pozycje-funduszy","benchmark-tygodnia","decision-quadrants","weather-watch"];
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
-    // publikacje tygodnia (klucze z manifest)
     const CAL = [
-      { day:"poniedziałek", key:"weather-watch" },
-      { day:"wtorek",      key:"pozycje-funduszy" },
-      { day:"środa",       key:"chart-pack" },
-      { day:"czwartek",    key:"decision-quadrants" },
-      { day:"piątek",      key:"benchmark-tygodnia" },
+      { dow:1, short:"PN", key:"weather-watch" },
+      { dow:2, short:"WT", key:"pozycje-funduszy" },
+      { dow:3, short:"ŚR", key:"chart-pack" },
+      { dow:4, short:"CZ", key:"decision-quadrants" },
+      { dow:5, short:"PT", key:"benchmark-tygodnia" }
     ];
 
     function fmtDatePL(iso){
@@ -589,43 +615,36 @@
       if(p.length !== 3) return iso;
       return `${p[2]}.${p[1]}.${p[0]}`;
     }
-
     function parseISO(iso){
       if(!iso || typeof iso !== "string") return -Infinity;
       const t = Date.parse(iso + "T00:00:00Z");
       return isNaN(t) ? -Infinity : t;
     }
-
     function parseISODateLocal(iso){
       const p = (iso || "").split("-");
       if(p.length !== 3) return null;
       const dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
       return isNaN(dt.getTime()) ? null : dt;
     }
-
     function nextBusinessDay(dateObj){
       const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
       do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
       return d;
     }
-
     function fmtDatePrettyPL(dt){
       if(!(dt instanceof Date)) return "—";
       return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
     }
-
     function pickTodayFromScan(scan){
       const items = scan && Array.isArray(scan.items) ? scan.items : [];
       if(!items.length) return null;
       return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
     }
-
     function safePath(p){
       const s = (p || "").toString();
       if(/^https?:\/\//i.test(s)) return s;
       return url(s);
     }
-
     function todayISO(){
       const d = new Date();
       const y = d.getFullYear();
@@ -642,13 +661,11 @@
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
       return await res.json();
     }
-
     async function loadPorannyScanJSON(){
       const res = await fetch(url("raporty/poranny-skan/scan.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) return null;
       return await res.json();
     }
-
     function toItems(manifest){
       return Object.entries(manifest).map(([id, r]) => ({
         id,
@@ -658,9 +675,7 @@
         path: r.path || ("raporty/" + id + "/"),
         updated: r.updated || "",
         next_issue: (r.next_issue || "").toString(),
-        group: (r.group || "").toString(),
-        section: (r.section || "").toString(),
-        category: (r.category || "").toString()
+        group: (r.group || "").toString()
       }));
     }
 
@@ -668,12 +683,10 @@
       const box = document.getElementById("todayTicker");
       const today = todayISO();
 
-      // Poranny: jeśli scan.json ma dzisiejszą datę, traktujemy jako "dziś"
       let porannyToday = false;
       const todayScan = pickTodayFromScan(scan);
       if(todayScan && todayScan.date === today) porannyToday = true;
 
-      // Raporty z manifest, updated === dziś (pomijamy foldery)
       const updatedToday = items
         .filter(x => x.type !== "folder")
         .filter(x => (x.updated || "") === today);
@@ -697,7 +710,7 @@
         return;
       }
 
-      const text = `DZISIEJSZE AKTUALIZACJE: <strong>${names.join(" • ")}</strong>`;
+      const text = `DZIŚ: <strong>${names.join(" • ")}</strong>`;
       box.style.display = "flex";
       box.innerHTML = `
         <div class="label">NOWE DZISIAJ</div>
@@ -718,15 +731,14 @@
 
       const todayScan = pickTodayFromScan(scan);
 
-      // UWAGA: Poranny bierze datę z scan.json, a manifest to fallback
+      // Poranny bierze datę z scan.json, manifest to fallback
       const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
       const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
       const updatedLabel = updatedISO
         ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
         : "—";
 
-      // ŻÓŁTY tylko gdy dzisiaj
-      const updChunk = isToday(updatedISO)
+      const updRight = isToday(updatedISO)
         ? `<span class="fUpdToday">Ostatnia aktualizacja: ${updatedLabel}</span>`
         : `<span style="color:rgba(234,240,255,.78)"><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>`;
 
@@ -742,7 +754,10 @@
         <a class="featured" href="${safePath(ps.path)}">
           <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
-            ${updChunk}
+            <span class="spacer"></span>
+            <div class="rightBox">
+              ${updRight}
+            </div>
           </div>
 
           <p class="fTitle">${ps.name}</p>
@@ -754,37 +769,32 @@
       `;
     }
 
-    function renderCalendarCards(items){
+    function renderCalendar(items){
       const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const nameOf = (key, fallback) => (map[key] && map[key].name) ? map[key].name : fallback;
+      const nameOf = (key) => (map[key] && map[key].name) ? map[key].name : key;
 
-      // podział na 2 kafelki: (pon-śr) i (czw-pt)
-      const left = CAL.slice(0,3);
-      const right = CAL.slice(3);
+      // JS getDay(): 0=ND,1=PN,...6=SB
+      const js = new Date().getDay();
+      const todayDow = (js === 0) ? 7 : js; // 1..7
 
-      const htmlBlock = (rows) => rows.map(r=>{
-        const nm = nameOf(r.key, r.key);
-        return `<div class="calLine"><span>${r.day}:</span>${nm}</div>`;
+      const rows = CAL.map(r=>{
+        const cls = (r.dow === todayDow) ? "calItem today" : "calItem";
+        return `
+          <div class="${cls}">
+            <div class="d">${r.short}</div>
+            <div class="n">${nameOf(r.key)}</div>
+          </div>
+        `;
       }).join("");
 
-      document.getElementById("calCard1").innerHTML = `
-        <a class="card calCard" href="javascript:void(0)" onclick="return false;">
+      document.getElementById("calWrap").innerHTML = `
+        <div class="cardStatic calPanel">
           <p class="calTitle">Kalendarz publikacji</p>
-          ${htmlBlock(left)}
+          <div class="calGrid">${rows}</div>
           <div class="metaLine" style="margin-top:12px">
-            <span><strong>Stały rozkład</strong></span>
+            <span><strong>Stały rozkład tygodnia</strong></span>
           </div>
-        </a>
-      `;
-
-      document.getElementById("calCard2").innerHTML = `
-        <a class="card calCard" href="javascript:void(0)" onclick="return false;">
-          <p class="calTitle">Kalendarz publikacji</p>
-          ${htmlBlock(right)}
-          <div class="metaLine" style="margin-top:12px">
-            <span><strong>Stały rozkład</strong></span>
-          </div>
-        </a>
+        </div>
       `;
     }
 
@@ -793,26 +803,21 @@
       const map = Object.fromEntries(items.map(x => [x.id, x]));
       const listRaw = QUICK_KEYS.map(k => map[k]).filter(Boolean);
 
-      // sort: najnowsze updated na początek
       const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
 
       wrap.innerHTML = list.map(r => {
         const updISO = (r.updated || "").trim();
         const upd = updISO ? fmtDatePL(updISO) : "—";
         const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
-
         const clsToday = isToday(updISO) ? "today" : "";
 
-        // żółty badge Aktualizacja tylko gdy dziś
         const updBadge = isToday(updISO)
           ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
           : `<span class="badge">Aktualizacja: ${upd}</span>`;
 
         return `
           <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
-            <div class="topMeta">
-              ${updBadge}
-            </div>
+            <div class="topMeta">${updBadge}</div>
             <p class="title">${r.name}</p>
             <p class="desc">${r.description}</p>
             <div class="metaLine">
@@ -821,13 +826,6 @@
           </a>
         `;
       }).join("");
-
-      const missing = QUICK_KEYS.filter(k => !map[k]);
-      if(missing.length){
-        wrap.insertAdjacentHTML("beforeend",
-          `<div class="error">Brak w <code>manifest.json</code>: ${missing.map(x=>`<code>${x}</code>`).join(" ")}</div>`
-        );
-      }
     }
 
     function renderFolders(items){
@@ -835,7 +833,6 @@
       const map = Object.fromEntries(items.map(x => [x.id, x]));
       const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
 
-      // elementy raportowe należące do folderów (group)
       const today = todayISO();
       const byGroup = {};
       for(const it of items){
@@ -852,8 +849,6 @@
         const hasToday = todayCount > 0;
 
         const clsToday = hasToday ? "today" : "";
-
-        // żółty badge tylko gdy dziś w folderze
         const todayBadge = hasToday
           ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
           : `<span class="badge">Aktualizacje dziś: 0</span>`;
@@ -875,13 +870,6 @@
           </a>
         `;
       }).join("");
-
-      const missing = FOLDER_KEYS.filter(k => !map[k]);
-      if(missing.length){
-        wrap.insertAdjacentHTML("beforeend",
-          `<div class="error">Brak w <code>manifest.json</code>: ${missing.map(x=>`<code>${x}</code>`).join(" ")}</div>`
-        );
-      }
     }
 
     function arrowCell(n){
@@ -982,7 +970,7 @@
 
         renderTodayTicker(items, scan);
         renderFeatured(items, scan);
-        renderCalendarCards(items);
+        renderCalendar(items);
         renderQuick(items);
         renderFolders(items);
         loadPrices();
