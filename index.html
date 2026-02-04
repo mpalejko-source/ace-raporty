@@ -853,48 +853,52 @@
     }
 
     function renderFolders(items){
-      const wrap = document.getElementById("folderGrid");
-      const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
+  const wrap = document.getElementById("folderGrid");
+  const map = Object.fromEntries(items.map(x => [x.id, x]));
+  const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
 
-      const today = todayISO();
-      const byGroup = {};
-      for(const it of items){
-        if(!it.group) continue;
-        if(!byGroup[it.group]) byGroup[it.group] = [];
-        byGroup[it.group].push(it);
-      }
+  const today = todayISO();
 
-      wrap.innerHTML = folderList.map(folder => {
-        const href = url(`kategorie.html?cat=${encodeURIComponent(folder.id)}`);
+  // grupowanie raportów po "group" (czyli po folder id)
+  const byGroup = {};
+  for(const it of items){
+    if(!it.group) continue;
+    if(!byGroup[it.group]) byGroup[it.group] = [];
+    byGroup[it.group].push(it);
+  }
 
-        const children = byGroup[folder.id] || [];
-        const todayCount = children.filter(x => (x.updated || "") === today).length;
-        const hasToday = todayCount > 0;
+  wrap.innerHTML = folderList.map(folder => {
+    // ✅ LINK Z MANIFESTU (folder.path), np. "raporty/raporty-fundamentalne/"
+    const href = safePath(folder.path);
 
-        const clsToday = hasToday ? "today" : "";
-        const todayBadge = hasToday
-          ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
-          : `<span class="badge">Aktualizacje dziś: 0</span>`;
+    const children = byGroup[folder.id] || [];
+    const todayCount = children.filter(x => (x.updated || "") === today).length;
+    const hasToday = todayCount > 0;
 
-        const allCount = children.length ? children.length : "—";
+    const clsToday = hasToday ? "today" : "";
+    const todayBadge = hasToday
+      ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
+      : `<span class="badge">Aktualizacje dziś: 0</span>`;
 
-        return `
-          <a class="card ${clsToday}" href="${href}">
-            <div class="topMeta">
-              <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
-              <span class="badge">W środku: ${allCount} raportów</span>
-              ${todayBadge}
-            </div>
-            <p class="title">${folder.name}</p>
-            <p class="desc">${folder.description}</p>
-            <div class="metaLine">
-              <span><strong>Wejdź →</strong> lista raportów w środku</span>
-            </div>
-          </a>
-        `;
-      }).join("");
-    }
+    const allCount = children.length ? children.length : "—";
+
+    return `
+      <a class="card ${clsToday}" href="${href}">
+        <div class="topMeta">
+          <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
+          <span class="badge">W środku: ${allCount} raportów</span>
+          ${todayBadge}
+        </div>
+        <p class="title">${folder.name}</p>
+        <p class="desc">${folder.description}</p>
+        <div class="metaLine">
+          <span><strong>Wejdź →</strong> lista raportów w środku</span>
+        </div>
+      </a>
+    `;
+  }).join("");
+}
+
 
     function arrowCell(n){
       if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
