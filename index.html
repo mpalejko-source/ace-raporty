@@ -9,15 +9,13 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
- <script>
-  // BASE działa i na GitHub Pages, i na subdomenie
-  const BASE = "/";
-
-  function url(path){
-    return BASE + String(path || "").replace(/^\/+/, "");
-  }
-</script>
-
+  <script>
+    // BASE działa i na GitHub Pages, i na subdomenie
+    const BASE = "/";
+    function url(path){
+      return BASE + String(path || "").replace(/^\/+/, "");
+    }
+  </script>
 
   <style>
     :root{
@@ -32,7 +30,17 @@
       --radius:16px;
       --input: rgba(255,255,255,.06);
       --inputb: rgba(255,255,255,.14);
+
+      /* TODAY highlight (delikatne – ramka + tło) */
+      --todayBorder: rgba(125,211,252,.55);
+      --todayBg: rgba(125,211,252,.10);
+
+      /* Żółty tylko dla "Aktualizacja: data" gdy dziś */
+      --todayYellow: rgba(250,204,21,.95);
+      --todayYellowBg: rgba(250,204,21,.22);
+      --todayYellowText: #0b1220;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -127,6 +135,15 @@
     }
     a.card > *{ position:relative; }
 
+    /* dzisiejsze raporty/foldery – delikatna ramka + odcień */
+    a.card.today{
+      border: 1px solid var(--todayBorder);
+      background: linear-gradient(180deg, var(--todayBg), rgba(255,255,255,.03));
+    }
+    a.card.today:hover{
+      border-color: rgba(125,211,252,.80);
+    }
+
     .topMeta{
       display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
       margin-bottom:10px; color: rgba(234,240,255,.78); font-size:12px;
@@ -155,6 +172,14 @@
       background: rgba(167,139,250,.14);
       color:#ffffff;
       font-weight:800;
+    }
+
+    /* ŻÓŁTY tylko gdy dziś */
+    .badge.updToday{
+      border-color: rgba(250,204,21,.70);
+      background: var(--todayYellow);
+      color: var(--todayYellowText);
+      font-weight: 950;
     }
 
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
@@ -226,6 +251,22 @@
       font-size:12px;
     }
     .fMetaLine strong{ color: rgba(234,240,255,.95); font-weight:900; }
+
+    /* żółty tylko gdy dziś – dla "Ostatnia aktualizacja" w Porannym Skanie */
+    .fUpdToday{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(250,204,21,.70);
+      background: var(--todayYellow);
+      color: var(--todayYellowText);
+      font-weight:950;
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
+      white-space:nowrap;
+    }
+
     .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.15; color:#ffffff; }
     .fNext{
       margin-top:12px;
@@ -235,6 +276,51 @@
       color: var(--muted2);
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
+
+    /* ===== TICKER (TVN-like) ===== */
+    .ticker{
+      margin-top:10px;
+      border:1px solid rgba(250,204,21,.45);
+      background: rgba(15,23,42,.78);
+      border-radius: 999px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      height:38px;
+      display:flex;
+      align-items:center;
+    }
+    .ticker .label{
+      flex:0 0 auto;
+      padding:0 12px;
+      color:#0b1220;
+      background: rgba(250,204,21,.95);
+      font-weight: 950;
+      letter-spacing:.04em;
+      height:100%;
+      display:flex;
+      align-items:center;
+    }
+    .ticker .track{
+      position:relative;
+      flex:1 1 auto;
+      overflow:hidden;
+      height:100%;
+    }
+    .ticker .marquee{
+      position:absolute;
+      white-space:nowrap;
+      will-change: transform;
+      display:inline-block;
+      padding-left: 100%;
+      animation: aceTicker 18s linear infinite;
+      color: rgba(234,240,255,.92);
+      font-size: 13px;
+    }
+    .ticker .marquee strong{ color: rgba(250,204,21,.95); }
+    @keyframes aceTicker{
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-100%); }
+    }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -254,6 +340,31 @@
     }
     @media (max-width: 720px){
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
+    }
+
+    /* ===== FOLDERS grid ===== */
+    .folderGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .folderGrid{ grid-template-columns: 1fr; }
+      a.featured{ max-width:100%; }
+    }
+    .folderIcon{
+      display:inline-flex;
+      width:22px;
+      height:22px;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
+      margin-right:6px;
+      font-size:14px;
     }
 
     /* ===== PRICES ===== */
@@ -294,7 +405,6 @@
     }
     @media (max-width: 980px){
       .pricesGrid{ grid-template-columns: 1fr; }
-      a.featured{ max-width:100%; }
     }
 
     table.prTable{
@@ -321,30 +431,6 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
-    /* ===== FOLDERS grid ===== */
-    .folderGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 980px){
-      .folderGrid{ grid-template-columns: 1fr; }
-    }
-    .folderIcon{
-      display:inline-flex;
-      width:22px;
-      height:22px;
-      align-items:center;
-      justify-content:center;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      margin-right:6px;
-      font-size:14px;
-    }
-
     .error{
       border:1px solid rgba(255,120,120,.25);
       background: rgba(255,120,120,.08);
@@ -362,38 +448,53 @@
 
 <body>
   <div class="wrap">
-<header>
-  <div class="brand">
-    <img src="" alt="ACE Group" class="logo" id="logoImg">
-    <div>
-      <h1>ACE – Panel raportów</h1>
-      <p class="sub">System raportów Agri Commodity Experts</p>
-    </div>
-  </div>
 
-  <div style="display:flex; align-items:center; gap:10px;">
-    <a href="/cdn-cgi/access/logout"
-       class="pill"
-       style="text-decoration:none; opacity:.85;"
-       title="Wyloguj się">
-      <span class="ico">🚪</span>
-      <span>Wyloguj</span>
-    </a>
+    <header>
+      <div class="brand">
+        <img src="" alt="ACE Group" class="logo" id="logoImg">
+        <div>
+          <h1>ACE – Panel raportów</h1>
+          <p class="sub">System raportów Agri Commodity Experts</p>
+        </div>
+      </div>
 
-    <div class="pill" id="asof">
-      <span class="ico">📍</span>
-      <span>Olsztyn —</span>
-    </div>
-  </div>
-</header>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="/cdn-cgi/access/logout"
+           class="pill"
+           style="text-decoration:none; opacity:.85;"
+           title="Wyloguj się">
+          <span class="ico">🚪</span>
+          <span>Wyloguj</span>
+        </a>
+
+        <div class="pill" id="asof">
+          <span class="ico">📍</span>
+          <span>Olsztyn —</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TICKER: dzisiejsze aktualizacje -->
+    <div id="todayTicker" class="ticker" style="display:none"></div>
+
+    <!-- FEATURED -->
     <div class="featuredWrap" id="featuredWrap"></div>
 
+    <!-- QUICK -->
     <div class="sectionHead">
       <p class="h2">Szybki dostęp</p>
       <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
+    <!-- FOLDERS (PRZENIESIONE NAD CENNIKI) -->
+    <div class="sectionHead">
+      <p class="h2">Biblioteka raportów</p>
+      <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
+    </div>
+    <section class="folderGrid" id="folderGrid"></section>
+
+    <!-- PRICES (NIŻEJ) -->
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych</p>
@@ -418,12 +519,6 @@
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
       </section>
     </section>
-
-    <div class="sectionHead">
-      <p class="h2">Biblioteka raportów</p>
-      <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
-    </div>
-    <section class="folderGrid" id="folderGrid"></section>
 
     <div id="err" class="error" style="display:none"></div>
 
@@ -485,6 +580,17 @@
       return url(s);
     }
 
+    function todayISO(){
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const day = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${day}`;
+    }
+    function isToday(iso){
+      return (iso || "").trim() === todayISO();
+    }
+
     async function loadManifest(){
       const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
@@ -506,8 +612,54 @@
         path: r.path || ("raporty/" + id + "/"),
         updated: r.updated || "",
         frequency: (r.frequency || "").toString(),
-        next_issue: (r.next_issue || "").toString()
+        next_issue: (r.next_issue || "").toString(),
+        group: (r.group || "").toString(),
+        section: (r.section || "").toString(),
+        category: (r.category || "").toString()
       }));
+    }
+
+    function renderTodayTicker(items, scan){
+      const box = document.getElementById("todayTicker");
+      const today = todayISO();
+
+      // Poranny: jeśli scan.json ma dzisiejszą datę, traktujemy jako "dziś"
+      let porannyToday = false;
+      const todayScan = pickTodayFromScan(scan);
+      if(todayScan && todayScan.date === today) porannyToday = true;
+
+      // Raporty z manifest, updated === dziś (pomijamy foldery)
+      const updatedToday = items
+        .filter(x => x.type !== "folder")
+        .filter(x => (x.updated || "") === today);
+
+      const names = [];
+      const used = new Set();
+
+      if(porannyToday){
+        const ps = items.find(x=>x.id === FEATURED_KEY);
+        if(ps){ names.push(ps.name); used.add(ps.id); }
+      }
+      for(const it of updatedToday){
+        if(used.has(it.id)) continue;
+        names.push(it.name);
+        used.add(it.id);
+      }
+
+      if(!names.length){
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+
+      const text = `DZISIEJSZE AKTUALIZACJE: <strong>${names.join(" • ")}</strong>`;
+      box.style.display = "flex";
+      box.innerHTML = `
+        <div class="label">DZISIAJ</div>
+        <div class="track">
+          <div class="marquee">${text} &nbsp;&nbsp;&nbsp; ${text}</div>
+        </div>
+      `;
     }
 
     function renderFeatured(items, scan){
@@ -519,17 +671,22 @@
         return;
       }
 
-      const today = pickTodayFromScan(scan);
+      const todayScan = pickTodayFromScan(scan);
 
-      const updatedISO  = (today && today.date) ? today.date : (ps.updated || "");
-      const updatedTime = (today && today.time) ? today.time : "";
+      const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
+      const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
       const updatedLabel = updatedISO
         ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
         : "—";
 
+      // ŻÓŁTA ramka "Ostatnia aktualizacja" tylko gdy dzisiaj
+      const updChunk = isToday(updatedISO)
+        ? `<span class="fUpdToday">Ostatnia aktualizacja: ${updatedLabel}</span>`
+        : `<span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>`;
+
       let nextTxt = "—";
-      if(today && today.date){
-        const dt = parseISODateLocal(today.date);
+      if(todayScan && todayScan.date){
+        const dt = parseISODateLocal(todayScan.date);
         if(dt) nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
       } else if ((ps.next_issue || "").trim()){
         nextTxt = fmtDatePL(ps.next_issue.trim());
@@ -541,7 +698,7 @@
         <a class="featured" href="${safePath(ps.path)}">
           <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
-            <span><strong>Ostatnia aktualizacja:</strong> ${updatedLabel}</span>
+            ${updChunk}
             <span class="badge">${freq}</span>
           </div>
 
@@ -557,18 +714,29 @@
     function renderQuick(items){
       const wrap = document.getElementById("quickGrid");
       const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const list = QUICK_KEYS.map(k => map[k]).filter(Boolean);
+      const listRaw = QUICK_KEYS.map(k => map[k]).filter(Boolean);
+
+      // sort: najnowsze updated na początek
+      const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
 
       wrap.innerHTML = list.map(r => {
-        const upd = r.updated ? fmtDatePL(r.updated) : "—";
+        const updISO = (r.updated || "").trim();
+        const upd = updISO ? fmtDatePL(updISO) : "—";
         const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
         const freq = (r.frequency || "raport").trim();
 
+        const clsToday = isToday(updISO) ? "today" : "";
+
+        // żółty badge Aktualizacja tylko gdy dziś
+        const updBadge = isToday(updISO)
+          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+          : `<span class="badge">Aktualizacja: ${upd}</span>`;
+
         return `
-          <a class="card quickCard" href="${safePath(r.path)}">
+          <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
             <div class="topMeta">
               <span class="badge">${freq}</span>
-              <span class="badge">Aktualizacja: ${upd}</span>
+              ${updBadge}
             </div>
             <p class="title">${r.name}</p>
             <p class="desc">${r.description}</p>
@@ -590,23 +758,44 @@
     function renderFolders(items){
       const wrap = document.getElementById("folderGrid");
       const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const list = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
+      const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
 
-      wrap.innerHTML = list.map(r => {
-        const upd = r.updated ? fmtDatePL(r.updated) : "—";
-        const href = url(`kategorie.html?cat=${encodeURIComponent(r.id)}`);
-        const count = "—";
+      // elementy raportowe należące do folderów (group)
+      const today = todayISO();
+      const byGroup = {};
+      for(const it of items){
+        if(!it.group) continue;
+        if(!byGroup[it.group]) byGroup[it.group] = [];
+        byGroup[it.group].push(it);
+      }
+
+      wrap.innerHTML = folderList.map(folder => {
+        const href = url(`kategorie.html?cat=${encodeURIComponent(folder.id)}`);
+
+        const children = byGroup[folder.id] || [];
+        const todayCount = children.filter(x => (x.updated || "") === today).length;
+        const hasToday = todayCount > 0;
+
+        const clsToday = hasToday ? "today" : "";
+
+        // żółty badge tylko gdy dziś w folderze (czyli todayCount>0)
+        const todayBadge = hasToday
+          ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
+          : `<span class="badge">Aktualizacje dziś: 0</span>`;
+
+        const allCount = children.length ? children.length : "—";
 
         return `
-          <a class="card" href="${href}">
+          <a class="card ${clsToday}" href="${href}">
             <div class="topMeta">
               <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
-              <span class="badge">W środku: ${count} raportów</span>
+              <span class="badge">W środku: ${allCount} raportów</span>
+              ${todayBadge}
             </div>
-            <p class="title">${r.name}</p>
-            <p class="desc">${r.description}</p>
+            <p class="title">${folder.name}</p>
+            <p class="desc">${folder.description}</p>
             <div class="metaLine">
-              <span><strong>Ostatnia zmiana:</strong> ${upd}</span>
+              <span><strong>Wejdź →</strong> lista raportów w środku</span>
             </div>
           </a>
         `;
@@ -717,6 +906,7 @@
 
         const scan = await loadPorannyScanJSON();
 
+        renderTodayTicker(items, scan);
         renderFeatured(items, scan);
         renderQuick(items);
         renderFolders(items);
