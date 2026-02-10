@@ -1,6 +1,6 @@
 {
   "poranny-skan": {
-    "name": "ACE – Poranny Skan Rynku",
+    "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
     "updated": "2026-02-04",
@@ -10,7 +10,7 @@
   },
 
   "Wykresy-Cenowe": {
-    "name": "ACE – Wykresy cenowe",
+    "name": "Wykresy cenowe",
     "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
     "path": "raporty/chart-pack/",
     "updated": "2026-02-06",
@@ -19,7 +19,7 @@
     "category": "zboza"
   },
   "pozycje-funduszy": {
-    "name": "ACE – Pozycje Funduszy",
+    "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
     "updated": "2026-02-04",
@@ -36,8 +36,8 @@
     "next_issue": "2026-02-07",
     "category": "zboza"
   },
-  "Analizy ACE": {
-    "name": "DO wymyslenia nazwa",
+  "Analizy kwadratow": {
+    "name": "Analizy kwadratow",
     "description": "Macierze decyzyjne i sygnały risk-management.",
     "path": "raporty/decision-quadrants/",
     "updated": "2026-02-02",
