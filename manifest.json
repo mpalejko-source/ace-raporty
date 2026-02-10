@@ -22,9 +22,9 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-02-04",
+    "updated": "2026-02-10",
     "frequency": "tygodniowo",
-    "next_issue": "2026-02-07",
+    "next_issue": "2026-02-17",
     "category": "zboza"
   },
   "Portfele-ACE": {
