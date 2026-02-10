@@ -71,12 +71,12 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      user-select:none;
     }
     .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
-    .btn.disabled{
+    .btn:disabled{
       opacity:.45;
       cursor:not-allowed;
-      pointer-events:none;
     }
 
     .panel{
@@ -88,7 +88,6 @@
     }
     .date{color:var(--muted2); font-size:13px; margin-top:4px}
     .lead{margin:12px 0 0 0; font-size:15px; line-height:1.5; color:rgba(234,240,255,.92)}
-
     .sec{margin-top:18px}
     .sec h2{
       margin:0 0 8px 0; font-size:16px;
@@ -107,19 +106,39 @@
     .text{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
     .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
 
-    /* MEDIA (obrazki pod sekcjami) */
-    .mediaWrap{
+    /* --- MEDIA layout (text + image) --- */
+    .mediaRow{
+      display:grid;
+      grid-template-columns: 3fr 2fr; /* ~60/40 */
+      gap:14px;
+      align-items:start;
       margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
     }
+    .mediaRow.singleCol{
+      grid-template-columns: 1fr;
+    }
+    .mediaText{ min-width:0; }
+    .mediaFigure{ min-width:0; }
+
     .mediaImg{
       width:100%;
+      max-width: 420px;
+      max-height: 260px;
+      height:auto;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       box-shadow: var(--shadow);
+      background: rgba(255,255,255,.03);
+      object-fit: contain;
       display:block;
+      cursor: zoom-in;
+    }
+    @media (min-width: 900px){
+      .mediaImg{ max-width: 380px; max-height: 240px; }
+    }
+    @media (max-width: 720px){
+      .mediaRow{ grid-template-columns: 1fr; }
+      .mediaImg{ max-width: 100%; max-height: 320px; }
     }
 
     .archive{
@@ -157,6 +176,70 @@
       font-size:13px;
       white-space:pre-wrap;
     }
+
+    /* --- LIGHTBOX --- */
+    .lb{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.72);
+      z-index:9999;
+      padding:18px;
+    }
+    .lb.open{ display:flex; }
+    .lbCard{
+      max-width:min(1100px, 96vw);
+      max-height:90vh;
+      width:auto;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(15,26,51,.92);
+      box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
+    }
+    .lbTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(234,240,255,.9);
+      font-size:12px;
+    }
+    .lbTop .lbBtns{ display:flex; gap:8px; align-items:center; }
+    .lbBtn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.92);
+      padding:7px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:12px;
+      text-decoration:none;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .lbImgWrap{
+      padding:12px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background: rgba(0,0,0,.20);
+    }
+    .lbImg{
+      max-width:100%;
+      max-height: calc(90vh - 58px);
+      width:auto;
+      height:auto;
+      object-fit: contain;
+      display:block;
+    }
   </style>
 </head>
 
@@ -167,7 +250,7 @@
       <img src="logo.png" alt="ACE Group" class="logo">
       <div>
         <h1>ACE – Poranny Skan Rynku</h1>
-        <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów (bez dzisiejszego).</p>
+        <p class="sub">PL/EN automatycznie. Archiwum pokazuje ostatnie 10 porannych skanów (bez dzisiejszego).</p>
       </div>
     </div>
 
@@ -196,19 +279,27 @@
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <div class="lbCard" role="dialog" aria-modal="true" aria-label="Podgląd wykresu">
+    <div class="lbTop">
+      <div id="lbTitle">Podgląd</div>
+      <div class="lbBtns">
+        <a class="lbBtn" id="lbOpen" href="#" target="_blank" rel="noopener">↗ Otwórz</a>
+        <button class="lbBtn" id="lbClose" type="button">✕ Zamknij</button>
+      </div>
+    </div>
+    <div class="lbImgWrap">
+      <img class="lbImg" id="lbImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
 <script>
   const DATA_URL = "scan.json?ts=" + Date.now();
   let LANG = "pl";
   let ITEMS = [];
   let ACTIVE_ID = null;
-
-  function setLang(lang){
-    LANG = lang;
-    document.getElementById("btnPL").classList.toggle("active", lang==="pl");
-    document.getElementById("btnEN").classList.toggle("active", lang==="en");
-    updateHeaderFromToday();
-    render();
-  }
 
   function fmtDate(iso){
     if(!iso) return "—";
@@ -232,7 +323,6 @@
     return isNaN(dt.getTime()) ? null : dt;
   }
 
-  // next business day (Mon–Fri); without holidays
   function nextBusinessDay(dateObj){
     const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
     do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
@@ -254,75 +344,80 @@
     return Array.isArray(a) && a.some(x => (x||"").toString().trim().length>0);
   }
 
-  function hasLangContent(item, lang){
-    if(!item || !item[lang]) return false;
-    const t = item[lang];
-    const hasText =
-      isNonEmptyText(t.title) ||
-      isNonEmptyText(t.lead)  ||
-      isNonEmptyText(t.fx)    ||
-      isNonEmptyText(t.agri);
+  // ---------- LIGHTBOX ----------
+  const lb = document.getElementById("lb");
+  const lbImg = document.getElementById("lbImg");
+  const lbClose = document.getElementById("lbClose");
+  const lbOpen = document.getElementById("lbOpen");
+  const lbTitle = document.getElementById("lbTitle");
 
-    const hasBlocks = Array.isArray(t.blocks) && t.blocks.some(b =>
-      b && (isNonEmptyText(b.title) || isNonEmptyText(b.text) || (Array.isArray(b.media) && b.media.length))
-    );
+  function openLightbox(src, title){
+    lbImg.src = src;
+    lbOpen.href = src;
+    lbTitle.textContent = title || (LANG==="pl" ? "Podgląd" : "Preview");
+    lb.classList.add("open");
+  }
+  function closeLightbox(){
+    lb.classList.remove("open");
+    lbImg.src = "";
+    lbOpen.href = "#";
+  }
+  lbClose.onclick = closeLightbox;
+  lb.addEventListener("click", (e)=>{
+    if(e.target === lb) closeLightbox();
+  });
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape" && lb.classList.contains("open")) closeLightbox();
+  });
 
-    const hasFocus = Array.isArray(t.focus) && t.focus.some(x => isNonEmptyText(x));
-    return hasText || hasBlocks || hasFocus;
+  function normSrc(src){
+    return (src || "").toString().trim();
   }
 
-  function applyLangAvailability(){
-    const today = ITEMS[0] || null;
-    const btnEN = document.getElementById("btnEN");
+  function renderMedia(media, titleForLightbox){
+    const arr = Array.isArray(media) ? media : [];
+    const imgs = arr
+      .filter(x => x && x.type === "image" && isNonEmptyText(x.src))
+      .map(x => {
+        const src = esc(normSrc(x.src));
+        const t = esc(titleForLightbox || "");
+        return `<img class="mediaImg" src="${src}" alt="" data-lb="1" data-src="${src}" data-title="${t}">`;
+      });
 
-    if(today && hasLangContent(today, "en")){
-      btnEN.classList.remove("disabled");
-      btnEN.title = "";
-    } else {
-      // jeśli brak EN, to blokujemy przełączenie
-      if(LANG === "en") LANG = "pl";
-      btnEN.classList.add("disabled");
-      btnEN.title = "Brak wersji EN dla tego wydania";
-    }
-
-    // odśwież stan aktywny przycisków
-    document.getElementById("btnPL").classList.toggle("active", LANG==="pl");
-    document.getElementById("btnEN").classList.toggle("active", LANG==="en");
+    if(!imgs.length) return "";
+    return `<div class="mediaFigure">${imgs.join("")}</div>`;
   }
 
-  function section(icon, title, bodyHtml){
+  function section(icon, title, bodyHtml, media){
     const hasIcon = (icon||"").toString().trim().length > 0;
+    const mediaHtml = renderMedia(media, title);
+
+    const content = mediaHtml
+      ? `<div class="mediaRow">
+           <div class="mediaText">${bodyHtml}</div>
+           ${mediaHtml}
+         </div>`
+      : `<div class="mediaRow singleCol">
+           <div class="mediaText">${bodyHtml}</div>
+         </div>`;
+
     return `
       <div class="sec">
         <h2>
           ${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}
           ${esc(title)}
         </h2>
-        ${bodyHtml}
+        ${content}
       </div>
     `;
   }
 
-  function renderMedia(media){
-    if(!Array.isArray(media) || media.length === 0) return "";
-
-    const imgs = media
-      .filter(m => m && m.type === "image" && isNonEmptyText(m.src))
-      .map(m => `<img class="mediaImg" src="${esc(m.src)}" alt="" loading="lazy">`)
-      .join("");
-
-    if(!imgs) return "";
-    return `<div class="mediaWrap">${imgs}</div>`;
-  }
-
-  // Dynamic blocks:
-  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"...", media:[{type:"image", src:"scan_media/x.png"}]}, ...]
+  // blocks: [{icon,title,text,media:[{type:"image",src:"scan_media/..."}]}]
   function renderBlocksFromDynamic(t){
     const blocks = Array.isArray(t.blocks) ? t.blocks : [];
     if(!blocks.length) return "";
 
     let html = "";
-
     const pageTitle = (t.title || "").toString().trim();
     const pageLead  = (t.lead  || "").toString().trim();
 
@@ -331,9 +426,7 @@
       const title = (b.title || "").toString().trim();
       const text  = (b.text  || "").toString().trim();
       const icon  = (b.icon  || "").toString().trim();
-      const media = Array.isArray(b.media) ? b.media : [];
 
-      // pomiń blok jeśli dubluje tytuł lub lead
       const tl = title.toLowerCase();
       const isIntroLike = (tl === "tytuł" || tl === "wprowadzenie" || tl === "co dziś ważnego ?" || tl === "co dziś ważnego");
       const isDup =
@@ -341,59 +434,73 @@
         (title.length === 0 || isIntroLike);
 
       const looksLikeHeaderOnly = (i === 0 && text.length > 0 && text === pageTitle);
-
       if (isDup || looksLikeHeaderOnly) continue;
 
-      // render text block (+media)
-      if (title.length > 0 && (text.length > 0 || media.length > 0)){
-        const body =
-          (text.length ? `<p class="text">${esc(text)}</p>` : ``) +
-          renderMedia(media);
-
-        html += section(icon, title, body);
+      if (title.length > 0 && text.length > 0){
+        html += section(icon, title, `<p class="text">${esc(text)}</p>`, b.media);
         continue;
       }
 
-      // render list block (optional future)
       const list = Array.isArray(b.list) ? b.list.filter(x => isNonEmptyText(x)) : [];
       if (title.length > 0 && list.length){
-        html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+        html += section(icon, title, `<ul class="list">${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`, b.media);
       }
     }
-
     return html;
   }
 
-  function renderMain(item){
-    // jeśli wybrany język nie istnieje dla tego itemu -> fallback do PL
-    if(!hasLangContent(item, LANG)){
-      LANG = "pl";
-    }
+  function hasENForItem(item){
+    // jeśli en jest null lub wszystkie pola puste -> brak EN
+    const en = item && item.en;
+    if(!en) return false;
+    const hasText = ["title","lead","fx","agri"].some(k => isNonEmptyText(en[k]));
+    const hasFocus = isNonEmptyArray(en.focus);
+    const hasBlocks = Array.isArray(en.blocks) && en.blocks.some(b => isNonEmptyText(b && b.text));
+    return hasText || hasFocus || hasBlocks;
+  }
 
+  function setLang(lang){
+    LANG = lang;
+    document.getElementById("btnPL").classList.toggle("active", lang==="pl");
+    document.getElementById("btnEN").classList.toggle("active", lang==="en");
+    updateHeaderFromToday();
+    render();
+  }
+
+  function renderMain(item){
     const t = item[LANG] || {};
     const dateLine = `${fmtDate(item.date)} | ${item.time || "—"}`;
     const title = t.title || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
     const lead = (t.lead||"").trim();
 
     const leadBlock = isNonEmptyText(lead) ? `<p class="lead">${esc(lead)}</p>` : "";
+    const leadMediaHtml = renderMedia(t.lead_media, (LANG==="pl" ? "Wstęp" : "Intro"));
 
-    // Prefer dynamic blocks if present
+    const leadCombo = (leadBlock || leadMediaHtml) ? `
+      <div class="mediaRow ${leadMediaHtml ? "" : "singleCol"}">
+        <div class="mediaText">${leadBlock}</div>
+        ${leadMediaHtml}
+      </div>
+    ` : "";
+
     let blocksHtml = renderBlocksFromDynamic(t);
 
-    // Fallback to classic sections (auto-hide)
     if(!blocksHtml){
       const fx = (t.fx||"").trim();
       const agri = (t.agri||"").trim();
       const focus = Array.isArray(t.focus) ? t.focus.filter(x => isNonEmptyText(x)) : [];
 
       if(isNonEmptyText(agri)){
-        blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), `<p class="text">${esc(agri)}</p>`);
+        blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), `<p class="text">${esc(agri)}</p>`, null);
       }
       if(isNonEmptyText(fx)){
-        blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), `<p class="text">${esc(fx)}</p>`);
+        blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), `<p class="text">${esc(fx)}</p>`, null);
       }
       if(isNonEmptyArray(focus)){
-        blocksHtml += section("🎯", (LANG==="pl"?"Na co zwrócić uwagę dziś":"What to watch"), `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
+        blocksHtml += section("🎯", (LANG==="pl"?"Na co zwrócić uwagę dziś":"What to watch"),
+          `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`,
+          null
+        );
       }
     }
 
@@ -411,10 +518,19 @@
           <div class="pill">ID: <strong>${esc(item.id)}</strong></div>
         </div>
 
-        ${leadBlock}
+        ${leadCombo}
         ${blocksHtml}
       </div>
     `;
+
+    // click handler dla obrazków
+    document.querySelectorAll('img.mediaImg[data-lb="1"]').forEach(img=>{
+      img.addEventListener("click", ()=>{
+        const src = img.getAttribute("data-src");
+        const tt = img.getAttribute("data-title") || "";
+        if(src) openLightbox(src, tt);
+      });
+    });
   }
 
   function renderArchive(){
@@ -477,11 +593,22 @@
   }
 
   function render(){
-    applyLangAvailability();
-
     const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
     if(!current) return;
     ACTIVE_ID = current.id;
+
+    // EN button logic dla aktywnego wpisu
+    const enOk = hasENForItem(current);
+    const btnEN = document.getElementById("btnEN");
+    btnEN.disabled = !enOk;
+    btnEN.style.display = enOk ? "inline-flex" : "none";
+
+    // jeśli jesteśmy w EN, a nie ma EN => przełącz na PL
+    if(LANG==="en" && !enOk) LANG = "pl";
+
+    document.getElementById("btnPL").classList.toggle("active", LANG==="pl");
+    document.getElementById("btnEN").classList.toggle("active", LANG==="en");
+
     renderMain(current);
     renderArchive();
   }
@@ -517,9 +644,6 @@
       const data = await res.json();
       ITEMS = Array.isArray(data.items) ? data.items : [];
 
-      // domyślnie PL; jeśli brak EN -> zablokuj przycisk
-      applyLangAvailability();
-
       updateHeaderFromToday();
       render();
     } catch(e){
@@ -531,6 +655,7 @@
 
   document.getElementById("btnPL").onclick = ()=>setLang("pl");
   document.getElementById("btnEN").onclick = ()=>setLang("en");
+
   init();
 </script>
 </body>
