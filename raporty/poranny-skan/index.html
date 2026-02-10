@@ -73,6 +73,11 @@
       gap:8px;
     }
     .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
+    .btn.disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
 
     .panel{
       border:1px solid var(--border);
@@ -101,6 +106,21 @@
     }
     .text{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
     .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
+
+    /* MEDIA (obrazki pod sekcjami) */
+    .mediaWrap{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .mediaImg{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      display:block;
+    }
 
     .archive{
       margin-top:16px;
@@ -234,6 +254,42 @@
     return Array.isArray(a) && a.some(x => (x||"").toString().trim().length>0);
   }
 
+  function hasLangContent(item, lang){
+    if(!item || !item[lang]) return false;
+    const t = item[lang];
+    const hasText =
+      isNonEmptyText(t.title) ||
+      isNonEmptyText(t.lead)  ||
+      isNonEmptyText(t.fx)    ||
+      isNonEmptyText(t.agri);
+
+    const hasBlocks = Array.isArray(t.blocks) && t.blocks.some(b =>
+      b && (isNonEmptyText(b.title) || isNonEmptyText(b.text) || (Array.isArray(b.media) && b.media.length))
+    );
+
+    const hasFocus = Array.isArray(t.focus) && t.focus.some(x => isNonEmptyText(x));
+    return hasText || hasBlocks || hasFocus;
+  }
+
+  function applyLangAvailability(){
+    const today = ITEMS[0] || null;
+    const btnEN = document.getElementById("btnEN");
+
+    if(today && hasLangContent(today, "en")){
+      btnEN.classList.remove("disabled");
+      btnEN.title = "";
+    } else {
+      // jeśli brak EN, to blokujemy przełączenie
+      if(LANG === "en") LANG = "pl";
+      btnEN.classList.add("disabled");
+      btnEN.title = "Brak wersji EN dla tego wydania";
+    }
+
+    // odśwież stan aktywny przycisków
+    document.getElementById("btnPL").classList.toggle("active", LANG==="pl");
+    document.getElementById("btnEN").classList.toggle("active", LANG==="en");
+  }
+
   function section(icon, title, bodyHtml){
     const hasIcon = (icon||"").toString().trim().length > 0;
     return `
@@ -247,8 +303,20 @@
     `;
   }
 
+  function renderMedia(media){
+    if(!Array.isArray(media) || media.length === 0) return "";
+
+    const imgs = media
+      .filter(m => m && m.type === "image" && isNonEmptyText(m.src))
+      .map(m => `<img class="mediaImg" src="${esc(m.src)}" alt="" loading="lazy">`)
+      .join("");
+
+    if(!imgs) return "";
+    return `<div class="mediaWrap">${imgs}</div>`;
+  }
+
   // Dynamic blocks:
-  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"..."}, ...]
+  // t.blocks = [{icon:"💵", title:"USD/PLN", text:"...", media:[{type:"image", src:"scan_media/x.png"}]}, ...]
   function renderBlocksFromDynamic(t){
     const blocks = Array.isArray(t.blocks) ? t.blocks : [];
     if(!blocks.length) return "";
@@ -263,6 +331,7 @@
       const title = (b.title || "").toString().trim();
       const text  = (b.text  || "").toString().trim();
       const icon  = (b.icon  || "").toString().trim();
+      const media = Array.isArray(b.media) ? b.media : [];
 
       // pomiń blok jeśli dubluje tytuł lub lead
       const tl = title.toLowerCase();
@@ -275,9 +344,13 @@
 
       if (isDup || looksLikeHeaderOnly) continue;
 
-      // render text block
-      if (title.length > 0 && text.length > 0){
-        html += section(icon, title, `<p class="text">${esc(text)}</p>`);
+      // render text block (+media)
+      if (title.length > 0 && (text.length > 0 || media.length > 0)){
+        const body =
+          (text.length ? `<p class="text">${esc(text)}</p>` : ``) +
+          renderMedia(media);
+
+        html += section(icon, title, body);
         continue;
       }
 
@@ -292,6 +365,11 @@
   }
 
   function renderMain(item){
+    // jeśli wybrany język nie istnieje dla tego itemu -> fallback do PL
+    if(!hasLangContent(item, LANG)){
+      LANG = "pl";
+    }
+
     const t = item[LANG] || {};
     const dateLine = `${fmtDate(item.date)} | ${item.time || "—"}`;
     const title = t.title || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
@@ -339,67 +417,68 @@
     `;
   }
 
- function renderArchive(){
-  const box = document.getElementById("archive");
-  const t = (LANG==="pl")
-    ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
-    : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet.", today:"TODAY"};
+  function renderArchive(){
+    const box = document.getElementById("archive");
+    const t = (LANG==="pl")
+      ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
+      : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet.", today:"TODAY"};
 
-  const today = ITEMS[0] || null;
-  const todayId = today ? today.id : null;
+    const today = ITEMS[0] || null;
+    const todayId = today ? today.id : null;
 
-  const archItems = ITEMS
-    .slice(1)
-    .filter(x => x && x.id !== todayId)
-    .slice(0, 10);
+    const archItems = ITEMS
+      .slice(1)
+      .filter(x => x && x.id !== todayId)
+      .slice(0, 10);
 
-  // kafelek "DZIŚ" zawsze na górze
-  const todayTile = today ? `
-    <div class="architem" data-id="${esc(today.id)}" data-today="1">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
-        <div style="font-weight:700">${esc((today[LANG]||{}).title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
-        <div class="pill" style="padding:4px 8px; font-size:11px; box-shadow:none; background: rgba(125,211,252,.10); border-color: rgba(125,211,252,.35); color: rgba(234,240,255,.9)">
-          ${t.today}
+    const todayTile = today ? `
+      <div class="architem" data-id="${esc(today.id)}" data-today="1">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
+          <div style="font-weight:700">${esc((today[LANG]||{}).title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+          <div class="pill" style="padding:4px 8px; font-size:11px; box-shadow:none; background: rgba(125,211,252,.10); border-color: rgba(125,211,252,.35); color: rgba(234,240,255,.9)">
+            ${t.today}
+          </div>
+        </div>
+        <div class="archmeta">
+          <span>${fmtDate(today.date)} | ${today.time || "—"}</span>
+          <span>${t.open} →</span>
         </div>
       </div>
-      <div class="archmeta">
-        <span>${fmtDate(today.date)} | ${today.time || "—"}</span>
-        <span>${t.open} →</span>
-      </div>
-    </div>
-  ` : "";
+    ` : "";
 
-  box.innerHTML = `
-    <h3>${t.h}</h3>
-    ${todayTile}
-    ${archItems.length ? `
-      <div class="archgrid" style="margin-top:10px">
-        ${archItems.map(it => {
-          const tt = it[LANG] || {};
-          return `
-            <div class="architem" data-id="${esc(it.id)}">
-              <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
-              <div class="archmeta">
-                <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
-                <span>${t.open} →</span>
+    box.innerHTML = `
+      <h3>${t.h}</h3>
+      ${todayTile}
+      ${archItems.length ? `
+        <div class="archgrid" style="margin-top:10px">
+          ${archItems.map(it => {
+            const tt = it[LANG] || {};
+            return `
+              <div class="architem" data-id="${esc(it.id)}">
+                <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+                <div class="archmeta">
+                  <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
+                  <span>${t.open} →</span>
+                </div>
               </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    ` : `<p class="text">${t.empty}</p>`}
-  `;
+            `;
+          }).join("")}
+        </div>
+      ` : `<p class="text">${t.empty}</p>`}
+    `;
 
-  box.querySelectorAll(".architem").forEach(el=>{
-    el.addEventListener("click",()=>{
-      ACTIVE_ID = el.dataset.id;   // klik „DZIŚ” ustawi id dzisiejsze
-      render();
-      window.scrollTo({ top: 0, behavior: "smooth" }); // fajny UX: wraca do góry
+    box.querySelectorAll(".architem").forEach(el=>{
+      el.addEventListener("click",()=>{
+        ACTIVE_ID = el.dataset.id;
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     });
-  });
-}
+  }
 
   function render(){
+    applyLangAvailability();
+
     const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
     if(!current) return;
     ACTIVE_ID = current.id;
@@ -437,6 +516,9 @@
       if(!res.ok) throw new Error("Nie mogę wczytać scan.json");
       const data = await res.json();
       ITEMS = Array.isArray(data.items) ? data.items : [];
+
+      // domyślnie PL; jeśli brak EN -> zablokuj przycisk
+      applyLangAvailability();
 
       updateHeaderFromToday();
       render();
