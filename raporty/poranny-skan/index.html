@@ -74,10 +74,10 @@
       user-select:none;
     }
     .btn.active{ border-color: rgba(125,211,252,.55); background: rgba(125,211,252,.10); }
-    .btn[disabled]{
+    .btn.disabled{
       opacity:.45;
       cursor:not-allowed;
-      filter: grayscale(100%);
+      filter:saturate(.6);
     }
 
     .panel{
@@ -88,29 +88,8 @@
       padding:16px;
     }
     .date{color:var(--muted2); font-size:13px; margin-top:4px}
+    .lead{margin:0; font-size:15px; line-height:1.55; color:rgba(234,240,255,.92); white-space:pre-wrap}
 
-    /* --- lead + media layout (60/40) --- */
-    .leadWrap{
-      margin-top:12px;
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-    }
-    .leadText{
-      flex: 0 0 60%;
-      min-width: 260px;
-      font-size:15px;
-      line-height:1.55;
-      color:rgba(234,240,255,.92);
-      white-space:pre-wrap;
-    }
-    .leadMedia{
-      flex: 1 1 40%;
-      display:flex;
-      justify-content:flex-end;
-    }
-
-    /* --- sections layout (60/40) --- */
     .sec{margin-top:18px}
     .sec h2{
       margin:0 0 10px 0; font-size:16px;
@@ -126,57 +105,46 @@
       font-size:16px;
       flex:0 0 auto;
     }
-    .secRow{
-      display:flex;
+
+    /* ====== Layout tekst+media (60/40) ====== */
+    .row{
+      display:grid;
+      grid-template-columns: 1.55fr 1fr; /* ~60/40 */
       gap:14px;
-      align-items:flex-start;
+      align-items:start;
     }
-    .secText{
-      flex: 0 0 60%;
-      min-width: 260px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:14px;
-      white-space:pre-wrap;
+    @media (max-width: 760px){
+      .row{ grid-template-columns: 1fr; }
     }
-    .secMedia{
-      flex: 1 1 40%;
+
+    .text{margin:0; color:var(--muted); line-height:1.6; font-size:14px; white-space:pre-wrap}
+
+    .mediaCol{
       display:flex;
-      justify-content:flex-end;
-      align-items:flex-start;
+      flex-direction:column;
       gap:10px;
-      flex-wrap:wrap;
+      align-items:flex-end;
+    }
+    @media (max-width: 760px){
+      .mediaCol{ align-items:stretch; }
     }
 
-    /* responsive: on mobile stack */
-    @media (max-width: 780px){
-      .leadWrap, .secRow{ flex-direction:column; }
-      .leadText, .secText{ flex: 1 1 auto; min-width: auto; }
-      .leadMedia, .secMedia{ justify-content:flex-start; }
-    }
-
-    /* images */
-    .mediaImg{
-      width:100%;
-      max-width: 420px;
-      height:auto;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
+    .imgCard{
+      border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:8px;
       box-shadow: var(--shadow);
-      display:block;
-    }
-    .mediaThumb{
+      max-width: 360px; /* mniejsze niż było */
       width:100%;
-      max-width: 420px;
     }
-    .imgLink{
+    .imgCard img{
+      width:100%;
+      height:auto;
       display:block;
-      text-decoration:none;
+      border-radius:10px;
       cursor: zoom-in;
     }
-
-    .list{margin:10px 0 0 18px; color:var(--muted); font-size:14px; line-height:1.55}
 
     .archive{
       margin-top:16px;
@@ -214,43 +182,43 @@
       white-space:pre-wrap;
     }
 
-    /* lightbox */
+    /* ====== Lightbox (klik w obraz) ====== */
     .lb{
       position:fixed; inset:0;
       background: rgba(0,0,0,.72);
       display:none;
       align-items:center;
       justify-content:center;
-      padding:18px;
+      padding:24px;
       z-index:9999;
     }
     .lb.open{ display:flex; }
     .lbInner{
       max-width:min(1100px, 96vw);
-      max-height: 90vh;
+      max-height:88vh;
       position:relative;
     }
     .lbImg{
-      width:100%;
-      height:auto;
-      max-height: 90vh;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow: 0 20px 70px rgba(0,0,0,.6);
-      background: rgba(255,255,255,.04);
+      max-width:100%;
+      max-height:88vh;
       display:block;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      cursor: zoom-out;
     }
     .lbClose{
       position:absolute;
-      top:-10px; right:-10px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(15,26,51,.85);
-      color: rgba(234,240,255,.95);
+      top:-12px; right:-12px;
+      width:36px; height:36px;
       border-radius:999px;
-      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: rgba(234,240,255,.95);
+      display:flex; align-items:center; justify-content:center;
       cursor:pointer;
       box-shadow: var(--shadow);
-      font-size:12px;
+      font-size:18px;
     }
   </style>
 </head>
@@ -262,7 +230,7 @@
       <img src="logo.png" alt="ACE Group" class="logo">
       <div>
         <h1>ACE – Poranny Skan Rynku</h1>
-        <p class="sub">Przełącz PL/EN. Archiwum pokazuje ostatnie 10 porannych skanów (bez dzisiejszego).</p>
+        <p class="sub">PL/EN. Archiwum pokazuje ostatnie skany (bez dzisiejszego).</p>
       </div>
     </div>
 
@@ -287,67 +255,40 @@
   <section class="panel archive" id="archive"></section>
 
   <div class="footer">
-    To nie jest porada inwestycyjna, przedstawione treści są tylko poglądem Autora <code>Agri Commodity Experts Sp. z o.o.</code>
+    To nie jest porada inwestycyjna. Treści są poglądem Autora <code>Agri Commodity Experts Sp. z o.o.</code>
   </div>
 </div>
 
-<!-- lightbox -->
+<!-- Lightbox -->
 <div class="lb" id="lb">
   <div class="lbInner">
-    <button class="lbClose" id="lbClose">✕ Zamknij</button>
-    <img class="lbImg" id="lbImg" alt="">
+    <button class="lbClose" id="lbClose" type="button" title="Zamknij">✕</button>
+    <img class="lbImg" id="lbImg" alt="Podgląd" />
   </div>
 </div>
 
 <script>
   const DATA_URL = "scan.json?ts=" + Date.now();
-  const MEDIA_DIR = "scan_media"; // folder obok index.html
+  const MEDIA_DIR = "scan_media/"; // folder z obrazkami obok scan.json
+
   let LANG = "pl";
   let ITEMS = [];
   let ACTIVE_ID = null;
 
+  // Map: key -> [src1, src2, ...]
+  // keys:
+  //   `${date}_lead`  -> lead images
+  //   `${date}_s1`    -> section 1 images, etc.
+  const MEDIA_MAP = new Map();
 
-function mediaCandidates(itemId, kind, sectionNo){
-  // kind: "lead" albo "s"
-  // dla lead: sectionNo ignorowane
-  const base = "scan_media/";
-  const out = [];
-  if(kind === "lead"){
-    out.push(`${base}${itemId}_lead_1.png`);
-    out.push(`${base}${itemId}_lead_2.png`);
-    return out;
+  function setLang(lang){
+    LANG = lang;
+    document.getElementById("btnPL").classList.toggle("active", lang==="pl");
+    document.getElementById("btnEN").classList.toggle("active", lang==="en");
+    updateHeaderFromToday();
+    render();
   }
-  // sekcje: s1_1, s1_2 itd.
-  out.push(`${base}${itemId}_s${sectionNo}_1.png`);
-  out.push(`${base}${itemId}_s${sectionNo}_2.png`);
-  return out;
-}
 
-function renderMediaHtml(itemId, kind, sectionNo){
-  // Wstawiamy "puste" img z data-src. Potem hydrate zrobi resztę.
-  const cands = mediaCandidates(itemId, kind, sectionNo);
-  return cands.map(src => `
-    <img class="media-img"
-         data-src="${src}"
-         alt=""
-         loading="lazy">
-  `).join("");
-}
-
-function hydrateMedia(container){
-  // Ustaw src dopiero po renderze; jeśli 404 -> usuń img
-  container.querySelectorAll("img.media-img[data-src]").forEach(img=>{
-    const src = img.getAttribute("data-src");
-    img.removeAttribute("data-src");
-
-    img.onerror = () => img.remove();          // nie ma pliku -> nie pokazuj
-    img.onclick = () => openLightbox(src);     // klik -> powiększenie
-    img.src = src;                             
-  });
-}
-
-
-  
   function fmtDate(iso){
     if(!iso) return "—";
     const p = iso.split("-");
@@ -370,6 +311,7 @@ function hydrateMedia(container){
     return isNaN(dt.getTime()) ? null : dt;
   }
 
+  // next business day (Mon–Fri); without holidays
   function nextBusinessDay(dateObj){
     const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
     do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
@@ -387,184 +329,196 @@ function hydrateMedia(container){
   function isNonEmptyText(x){
     return (x||"").toString().trim().length > 0;
   }
-  function isNonEmptyArray(a){
-    return Array.isArray(a) && a.some(x => (x||"").toString().trim().length>0);
-  }
 
-  function section(icon, title, innerHtml){
-    const hasIcon = (icon||"").toString().trim().length > 0;
-    return `
-      <div class="sec">
-        <h2>
-          ${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}
-          ${esc(title)}
-        </h2>
-        ${innerHtml}
-      </div>
-    `;
+  function getMediaFor(dateStr, keySuffix){
+    const key = `${dateStr}_${keySuffix}`;
+    const arr = MEDIA_MAP.get(key);
+    return Array.isArray(arr) ? arr : [];
   }
-
-  // --- LIGHTBOX ---
-  const lb = document.getElementById("lb");
-  const lbImg = document.getElementById("lbImg");
-  document.getElementById("lbClose").onclick = () => lb.classList.remove("open");
-  lb.addEventListener("click", (e) => {
-    if(e.target === lb) lb.classList.remove("open");
-  });
-  document.addEventListener("keydown", (e) => {
-    if(e.key === "Escape") lb.classList.remove("open");
-  });
 
   function openLightbox(src){
-    lbImg.src = src;
+    const lb = document.getElementById("lb");
+    const img = document.getElementById("lbImg");
+    img.src = src;
     lb.classList.add("open");
   }
+  function closeLightbox(){
+    const lb = document.getElementById("lb");
+    const img = document.getElementById("lbImg");
+    img.src = "";
+    lb.classList.remove("open");
+  }
+  document.getElementById("lbClose").onclick = closeLightbox;
+  document.getElementById("lb").addEventListener("click", (e)=>{
+    if(e.target.id === "lb" || e.target.id === "lbImg") closeLightbox();
+  });
 
-  // render one image thumb with auto-hide on 404
-  function imgThumb(src){
-    const safe = esc(src);
+  function renderMediaColumn(mediaArr){
+    if(!mediaArr || !mediaArr.length) return "";
+    const cards = mediaArr.map(src => `
+      <div class="imgCard">
+        <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}" />
+      </div>
+    `).join("");
+    return `<div class="mediaCol">${cards}</div>`;
+  }
+
+  function section(icon, title, text, mediaArr){
+    const hasIcon = (icon||"").toString().trim().length > 0;
+    const textHtml = isNonEmptyText(text) ? `<p class="text">${esc(text)}</p>` : `<p class="text">—</p>`;
+    const mediaHtml = renderMediaColumn(mediaArr);
+
+    // jeśli nie ma media → jedna kolumna (ładniej)
+    if(!mediaHtml){
+      return `
+        <div class="sec">
+          <h2>${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}${esc(title)}</h2>
+          ${textHtml}
+        </div>
+      `;
+    }
+
     return `
-      <a class="imgLink mediaThumb" href="${safe}" data-img="${safe}">
-        <img class="mediaImg" src="${safe}" alt=""
-             onerror="this.closest('a').style.display='none'">
-      </a>
+      <div class="sec">
+        <h2>${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}${esc(title)}</h2>
+        <div class="row">
+          <div>${textHtml}</div>
+          ${mediaHtml}
+        </div>
+      </div>
     `;
   }
 
-  function wireImageClicks(scopeEl){
-    scopeEl.querySelectorAll("a.imgLink[data-img]").forEach(a=>{
-      a.addEventListener("click", (e)=>{
-        e.preventDefault();
-        openLightbox(a.dataset.img);
-      });
-    });
-  }
+  // Pobiera listing folderu scan_media/ i buduje mapę:
+  //  - YYYY-MM-DD_lead_1.png -> key: YYYY-MM-DD_lead
+  //  - YYYY-MM-DD_s1_1.png   -> key: YYYY-MM-DD_s1
+  async function loadMediaIndex(){
+    try{
+      const res = await fetch(MEDIA_DIR, { cache:"no-store" });
+      if(!res.ok) return; // jak listing wyłączony, po prostu nic
+      const html = await res.text();
 
-  // If JSON block has media[] -> use it. Otherwise auto from naming.
-  function mediaFromBlockOrAuto(itemDate, renderedSectionNo, block){
-    let html = "";
+      // wyciągnij hrefy
+      const hrefs = Array.from(html.matchAll(/href="([^"]+)"/g)).map(m=>m[1]);
+      const files = hrefs
+        .map(h => decodeURIComponent(h))
+        .map(h => h.replace(/^\.\/+/,''))
+        .filter(name => /\.(png|jpg|jpeg|webp|gif)$/i.test(name));
 
-    // 1) explicit media in JSON (optional)
-    const m = (block && Array.isArray(block.media)) ? block.media : [];
-    const imgs = m.filter(x => x && x.type === "image" && isNonEmptyText(x.src)).map(x => x.src);
+      // reset
+      MEDIA_MAP.clear();
 
-    if(imgs.length){
-      html += imgs.map(src => imgThumb(src)).join("");
-      return html;
-    }
+      for(const f of files){
+        // oczekiwane wzorce:
+        // 2026-02-10_lead_1.png
+        // 2026-02-10_s1_1.png
+        const m = f.match(/^(\d{4}-\d{2}-\d{2})_(lead|s\d+)_\d+\.(png|jpg|jpeg|webp|gif)$/i);
+        if(!m) continue;
 
-    // 2) auto from folder (up to 3 images per section)
-    for(let k=1; k<=3; k++){
-      const src = `${MEDIA_DIR}/${itemDate}_s${renderedSectionNo}_${k}.png`;
-      html += imgThumb(src);
-    }
-    return html;
-  }
+        const date = m[1];
+        const bucket = m[2].toLowerCase(); // lead / s1 / s2...
+        const key = `${date}_${bucket}`;
+        const src = MEDIA_DIR + f;
 
-  function leadMediaAuto(itemDate){
-    // up to 3 lead images
-    let html = "";
-    for(let k=1; k<=3; k++){
-      const src = `${MEDIA_DIR}/${itemDate}_lead_${k}.png`;
-      html += imgThumb(src);
-    }
-    return html;
-  }
+        if(!MEDIA_MAP.has(key)) MEDIA_MAP.set(key, []);
+        MEDIA_MAP.get(key).push(src);
+      }
 
-  // Dynamic blocks renderer with:
-  // - removal of duplicate lead blocks
-  // - renderedSectionNo counter (THIS fixes s1/s5 mismatch!)
-  function renderBlocksFromDynamic(item){
-  const t = item[LANG] || {};
-  const blocks = Array.isArray(t.blocks) ? t.blocks : [];
-  if(!blocks.length) return "";
-
-  let html = "";
-  let sectionNo = 0; // liczymy tylko realnie renderowane sekcje
-
-  const pageTitle = (t.title || "").toString().trim();
-  const pageLead  = (t.lead  || "").toString().trim();
-
-  for (let i = 0; i < blocks.length; i++){
-    const b = blocks[i] || {};
-    const title = (b.title || "").toString().trim();
-    const text  = (b.text  || "").toString().trim();
-    const icon  = (b.icon  || "").toString().trim();
-
-    // --- filtry na duplikaty / pseudo-bloki intro
-    const tl = title.toLowerCase();
-    const isIntroLike = (tl === "tytuł" || tl === "wprowadzenie" || tl === "krótki wstęp do dnia:" || tl === "krótki wstęp do dnia" || tl === "co dziś ważnego ?" || tl === "co dziś ważnego");
-    const isDup =
-      (text.length > 0 && (text === pageTitle || text === pageLead)) &&
-      (title.length === 0 || isIntroLike);
-
-    const looksLikeHeaderOnly = (text.length > 0 && text === pageTitle && isIntroLike);
-
-    if (isDup || looksLikeHeaderOnly) continue;
-
-    // render tylko sensowne bloki (title+text)
-    if (title.length > 0 && text.length > 0){
-      sectionNo += 1;
-
-      const mediaHtml = `<div class="media-col">${renderMediaHtml(item.id, "s", sectionNo)}</div>`;
-      const bodyHtml = `
-        <div class="row">
-          <div><p class="text">${esc(text)}</p></div>
-          ${mediaHtml}
-        </div>
-      `;
-
-      html += section(icon, title, bodyHtml);
-      continue;
+      // opcjonalnie: sortuj stabilnie (…_1, …_2)
+      for(const [k, arr] of MEDIA_MAP.entries()){
+        arr.sort((a,b)=> a.localeCompare(b, undefined, {numeric:true, sensitivity:"base"}));
+        MEDIA_MAP.set(k, arr);
+      }
+    } catch(e){
+      // cisza – brak listing / brak folderu
     }
   }
-
-  return html;
-}
-
 
   function renderMain(item){
-    const t = item[LANG] || {};
+    const t = item[LANG] || null;
+    const hasLang = t && (isNonEmptyText(t.title) || isNonEmptyText(t.lead) || isNonEmptyText(t.fx) || isNonEmptyText(t.agri) || (Array.isArray(t.blocks) && t.blocks.length));
+    if(!hasLang){
+      document.getElementById("main").innerHTML = `<div class="text">Brak treści w tym języku.</div>`;
+      return;
+    }
+
     const dateLine = `${fmtDate(item.date)} | ${item.time || "—"}`;
-    const title = t.title || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
-    const lead = (t.lead||"").trim();
+    const title = (t.title || "").toString().trim() || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
+    const lead = (t.lead || "").toString();
 
-    const leadBlock = isNonEmptyText(lead) ? `
-      <div class="leadWrap">
-        <div class="leadText">${esc(lead)}</div>
-        <div class="leadMedia">${leadMediaAuto(item.date)}</div>
-      </div>
-    ` : "";
+    // lead media: z JSON (jeśli dodasz kiedyś) albo z folderu: YYYY-MM-DD_lead_*.png
+    const leadMedia = getMediaFor(item.id, "lead");
 
-    // Prefer dynamic blocks if present
-    let blocksHtml = renderBlocksFromDynamic(item);
+    const leadHtml = isNonEmptyText(lead)
+      ? (leadMedia.length
+          ? `<div class="row" style="margin-top:12px">
+               <div><p class="lead">${esc(lead)}</p></div>
+               ${renderMediaColumn(leadMedia)}
+             </div>`
+          : `<p class="lead" style="margin-top:12px">${esc(lead)}</p>`
+        )
+      : "";
 
-    // Fallback to classic sections (auto-hide)
-    if(!blocksHtml){
-      const fx = (t.fx||"").trim();
-      const agri = (t.agri||"").trim();
-      const focus = Array.isArray(t.focus) ? t.focus.filter(x => isNonEmptyText(x)) : [];
+    // dynamic blocks
+    const blocks = Array.isArray(t.blocks) ? t.blocks : [];
+    let blocksHtml = "";
 
-      if(isNonEmptyText(agri)){
-        blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"),
-          `<div class="secRow"><div class="secText">${esc(agri)}</div><div class="secMedia"></div></div>`);
+    // WAŻNE: numerujemy sekcje po WYŚWIETLENIU (displayIndex)
+    let displayIndex = 0;
+
+    for (let i = 0; i < blocks.length; i++){
+      const b = blocks[i] || {};
+      const bTitle = (b.title || "").toString().trim();
+      const bText  = (b.text  || "").toString();
+
+      if(!isNonEmptyText(bTitle) || !isNonEmptyText(bText)) continue;
+
+      // usuń “intro-like” bloki oraz duplikaty leadu/tytułu
+      const tl = bTitle.toLowerCase();
+      const introLike =
+        tl === "tytuł" ||
+        tl === "wprowadzenie" ||
+        tl === "krótki wstęp do dnia:" ||
+        tl === "krótki wstęp do dnia" ||
+        tl === "na co dziś zwracamy uwagę ?" ||
+        tl === "na co dziś zwracamy uwagę?" ||
+        tl === "co dziś ważnego ?" ||
+        tl === "co dziś ważnego";
+
+      // jeśli blok jest intro-like, to w ogóle go nie renderujemy
+      if(introLike) continue;
+
+      // jeśli tekst bloku == lead → nie renderuj (żeby nie powielać)
+      if(lead && bText.trim() === lead.trim()) continue;
+
+      // jeśli tekst bloku == title → nie renderuj
+      if(title && bText.trim() === title.trim()) continue;
+
+      displayIndex += 1;
+
+      // media: najpierw z JSON (b.media), a jak brak to z folderu: YYYY-MM-DD_s{displayIndex}_*.png
+      let mediaArr = [];
+      if(Array.isArray(b.media) && b.media.length){
+        mediaArr = b.media
+          .filter(m => m && m.type === "image" && isNonEmptyText(m.src))
+          .map(m => m.src);
+      } else {
+        mediaArr = getMediaFor(item.id, `s${displayIndex}`);
       }
-      if(isNonEmptyText(fx)){
-        blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"),
-          `<div class="secRow"><div class="secText">${esc(fx)}</div><div class="secMedia"></div></div>`);
-      }
-      if(isNonEmptyArray(focus)){
-        blocksHtml += section("🎯", (LANG==="pl"?"Na co zwrócić uwagę dziś":"What to watch"),
-          `<ul class="list">${focus.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`);
-      }
+
+      blocksHtml += section(b.icon || "", bTitle, bText, mediaArr);
     }
 
     if(!blocksHtml){
-      blocksHtml = `<p class="secText">—</p>`;
+      // fallback: klasyczne pola (gdybyś kiedyś wrócił do v1 bez blocks)
+      const fx = (t.fx||"").toString();
+      const agri = (t.agri||"").toString();
+      if(isNonEmptyText(agri)) blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), agri, getMediaFor(item.id, "s1"));
+      if(isNonEmptyText(fx)) blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), fx, getMediaFor(item.id, "s2"));
+      if(!blocksHtml) blocksHtml = `<p class="text">—</p>`;
     }
 
-    const main = document.getElementById("main");
-    main.innerHTML = `
+    document.getElementById("main").innerHTML = `
       <div>
         <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap">
           <div>
@@ -574,12 +528,15 @@ function hydrateMedia(container){
           <div class="pill">ID: <strong>${esc(item.id)}</strong></div>
         </div>
 
-        ${leadBlock}
+        ${leadHtml}
         ${blocksHtml}
       </div>
     `;
 
-    wireImageClicks(main);
+    // klik w obraz
+    document.getElementById("main").querySelectorAll("img[data-zoom]").forEach(img=>{
+      img.addEventListener("click", ()=>openLightbox(img.dataset.zoom));
+    });
   }
 
   function renderArchive(){
@@ -599,7 +556,7 @@ function hydrateMedia(container){
     const todayTile = today ? `
       <div class="architem" data-id="${esc(today.id)}" data-today="1">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
-          <div style="font-weight:700">${esc((today[LANG]||{}).title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
+          <div style="font-weight:700">${esc(((today[LANG]||{})?.title) || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
           <div class="pill" style="padding:4px 8px; font-size:11px; box-shadow:none; background: rgba(125,211,252,.10); border-color: rgba(125,211,252,.35); color: rgba(234,240,255,.9)">
             ${t.today}
           </div>
@@ -629,7 +586,7 @@ function hydrateMedia(container){
             `;
           }).join("")}
         </div>
-      ` : `<p class="secText">${t.empty}</p>`}
+      ` : `<p class="text">${t.empty}</p>`}
     `;
 
     box.querySelectorAll(".architem").forEach(el=>{
@@ -639,6 +596,14 @@ function hydrateMedia(container){
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
+  }
+
+  function render(){
+    const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
+    if(!current) return;
+    ACTIVE_ID = current.id;
+    renderMain(current);
+    renderArchive();
   }
 
   function updateHeaderFromToday(){
@@ -665,51 +630,37 @@ function hydrateMedia(container){
     }
   }
 
-  function hasEnglish(today){
-    if(!today) return false;
+  function updateLangButtons(){
+    // EN ma być klikalne tylko jeśli istnieje realna treść
+    const today = ITEMS[0] || null;
+    const btnEN = document.getElementById("btnEN");
+    if(!today || !today.en){
+      btnEN.classList.add("disabled");
+      return;
+    }
     const en = today.en;
-    if(!en) return false; // en:null -> brak
-    const hasTxt =
+    const ok = (
       isNonEmptyText(en.title) ||
       isNonEmptyText(en.lead) ||
       isNonEmptyText(en.fx) ||
       isNonEmptyText(en.agri) ||
-      (Array.isArray(en.blocks) && en.blocks.length) ||
-      (Array.isArray(en.focus) && en.focus.length);
-    return !!hasTxt;
-  }
-
-  function setLang(lang){
-    LANG = lang;
-    document.getElementById("btnPL").classList.toggle("active", lang==="pl");
-    document.getElementById("btnEN").classList.toggle("active", lang==="en");
-    updateHeaderFromToday();
-    render();
-  }
-
-  function render(){
-    const current = ITEMS.find(x => x.id === ACTIVE_ID) || ITEMS[0];
-    if(!current) return;
-    ACTIVE_ID = current.id;
-    renderMain(current);
-    renderArchive();
+      (Array.isArray(en.blocks) && en.blocks.length)
+    );
+    btnEN.classList.toggle("disabled", !ok);
   }
 
   async function init(){
     try{
+      // 1) media index
+      await loadMediaIndex();
+
+      // 2) json
       const res = await fetch(DATA_URL, {cache:"no-store"});
       if(!res.ok) throw new Error("Nie mogę wczytać scan.json");
       const data = await res.json();
       ITEMS = Array.isArray(data.items) ? data.items : [];
 
-      // EN button: disable/hide if no EN today
-      const enBtn = document.getElementById("btnEN");
-      const enOk = hasEnglish(ITEMS[0]);
-      if(!enOk){
-        enBtn.disabled = true;
-        enBtn.style.display = "none"; // jak chcesz tylko disable: usuń tę linię
-      }
-
+      updateLangButtons();
       updateHeaderFromToday();
       render();
     } catch(e){
@@ -720,7 +671,11 @@ function hydrateMedia(container){
   }
 
   document.getElementById("btnPL").onclick = ()=>setLang("pl");
-  document.getElementById("btnEN").onclick = ()=>setLang("en");
+  document.getElementById("btnEN").onclick = ()=>{
+    if(document.getElementById("btnEN").classList.contains("disabled")) return;
+    setLang("en");
+  };
+
   init();
 </script>
 </body>
