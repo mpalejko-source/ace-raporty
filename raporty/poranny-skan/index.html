@@ -306,6 +306,48 @@
   let ITEMS = [];
   let ACTIVE_ID = null;
 
+
+function mediaCandidates(itemId, kind, sectionNo){
+  // kind: "lead" albo "s"
+  // dla lead: sectionNo ignorowane
+  const base = "scan_media/";
+  const out = [];
+  if(kind === "lead"){
+    out.push(`${base}${itemId}_lead_1.png`);
+    out.push(`${base}${itemId}_lead_2.png`);
+    return out;
+  }
+  // sekcje: s1_1, s1_2 itd.
+  out.push(`${base}${itemId}_s${sectionNo}_1.png`);
+  out.push(`${base}${itemId}_s${sectionNo}_2.png`);
+  return out;
+}
+
+function renderMediaHtml(itemId, kind, sectionNo){
+  // Wstawiamy "puste" img z data-src. Potem hydrate zrobi resztę.
+  const cands = mediaCandidates(itemId, kind, sectionNo);
+  return cands.map(src => `
+    <img class="media-img"
+         data-src="${src}"
+         alt=""
+         loading="lazy">
+  `).join("");
+}
+
+function hydrateMedia(container){
+  // Ustaw src dopiero po renderze; jeśli 404 -> usuń img
+  container.querySelectorAll("img.media-img[data-src]").forEach(img=>{
+    const src = img.getAttribute("data-src");
+    img.removeAttribute("data-src");
+
+    img.onerror = () => img.remove();          // nie ma pliku -> nie pokazuj
+    img.onclick = () => openLightbox(src);     // klik -> powiększenie
+    img.src = src;                             
+  });
+}
+
+
+  
   function fmtDate(iso){
     if(!iso) return "—";
     const p = iso.split("-");
@@ -433,48 +475,53 @@
   // - removal of duplicate lead blocks
   // - renderedSectionNo counter (THIS fixes s1/s5 mismatch!)
   function renderBlocksFromDynamic(item){
-    const t = item[LANG] || {};
-    const blocks = Array.isArray(t.blocks) ? t.blocks : [];
-    if(!blocks.length) return "";
+  const t = item[LANG] || {};
+  const blocks = Array.isArray(t.blocks) ? t.blocks : [];
+  if(!blocks.length) return "";
 
-    const pageTitle = (t.title || "").toString().trim();
-    const pageLead  = (t.lead  || "").toString().trim();
+  let html = "";
+  let sectionNo = 0; // liczymy tylko realnie renderowane sekcje
 
-    let html = "";
-    let renderedNo = 0;
+  const pageTitle = (t.title || "").toString().trim();
+  const pageLead  = (t.lead  || "").toString().trim();
 
-    for (let i = 0; i < blocks.length; i++){
-      const b = blocks[i] || {};
-      const title = (b.title || "").toString().trim();
-      const text  = (b.text  || "").toString().trim();
-      const icon  = (b.icon  || "").toString().trim();
+  for (let i = 0; i < blocks.length; i++){
+    const b = blocks[i] || {};
+    const title = (b.title || "").toString().trim();
+    const text  = (b.text  || "").toString().trim();
+    const icon  = (b.icon  || "").toString().trim();
 
-      if(!isNonEmptyText(title) || !isNonEmptyText(text)) continue;
+    // --- filtry na duplikaty / pseudo-bloki intro
+    const tl = title.toLowerCase();
+    const isIntroLike = (tl === "tytuł" || tl === "wprowadzenie" || tl === "krótki wstęp do dnia:" || tl === "krótki wstęp do dnia" || tl === "co dziś ważnego ?" || tl === "co dziś ważnego");
+    const isDup =
+      (text.length > 0 && (text === pageTitle || text === pageLead)) &&
+      (title.length === 0 || isIntroLike);
 
-      // drop: block that is literally a title echo or lead echo
-      const tl = title.toLowerCase();
-      const isIntroLike = (tl === "tytuł" || tl === "wprowadzenie" || tl === "krótki wstęp do dnia:" || tl === "krotki wstep do dnia:" || tl === "co dziś ważnego ?" || tl === "co dziś ważnego");
-      const looksLikeHeaderOnly = (text === pageTitle) && (isIntroLike || i === 0);
-      const looksLikeLeadDup    = (text === pageLead); // <- klucz: wycina powtórkę lead niezależnie od tytułu
+    const looksLikeHeaderOnly = (text.length > 0 && text === pageTitle && isIntroLike);
 
-      if(looksLikeHeaderOnly || looksLikeLeadDup) continue;
+    if (isDup || looksLikeHeaderOnly) continue;
 
-      // now this is a real rendered section
-      renderedNo += 1;
+    // render tylko sensowne bloki (title+text)
+    if (title.length > 0 && text.length > 0){
+      sectionNo += 1;
 
-      const mediaHtml = mediaFromBlockOrAuto(item.date, renderedNo, b);
-      const inner = `
-        <div class="secRow">
-          <div class="secText">${esc(text)}</div>
-          <div class="secMedia">${mediaHtml}</div>
+      const mediaHtml = `<div class="media-col">${renderMediaHtml(item.id, "s", sectionNo)}</div>`;
+      const bodyHtml = `
+        <div class="row">
+          <div><p class="text">${esc(text)}</p></div>
+          ${mediaHtml}
         </div>
       `;
 
-      html += section(icon, title, inner);
+      html += section(icon, title, bodyHtml);
+      continue;
     }
-
-    return html;
   }
+
+  return html;
+}
+
 
   function renderMain(item){
     const t = item[LANG] || {};
