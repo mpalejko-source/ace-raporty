@@ -178,9 +178,9 @@
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
     "path": "raporty/raporty-fundamentalne/wasde/",
-    "updated": "2026-02-02",
+    "updated": "2026-02-10",
     "frequency": "miesięcznie",
-    "next_issue": "2026-02-10",
+    "next_issue": "2026-03-11",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza"
