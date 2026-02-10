@@ -5,6 +5,7 @@
 {"name":"Śruta sojowa – port Gdańsk/Gdynia [PLN/t]","price":1350,"w":-40,"m":-60},
 {"name":"Śruta rzepakowa – centralna Polska [PLN/t]","price":1020,"w":140,"m":230},
 {"name":"Śruta słonecznikowa – granica PL–UA [PLN/t]","price":870,"w":-20,"m":-60}
+  {"name":"Olej sojowy [PLN/t]","price":870,"w":-20,"m":-60}
 ],
 "futures":[
 {"name":"Wheat MATIF","close":189,"d1":"","w":-3,"m":-11},
