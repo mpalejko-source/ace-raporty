@@ -1,16 +1,16 @@
-{"asof":"2026-02-10 09:32",
+{"asof":"2026-02-11 20:11",
 "cash":[
-{"name":"Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]","price":795,"w":10,"m":10},
-{"name":"Kukurydza – port Gdańsk/Gdynia [PLN/t]","price":790,"w":20,"m":40},
-{"name":"Śruta sojowa – port Gdańsk/Gdynia [PLN/t]","price":1350,"w":-40,"m":-60},
-{"name":"Śruta rzepakowa – centralna Polska [PLN/t]","price":1020,"w":140,"m":230},
-{"name":"Śruta słonecznikowa – granica PL–UA [PLN/t]","price":870,"w":-20,"m":-60}
+{"name":"Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]","price":795,"w":-10,"m":-30},
+{"name":"Kukurydza – port Gdańsk/Gdynia [PLN/t]","price":785,"w":0,"m":10},
+{"name":"Śruta sojowa – port Gdańsk/Gdynia [PLN/t]","price":1384,"w":-3,"m":-56},
+{"name":"Śruta rzepakowa – centralna Polska [PLN/t]","price":972,"w":-6,"m":119},
+{"name":"Śruta słonecznikowa – granica PL–UA [PLN/t]","price":949,"w":-29,"m":-29}
 ],
 "futures":[
-{"name":"Wheat MATIF","close":189,"d1":"","w":-3,"m":-11},
-{"name":"Corn MATIF","close":189,"d1":"","w":-3,"m":-11},
-{"name":"Rapeseed MATIF","close":475,"d1":"","w":-12,"m":43},
-{"name":"Soymeal CBOT","close":295,"d1":"","w":-2,"m":8},
-{"name":"Rapemeal Neuss/Spyck","close":242,"d1":"","w":40,"m":55}
+{"name":"Wheat MATIF","close":189.5,"d1":"","w":null,"m":null},
+{"name":"Corn MATIF","close":189,"d1":"","w":-2,"m":null},
+{"name":"Rapeseed MATIF","close":487.75,"d1":"","w":null,"m":null},
+{"name":"Soymeal CBOT","close":300.8,"d1":"","w":null,"m":null},
+{"name":"Rapemeal Neuss/Spyck","close":235,"d1":"","w":3,"m":30}
 ]
 }
