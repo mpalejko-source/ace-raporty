@@ -31,9 +31,9 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-02-02",
+    "updated": "2026-02-13",
     "frequency": "tygodniowo",
-    "next_issue": "2026-02-07",
+    "next_issue": "2026-02-20",
     "category": "zboza"
   },
   "Analizy kwadratow": {
