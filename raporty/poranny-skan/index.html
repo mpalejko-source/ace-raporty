@@ -135,7 +135,7 @@
       border-radius:14px;
       padding:8px;
       box-shadow: var(--shadow);
-      max-width: 360px; /* mniejsze niż było */
+      max-width: 360px;
       width:100%;
     }
     .imgCard img{
@@ -269,17 +269,10 @@
 
 <script>
   const DATA_URL = "scan.json?ts=" + Date.now();
-  const MEDIA_DIR = "scan_media/"; // folder z obrazkami obok scan.json
 
   let LANG = "pl";
   let ITEMS = [];
   let ACTIVE_ID = null;
-
-  // Map: key -> [src1, src2, ...]
-  // keys:
-  //   `${date}_lead`  -> lead images
-  //   `${date}_s1`    -> section 1 images, etc.
-  const MEDIA_MAP = new Map();
 
   function setLang(lang){
     LANG = lang;
@@ -330,12 +323,6 @@
     return (x||"").toString().trim().length > 0;
   }
 
-  function getMediaFor(dateStr, keySuffix){
-    const key = `${dateStr}_${keySuffix}`;
-    const arr = MEDIA_MAP.get(key);
-    return Array.isArray(arr) ? arr : [];
-  }
-
   function openLightbox(src){
     const lb = document.getElementById("lb");
     const img = document.getElementById("lbImg");
@@ -368,7 +355,6 @@
     const textHtml = isNonEmptyText(text) ? `<p class="text">${esc(text)}</p>` : `<p class="text">—</p>`;
     const mediaHtml = renderMediaColumn(mediaArr);
 
-    // jeśli nie ma media → jedna kolumna (ładniej)
     if(!mediaHtml){
       return `
         <div class="sec">
@@ -389,54 +375,25 @@
     `;
   }
 
-  // Pobiera listing folderu scan_media/ i buduje mapę:
-  //  - YYYY-MM-DD_lead_1.png -> key: YYYY-MM-DD_lead
-  //  - YYYY-MM-DD_s1_1.png   -> key: YYYY-MM-DD_s1
-  async function loadMediaIndex(){
-    try{
-      const res = await fetch(MEDIA_DIR, { cache:"no-store" });
-      if(!res.ok) return; // jak listing wyłączony, po prostu nic
-      const html = await res.text();
-
-      // wyciągnij hrefy
-      const hrefs = Array.from(html.matchAll(/href="([^"]+)"/g)).map(m=>m[1]);
-      const files = hrefs
-        .map(h => decodeURIComponent(h))
-        .map(h => h.replace(/^\.\/+/,''))
-        .filter(name => /\.(png|jpg|jpeg|webp|gif)$/i.test(name));
-
-      // reset
-      MEDIA_MAP.clear();
-
-      for(const f of files){
-        // oczekiwane wzorce:
-        // 2026-02-10_lead_1.png
-        // 2026-02-10_s1_1.png
-        const m = f.match(/^(\d{4}-\d{2}-\d{2})_(lead|s\d+)_\d+\.(png|jpg|jpeg|webp|gif)$/i);
-        if(!m) continue;
-
-        const date = m[1];
-        const bucket = m[2].toLowerCase(); // lead / s1 / s2...
-        const key = `${date}_${bucket}`;
-        const src = MEDIA_DIR + f;
-
-        if(!MEDIA_MAP.has(key)) MEDIA_MAP.set(key, []);
-        MEDIA_MAP.get(key).push(src);
-      }
-
-      // opcjonalnie: sortuj stabilnie (…_1, …_2)
-      for(const [k, arr] of MEDIA_MAP.entries()){
-        arr.sort((a,b)=> a.localeCompare(b, undefined, {numeric:true, sensitivity:"base"}));
-        MEDIA_MAP.set(k, arr);
-      }
-    } catch(e){
-      // cisza – brak listing / brak folderu
-    }
+  function normalizeMediaSrc(src){
+    const s = (src||"").toString().trim();
+    if(!s) return "";
+    // jeżeli ktoś poda samo "plik.png" bez folderu, dopnij scan_media/
+    if (!/^https?:\/\//i.test(s) && !s.startsWith("scan_media/")) return "scan_media/" + s;
+    return s;
   }
 
   function renderMain(item){
     const t = item[LANG] || null;
-    const hasLang = t && (isNonEmptyText(t.title) || isNonEmptyText(t.lead) || isNonEmptyText(t.fx) || isNonEmptyText(t.agri) || (Array.isArray(t.blocks) && t.blocks.length));
+
+    const hasLang = t && (
+      isNonEmptyText(t.title) ||
+      isNonEmptyText(t.lead) ||
+      isNonEmptyText(t.fx) ||
+      isNonEmptyText(t.agri) ||
+      (Array.isArray(t.blocks) && t.blocks.length)
+    );
+
     if(!hasLang){
       document.getElementById("main").innerHTML = `<div class="text">Brak treści w tym języku.</div>`;
       return;
@@ -446,8 +403,14 @@
     const title = (t.title || "").toString().trim() || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
     const lead = (t.lead || "").toString();
 
-    // lead media: z JSON (jeśli dodasz kiedyś) albo z folderu: YYYY-MM-DD_lead_*.png
-    const leadMedia = getMediaFor(item.id, "lead");
+    // ===== LEAD MEDIA: tylko z JSON (pl.lead_media / en.lead_media) =====
+    let leadMedia = [];
+    if (Array.isArray(t.lead_media) && t.lead_media.length) {
+      leadMedia = t.lead_media
+        .filter(m => m && m.type === "image" && isNonEmptyText(m.src))
+        .map(m => normalizeMediaSrc(m.src))
+        .filter(Boolean);
+    }
 
     const leadHtml = isNonEmptyText(lead)
       ? (leadMedia.length
@@ -459,11 +422,10 @@
         )
       : "";
 
-    // dynamic blocks
+    // ===== BLOCKS (preferowane) =====
     const blocks = Array.isArray(t.blocks) ? t.blocks : [];
     let blocksHtml = "";
 
-    // WAŻNE: numerujemy sekcje po WYŚWIETLENIU (displayIndex)
     let displayIndex = 0;
 
     for (let i = 0; i < blocks.length; i++){
@@ -473,7 +435,6 @@
 
       if(!isNonEmptyText(bTitle) || !isNonEmptyText(bText)) continue;
 
-      // usuń “intro-like” bloki oraz duplikaty leadu/tytułu
       const tl = bTitle.toLowerCase();
       const introLike =
         tl === "tytuł" ||
@@ -485,36 +446,30 @@
         tl === "co dziś ważnego ?" ||
         tl === "co dziś ważnego";
 
-      // jeśli blok jest intro-like, to w ogóle go nie renderujemy
       if(introLike) continue;
-
-      // jeśli tekst bloku == lead → nie renderuj (żeby nie powielać)
       if(lead && bText.trim() === lead.trim()) continue;
-
-      // jeśli tekst bloku == title → nie renderuj
       if(title && bText.trim() === title.trim()) continue;
 
       displayIndex += 1;
 
-      // media: najpierw z JSON (b.media), a jak brak to z folderu: YYYY-MM-DD_s{displayIndex}_*.png
+      // ===== SECTION MEDIA: tylko z JSON b.media =====
       let mediaArr = [];
       if(Array.isArray(b.media) && b.media.length){
         mediaArr = b.media
           .filter(m => m && m.type === "image" && isNonEmptyText(m.src))
-          .map(m => m.src);
-      } else {
-        mediaArr = getMediaFor(item.id, `s${displayIndex}`);
+          .map(m => normalizeMediaSrc(m.src))
+          .filter(Boolean);
       }
 
       blocksHtml += section(b.icon || "", bTitle, bText, mediaArr);
     }
 
+    // ===== fallback (gdybyś kiedyś zrobił JSON bez blocks) =====
     if(!blocksHtml){
-      // fallback: klasyczne pola (gdybyś kiedyś wrócił do v1 bez blocks)
       const fx = (t.fx||"").toString();
       const agri = (t.agri||"").toString();
-      if(isNonEmptyText(agri)) blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), agri, getMediaFor(item.id, "s1"));
-      if(isNonEmptyText(fx)) blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), fx, getMediaFor(item.id, "s2"));
+      if(isNonEmptyText(agri)) blocksHtml += section("🌾", (LANG==="pl"?"Zboża i oleiste":"Grains & Oilseeds"), agri, []);
+      if(isNonEmptyText(fx)) blocksHtml += section("💵", (LANG==="pl"?"FX / Makro":"FX / Macro"), fx, []);
       if(!blocksHtml) blocksHtml = `<p class="text">—</p>`;
     }
 
@@ -533,7 +488,6 @@
       </div>
     `;
 
-    // klik w obraz
     document.getElementById("main").querySelectorAll("img[data-zoom]").forEach(img=>{
       img.addEventListener("click", ()=>openLightbox(img.dataset.zoom));
     });
@@ -631,7 +585,6 @@
   }
 
   function updateLangButtons(){
-    // EN ma być klikalne tylko jeśli istnieje realna treść
     const today = ITEMS[0] || null;
     const btnEN = document.getElementById("btnEN");
     if(!today || !today.en){
@@ -644,17 +597,14 @@
       isNonEmptyText(en.lead) ||
       isNonEmptyText(en.fx) ||
       isNonEmptyText(en.agri) ||
-      (Array.isArray(en.blocks) && en.blocks.length)
+      (Array.isArray(en.blocks) && en.blocks.length) ||
+      (Array.isArray(en.lead_media) && en.lead_media.length)
     );
     btnEN.classList.toggle("disabled", !ok);
   }
 
   async function init(){
     try{
-      // 1) media index
-      await loadMediaIndex();
-
-      // 2) json
       const res = await fetch(DATA_URL, {cache:"no-store"});
       if(!res.ok) throw new Error("Nie mogę wczytać scan.json");
       const data = await res.json();
