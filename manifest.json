@@ -94,7 +94,7 @@
     "name": "EUR/USD",
     "description": "Analiza statystyczno-techniczna pary EUR/USD.",
     "path": "raporty/analizy-stat-tech/waluty/eurusd/",
-    "updated": "2026-02-02",
+    "updated": "2026-02-13",
     "frequency": "dziennie",
     "group": "analizy-stat-tech",
     "section": "Waluty",
