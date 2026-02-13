@@ -341,14 +341,19 @@
   });
 
   function renderMediaColumn(mediaArr){
-    if(!mediaArr || !mediaArr.length) return "";
-    const cards = mediaArr.map(src => `
+  if(!mediaArr || !mediaArr.length) return "";
+  const cards = mediaArr.map(raw => {
+    const src = normalizeMediaSrc(raw);
+    if(!src) return "";
+    return `
       <div class="imgCard">
-        <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}" />
+        <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}"
+             onerror="this.closest('.imgCard')?.remove()" />
       </div>
-    `).join("");
-    return `<div class="mediaCol">${cards}</div>`;
-  }
+    `;
+  }).join("");
+  return `<div class="mediaCol">${cards}</div>`;
+}
 
   function section(icon, title, text, mediaArr){
     const hasIcon = (icon||"").toString().trim().length > 0;
@@ -375,13 +380,27 @@
     `;
   }
 
-  function normalizeMediaSrc(src){
-    const s = (src||"").toString().trim();
-    if(!s) return "";
-    // jeżeli ktoś poda samo "plik.png" bez folderu, dopnij scan_media/
-    if (!/^https?:\/\//i.test(s) && !s.startsWith("scan_media/")) return "scan_media/" + s;
-    return s;
+ function normalizeMediaSrc(src){
+  let s = (src ?? "").toString();
+
+  // usuń whitespace (spacje, taby, nowe linie, NBSP, zero-width)
+  s = s
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")   // zero-width
+    .replace(/\u00A0/g, " ")                 // nbsp
+    .trim();
+
+  // usuń ewentualne podwójne slashe w środku (poza https://)
+  s = s.replace(/([^:])\/{2,}/g, "$1/");
+
+  if(!s) return "";
+
+  // jeśli ktoś podał samo "plik.png" bez folderu
+  if(!/^https?:\/\//i.test(s) && !s.startsWith("scan_media/")) {
+    s = "scan_media/" + s;
   }
+  return s;
+}
+
 
   function renderMain(item){
     const t = item[LANG] || null;
