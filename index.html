@@ -1050,5 +1050,19 @@ async function loadUserEmail(){
       }
     })();
   </script>
+  
+  <script>
+fetch("/cdn-cgi/access/get-identity")
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById("userEmail").innerHTML =
+      "Zalogowany: " + d.email;
+  })
+  .catch(e => {
+    document.getElementById("userEmail").innerHTML =
+      "Błąd identity";
+  });
+</script>
+
 </body>
 </html>
