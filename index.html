@@ -986,30 +986,41 @@
         document.getElementById("futuresPanel").innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
       }
     }
-
-
-    async function loadUserEmail(){
+async function loadUserEmail(){
   const box = document.getElementById("userEmail");
   if(!box) return;
 
+  // pokaż, że próbujemy
+  box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>…</strong></span>`;
+
   try{
-    const res = await fetch("/cdn-cgi/access/get-identity", { cache:"no-store" });
-    if(!res.ok) return;
+    const res = await fetch("/cdn-cgi/access/get-identity", {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
 
-    const data = await res.json();
-    const email = (data && data.email) ? String(data.email).trim() : "";
-    const name  = (data && data.name) ? String(data.name).trim() : "";
-
-    if(email){
-      // pokaż email (i opcjonalnie name w title)
-      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>${email}</strong></span>`;
-      if(name) box.title = `Zalogowany: ${name} (${email})`;
+    // pokaż status gdy nie OK
+    if(!res.ok){
+      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(HTTP ${res.status})</span></span>`;
       return;
     }
+
+    const data = await res.json();
+    const email = (data?.email || "").toString().trim();
+    const name  = (data?.name  || "").toString().trim();
+
+    if(email){
+      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>${email}</strong></span>`;
+      box.title = name ? `Zalogowany: ${name} (${email})` : `Zalogowany: ${email}`;
+    } else {
+      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(brak email w JSON)</span></span>`;
+    }
   } catch(e){
-    // nic – zostaw "—"
+    box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(błąd fetch)</span></span>`;
   }
 }
+
+
 
     (async () => {
       const errBox = document.getElementById("err");
