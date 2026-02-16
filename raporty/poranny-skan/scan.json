@@ -1,22 +1,23 @@
 {"items":[
   {
-    "id":"2026-02-14",
-    "date":"2026-02-14",
-    "time":"13:40",
+    "id":"2026-02-16",
+    "date":"2026-02-16",
+    "time":"11:08",
     "pl":{
-      "title":"Dziś raport WASDE ! Wszystkie oczy tam",
-      "lead":"Dzisiaj wychodzi raport USDA (godzina 18 naszego czasu). Zaczniemy zatem od tego i przewidywań analityków:\n•\tBrazylia: przewidywania są na zwiększenie produkcji zarówno soi i kukurydzy. Choć w soi nadal dość „konserwatywnie” poniżej 180 mln – a przypominamy że inne agencje mówiły już nawet o ponad 181 mln. Gdyby nastąpiła większa korekta w górę na soi  >180 mln to spodziewamy się ruchu w dół na kompleksie sojowym. ",
+      "title":"„Pszenica i soja w dół po rajdzie, kukurydza stabiln",
+      "lead":"Rynek zbóż i oleistych odnotował korektę po wcześniejszych wzrostach, pod wpływem wysokiej globalnej podaży, prognoz zbiorów w Rosji, Brazylii i UE oraz realizacji zysków inwestorów.",
+      "lead_media":[{"type":"image","src":"scan_media/2026-02-13_lead_1.png"}],
       "fx":"",
       "agri":"",
-      "blocks":[{"icon":"🌾","title":"Śruta Sojowa","text":"Trump-Chiny – to dziś rządzi CBOT:\n\nNa rynku śruty sojowej obserwujemy jednak w ostatnich dniach lekkie techniczne odbicie.\nŚruta sojowa wzrosła do 307,90 USD/t. Przed długim weekendem w USA spekulanci zamykali krótkie pozycje (stąd wzrosty), obawiając się dalszych informacji dotyczących relacji handlowych.\n\nRynek zignorował rosnące prognozy produkcji w Ameryce Południowej. Brazylijska Conab podniosła szacunek zbiorów do rekordowych 177,98 mln ton, a USDA wskazuje nawet 180 mln ton.","media":[{"type":"image","src":"scan_media/2026-02-14_s1_1.png"}]},{"icon":"🌾","title":"Zboża","text":"Pszenica (WASDE 2025/26): globalna podaż lekko w dół, konsumpcja minimalnie w górę, handel większy, a zapasy końcowe nieco niższe. Bilans pozostaje relatywnie zrównoważony, bez silnego impulsu wzrostowego."},{"icon":"🌾","title":"Rzepak/Canola","text":"Rynek śruty rzepakowej pozostaje napięty cenowo. W grze nadal jest możliwość zwiększonego importu kanadyjskiej kanoli do Chin, co wspiera ceny samej kanoli, a w konsekwencji także rzepaku na MATIF: \nA wyższe notowania rzepaku przekładają się również na utrzymanie wysokich poziomów śruty rzepakowej.\nDolny Ren ponownie w górę. W Polsce relacja ceny śruty rzepakowej do sojowej utrzymuje się w rejonie ok. 68%, z tendencją do zbliżania się do poziomów zachodnioeuropejskich. Dla porównania, na rynku holenderskim ratio sięga już ok. 71%, co sugeruje dalszą próbę „dobijania” do zachodnich benchmarków.","media":[{"type":"image","src":"scan_media/2026-02-14_s3_1.png"}]},{"icon":"💵","title":"Waluty","text":"Ostatnie dane z rynku pracy w USA (130 tys. nowych miejsc pracy vs 70 tys. prognozy, spadek bezrobocia do 4,3%) ograniczyły oczekiwania na szybkie obniżki stóp przez Fed. Rynek wycenia obecnie maksymalnie dwie obniżki w 2026 r., a pierwsza nie jest w pełni zdyskontowana przed lipcem. Dla rynku surowców oznacza to, że scenariusz szybkiego i mocnego osłabienia dolara na razie się oddala, choć inwestorzy czekają jeszcze na dane inflacyjne (CPI)."}],
+      "blocks":[{"icon":"??","title":"Śruta Sojowa","text":"Soja spada do 11,33 USD/buszel, realizując zyski po rajdzie napędzanym zakupami z Chin, podczas gdy śruta sojowa rośnie w portach europejskich (ok. 1428 PLN/t). Rekordowe zbiory w Brazylii ograniczają dalszy potencjał wzrostu.","media":[{"type":"image","src":"scan_media/2026-02-13_s1_1.png"}]},{"icon":"??","title":"Pszenica","text":"Po silnym rajdzie w Chicago pszenica koryguje w dół, realizując zyski z ostatnich wzrostów. CBOT spadła do 5,48 3/4 USD/buszel, przy rosnącej globalnej podaży i dopuszczeniu eksportu przez Indie 2,5 mln ton. W Europie notowania również cofnęły się po tygodniowych maksimach, a perspektywa wysokich zbiorów w Rosji i Francji ogranicza potencjał dalszych wzrostów."},{"icon":"??","title":"Kukurydza","text":"Kukurydza zachowuje relatywną siłę i drożeje lekko do 4,31 3/4 USD/buszel dzięki solidnemu eksportowi z USA i wzmożonemu chińskiemu importowi paszowych alternatyw. Fundamenty globalnej podaży pozostają jednak stabilne."},{"icon":"??","title":"Waluty","text":"Na rynku walutowym złoty pozostawał stabilny wobec euro i dolara, EUR/PLN utrzymywał się w okolicach 4,63, USD/PLN blisko 4,37, a EUR/USD nieznacznie spadał do 1,058."},{"icon":"??","title":"USDPLN","text":"Kurs USD/PLN stabilny, pod presją umiarkowanego osłabienia dolara wobec EBC.","media":[{"type":"image","src":"scan_media/2026-02-13_s5_1.png"}]},{"icon":"??","title":"EURUSD","text":"Niewielka aprecjacja euro przy globalnym wzmocnieniu roli wspólnej waluty w operacjach repo i stabilizacji strefy euro."}],
       "focus":[]
     },
     "en":null
   },
   {
-    "id":"2026-02-13",
-    "date":"2026-02-13",
-    "time":"0.680555555555556",
+    "id":"13.02.2026",
+    "date":"13.02.2026",
+    "time":"0,680555555555556",
     "pl":{
       "title":"Dziś raport WASDE ! Wszystkie oczy tam",
       "lead":"Dzisiaj wychodzi raport USDA (godzina 18 naszego czasu). Zaczniemy zatem od tego i przewidywań analityków:\n•\tBrazylia: przewidywania są na zwiększenie produkcji zarówno soi i kukurydzy. Choć w soi nadal dość „konserwatywnie” poniżej 180 mln – a przypominamy że inne agencje mówiły już nawet o ponad 181 mln. Gdyby nastąpiła większa korekta w górę na soi  >180 mln to spodziewamy się ruchu w dół na kompleksie sojowym. ",
@@ -33,9 +34,9 @@
     }
   },
   {
-    "id":"2026-02-10",
-    "date":"2026-02-10",
-    "time":"0.85",
+    "id":"10.02.2026",
+    "date":"10.02.2026",
+    "time":"0,85",
     "pl":{
       "title":"Dziś raport WASDE ! Wszystkie oczy tam",
       "lead":"Dzisiaj wychodzi raport USDA (godzina 18 naszego czasu). Zaczniemy zatem od tego i przewidywań analityków:\n\n•\tBrazylia: przewidywania są na zwiększenie produkcji zarówno soi i kukurydzy. Choć w soi nadal dość „konserwatywnie” poniżej 180 mln – a przypominamy że inne agencje mówiły już nawet o ponad 181 mln. Gdyby nastąpiła większa korekta w górę na soi  >180 mln to spodziewamy się ruchu w dół na kompleksie sojowym. ",
