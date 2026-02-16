@@ -544,17 +544,23 @@
         </div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:10px;">
-        <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
-          <span class="ico">🚪</span>
-          <span>Wyloguj</span>
-        </a>
+  <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+  <div class="pill" id="userEmail" title="Zalogowany użytkownik">
+    <span class="ico">👤</span>
+    <span>Zalogowany: —</span>
+  </div>
 
-        <div class="pill" id="asof">
-          <span class="ico">📍</span>
-          <span>Olsztyn —</span>
-        </div>
-      </div>
+  <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
+    <span class="ico">🚪</span>
+    <span>Wyloguj</span>
+  </a>
+
+  <div class="pill" id="asof">
+    <span class="ico">📍</span>
+    <span>Olsztyn —</span>
+  </div>
+</div>
+
     </header>
 
     <!-- TICKER: dzisiejsze aktualizacje -->
@@ -981,11 +987,36 @@
       }
     }
 
+
+    async function loadUserEmail(){
+  const box = document.getElementById("userEmail");
+  if(!box) return;
+
+  try{
+    const res = await fetch("/cdn-cgi/access/get-identity", { cache:"no-store" });
+    if(!res.ok) return;
+
+    const data = await res.json();
+    const email = (data && data.email) ? String(data.email).trim() : "";
+    const name  = (data && data.name) ? String(data.name).trim() : "";
+
+    if(email){
+      // pokaż email (i opcjonalnie name w title)
+      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>${email}</strong></span>`;
+      if(name) box.title = `Zalogowany: ${name} (${email})`;
+      return;
+    }
+  } catch(e){
+    // nic – zostaw "—"
+  }
+}
+
     (async () => {
       const errBox = document.getElementById("err");
       const showErr = (msg) => { errBox.style.display = "block"; errBox.textContent = msg; };
 
       try{
+        loadUserEmail();
         const now = new Date();
         const date = now.toLocaleDateString("pl-PL");
         const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
