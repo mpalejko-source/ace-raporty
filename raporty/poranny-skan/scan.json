@@ -2,17 +2,35 @@
   {
     "id":"2026-02-16",
     "date":"2026-02-16",
-    "time":"11:08",
+    "time":"14:06",
     "pl":{
       "title":"„Pszenica i soja w dół po rajdzie, kukurydza stabiln",
       "lead":"Rynek zbóż i oleistych odnotował korektę po wcześniejszych wzrostach, pod wpływem wysokiej globalnej podaży, prognoz zbiorów w Rosji, Brazylii i UE oraz realizacji zysków inwestorów.",
-      "lead_media":[{"type":"image","src":"scan_media/2026-02-13_lead_1.png"}],
       "fx":"",
       "agri":"",
-      "blocks":[{"icon":"??","title":"Śruta Sojowa","text":"Soja spada do 11,33 USD/buszel, realizując zyski po rajdzie napędzanym zakupami z Chin, podczas gdy śruta sojowa rośnie w portach europejskich (ok. 1428 PLN/t). Rekordowe zbiory w Brazylii ograniczają dalszy potencjał wzrostu.","media":[{"type":"image","src":"scan_media/2026-02-13_s1_1.png"}]},{"icon":"??","title":"Pszenica","text":"Po silnym rajdzie w Chicago pszenica koryguje w dół, realizując zyski z ostatnich wzrostów. CBOT spadła do 5,48 3/4 USD/buszel, przy rosnącej globalnej podaży i dopuszczeniu eksportu przez Indie 2,5 mln ton. W Europie notowania również cofnęły się po tygodniowych maksimach, a perspektywa wysokich zbiorów w Rosji i Francji ogranicza potencjał dalszych wzrostów."},{"icon":"??","title":"Kukurydza","text":"Kukurydza zachowuje relatywną siłę i drożeje lekko do 4,31 3/4 USD/buszel dzięki solidnemu eksportowi z USA i wzmożonemu chińskiemu importowi paszowych alternatyw. Fundamenty globalnej podaży pozostają jednak stabilne."},{"icon":"??","title":"Waluty","text":"Na rynku walutowym złoty pozostawał stabilny wobec euro i dolara, EUR/PLN utrzymywał się w okolicach 4,63, USD/PLN blisko 4,37, a EUR/USD nieznacznie spadał do 1,058."},{"icon":"??","title":"USDPLN","text":"Kurs USD/PLN stabilny, pod presją umiarkowanego osłabienia dolara wobec EBC.","media":[{"type":"image","src":"scan_media/2026-02-13_s5_1.png"}]},{"icon":"??","title":"EURUSD","text":"Niewielka aprecjacja euro przy globalnym wzmocnieniu roli wspólnej waluty w operacjach repo i stabilizacji strefy euro."}],
+      "blocks":[{"icon":"🌱","title":"Śruta Sojowa","text":"Soja spada do 11,33 USD/buszel, realizując zyski po rajdzie napędzanym zakupami z Chin, podczas gdy śruta sojowa rośnie w portach europejskich (ok. 1428 PLN/t). Rekordowe zbiory w Brazylii ograniczają dalszy potencjał wzrostu."},{"icon":"🌾","title":"Pszenica","text":"Po silnym rajdzie w Chicago pszenica koryguje w dół, realizując zyski z ostatnich wzrostów. CBOT spadła do 5,48 3/4 USD/buszel, przy rosnącej globalnej podaży i dopuszczeniu eksportu przez Indie 2,5 mln ton. W Europie notowania również cofnęły się po tygodniowych maksimach, a perspektywa wysokich zbiorów w Rosji i Francji ogranicza potencjał dalszych wzrostów."},{"icon":"🌽","title":"Kukurydza","text":"Kukurydza zachowuje relatywną siłę i drożeje lekko do 4,31 3/4 USD/buszel dzięki solidnemu eksportowi z USA i wzmożonemu chińskiemu importowi paszowych alternatyw. Fundamenty globalnej podaży pozostają jednak stabilne."},{"icon":"💱","title":"Waluty","text":"Na rynku walutowym złoty pozostawał stabilny wobec euro i dolara, EUR/PLN utrzymywał się w okolicach 4,63, USD/PLN blisko 4,37, a EUR/USD nieznacznie spadał do 1,058."},{"icon":"💲","title":"USDPLN","text":"Kurs USD/PLN stabilny, pod presją umiarkowanego osłabienia dolara wobec EBC."},{"icon":"€","title":"EURUSD","text":"Niewielka aprecjacja euro przy globalnym wzmocnieniu roli wspólnej waluty w operacjach repo i stabilizacji strefy euro."}],
       "focus":[]
     },
     "en":null
+  },
+  {
+    "id":"16.02.2026",
+    "date":"16.02.2026",
+    "time":"0,463888888888889",
+    "pl":{
+      "title":"„Pszenica i soja w dół po rajdzie, kukurydza stabiln",
+      "lead":"Rynek zbóż i oleistych odnotował korektę po wcześniejszych wzrostach, pod wpływem wysokiej globalnej podaży, prognoz zbiorów w Rosji, Brazylii i UE oraz realizacji zysków inwestorów.",
+      "fx":"",
+      "agri":"",
+      "focus":[]
+    },
+    "en":{
+      "title":"",
+      "lead":"",
+      "fx":"",
+      "agri":"",
+      "focus":[]
+    }
   },
   {
     "id":"13.02.2026",
