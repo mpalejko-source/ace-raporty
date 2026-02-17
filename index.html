@@ -28,15 +28,12 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
 
-      /* TODAY highlight (delikatne – ramka + odcień) */
       --todayBorder: rgba(125,211,252,.55);
       --todayBg: rgba(125,211,252,.10);
 
-      /* Żółty tylko dla "Aktualizacja: data" gdy dziś */
       --todayYellow: rgba(250,204,21,.95);
       --todayYellowText: #0b1220;
 
-      /* Kalendarz: highlight dzisiejszego dnia */
       --calTodayBorder: rgba(250,204,21,.65);
       --calTodayBg: rgba(250,204,21,.12);
     }
@@ -122,7 +119,6 @@
     }
     a.card > *, .cardStatic > *{ position:relative; }
 
-    /* dzisiejsze raporty/foldery – delikatna ramka + odcień */
     a.card.today{
       border: 1px solid var(--todayBorder);
       background: linear-gradient(180deg, var(--todayBg), rgba(255,255,255,.03));
@@ -164,18 +160,13 @@
       color:#ffffff;
       font-weight:800;
     }
-
-    /* ŻÓŁTY tylko gdy dziś */
     .badge.updToday{
       border-color: rgba(250,204,21,.70);
       background: var(--todayYellow);
       color: var(--todayYellowText);
       font-weight: 950;
     }
-    .topMeta .badge.updToday{
-      margin-left:auto;
-      margin-right:auto;
-    }
+    .topMeta .badge.updToday{ margin-left:auto; margin-right:auto; }
 
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
     .desc{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
@@ -335,7 +326,29 @@
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* ===== KALENDARZ (pełny tydzień, bez animacji, wysoki jak featured) ===== */
+    /* === HERO === */
+    .fHero{
+      margin-top:12px;
+      height:140px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)),
+        url("/poranny-skan.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow:
+        inset 0 18px 40px rgba(0,0,0,.45),
+        0 10px 30px rgba(0,0,0,.35);
+    }
+    .fHeroNote{
+      margin-top:8px;
+      font-size:12px;
+      color: rgba(234,240,255,.62);
+    }
+
+    /* ===== KALENDARZ ===== */
     .calPanel{
       height:100%;
       padding:14px;
@@ -364,20 +377,18 @@
       font-weight:800;
       white-space:nowrap;
     }
-
     .calGrid{
       display:flex;
       flex-direction:column;
       gap:8px;
-      flex:1 1 auto; /* ✅ dociąga do wysokości */
-      justify-content:space-between; /* ✅ rozciąga na całą wysokość panelu */
+      flex:1 1 auto;
+      justify-content:space-between;
     }
-
     .calItem{
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px 10px; /* trochę większe, żeby ładnie "wypełnić" */
+      padding:10px 10px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
@@ -424,10 +435,7 @@
       background: var(--calTodayBg);
       box-shadow: 0 12px 26px rgba(0,0,0,.28);
     }
-    /* weekend delikatnie przygaszony */
-    .calItem.weekend{
-      opacity:.78;
-    }
+    .calItem.weekend{ opacity:.78; }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -523,6 +531,67 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
+    /* ===== ŹRÓDŁA NOTOWAŃ (linki) ===== */
+    .linksBar{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .linkPill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.88);
+      text-decoration:none;
+      font-size:12px;
+      font-weight:900;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      transition: transform .08s ease, border-color .08s ease, background .08s ease;
+      white-space:nowrap;
+      max-width:100%;
+    }
+    .linkPill:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+    }
+    .linkPill .ico{
+      width:22px; height:22px;
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+      flex:0 0 auto;
+      font-size:13px;
+    }
+    .linkPill .txt{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:320px;
+    }
+    .linkPill.primary{
+      border-color: rgba(125,211,252,.45);
+      background: rgba(125,211,252,.10);
+    }
+    .linkPill.gold{
+      border-color: rgba(250,204,21,.45);
+      background: rgba(250,204,21,.10);
+    }
+    .linksHint{
+      margin-top:8px;
+      font-size:12px;
+      color: rgba(234,240,255,.55);
+      line-height:1.25;
+    }
+
     .error{
       border:1px solid rgba(255,120,120,.25);
       background: rgba(255,120,120,.08);
@@ -535,31 +604,6 @@
 
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
-
-    /* === HERO newsowo-analityczny pod Porannym Skanem === */
-    .fHero{
-      margin-top:12px;
-      height:140px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-
-      background:
-        linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)),
-        url("/poranny-skan.png");
-
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-
-      box-shadow:
-        inset 0 18px 40px rgba(0,0,0,.45),
-        0 10px 30px rgba(0,0,0,.35);
-    }
-    .fHeroNote{
-      margin-top:8px;
-      font-size:12px;
-      color: rgba(234,240,255,.62);
-    }
   </style>
 </head>
 
@@ -593,30 +637,25 @@
       </div>
     </header>
 
-    <!-- TICKER: dzisiejsze aktualizacje -->
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
-    <!-- TOP ROW -->
     <section class="topRowGrid">
       <div id="featuredWrap"></div>
       <div id="calWrap"></div>
     </section>
 
-    <!-- QUICK -->
     <div class="sectionHead">
       <p class="h2">Szybki dostęp</p>
       <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
-    <!-- FOLDERS -->
     <div class="sectionHead">
       <p class="h2">Biblioteka raportów</p>
       <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
     </div>
     <section class="folderGrid" id="folderGrid"></section>
 
-    <!-- PRICES -->
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych</p>
@@ -630,6 +669,15 @@
         </div>
         <table id="cashTable" class="prTable"></table>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • rynek spot</div>
+
+        <!-- ✅ Linki do źródeł (spot) -->
+        <div class="linksBar" aria-label="Linki do notowań spot">
+          <a class="linkPill" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank" rel="noopener noreferrer">
+            <span class="ico">🇳🇱</span>
+            <span class="txt">Dolny Ren – ceny rzepaku / śruty</span>
+          </a>
+        </div>
+        <div class="linksHint">Linki otwierają oficjalne notowania w nowej karcie (źródła zewnętrzne).</div>
       </section>
 
       <section class="panel" id="futuresPanel">
@@ -639,6 +687,30 @@
         </div>
         <table id="futuresTable" class="prTable"></table>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
+
+        <!-- ✅ Linki do źródeł (futures) -->
+        <div class="linksBar" aria-label="Linki do notowań giełdowych">
+          <a class="linkPill primary" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank" rel="noopener noreferrer">
+            <span class="ico">CME</span>
+            <span class="txt">CBOT Soybean Meal (śruta sojowa)</span>
+          </a>
+
+          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank" rel="noopener noreferrer">
+            <span class="ico">🇪🇺</span>
+            <span class="txt">MATIF Pszenica (ML)</span>
+          </a>
+
+          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank" rel="noopener noreferrer">
+            <span class="ico">🇪🇺</span>
+            <span class="txt">MATIF Kukurydza (XB)</span>
+          </a>
+
+          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank" rel="noopener noreferrer">
+            <span class="ico">🇪🇺</span>
+            <span class="txt">MATIF Rzepak (XR)</span>
+          </a>
+        </div>
+        <div class="linksHint">Szybkie przejście do notowań: CBOT (CME) i Euronext/MATIF (Barchart).</div>
       </section>
     </section>
 
@@ -657,15 +729,12 @@
     const QUICK_KEYS = ["Wykresy cenowe","Pozycje Funduszy","Portfele-ACE","Analizy kwadratow","Pogoda"];
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
-    // U Ciebie publikacje tylko PN..PT, ale kalendarz ma pokazać wszystkie dni
     const CAL = [
       { dow:1, short:"PN", key:"Pogoda" },
       { dow:2, short:"WT", key:"Pozycje Funduszy" },
       { dow:3, short:"ŚR", key:"Wykresy cenowe" },
       { dow:4, short:"CZ", key:"Analizy kwadratow" },
       { dow:5, short:"PT", key:"Portfele-ACE" },
-
-      // Weekend – pokażemy jako "—" (nie musi istnieć w manifest)
       { dow:6, short:"SB", key:"" },
       { dow:7, short:"ND", key:"" }
     ];
@@ -834,17 +903,15 @@
       `;
     }
 
-    // ✅ KALENDARZ: pełny tydzień, tydz. ISO + zakres dat, klik do raportu
     function renderCalendar(items){
       const map = Object.fromEntries(items.map(x => [x.id, x]));
       const nameOf = (key) => (map[key] && map[key].name) ? map[key].name : (key || "—");
       const pathOf = (key) => (map[key] && map[key].path) ? safePath(map[key].path) : null;
 
       const now = new Date();
-      const jsDay = now.getDay();           // 0=ND..6=SB
-      const isoDay = (jsDay === 0) ? 7 : jsDay; // 1..7
+      const jsDay = now.getDay();
+      const isoDay = (jsDay === 0) ? 7 : jsDay;
 
-      // poniedziałek bieżącego tygodnia
       const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isoDay - 1));
 
       function dateForDow(dow){
@@ -863,15 +930,12 @@
         if(monMM === sunMM) return `${monDD}–${sunDD}.${sunMM}`;
         return `${monDD}.${monMM}–${sunDD}.${sunMM}`;
       }
-
-      // ISO week number
       function isoWeekNumber(d){
         const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
         const dayNum = date.getUTCDay() || 7;
         date.setUTCDate(date.getUTCDate() + 4 - dayNum);
         const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
-        const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-        return weekNo;
+        return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
       }
 
       const weekNo = isoWeekNumber(now);
@@ -888,12 +952,10 @@
         const titleText = hasKey ? nameOf(r.key) : "Brak publikacji";
         const href = hasKey ? pathOf(r.key) : null;
 
-       ota();
         const cls =
           (r.dow === isoDay ? "calItem today" : "calItem") +
           (isWeekend ? " weekend" : "");
 
-        // weekend: nie klikamy (ale widać)
         const dataHref = href ? `data-href="${href}"` : "";
         const tab = href ? `tabindex="0"` : `tabindex="-1"`;
 
@@ -919,7 +981,6 @@
         </div>
       `;
 
-      // klik + Enter/Space (tylko tam gdzie jest data-href)
       const panel = document.getElementById("calWrap");
       panel.querySelectorAll(".calItem[data-href]").forEach(el=>{
         const go = () => {
