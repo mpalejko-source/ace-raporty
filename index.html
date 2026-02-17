@@ -326,7 +326,6 @@
     }
     .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
 
-    /* === HERO === */
     .fHero{
       margin-top:12px;
       height:140px;
@@ -348,7 +347,7 @@
       color: rgba(234,240,255,.62);
     }
 
-    /* ===== KALENDARZ ===== */
+    /* ===== KALENDARZ (PN–PT) ===== */
     .calPanel{
       height:100%;
       padding:14px;
@@ -435,7 +434,6 @@
       background: var(--calTodayBg);
       box-shadow: 0 12px 26px rgba(0,0,0,.28);
     }
-    .calItem.weekend{ opacity:.78; }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -497,13 +495,16 @@
     }
     .panelTitle{ margin:0; font-weight:950; font-size:16px; line-height:1.15; }
     .panelSub{ margin:0; font-size:12px; opacity:.75; line-height:1.2; min-height:14px; }
+
+    /* ✅ teraz 3 kolumny: Cash | Futures | Notowania */
     .pricesGrid{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.2fr 1.2fr .9fr;
       gap:14px;
       margin-top:14px;
+      align-items:stretch;
     }
-    @media (max-width: 980px){
+    @media (max-width: 1100px){
       .pricesGrid{ grid-template-columns: 1fr; }
     }
 
@@ -531,62 +532,85 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
-    /* ===== ŹRÓDŁA NOTOWAŃ (linki) ===== */
-    .linksBar{
-      margin-top:10px;
+    /* ===== Notowania box ===== */
+    .quotesBox{
+      height:100%;
       display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
+      flex-direction:column;
+      gap:10px;
     }
-    .linkPill{
-      display:inline-flex;
-      align-items:center;
+    .qTitle{
+      margin:0;
+      font-weight:950;
+      font-size:16px;
+      line-height:1.15;
+      color:#fff;
+    }
+    .qSub{
+      margin:0;
+      font-size:12px;
+      color: rgba(234,240,255,.60);
+      line-height:1.3;
+    }
+    .qLinks{
+      display:flex;
+      flex-direction:column;
       gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
+      margin-top:6px;
+    }
+    .qLink{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
-      color: rgba(234,240,255,.88);
+      color: rgba(234,240,255,.90);
       text-decoration:none;
-      font-size:12px;
-      font-weight:900;
+      font-size:12.5px;
+      font-weight:950;
       box-shadow: 0 10px 24px rgba(0,0,0,.18);
       transition: transform .08s ease, border-color .08s ease, background .08s ease;
-      white-space:nowrap;
-      max-width:100%;
     }
-    .linkPill:hover{
+    .qLink:hover{
       transform: translateY(-1px);
       border-color: rgba(255,255,255,.20);
       background: rgba(255,255,255,.06);
     }
-    .linkPill .ico{
-      width:22px; height:22px;
+    .qIco{
+      width:26px;
+      height:26px;
       display:inline-flex;
-      align-items:center; justify-content:center;
-      border-radius:8px;
+      align-items:center;
+      justify-content:center;
+      border-radius:10px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(0,0,0,.15);
       flex:0 0 auto;
       font-size:13px;
     }
-    .linkPill .txt{
+    .qTxt{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .qMain{
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:320px;
+      white-space:nowrap;
     }
-    .linkPill.primary{
-      border-color: rgba(125,211,252,.45);
-      background: rgba(125,211,252,.10);
+    .qSmall{
+      font-weight:800;
+      color: rgba(234,240,255,.60);
+      font-size:11.5px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
-    .linkPill.gold{
-      border-color: rgba(250,204,21,.45);
-      background: rgba(250,204,21,.10);
-    }
-    .linksHint{
-      margin-top:8px;
+    .qHint{
+      margin-top:auto;
       font-size:12px;
       color: rgba(234,240,255,.55);
       line-height:1.25;
@@ -615,7 +639,7 @@
         <img src="" alt="ACE Group" class="logo" id="logoImg">
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">System raportów Agri Commodity Experts</p>
+          <p class="sub">Tu pozdrawiamy Irka i czekamy na jego hasło przewodnie ;)</p>
         </div>
       </div>
 
@@ -658,10 +682,11 @@
 
     <div class="sectionHead">
       <p class="h2">Cenniki</p>
-      <p class="hint">Szybki podgląd cen spot i giełdowych</p>
+      <p class="hint">Szybki podgląd cen spot i giełdowych + linki do notowań</p>
     </div>
 
     <section class="pricesGrid">
+      <!-- CASH -->
       <section class="panel" id="cashPanel">
         <div class="panelHead">
           <div class="panelTitle">Ceny najważniejszych surowców do produkcji pasz</div>
@@ -669,17 +694,9 @@
         </div>
         <table id="cashTable" class="prTable"></table>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • rynek spot</div>
-
-        <!-- ✅ Linki do źródeł (spot) -->
-        <div class="linksBar" aria-label="Linki do notowań spot">
-          <a class="linkPill" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank" rel="noopener noreferrer">
-            <span class="ico">🇳🇱</span>
-            <span class="txt">Dolny Ren – ceny rzepaku / śruty</span>
-          </a>
-        </div>
-        <div class="linksHint">Linki otwierają oficjalne notowania w nowej karcie (źródła zewnętrzne).</div>
       </section>
 
+      <!-- FUTURES -->
       <section class="panel" id="futuresPanel">
         <div class="panelHead">
           <div class="panelTitle">Ceny giełdowe (close)</div>
@@ -687,30 +704,62 @@
         </div>
         <table id="futuresTable" class="prTable"></table>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
+      </section>
 
-        <!-- ✅ Linki do źródeł (futures) -->
-        <div class="linksBar" aria-label="Linki do notowań giełdowych">
-          <a class="linkPill primary" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank" rel="noopener noreferrer">
-            <span class="ico">CME</span>
-            <span class="txt">CBOT Soybean Meal (śruta sojowa)</span>
-          </a>
+      <!-- NOTOWANIA (linki) -->
+      <section class="panel">
+        <div class="quotesBox">
+          <div>
+            <p class="qTitle">Notowania</p>
+            <p class="qSub">Szybkie przejście do oficjalnych stron (otwiera nową kartę).</p>
+          </div>
 
-          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank" rel="noopener noreferrer">
-            <span class="ico">🇪🇺</span>
-            <span class="txt">MATIF Pszenica (ML)</span>
-          </a>
+          <div class="qLinks">
+            <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank" rel="noopener noreferrer">
+              <span class="qIco">CME</span>
+              <span class="qTxt">
+                <span class="qMain">CBOT – Soybean Meal</span>
+                <span class="qSmall">Śruta sojowa (CME Group)</span>
+              </span>
+            </a>
 
-          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank" rel="noopener noreferrer">
-            <span class="ico">🇪🇺</span>
-            <span class="txt">MATIF Kukurydza (XB)</span>
-          </a>
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank" rel="noopener noreferrer">
+              <span class="qIco">ML</span>
+              <span class="qTxt">
+                <span class="qMain">MATIF – Pszenica</span>
+                <span class="qSmall">Barchart • Euronext (ML)</span>
+              </span>
+            </a>
 
-          <a class="linkPill gold" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank" rel="noopener noreferrer">
-            <span class="ico">🇪🇺</span>
-            <span class="txt">MATIF Rzepak (XR)</span>
-          </a>
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank" rel="noopener noreferrer">
+              <span class="qIco">XB</span>
+              <span class="qTxt">
+                <span class="qMain">MATIF – Kukurydza</span>
+                <span class="qSmall">Barchart • Euronext (XB)</span>
+              </span>
+            </a>
+
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank" rel="noopener noreferrer">
+              <span class="qIco">XR</span>
+              <span class="qTxt">
+                <span class="qMain">MATIF – Rzepak</span>
+                <span class="qSmall">Barchart • Euronext (XR)</span>
+              </span>
+            </a>
+
+            <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank" rel="noopener noreferrer">
+              <span class="qIco">NR</span>
+              <span class="qTxt">
+                <span class="qMain">Rape meal – Neuss/Spyck</span>
+                <span class="qSmall">RSCOM • Dolny Ren</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="qHint">
+            Tip: jeśli chcesz, mogę też dodać tu link do „pełnej tabeli” albo sekcję „Najczęściej klikane”.
+          </div>
         </div>
-        <div class="linksHint">Szybkie przejście do notowań: CBOT (CME) i Euronext/MATIF (Barchart).</div>
       </section>
     </section>
 
@@ -729,14 +778,13 @@
     const QUICK_KEYS = ["Wykresy cenowe","Pozycje Funduszy","Portfele-ACE","Analizy kwadratow","Pogoda"];
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
+    // ✅ PN–PT (bez SB/ND)
     const CAL = [
       { dow:1, short:"PN", key:"Pogoda" },
       { dow:2, short:"WT", key:"Pozycje Funduszy" },
       { dow:3, short:"ŚR", key:"Wykresy cenowe" },
       { dow:4, short:"CZ", key:"Analizy kwadratow" },
-      { dow:5, short:"PT", key:"Portfele-ACE" },
-      { dow:6, short:"SB", key:"" },
-      { dow:7, short:"ND", key:"" }
+      { dow:5, short:"PT", key:"Portfele-ACE" }
     ];
 
     function fmtDatePL(iso){
@@ -787,7 +835,8 @@
     }
 
     async function loadManifest(){
-      const res = await fetch(url("manifest.json?ts=" + Date.now()), { cache:"no-store" });
+      const finalUrl = url("manifest.json?ts=" + Date.now());
+      const res = await fetch(finalUrl, { cache:"no-store" });
       if(!res.ok) throw new Error("Nie mogę wczytać manifest.json (" + res.status + ")");
       return await res.json();
     }
@@ -922,13 +971,13 @@
         const mm = String(dt.getMonth()+1).padStart(2,"0");
         return `${dd}.${mm}`;
       }
-      function fmtRange(mon, sun){
+      function fmtRange(mon, fri){
         const monDD = String(mon.getDate()).padStart(2,"0");
         const monMM = String(mon.getMonth()+1).padStart(2,"0");
-        const sunDD = String(sun.getDate()).padStart(2,"0");
-        const sunMM = String(sun.getMonth()+1).padStart(2,"0");
-        if(monMM === sunMM) return `${monDD}–${sunDD}.${sunMM}`;
-        return `${monDD}.${monMM}–${sunDD}.${sunMM}`;
+        const friDD = String(fri.getDate()).padStart(2,"0");
+        const friMM = String(fri.getMonth()+1).padStart(2,"0");
+        if(monMM === friMM) return `${monDD}–${friDD}.${friMM}`;
+        return `${monDD}.${monMM}–${friDD}.${friMM}`;
       }
       function isoWeekNumber(d){
         const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -940,22 +989,17 @@
 
       const weekNo = isoWeekNumber(now);
       const weekFrom = dateForDow(1);
-      const weekTo   = dateForDow(7);
+      const weekTo   = dateForDow(5);
       const rangeTxt = fmtRange(weekFrom, weekTo);
 
       const rows = CAL.map(r=>{
         const dt = dateForDow(r.dow);
         const ddmm = fmtDDMM(dt);
 
-        const isWeekend = (r.dow === 6 || r.dow === 7);
-        const hasKey = !!(r.key && r.key.trim());
-        const titleText = hasKey ? nameOf(r.key) : "Brak publikacji";
-        const href = hasKey ? pathOf(r.key) : null;
+        const titleText = nameOf(r.key);
+        const href = pathOf(r.key);
 
-        const cls =
-          (r.dow === isoDay ? "calItem today" : "calItem") +
-          (isWeekend ? " weekend" : "");
-
+        const cls = (r.dow === isoDay) ? "calItem today" : "calItem";
         const dataHref = href ? `data-href="${href}"` : "";
         const tab = href ? `tabindex="0"` : `tabindex="-1"`;
 
