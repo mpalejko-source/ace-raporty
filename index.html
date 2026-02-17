@@ -298,8 +298,6 @@
     a.featured > *{ position:relative; }
     a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
 
-
-
     /* Meta Poranny: lewo/prawo, bez nachodzenia */
     .fMetaLine{
       display:flex;
@@ -367,15 +365,39 @@
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
       line-height:1.15;
+
+      /* klik */
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, border-color .08s ease, background .08s ease;
+    }
+    .calItem:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* Dzień + data */
+    .calItem .dWrap{
+      min-width:64px;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
     .calItem .d{
-      min-width:38px;           /* skrót dnia */
       text-transform:uppercase;
       letter-spacing:.06em;
       font-weight:950;
       font-size:12px;
       color: rgba(234,240,255,.82);
+      line-height:1;
     }
+    .calItem .dt{
+      font-size:11px;
+      color: rgba(234,240,255,.55);
+      font-weight:800;
+      line-height:1;
+    }
+
     .calItem .n{
       font-size:12.5px;
       color: rgba(234,240,255,.92);
@@ -388,6 +410,27 @@
       border-color: var(--calTodayBorder);
       background: var(--calTodayBg);
       box-shadow: 0 12px 26px rgba(0,0,0,.28);
+    }
+
+    /* Opcjonalne: bardzo wolne "pływanie" listy */
+    .calGrid.scroll{
+      position:relative;
+      overflow:hidden;
+      height: 132px; /* ile wierszy widoczne */
+    }
+    .calGrid.scroll .calTrack{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      animation: calFloatUp 22s linear infinite;
+    }
+    .calGrid.scroll:hover .calTrack{
+      animation-play-state: paused;
+    }
+    @keyframes calFloatUp{
+      0%   { transform: translateY(8px); }
+      50%  { transform: translateY(-28px); }
+      100% { transform: translateY(8px); }
     }
 
     /* ===== QUICK grid ===== */
@@ -497,38 +540,30 @@
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
 
-/* === HERO newsowo-analityczny pod Porannym Skanem === */
-.fHero{
-  margin-top:12px;
-  height:140px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
+    /* === HERO newsowo-analityczny pod Porannym Skanem === */
+    .fHero{
+      margin-top:12px;
+      height:140px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
 
-  /* 👉 TU WSKAZUJESZ NA SWÓJ OBRAZEK */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(11,18,32,.15),
-      rgba(11,18,32,.55)
-    ),
-    url("/poranny-skan.png");
+      background:
+        linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)),
+        url("/poranny-skan.png");
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-  box-shadow:
-    inset 0 18px 40px rgba(0,0,0,.45),
-    0 10px 30px rgba(0,0,0,.35);
-}
-
-.fHeroNote{
-  margin-top:8px;
-  font-size:12px;
-  color: rgba(234,240,255,.62);
-}
-
-    
+      box-shadow:
+        inset 0 18px 40px rgba(0,0,0,.45),
+        0 10px 30px rgba(0,0,0,.35);
+    }
+    .fHeroNote{
+      margin-top:8px;
+      font-size:12px;
+      color: rgba(234,240,255,.62);
+    }
   </style>
 </head>
 
@@ -540,27 +575,26 @@
         <img src="" alt="ACE Group" class="logo" id="logoImg">
         <div>
           <h1>ACE – Panel raportów</h1>
-          <p class="sub">System raportów Agri Commodity Experts</p>
+          <p class="sub">Z nami budujesz przewagę ! Pozdrowienia dla Ireneusza ;) </p>
         </div>
       </div>
 
-  <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-  <div class="pill" id="userEmail" title="Zalogowany użytkownik">
-    <span class="ico">👤</span>
-    <span>Zalogowany: —</span>
-  </div>
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <div class="pill" id="userEmail" title="Zalogowany użytkownik">
+          <span class="ico">👤</span>
+          <span>Zalogowany: —</span>
+        </div>
 
-  <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
-    <span class="ico">🚪</span>
-    <span>Wyloguj</span>
-  </a>
+        <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
+          <span class="ico">🚪</span>
+          <span>Wyloguj</span>
+        </a>
 
-  <div class="pill" id="asof">
-    <span class="ico">📍</span>
-    <span>Olsztyn —</span>
-  </div>
-</div>
-
+        <div class="pill" id="asof">
+          <span class="ico">📍</span>
+          <span>Olsztyn —</span>
+        </div>
+      </div>
     </header>
 
     <!-- TICKER: dzisiejsze aktualizacje -->
@@ -787,10 +821,11 @@
           </div>
 
           <p class="fTitle">${ps.name}</p>
-<div class="fHero"></div>
-<div class="fHeroNote">
-  Skan newsów + szybki kontekst rynkowy (agro • FX • energia)
-</div>
+
+          <div class="fHero"></div>
+          <div class="fHeroNote">
+            Skan newsów + szybki kontekst rynkowy (agro • FX • energia)
+          </div>
 
           <div class="fNext">
             <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
@@ -799,33 +834,89 @@
       `;
     }
 
+    // ✅ NOWY KALENDARZ: daty + zakres tygodnia + klik
     function renderCalendar(items){
       const map = Object.fromEntries(items.map(x => [x.id, x]));
       const nameOf = (key) => (map[key] && map[key].name) ? map[key].name : key;
+      const pathOf = (key) => (map[key] && map[key].path) ? safePath(map[key].path) : "#";
 
-      // JS getDay(): 0=ND,1=PN,...6=SB
-      const js = new Date().getDay();
-      const todayDow = (js === 0) ? 7 : js; // 1..7
+      const now = new Date();
+      const jsDay = now.getDay();          // 0=ND..6=SB
+      const isoDay = (jsDay === 0) ? 7 : jsDay;   // 1..7
+      const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isoDay - 1));
+
+      function dateForDow(dow){
+        return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (dow - 1));
+      }
+      function fmtDDMM(dt){
+        const dd = String(dt.getDate()).padStart(2,"0");
+        const mm = String(dt.getMonth()+1).padStart(2,"0");
+        return `${dd}.${mm}`;
+      }
+      function fmtRange(mon, fri){
+        const monDD = String(mon.getDate()).padStart(2,"0");
+        const monMM = String(mon.getMonth()+1).padStart(2,"0");
+        const friDD = String(fri.getDate()).padStart(2,"0");
+        const friMM = String(fri.getMonth()+1).padStart(2,"0");
+        if(monMM === friMM) return `${monDD}–${friDD}.${friMM}`;
+        return `${monDD}.${monMM}–${friDD}.${friMM}`;
+      }
+
+      const weekFrom = dateForDow(1);
+      const weekTo   = dateForDow(5);
+      const rangeTxt = fmtRange(weekFrom, weekTo);
+
+      const todayDow = isoDay;
 
       const rows = CAL.map(r=>{
+        const dt = dateForDow(r.dow);
+        const ddmm = fmtDDMM(dt);
         const cls = (r.dow === todayDow) ? "calItem today" : "calItem";
+        const target = pathOf(r.key);
+
         return `
-          <div class="${cls}">
-            <div class="d">${r.short}</div>
+          <div class="${cls}" role="link" tabindex="0"
+               data-href="${target}"
+               title="Otwórz: ${nameOf(r.key)}">
+            <div class="dWrap">
+              <div class="d">${r.short}</div>
+              <div class="dt">${ddmm}</div>
+            </div>
             <div class="n">${nameOf(r.key)}</div>
           </div>
         `;
       }).join("");
 
+      const useScroll = true; // <- zmień na false jeśli nie chcesz wolnego "pływania"
+      const gridHtml = useScroll
+        ? `<div class="calGrid scroll"><div class="calTrack">${rows}</div></div>`
+        : `<div class="calGrid">${rows}</div>`;
+
       document.getElementById("calWrap").innerHTML = `
         <div class="cardStatic calPanel">
-          <p class="calTitle">Kalendarz publikacji</p>
-          <div class="calGrid">${rows}</div>
+          <p class="calTitle">Kalendarz publikacji <span style="opacity:.65;font-weight:800">(${rangeTxt})</span></p>
+          ${gridHtml}
           <div class="metaLine" style="margin-top:12px">
             <span><strong>Stały rozkład tygodnia</strong></span>
           </div>
         </div>
       `;
+
+      // klik + Enter/Space
+      const panel = document.getElementById("calWrap");
+      panel.querySelectorAll(".calItem[data-href]").forEach(el=>{
+        const go = () => {
+          const href = el.getAttribute("data-href");
+          if(href && href !== "#") window.location.href = href;
+        };
+        el.addEventListener("click", go);
+        el.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            go();
+          }
+        });
+      });
     }
 
     function renderQuick(items){
@@ -859,52 +950,49 @@
     }
 
     function renderFolders(items){
-  const wrap = document.getElementById("folderGrid");
-  const map = Object.fromEntries(items.map(x => [x.id, x]));
-  const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
+      const wrap = document.getElementById("folderGrid");
+      const map = Object.fromEntries(items.map(x => [x.id, x]));
+      const folderList = FOLDER_KEYS.map(k => map[k]).filter(Boolean);
 
-  const today = todayISO();
+      const today = todayISO();
 
-  // grupowanie raportów po "group" (czyli po folder id)
-  const byGroup = {};
-  for(const it of items){
-    if(!it.group) continue;
-    if(!byGroup[it.group]) byGroup[it.group] = [];
-    byGroup[it.group].push(it);
-  }
+      const byGroup = {};
+      for(const it of items){
+        if(!it.group) continue;
+        if(!byGroup[it.group]) byGroup[it.group] = [];
+        byGroup[it.group].push(it);
+      }
 
-  wrap.innerHTML = folderList.map(folder => {
-    // ✅ LINK Z MANIFESTU (folder.path), np. "raporty/raporty-fundamentalne/"
-    const href = safePath(folder.path);
+      wrap.innerHTML = folderList.map(folder => {
+        const href = safePath(folder.path);
 
-    const children = byGroup[folder.id] || [];
-    const todayCount = children.filter(x => (x.updated || "") === today).length;
-    const hasToday = todayCount > 0;
+        const children = byGroup[folder.id] || [];
+        const todayCount = children.filter(x => (x.updated || "") === today).length;
+        const hasToday = todayCount > 0;
 
-    const clsToday = hasToday ? "today" : "";
-    const todayBadge = hasToday
-      ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
-      : `<span class="badge">Aktualizacje dziś: 0</span>`;
+        const clsToday = hasToday ? "today" : "";
+        const todayBadge = hasToday
+          ? `<span class="badge updToday">Aktualizacje dziś: ${todayCount}</span>`
+          : `<span class="badge">Aktualizacje dziś: 0</span>`;
 
-    const allCount = children.length ? children.length : "—";
+        const allCount = children.length ? children.length : "—";
 
-    return `
-      <a class="card ${clsToday}" href="${href}">
-        <div class="topMeta">
-          <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
-          <span class="badge">W środku: ${allCount} raportów</span>
-          ${todayBadge}
-        </div>
-        <p class="title">${folder.name}</p>
-        <p class="desc">${folder.description}</p>
-        <div class="metaLine">
-          <span><strong>Wejdź →</strong> lista raportów w środku</span>
-        </div>
-      </a>
-    `;
-  }).join("");
-}
-
+        return `
+          <a class="card ${clsToday}" href="${href}">
+            <div class="topMeta">
+              <span class="badge folder"><span class="folderIcon">📁</span>folder</span>
+              <span class="badge">W środku: ${allCount} raportów</span>
+              ${todayBadge}
+            </div>
+            <p class="title">${folder.name}</p>
+            <p class="desc">${folder.description}</p>
+            <div class="metaLine">
+              <span><strong>Wejdź →</strong> lista raportów w środku</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
 
     function arrowCell(n){
       if(n === null || n === undefined || n === "" || Number.isNaN(Number(n))) {
@@ -986,41 +1074,38 @@
         document.getElementById("futuresPanel").innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
       }
     }
-async function loadUserEmail(){
-  const box = document.getElementById("userEmail");
-  if(!box) return;
 
-  // pokaż, że próbujemy
-  box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>…</strong></span>`;
+    async function loadUserEmail(){
+      const box = document.getElementById("userEmail");
+      if(!box) return;
 
-  try{
-    const res = await fetch("/cdn-cgi/access/get-identity", {
-      cache: "no-store",
-      credentials: "same-origin"
-    });
+      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>…</strong></span>`;
 
-    // pokaż status gdy nie OK
-    if(!res.ok){
-      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(HTTP ${res.status})</span></span>`;
-      return;
+      try{
+        const res = await fetch("/cdn-cgi/access/get-identity", {
+          cache: "no-store",
+          credentials: "same-origin"
+        });
+
+        if(!res.ok){
+          box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(HTTP ${res.status})</span></span>`;
+          return;
+        }
+
+        const data = await res.json();
+        const email = (data?.email || "").toString().trim();
+        const name  = (data?.name  || "").toString().trim();
+
+        if(email){
+          box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>${email}</strong></span>`;
+          box.title = name ? `Zalogowany: ${name} (${email})` : `Zalogowany: ${email}`;
+        } else {
+          box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(brak email w JSON)</span></span>`;
+        }
+      } catch(e){
+        box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(błąd fetch)</span></span>`;
+      }
     }
-
-    const data = await res.json();
-    const email = (data?.email || "").toString().trim();
-    const name  = (data?.name  || "").toString().trim();
-
-    if(email){
-      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: <strong>${email}</strong></span>`;
-      box.title = name ? `Zalogowany: ${name} (${email})` : `Zalogowany: ${email}`;
-    } else {
-      box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(brak email w JSON)</span></span>`;
-    }
-  } catch(e){
-    box.innerHTML = `<span class="ico">👤</span><span>Zalogowany: — <span style="opacity:.65">(błąd fetch)</span></span>`;
-  }
-}
-
-
 
     (async () => {
       const errBox = document.getElementById("err");
@@ -1028,6 +1113,7 @@ async function loadUserEmail(){
 
       try{
         loadUserEmail();
+
         const now = new Date();
         const date = now.toLocaleDateString("pl-PL");
         const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
@@ -1050,19 +1136,6 @@ async function loadUserEmail(){
       }
     })();
   </script>
-  
-  <script>
-fetch("/cdn-cgi/access/get-identity")
-  .then(r => r.json())
-  .then(d => {
-    document.getElementById("userEmail").innerHTML =
-      "Zalogowany: " + d.email;
-  })
-  .catch(e => {
-    document.getElementById("userEmail").innerHTML =
-      "Błąd identity";
-  });
-</script>
 
 </body>
 </html>
