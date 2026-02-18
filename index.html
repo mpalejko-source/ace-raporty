@@ -65,11 +65,22 @@
       flex-direction:column;
     }
 
-    header{
-      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
-      flex-wrap:wrap; margin-bottom:14px
-    }
-    .brand{display:flex; gap:14px; align-items:center;}
+   header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:18px;
+  text-align:center;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
     .logo{
       height:56px; width:auto; display:block; flex:0 0 auto;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
@@ -630,8 +641,28 @@
       white-space:pre-wrap;
     }
 
+/* ===== WYRÓŻNIONA SEKCJA NOTOWAŃ ===== */
+.featuredQuotes{
+  border: 2px solid rgba(125,211,252,.70);
+  background: linear-gradient(135deg, rgba(125,211,252,.10), rgba(167,139,250,.06));
+  box-shadow: 0 18px 46px rgba(0,0,0,.48);
+}
+
+    
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
+
+/* ===== NAGŁÓWEK – ACE PANEL ===== */
+.mainTitle{
+  margin:0;
+  font-size:26px;
+  font-style:italic;
+  font-weight:900;
+  color:rgba(250,204,21,.95);
+  letter-spacing:.4px;
+}
+
+    
   </style>
 </head>
 
@@ -642,7 +673,7 @@
       <div class="brand">
         <img src="" alt="ACE Group" class="logo" id="logoImg">
         <div>
-          <h1>Nasza współpraca buduje sukces !</h1>
+          <h1 class="mainTitle">Nasza współpraca buduje sukces!</h1>
           <p class="sub">ACE-Panel Raportów</p>
         </div>
       </div>
@@ -711,7 +742,7 @@
       </section>
 
      <!-- NOTOWANIA (linki) -->
-<section class="panel">
+<section class="panel featuredQuotes">
   <div class="quotesBox">
 
     <div>
