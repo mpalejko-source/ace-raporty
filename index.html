@@ -74,12 +74,17 @@
       text-align:left;
     }
 
-    .brand{
-      display:flex;
-      flex-direction:row;
-      align-items:center;
-      gap:18px;
-    }
+   .brand{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;   /* ✅ wyśrodkuj cały rząd */
+  gap:18px;
+  width:100%;               /* ✅ żeby centrowanie działało w całej szerokości */
+}
+.brand > div{
+  text-align:left;          /* tytuł i podtytuł wyrównane do lewej względem siebie */
+}
 
     .logo{
       height:56px;
