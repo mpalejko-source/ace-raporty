@@ -19,7 +19,6 @@
   }
 </script>
 
-
   <style>
     :root{
       --bg:#0b1220;
@@ -65,28 +64,50 @@
       flex-direction:column;
     }
 
-   header{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:18px;
-  text-align:center;
-}
+    /* ===== HEADER (jak na screenie: logo po lewej, tekst obok) ===== */
+    header{
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      justify-content:flex-start;
+      margin-bottom:18px;
+      text-align:left;
+    }
 
-.brand{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
+    .brand{
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      gap:18px;
+    }
 
     .logo{
-      height:56px; width:auto; display:block; flex:0 0 auto;
+      height:56px;
+      width:auto;
+      display:block;
+      flex:0 0 auto;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
-    h1{margin:0; font-size:24px; letter-spacing:.2px}
-    .sub{margin:6px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+
+    /* UWAGA: usuwamy konflikt globalnego h1 (nie ustawiamy tu koloru/rozmiaru) */
+    h1{ margin:0; }
+
+    .mainTitle{
+      margin:0;
+      font-size:42px;
+      font-weight:950;
+      letter-spacing:.2px;
+      color: rgba(234,240,255,.95); /* biały jak na screenie */
+      font-style:normal;            /* bez kursywy */
+      line-height:1.08;
+    }
+
+    .sub{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.35;
+    }
 
     .pill{
       border:1px solid var(--border);
@@ -499,7 +520,11 @@
       box-shadow: var(--shadow);
       padding:16px;
       margin-top:14px;
+      position:relative;
+      overflow:hidden;
     }
+    .panel > *{ position:relative; }
+
     .panelHead{
       display:flex;
       flex-direction:column;
@@ -511,7 +536,6 @@
     .panelTitle{ margin:0; font-weight:950; font-size:16px; line-height:1.15; }
     .panelSub{ margin:0; font-size:12px; opacity:.75; line-height:1.2; min-height:14px; }
 
-    /* ✅ teraz 3 kolumny: Cash | Futures | Notowania */
     .pricesGrid{
       display:grid;
       grid-template-columns: 1.2fr 1.2fr .9fr;
@@ -624,12 +648,6 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
-    .qHint{
-      margin-top:auto;
-      font-size:12px;
-      color: rgba(234,240,255,.55);
-      line-height:1.25;
-    }
 
     .error{
       border:1px solid rgba(255,120,120,.25);
@@ -641,28 +659,30 @@
       white-space:pre-wrap;
     }
 
-/* ===== WYRÓŻNIONA SEKCJA NOTOWAŃ ===== */
-.featuredQuotes{
-  border: 2px solid rgba(125,211,252,.70);
-  background: linear-gradient(135deg, rgba(125,211,252,.10), rgba(167,139,250,.06));
-  box-shadow: 0 18px 46px rgba(0,0,0,.48);
-}
+    /* ===== WYRÓŻNIONA SEKCJA NOTOWAŃ (jak featured) ===== */
+    .featuredQuotes{
+      border: 2px solid rgba(125,211,252,.70) !important;
+      background: linear-gradient(135deg, rgba(125,211,252,.12), rgba(167,139,250,.08)) !important;
+      box-shadow: 0 18px 46px rgba(0,0,0,.48) !important;
+    }
+    .featuredQuotes:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
 
-    
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
 
-/* ===== NAGŁÓWEK – ACE PANEL ===== */
-.mainTitle{
-  margin:0;
-  font-size:26px;
-  font-style:italic;
-  font-weight:900;
-  color:rgba(250,204,21,.95);
-  letter-spacing:.4px;
-}
-
-    
+    /* Drobne dopasowanie na węższych ekranach */
+    @media (max-width: 720px){
+      .brand{ gap:12px; }
+      .mainTitle{ font-size:28px; }
+      .sub{ font-size:13px; }
+      .logo{ height:46px; }
+    }
   </style>
 </head>
 
@@ -673,12 +693,12 @@
       <div class="brand">
         <img src="" alt="ACE Group" class="logo" id="logoImg">
         <div>
-          <h1 class="mainTitle">Nasza współpraca buduje sukces!</h1>
+          <h1 class="mainTitle">Nasza współpraca buduje sukces !</h1>
           <p class="sub">ACE-Panel Raportów</p>
         </div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
         <div class="pill" id="userEmail" title="Zalogowany użytkownik">
           <span class="ico">👤</span>
           <span>Zalogowany: —</span>
@@ -741,86 +761,85 @@
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
       </section>
 
-     <!-- NOTOWANIA (linki) -->
-<section class="panel featuredQuotes">
-  <div class="quotesBox">
+      <!-- NOTOWANIA (linki) -->
+      <section class="panel featuredQuotes">
+        <div class="quotesBox">
 
-    <div>
-      <p class="qTitle" style="color:rgba(250,204,21,.95)">Link do notowań</p>
-      <p class="qSub">Oficjalne strony giełdowe – dane źródłowe.</p>
-    </div>
+          <div>
+            <p class="qTitle" style="color:rgba(250,204,21,.95)">Link do notowań</p>
+            <p class="qSub">Oficjalne strony giełdowe – dane źródłowe.</p>
+          </div>
 
-    <div class="qLinks">
+          <div class="qLinks">
 
-      <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
-        <span class="qIco">🇺🇸</span>
-        <span class="qTxt">
-          <span class="qMain">Śruta sojowa – CBOT (CME)</span>
-          <span class="qSmall">USA • Chicago Board of Trade</span>
-        </span>
-      </a>
+            <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
+              <span class="qIco">🇺🇸</span>
+              <span class="qTxt">
+                <span class="qMain">Śruta sojowa – CBOT (CME)</span>
+                <span class="qSmall">USA • Chicago Board of Trade</span>
+              </span>
+            </a>
 
-      <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank">
-        <span class="qIco">🇪🇺</span>
-        <span class="qTxt">
-          <span class="qMain">Pszenica – MATIF (ML)</span>
-          <span class="qSmall">UE • Euronext Paris</span>
-        </span>
-      </a>
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank">
+              <span class="qIco">🇪🇺</span>
+              <span class="qTxt">
+                <span class="qMain">Pszenica – MATIF (ML)</span>
+                <span class="qSmall">UE • Euronext Paris</span>
+              </span>
+            </a>
 
-      <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank">
-        <span class="qIco">🇪🇺</span>
-        <span class="qTxt">
-          <span class="qMain">Kukurydza – MATIF (XB)</span>
-          <span class="qSmall">UE • Euronext Paris</span>
-        </span>
-      </a>
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank">
+              <span class="qIco">🇪🇺</span>
+              <span class="qTxt">
+                <span class="qMain">Kukurydza – MATIF (XB)</span>
+                <span class="qSmall">UE • Euronext Paris</span>
+              </span>
+            </a>
 
-      <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
-        <span class="qIco">🇪🇺</span>
-        <span class="qTxt">
-          <span class="qMain">Rzepak – MATIF (XR)</span>
-          <span class="qSmall">UE • Euronext Paris</span>
-        </span>
-      </a>
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
+              <span class="qIco">🇪🇺</span>
+              <span class="qTxt">
+                <span class="qMain">Rzepak – MATIF (XR)</span>
+                <span class="qSmall">UE • Euronext Paris</span>
+              </span>
+            </a>
 
-      <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
-        <span class="qIco">🇩🇪</span>
-        <span class="qTxt">
-          <span class="qMain">Rape meal – Neuss / Spyck</span>
-          <span class="qSmall">Niemcy • Dolny Ren</span>
-        </span>
-      </a>
+            <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
+              <span class="qIco">🇩🇪</span>
+              <span class="qTxt">
+                <span class="qMain">Rape meal – Neuss / Spyck</span>
+                <span class="qSmall">Niemcy • Dolny Ren</span>
+              </span>
+            </a>
 
-    </div>
+          </div>
 
-    <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,.08)">
-      <div style="font-size:12px; color:rgba(250,204,21,.9); font-weight:900; margin-bottom:6px">
-        🔥 Najczęściej monitorowane przez klientów ACE
-      </div>
+          <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,.08)">
+            <div style="font-size:12px; color:rgba(250,204,21,.9); font-weight:900; margin-bottom:6px">
+              🔥 Najczęściej monitorowane przez klientów ACE
+            </div>
 
-      <div class="qLinks">
-        <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
-          <span class="qIco">🇺🇸</span>
-          <span class="qMain">Śruta sojowa CBOT</span>
-        </a>
+            <div class="qLinks">
+              <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
+                <span class="qIco">🇺🇸</span>
+                <span class="qMain">Śruta sojowa CBOT</span>
+              </a>
 
-        <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
-          <span class="qIco">🇪🇺</span>
-          <span class="qMain">Rzepak MATIF</span>
-        </a>
+              <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
+                <span class="qIco">🇪🇺</span>
+                <span class="qMain">Rzepak MATIF</span>
+              </a>
 
-        <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
-          <span class="qIco">🇩🇪</span>
-          <span class="qMain">Rape meal Neuss</span>
-        </a>
-      </div>
-    </div>
+              <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
+                <span class="qIco">🇩🇪</span>
+                <span class="qMain">Rape meal Neuss</span>
+              </a>
+            </div>
+          </div>
 
-  </div>
-</section>
-
-
+        </div>
+      </section>
+    </section>
 
     <div id="err" class="error" style="display:none"></div>
 
@@ -837,7 +856,6 @@
     const QUICK_KEYS = ["Wykresy cenowe","Pozycje Funduszy","Portfele-ACE","Analizy kwadratow","Pogoda"];
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
-    // ✅ PN–PT (bez SB/ND)
     const CAL = [
       { dow:1, short:"PN", key:"Pogoda" },
       { dow:2, short:"WT", key:"Pozycje Funduszy" },
