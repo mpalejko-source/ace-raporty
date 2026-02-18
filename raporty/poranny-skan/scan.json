@@ -1,15 +1,14 @@
 {"items":[
   {
-    "id":"2026-02-17",
-    "date":"2026-02-17",
-    "time":"09:26",
+    "id":"2026-02-18",
+    "date":"2026-02-18",
+    "time":"10:12",
     "pl":{
-      "title":"17-23 lutego Golden Week - przewa świąteczna w Chinach",
-      "lead":"IKAR podniósł prognozę zbiorów pszenicy w 2026 r. do 91 mln ton (z 88 mln), przy potencjale eksportowym w sezonie 2026/27 na poziomie 47,5 mln ton. Zbiory soi w Brazylii w sezonie 2025/26 postępują wolniej niż rok temu (21% areału), podobnie jak zasiewy drugiej i zbiory pierwszej kukurydzy, głównie z powodu intensywnych opadów, co może krótkoterminowo wpłynąć na logistykę i podaż surowca.",
-      "lead_media":[{"type":"image","src":"scan_media/2026-02-17_lead_1.png"}],
+      "title":"Konsultingowa firma Expana obniżyła prognozę eksportu pszenicy miękkiej z UE w sezonie 2025/26 o kolejne 1,2 mln ton do 27,6 mln ton z powodu silnej konkurencji na rynku światowym.",
+      "lead":"Po silnych mrozach z ostatnich tygodni w Polsce oraz krajach bałtyckich pojawiają się pierwsze korekty w prognozach zbiorów zbóż w Unii Europejskiej na sezon 2026. W porównaniu z ocenami ze stycznia obniżono szacunki produkcji wszystkich kluczowych upraw – prognoza dla pszenicy miękkiej spadła z 128,6 do 128,3 mln ton, dla jęczmienia z 52,4 do 52,2 mln ton, a produkcję kukurydzy oszacowano na 58,3 mln ton. ",
       "fx":"",
       "agri":"",
-      "blocks":[{"icon":"🌾","title":"Pszenica","text":"Notowania pszenicy na Euronext lekko wzrosły, wspierane osłabieniem euro wobec dolara oraz przetasowaniami pozycji przed wygaśnięciem opcji. Rynek liczy, że trudne warunki zimowe w Rosji i na Ukrainie mogą przejściowo poprawić perspektywy eksportowe UE, choć lepsze prognozy zbiorów w Maroku mogą ograniczyć popyt na francuską pszenicę. Rzepak także zyskał, a handel pozostaje ograniczony ze względu na święta i sezonowe czynniki zmniejszające płynność."},{"icon":"🌽","title":"Kukurydza","text":"Kukurydza na CBOT zniżkowała o ok. 0,6% do 4,29 USD/buszel. Skalę spadków ograniczają obawy o jakość ziarna w Chinach po opadach oraz rosnący import alternatywnych pasz – jęczmienia z Australii i sorga z USA."},{"icon":"🌱","title":"Soja","text":"Notowania soi w Chicago spadły drugi dzień z rzędu, oddalając się od zeszłotygodniowych wielomiesięcznych maksimów. Najbardziej aktywny kontrakt obniżył się w okolice 11,26–11,28 USD/buszel (-0,4% do -0,6%). Rynek odczuwa brak aktywnego popytu z Chin w związku z tygodniową przerwą świąteczną (Lunar New Year). Wcześniejszy rajd był napędzany oczekiwaniami na większe zakupy ze strony Pekinu oraz spekulacjami o możliwym przedłużeniu rozejmu handlowego USA-Chiny."},{"icon":"💱","title":"Waluty","text":"Jen osłabił się do 153,32 USD/JPY po słabych danych o wzroście gospodarczym Japonii, podczas gdy dolar pozostał stabilny, a oczekiwania na cięcia stóp Fed w 2026 r. wzrosły. Złoty utrzymuje stabilną pozycję – kurs euro wynosi 4,208 PLN, a dolara 3,5467 PLN, bez silnej presji walutowej."}],
+      "blocks":[{"icon":"🌾","title":"Pszenica","text":"Globalny rynek pszenicy pozostaje pod presją spadkową ze względu na rosnące prognozy zbiorów i utrzymującą się wysoką podaż, szczególnie z regionu Morza Czarnego. Słabszy popyt eksportowy oraz sezonowe spowolnienie zakupów w Azji dodatkowo ograniczają wsparcie cenowe. W efekcie notowania w Chicago i Europie kontynuują korektę"},{"icon":"🌱","title":"Soja","text":"Styczniowy przerób soi w USA osiągnął rekordowe 221,6 mln buszli, wspierając popyt na ziarno dzięki rosnącym mocom tłoczni i zapotrzebowaniu sektora biopaliw. Jednocześnie gwałtowny wzrost zapasów oleju sojowego do najwyższego poziomu od 2023 r. może ograniczać dalszy potencjał wzrostowy cen oleju."},{"icon":"💱","title":"Waluty","text":"Po czterech miesiącach osłabienia dolar amerykański może przejść w krótkoterminową fazę umocnienia, wspierany poprawą perspektyw gospodarczych w USA, stabilizacją nastrojów biznesowych oraz napływem kapitału zagranicznego do amerykańskich aktywów. Indeks dolara pozostaje poniżej 100 od listopada, a inwestorzy zmniejszają zakłady na dalszą deprecjację wobec euro i funta. Mimo to część analityków pozostaje sceptyczna wobec trwałego odbicia, wskazując na możliwe preferowanie słabszej waluty przez administrację USA dla wsparcia konkurencyjności handlowej."}],
       "focus":[]
     }
   },
