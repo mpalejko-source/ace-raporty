@@ -39,7 +39,7 @@
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
     "description": "Pakiet szczegółowych analiz liczbowych dla wszystkich surowców i walut",
-     "path": "raporty/analizy-stat-tech/"
+     "path": "raporty/analizy-stat-tech/",
       "type": "folder",
     "category": "foldery"
   },
