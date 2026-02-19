@@ -36,6 +36,9 @@
       --hiBg1: rgba(125,211,252,.12);
       --hiBg2: rgba(167,139,250,.08);
       --hiShadow: 0 18px 46px rgba(0,0,0,.48);
+
+      --todayYellow: rgba(250,204,21,.95);
+      --todayYellowText: #0b1220;
     }
 
     *{box-sizing:border-box}
@@ -228,10 +231,12 @@
       font-weight:900;
     }
     .badge.updToday{
-      border:1px solid rgba(125,211,252,.70);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
-      color:#ffffff;
-      font-weight:950;
+  border-color: rgba(250,204,21,.70);
+  background: var(--todayYellow);
+  color: var(--todayYellowText);
+  font-weight: 950;
+}
+
     }
     .topMeta .badge.updToday{ margin-left:auto; margin-right:auto; }
 
@@ -368,20 +373,21 @@
     .fMetaLine .spacer{ flex:1 1 auto; min-width:10px; }
     .fMetaLine .rightBox{ margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
 
-    .fUpdToday{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(125,211,252,.70);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
-      color: #ffffff;
-      font-weight:950;
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      white-space:nowrap;
-      max-width:100%;
-    }
+.fUpdToday{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(250,204,21,.70);
+  background: var(--todayYellow);
+  color: var(--todayYellowText);
+  font-weight:950;
+  box-shadow: 0 10px 24px rgba(0,0,0,.20);
+  white-space:nowrap;
+  max-width:100%;
+}
+
 
     .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.15; color:#ffffff; }
     .fNext{
@@ -454,7 +460,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px 10px;
+      padding:8px 10px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
@@ -480,18 +486,18 @@
       text-transform:uppercase;
       letter-spacing:.06em;
       font-weight:950;
-      font-size:12px;
+      font-size:10px;
       color: rgba(234,240,255,.82);
       line-height:1;
     }
     .calItem .dt{
-      font-size:11px;
+      font-size:10px;
       color: rgba(234,240,255,.55);
       font-weight:800;
       line-height:1;
     }
     .calItem .n{
-      font-size:12.5px;
+      font-size:10.5px;
       color: rgba(234,240,255,.92);
       font-weight:800;
       overflow:hidden;
@@ -880,12 +886,12 @@
     const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
 
     const CAL = [
-      { dow:1, short:"PN", key:"Warunki pogodowe dla upraw kluczowych surowców" },
-      { dow:2, short:"WT", key:"Pozycje Funduszy" },
-      { dow:3, short:"ŚR", key:"Rynek na wykresach - Surowce i Waluty" },
-      { dow:4, short:"CZ", key:"Analizy statystyczno-techniczne" },
-      { dow:5, short:"PT", key:"Portfele-ACE" }
-    ];
+      { dow:1, short:"PN", key:"Pozycje Funduszy" },
+      { dow:2, short:"WT", key:"Analizy statystyczno-techniczne" },
+      { dow:3, short:"ŚR", key:"Portfele-ACE" }
+      { dow:4, short:"CZ", key:"Rynek na wykresach - Surowce i Waluty" },
+      { dow:5, short:"PT", key:"Warunki pogodowe dla upraw kluczowych surowców" },
+      ];
 
     function fmtDatePL(iso){
       if(!iso || typeof iso !== "string") return "—";
