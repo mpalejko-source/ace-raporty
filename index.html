@@ -150,7 +150,8 @@
 
     /* ===== cards base ===== */
     a.card, .cardStatic{
-      display:block;
+      display:flex;
+      flex-direction:column;
       text-decoration:none;
       color:inherit;
       border:1px solid var(--border);
@@ -163,7 +164,7 @@
     }
     a.card{ transition: transform .08s ease, border-color .08s ease; }
     a.card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
-
+    a.card{ height:100%; }
     a.card:before, .cardStatic:before{
       content:"";
       position:absolute; inset:-1px;
@@ -241,10 +242,22 @@
     .topMeta .badge.updToday{ margin-left:auto; margin-right:auto; }
 
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
-    .desc{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .desc{
+  margin:10px 0 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.35;
+
+  display:-webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+  min-height: calc(1.35em * 3);
+}
+
 
     .metaLine{
-      margin-top:12px;
+      margin-top:auto;
       padding-top:10px;
       border-top:1px solid rgba(255,255,255,.10);
       font-size:12px;
@@ -536,21 +549,30 @@
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
     }
 /* ===== MONTHLY grid (5 kolumn jak tygodniowe, a gdy są 4 – start od kolumny 2) ===== */
+/* ===== MONTHLY grid ===== */
 .monthlyGrid{
   display:grid;
   grid-template-columns: repeat(5, 1fr);
   gap:12px;
   margin-top:14px;
 }
-.monthlyGrid.center4 > a:nth-child(1){ grid-column:2; }
+
+/* gdy są 4 kafelki: robimy „pod 5”, ale realnie 4 kolumny o tej samej szerokości co tygodniowe,
+   i całość centrujemy */
+.monthlyGrid.center4{
+  grid-template-columns: repeat(4, 1fr);
+  width: calc((100% - 12px*4) * 4/5 + 12px*3); /* 4/5 szerokości + 3 przerwy */
+  margin-left:auto;
+  margin-right:auto;
+}
 
 @media (max-width: 1100px){
   .monthlyGrid{ grid-template-columns: repeat(3, 1fr); }
-  .monthlyGrid.center4 > a:nth-child(1){ grid-column:auto; }
+  .monthlyGrid.center4{ width:100%; }
 }
 @media (max-width: 720px){
   .monthlyGrid{ grid-template-columns: 1fr; }
-  .monthlyGrid.center4 > a:nth-child(1){ grid-column:auto; }
+  .monthlyGrid.center4{ width:100%; }
 }
 
     /* ===== FOLDERS grid ===== */
@@ -1214,20 +1236,25 @@
 
     const clsToday = (isToday(updISO) || todayInside > 0) ? "today" : "";
 
-    const updBadge = isToday(updISO)
-      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-      : `<span class="badge">Aktualizacja: ${upd}</span>`;
+    const isStatTechTile = (r.id === "Analizy statystyczno-techniczne");
 
-    const insideBadge = (todayInside > 0)
-      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
-      : "";
+// Badge “Aktualizacja” — normalnie dla wszystkich, ale NIE dla stat-tech
+const updBadge = (!isStatTechTile && isToday(updISO))
+  ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+  : (!isStatTechTile ? `<span class="badge">Aktualizacja: ${upd}</span>` : "");
+
+// Badge “Nowe dziś” — tylko gdy są nowe
+const insideBadge = (todayInside > 0)
+  ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
+  : "";
+
 
     return `
       <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
         <div class="topMeta">
-          ${updBadge}
-          ${insideBadge}
-        </div>
+  ${updBadge}
+  ${insideBadge}
+</div>
         <p class="title">${r.name}</p>
         <p class="desc">${r.description}</p>
         <div class="metaLine">
@@ -1248,8 +1275,25 @@ function renderMonthly(items){
 
   // jeśli coś nie dojechało z manifestu — pokaż komunikat zamiast “ciszy”
   if(!listRaw.length){
-    wrap.innerHTML = `<div class="error">Brak pozycji z <code>MONTHLY_KEYS</code> w <code>manifest.json</code>.</div>`;
-    return;
+   wrap.innerHTML = list.map(r => {
+  const updISO = (r.updated || "").trim();
+  const upd = updISO ? fmtDatePL(updISO) : "—";
+  const clsToday = isToday(updISO) ? "today" : "";
+
+  // MIESIĘCZNE: pokazuj badge tylko jeśli aktualizacja jest DZISIAJ. Jak nie, to nic.
+  const updBadge = isToday(updISO)
+    ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+    : ``;
+
+  return `
+    <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+      <div class="topMeta">${updBadge}</div>
+      <p class="title">${r.name}</p>
+      <p class="desc">${r.description}</p>
+    </a>
+  `;
+}).join("");
+
   }
 
   const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
