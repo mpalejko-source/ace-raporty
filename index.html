@@ -535,6 +535,23 @@
     @media (max-width: 720px){
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
     }
+/* ===== MONTHLY grid (5 kolumn jak tygodniowe, a gdy są 4 – start od kolumny 2) ===== */
+.monthlyGrid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+.monthlyGrid.center4 > a:nth-child(1){ grid-column:2; }
+
+@media (max-width: 1100px){
+  .monthlyGrid{ grid-template-columns: repeat(3, 1fr); }
+  .monthlyGrid.center4 > a:nth-child(1){ grid-column:auto; }
+}
+@media (max-width: 720px){
+  .monthlyGrid{ grid-template-columns: 1fr; }
+  .monthlyGrid.center4 > a:nth-child(1){ grid-column:auto; }
+}
 
     /* ===== FOLDERS grid ===== */
     .folderGrid{
@@ -1149,35 +1166,77 @@
       });
     }
 
-    function renderQuick(items){
-      const wrap = document.getElementById("quickGrid");
-      const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const listRaw = QUICK_KEYS.map(k => map[k]).filter(Boolean);
+   function renderQuick(items){
+  const wrap = document.getElementById("quickGrid");
+  const map = Object.fromEntries(items.map(x => [x.id, x]));
+  const listRaw = QUICK_KEYS.map(k => map[k]).filter(Boolean);
+  const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+  const today = todayISO();
 
-      const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+  function countTodayInside(folder){
+    const folderPath = (folder.path || "").toString();
+    // 1) preferuj group==folder.id
+    let children = items.filter(it =>
+      it.id !== folder.id &&
+      it.type !== "folder" &&
+      it.group &&
+      it.group === folder.id
+    );
 
-      wrap.innerHTML = list.map(r => {
-        const updISO = (r.updated || "").trim();
-        const upd = updISO ? fmtDatePL(updISO) : "—";
-        const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
-        const clsToday = isToday(updISO) ? "today" : "";
-
-        const updBadge = isToday(updISO)
-          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-          : `<span class="badge">Aktualizacja: ${upd}</span>`;
-
-        return `
-          <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
-            <div class="topMeta">${updBadge}</div>
-            <p class="title">${r.name}</p>
-            <p class="desc">${r.description}</p>
-            <div class="metaLine">
-              <span><strong>Kolejne:</strong> ${nxt}</span>
-            </div>
-          </a>
-        `;
-      }).join("");
+    // 2) jeśli group nie pasuje (u Ciebie tak jest), licz po path prefix
+    if(!children.length && folderPath){
+      children = items.filter(it =>
+        it.id !== folder.id &&
+        it.type !== "folder" &&
+        (it.path || "").toString().startsWith(folderPath)
+      );
     }
+
+    // 3) fallback: znane mapowanie dla stat-tech (bo folder ma inne ID niż group)
+    if(!children.length && folderPath.includes("analizy-stat-tech")){
+      children = items.filter(it =>
+        it.type !== "folder" &&
+        it.group === "analizy-stat-tech"
+      );
+    }
+
+    return children.filter(x => (x.updated || "") === today).length;
+  }
+
+  wrap.innerHTML = list.map(r => {
+    const updISO = (r.updated || "").trim();
+    const upd = updISO ? fmtDatePL(updISO) : "—";
+    const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
+
+    const isFolderLike = (r.type || "").toLowerCase() === "folder";
+    const todayInside = isFolderLike ? countTodayInside(r) : 0;
+
+    const clsToday = (isToday(updISO) || todayInside > 0) ? "today" : "";
+
+    const updBadge = isToday(updISO)
+      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+      : `<span class="badge">Aktualizacja: ${upd}</span>`;
+
+    const insideBadge = (todayInside > 0)
+      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
+      : "";
+
+    return `
+      <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+        <div class="topMeta">
+          ${updBadge}
+          ${insideBadge}
+        </div>
+        <p class="title">${r.name}</p>
+        <p class="desc">${r.description}</p>
+        <div class="metaLine">
+          <span><strong>Kolejne:</strong> ${nxt}</span>
+        </div>
+      </a>
+    `;
+  }).join("");
+}
+
 
 function renderMonthly(items){
   const wrap = document.getElementById("monthlyGrid");
@@ -1185,6 +1244,7 @@ function renderMonthly(items){
 
   const map = Object.fromEntries(items.map(x => [x.id, x]));
   const listRaw = MONTHLY_KEYS.map(k => map[k]).filter(Boolean);
+wrap.classList.toggle("center4", list.length === 4);
 
   // jeśli coś nie dojechało z manifestu — pokaż komunikat zamiast “ciszy”
   if(!listRaw.length){
