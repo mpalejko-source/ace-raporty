@@ -868,7 +868,8 @@
       <p class="h2">Raporty Miesięczne Fundamentalne</p>
       <p class="hint">Foldery z raportami (klik → lista raportów w środku)</p>
     </div>
-    <section class="folderGrid" id="folderGrid"></section>
+  <section class="quickGrid" id="monthlyGrid"></section>
+
 
     <div id="err" class="error" style="display:none"></div>
 
@@ -883,7 +884,8 @@
 
     const FEATURED_KEY = "Poranny Skan Rynku";
     const QUICK_KEYS = ["Rynek na wykresach - Surowce i Waluty","Pozycje Funduszy","Portfele-ACE","Analizy statystyczno-techniczne","Pogoda"];
-    const FOLDER_KEYS = ["analizy-stat-tech","raporty-fundamentalne"];
+    const MONTHLY_KEYS = ["WASDE","IGCc","FAO","Indexy-światowe"];
+    const FOLDER_KEYS = ["analizy-stat-tech"];
 
     const CAL = [
       { dow:1, short:"PN", key:"Pozycje Funduszy" },
@@ -1177,6 +1179,47 @@
       }).join("");
     }
 
+function renderMonthly(items){
+  const wrap = document.getElementById("monthlyGrid");
+  if(!wrap) return;
+
+  const map = Object.fromEntries(items.map(x => [x.id, x]));
+  const listRaw = MONTHLY_KEYS.map(k => map[k]).filter(Boolean);
+
+  // jeśli coś nie dojechało z manifestu — pokaż komunikat zamiast “ciszy”
+  if(!listRaw.length){
+    wrap.innerHTML = `<div class="error">Brak pozycji z <code>MONTHLY_KEYS</code> w <code>manifest.json</code>.</div>`;
+    return;
+  }
+
+  const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+
+  wrap.innerHTML = list.map(r => {
+    const updISO = (r.updated || "").trim();
+    const upd = updISO ? fmtDatePL(updISO) : "—";
+    const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
+    const clsToday = isToday(updISO) ? "today" : "";
+
+    const updBadge = isToday(updISO)
+      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+      : `<span class="badge">Aktualizacja: ${upd}</span>`;
+
+    return `
+      <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+        <div class="topMeta">${updBadge}</div>
+        <p class="title">${r.name}</p>
+        <p class="desc">${r.description}</p>
+        <div class="metaLine">
+          <span><strong>Kolejne:</strong> ${nxt}</span>
+        </div>
+      </a>
+    `;
+  }).join("");
+}
+
+
+
+    
     function renderFolders(items){
       const wrap = document.getElementById("folderGrid");
       const map = Object.fromEntries(items.map(x => [x.id, x]));
@@ -1372,7 +1415,8 @@
     try { renderFeatured(items, scan); } catch(e) { showErr("Błąd porannego skanu: " + (e?.message || e)); }
     try { renderCalendar(items); } catch(e) { showErr("Błąd kalendarza: " + (e?.message || e)); }
     try { renderQuick(items); } catch(e) { showErr("Błąd raportów tygodniowych: " + (e?.message || e)); }
-    try { renderFolders(items); } catch(e) { showErr("Błąd raportów miesięcznych: " + (e?.message || e)); }
+    try { renderMonthly(items); } catch(e) { showErr("Błąd raportów miesięcznych: " + (e?.message || e)); }
+
 
   } catch(e){
     showErr("Błąd manifest/scan: " + (e?.message || e));
