@@ -1,7 +1,20 @@
 {"items":[
   {
-    "id":"2026-02-18",
-    "date":"2026-02-18",
+    "id":"2026-02-19",
+    "date":"2026-02-19",
+    "time":"10:08",
+    "pl":{
+      "title":"Na rynkach rolnych soja po osiągnięciu trzymiesięcznych maksimów cofa się, wspierana jednak przez możliwe większe zakupy Chin i ograniczoną podaż oleju sojowego",
+      "lead":"Pszenica w UE odbija po wcześniejszych spadkach, jednak pozostaje pod presją dużych zapasów, konkurencji eksportowej oraz ryzyka pogodowego w Ukrainie, natomiast rzepak korzysta ze wzrostów pozycjonowania funduszy i silnym popycie na oleje roślinne. Dodatkowo czynniki globalne, jak strajk w argentyńskich portach i wielkie zakupy zbóż i soi przez Indonezję, mogą w krótkim terminie zwiększać zmienność cen i ograniczać dostępność surowców.",
+      "fx":"",
+      "agri":"",
+      "blocks":[{"icon":"🌾","title":"Pszenica","text":"Notowania pszenicy w UE odbiły po spadkach, wspierane przez wzrosty w Chicago i obawy o uszkodzenia upraw w USA oraz na Ukrainie po silnych wiatrach i mrozach. W Polsce ceny spadły nieznacznie, a eksport do Maroka i Nigerii trwa, mimo dużej podaży i trudnego otoczenia rynkowego. Ryzyko dla upraw ozimych w Ukrainie wzrosło po okresie mrozów i lodowej pokrywy, co może wpłynąć na przyszłe prognozy produkcji i eksportu. Dodatkowo inwestorzy finansowi zmniejszyli shorty na pszenicy na MATIF, częściowo realizując wcześniejsze zyski."},{"icon":"🌱","title":"Soja","text":"Notowania soi na CBOT po trzymiesięcznych maksimach lekko spadły, gdy rynek realizował zyski po silnym rajdzie wywołanym rekordowym przerobem w USA i oczekiwanymi dodatkowymi zakupami Chin. Dane NOPA pokazały najwyższy styczniowy przerób soi w historii, co zwiększa oczekiwania, że USDA może obniżyć prognozę zapasów końcowych. Z drugiej strony wzrosły zapasy oleju sojowego do najwyższego poziomu od kwietnia 2023 r., ograniczając potencjał dalszych wzrostów. Silnie zachowywał się olej sojowy, wspierany możliwymi wyższymi limitami blendingowymi dla biopaliw w USA. W Argentynie i Brazylii rynek uważnie obserwuje opady – poprawiające się warunki pogodowe częściowo odbudowują potencjał plonów i ograniczają presję spadkową na ceny. Dodatkowo strajk marynarzy w Argentynie tymczasowo wstrzymał eksport śruty i oleju sojowego, co może zwiększyć krótkoterminową zmienność cen."},{"icon":"💱","title":"Waluty","text":"Rynki finansowe śledzą możliwą wcześniejszą zmianę na czele Europejskiego Banku Centralnego po potencjalnej rezygnacji Christine Lagarde, przy czym główni kandydaci to Klaas Knot i Pablo Hernández de Cos. Inwestorzy oczekują utrzymania stabilnej polityki monetarnej i przewidywalności stóp procentowych, a decyzje personalne EBC traktowane są w kontekście szerszej polityki strefy euro. Na Wall Street wciąż utrzymuje się podwyższona zmienność, przy czym indeksy S&P 500 i Nasdaq pozostają na minusie w 2026 r., a sektor technologiczny reaguje na inwestycje w sztuczną inteligencję. W Wielkiej Brytanii inflacja spadła do 3%, co podtrzymuje spekulacje o możliwej obniżce stóp przez Bank Anglii, a inwestorzy czekają również na protokół z ostatniego posiedzenia Fed w kontekście globalnych trendów gospodarczych i geopolitycznych"},{"icon":"🌼","title":"Rzepak","text":"Fundusze zwiększyły pozycje długie na rzepaku, podczas gdy uczestnicy komercyjni pogłębiali shorty, co wskazuje na rosnące nastawienie rynku do wzrostów. Pozycjonowanie funduszy wspiera pozytywny sentyment wynikający z mocnych cen olejów roślinnych i rynku soi."},{"icon":"🌽","title":"Kukurydza","text":"Amerykańscy rolnicy planują utrzymać wysokie areały kukurydzy w sezonie 2026, traktując ją jako najbardziej opłacalną uprawę, mimo presji cenowej po rekordowych zbiorach. Notowania w Chicago pozostawały stabilne przed raportem USDA o zasiewach, który może nadać kierunek rynkowi. Prognozy zakładają niewielki spadek powierzchni w USA, ale nadal wysoki poziom historyczny, przy stabilnym popycie ze strony eksportu i przemysłu etanolowego. Dodatkowo duże zakupy zbóż i kukurydzy przez Indonezję mogą wspierać eksport USA w nadchodzących miesiącach."}],
+      "focus":[]
+    }
+  },
+  {
+    "id":"18.02.2026",
+    "date":"18.02.2026",
     "time":"10:12",
     "pl":{
       "title":"Konsultingowa firma Expana obniżyła prognozę eksportu pszenicy miękkiej z UE w sezonie 2025/26 o kolejne 1,2 mln ton do 27,6 mln ton z powodu silnej konkurencji na rynku światowym.",
