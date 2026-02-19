@@ -1363,6 +1363,9 @@
   try{
     const manifest = await loadManifest();
     const items = toItems(manifest);
+    console.log("IDs:", items.map(x=>x.id));
+  console.log("Pogoda item:", items.find(x=>x.id==="Pogoda"));
+
     const scan = await loadPorannyScanJSON();
 
     try { renderTodayTicker(items, scan); } catch(e) { showErr("Błąd tickera: " + (e?.message || e)); }
