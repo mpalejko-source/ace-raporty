@@ -1406,8 +1406,10 @@ function renderMonthly(items){
   try{
     const manifest = await loadManifest();
     const items = toItems(manifest);
-    console.log("IDs:", items.map(x=>x.id));
-  console.log("Pogoda item:", items.find(x=>x.id==="Pogoda"));
+console.log("MANIFEST IDs:", items.map(x => x.id));
+console.log("MONTHLY_KEYS:", MONTHLY_KEYS);
+console.log("MONTHLY found:", MONTHLY_KEYS.map(k => [k, !!items.find(it => it.id === k)]));
+
 
     const scan = await loadPorannyScanJSON();
 
