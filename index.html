@@ -548,7 +548,6 @@
     @media (max-width: 720px){
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
     }
-/* ===== MONTHLY grid (5 kolumn jak tygodniowe, a gdy są 4 – start od kolumny 2) ===== */
 /* ===== MONTHLY grid ===== */
 .monthlyGrid{
   display:grid;
@@ -557,21 +556,29 @@
   margin-top:14px;
 }
 
-/* gdy są 4 kafelki: robimy „pod 5”, ale realnie 4 kolumny o tej samej szerokości co tygodniowe,
-   i całość centrujemy */
-/* 4 kafelki: zaczynamy od kolumny 2 (czyli wizualnie pod 5) */
-.monthlyGrid.center4 > a:nth-child(1){
+/* Jeśli są 4 kafelki: przesuwamy pierwszy na kolumnę 2 (czyli wizualnie centrujemy pod układ 5) */
+.monthlyGrid.center4 > a:first-child{
   grid-column: 2;
 }
 
-
+/* Responsywność */
 @media (max-width: 1100px){
-  .monthlyGrid{ grid-template-columns: repeat(3, 1fr); }
-  .monthlyGrid.center4{ width:100%; }
+  .monthlyGrid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* na mniejszych ekranach NIE przesuwamy, bo układ jest 3-kolumnowy */
+  .monthlyGrid.center4 > a:first-child{
+    grid-column: auto;
+  }
 }
+
 @media (max-width: 720px){
-  .monthlyGrid{ grid-template-columns: 1fr; }
-  .monthlyGrid.center4{ width:100%; }
+  .monthlyGrid{
+    grid-template-columns: 1fr;
+  }
+  .monthlyGrid.center4 > a:first-child{
+    grid-column: auto;
+  }
 }
 
     /* ===== FOLDERS grid ===== */
