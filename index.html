@@ -9,15 +9,15 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-<script>
-  const BASE = location.hostname.endsWith("github.io")
-    ? "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/"
-    : "/";
+  <script>
+    const BASE = location.hostname.endsWith("github.io")
+      ? "/" + (location.pathname.split("/").filter(Boolean)[0] || "") + "/"
+      : "/";
 
-  function url(path){
-    return BASE + String(path || "").replace(/^\/+/, "");
-  }
-</script>
+    function url(path){
+      return BASE + String(path || "").replace(/^\/+/, "");
+    }
+  </script>
 
   <style>
     :root{
@@ -31,14 +31,11 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
 
-      --todayBorder: rgba(125,211,252,.55);
-      --todayBg: rgba(125,211,252,.10);
-
-      --todayYellow: rgba(250,204,21,.95);
-      --todayYellowText: #0b1220;
-
-      --calTodayBorder: rgba(250,204,21,.65);
-      --calTodayBg: rgba(250,204,21,.12);
+      /* wspólny styl wyróżnienia (jak było "Link do notowań" w wersji wyróżnionej) */
+      --hiBorder: rgba(125,211,252,.70);
+      --hiBg1: rgba(125,211,252,.12);
+      --hiBg2: rgba(167,139,250,.08);
+      --hiShadow: 0 18px 46px rgba(0,0,0,.48);
     }
 
     *{box-sizing:border-box}
@@ -64,55 +61,59 @@
       flex-direction:column;
     }
 
-    /* ===== HEADER (jak na screenie: logo po lewej, tekst obok) ===== */
+    /* ===== HEADER ===== */
     header{
       display:flex;
       flex-direction:column;
-      align-items:stretch;
-      justify-content:flex-start;
+      gap:12px;
       margin-bottom:18px;
-      text-align:left;
     }
 
-   .brand{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;   /* ✅ wyśrodkuj cały rząd */
-  gap:18px;
-  width:100%;               /* ✅ żeby centrowanie działało w całej szerokości */
-}
+    .topTitle{
+      text-align:center;
+      font-size:33px;
+      font-weight:950;
+      letter-spacing:.12px;
+      color:#ffffff;
+      line-height:1.12;
+      text-shadow: 0 10px 24px rgba(0,0,0,.35);
+      margin:0;
+    }
 
+    .headerRow{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      gap:14px;
+      align-items:center;
+    }
 
     .logo{
       height:56px;
       width:auto;
       display:block;
-      flex:0 0 auto;
       filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
     }
 
-    /* UWAGA: usuwamy konflikt globalnego h1 (nie ustawiamy tu koloru/rozmiaru) */
-    h1{ margin:0; }
+    .rightSlogan{
+      text-align:right;
+      font-style:italic;
+      color: rgba(250,204,21,.78);
+      text-shadow: 0 10px 24px rgba(0,0,0,.35);
+      line-height:1.08;
+      margin:0;
+      font-size:29px; /* troszkę mniejszy od głównego */
+      font-weight:500;
+      max-width: 360px;
+    }
+    .rightSlogan .l1{ display:block; }
+    .rightSlogan .l2{ display:block; }
 
-.mainTitle{
-  margin:0;
-  font-size:33px;
-  font-weight:500;
-  letter-spacing:.12px;
-  color: rgba(250,204,21,.78);
-  font-style:italic;
-  line-height:1.12;
-  text-shadow: 0 10px 24px rgba(0,0,0,.35);
-}
-
-
-
-    .sub{
-      margin:6px 0 0 0;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.35;
+    .userBar{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     .pill{
@@ -129,11 +130,19 @@
       align-items:center;
     }
 
+    /* ===== Subtelne separatory sekcji ===== */
+    .sectionDivider{
+      margin:16px 0 6px;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+      border:0;
+    }
+
     .sectionHead{
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      margin-top:18px;
+      margin-top:14px;
     }
-    .h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
+    .h2{ margin:0; font-size:16px; font-weight:950; letter-spacing:.2px; }
     .hint{ margin:0; color: var(--muted2); font-size:12px; }
 
     /* ===== cards base ===== */
@@ -161,9 +170,25 @@
     }
     a.card > *, .cardStatic > *{ position:relative; }
 
-    a.card.today{
-      border: 1px solid var(--todayBorder);
-      background: linear-gradient(180deg, var(--todayBg), rgba(255,255,255,.03));
+    /* ===== Wyróżnienie "dziś" (wspólny styl) ===== */
+    .hiToday{
+      border:2px solid var(--hiBorder) !important;
+      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2)) !important;
+      box-shadow: var(--hiShadow) !important;
+    }
+    .hiToday:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
+
+    /* nadpisujemy wcześniejsze "today" na wspólny styl */
+    a.card.today{ /* kafelki dziś zaktualizowane */
+      border:2px solid var(--hiBorder);
+      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
+      box-shadow: var(--hiShadow);
     }
 
     .topMeta{
@@ -194,19 +219,19 @@
       border-color: rgba(125,211,252,.45);
       background: rgba(125,211,252,.16);
       color:#ffffff;
-      font-weight:800;
+      font-weight:900;
     }
     .badge.folder{
       border-color: rgba(167,139,250,.45);
       background: rgba(167,139,250,.14);
       color:#ffffff;
-      font-weight:800;
+      font-weight:900;
     }
     .badge.updToday{
-      border-color: rgba(250,204,21,.70);
-      background: var(--todayYellow);
-      color: var(--todayYellowText);
-      font-weight: 950;
+      border:1px solid rgba(125,211,252,.70);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
+      color:#ffffff;
+      font-weight:950;
     }
     .topMeta .badge.updToday{ margin-left:auto; margin-right:auto; }
 
@@ -349,9 +374,9 @@
       gap:6px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(250,204,21,.70);
-      background: var(--todayYellow);
-      color: var(--todayYellowText);
+      border:1px solid rgba(125,211,252,.70);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
+      color: #ffffff;
       font-weight:950;
       box-shadow: 0 10px 24px rgba(0,0,0,.20);
       white-space:nowrap;
@@ -438,6 +463,8 @@
       cursor:pointer;
       user-select:none;
       transition: transform .08s ease, border-color .08s ease, background .08s ease;
+      position:relative;
+      overflow:hidden;
     }
     .calItem:hover{
       transform: translateY(-1px);
@@ -471,11 +498,20 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
+    /* wyróżnienie dnia w kalendarzu – identyczny styl jak reszta wyróżnień */
     .calItem.today{
-      border-color: var(--calTodayBorder);
-      background: var(--calTodayBg);
-      box-shadow: 0 12px 26px rgba(0,0,0,.28);
+      border:2px solid var(--hiBorder);
+      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
+      box-shadow: var(--hiShadow);
     }
+    .calItem.today:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
+    .calItem.today > *{ position:relative; }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -665,29 +701,24 @@
       white-space:pre-wrap;
     }
 
-    /* ===== WYRÓŻNIONA SEKCJA NOTOWAŃ (jak featured) ===== */
-    .featuredQuotes{
-      border: 2px solid rgba(125,211,252,.70) !important;
-      background: linear-gradient(135deg, rgba(125,211,252,.12), rgba(167,139,250,.08)) !important;
-      box-shadow: 0 18px 46px rgba(0,0,0,.48) !important;
-    }
-    .featuredQuotes:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
-                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
-      pointer-events:none;
-    }
-
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
 
-    /* Drobne dopasowanie na węższych ekranach */
+    /* ===== Responsive header ===== */
     @media (max-width: 720px){
-      .brand{ gap:12px; }
-      .mainTitle{ font-size:28px; }
-      .sub{ font-size:13px; }
+      .topTitle{ font-size:28px; }
+      .headerRow{
+        grid-template-columns: 1fr;
+        justify-items:center;
+        gap:10px;
+      }
+      .rightSlogan{
+        text-align:center;
+        font-size:24px;
+        max-width:none;
+      }
       .logo{ height:46px; }
+      .userBar{ justify-content:center; }
     }
   </style>
 </head>
@@ -696,53 +727,48 @@
   <div class="wrap">
 
     <header>
-      <div class="brand">
+      <!-- Linia 1: główny tytuł -->
+      <h1 class="topTitle">ACE-Panel Raportów</h1>
+
+      <!-- Linia 2: logo (lewo) / userBar (środek) / slogan (prawo) -->
+      <div class="headerRow">
         <img src="" alt="ACE Group" class="logo" id="logoImg">
-        <div>
-          <h1 class="mainTitle">Nasza współpraca buduje sukces !</h1>
-          <p class="sub">ACE-Panel Raportów</p>
-        </div>
-      </div>
 
-      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <div class="pill" id="userEmail" title="Zalogowany użytkownik">
-          <span class="ico">👤</span>
-          <span>Zalogowany: —</span>
+        <div class="userBar">
+          <div class="pill" id="userEmail" title="Zalogowany użytkownik">
+            <span class="ico">👤</span>
+            <span>Zalogowany: —</span>
+          </div>
+
+          <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
+            <span class="ico">🚪</span>
+            <span>Wyloguj</span>
+          </a>
+
+          <div class="pill" id="asof">
+            <span class="ico">📍</span>
+            <span>Olsztyn —</span>
+          </div>
         </div>
 
-        <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
-          <span class="ico">🚪</span>
-          <span>Wyloguj</span>
-        </a>
-
-        <div class="pill" id="asof">
-          <span class="ico">📍</span>
-          <span>Olsztyn —</span>
-        </div>
+        <p class="rightSlogan">
+          <span class="l1">Nasza współpraca</span>
+          <span class="l2">buduje sukces !</span>
+        </p>
       </div>
     </header>
 
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
+    <!-- Poranny skan + kalendarz (zostaje) -->
     <section class="topRowGrid">
       <div id="featuredWrap"></div>
       <div id="calWrap"></div>
     </section>
 
-    <div class="sectionHead">
-      <p class="h2">Szybki dostęp</p>
-      <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
-    </div>
-    <section class="quickGrid" id="quickGrid"></section>
-
-    <div class="sectionHead">
-      <p class="h2">Biblioteka raportów</p>
-      <p class="hint">Kafle-foldery (klik → lista raportów w środku)</p>
-    </div>
-    <section class="folderGrid" id="folderGrid"></section>
-
-    <div class="sectionHead">
-      <p class="h2">Cenniki</p>
+    <!-- CODZIENNE: Cenniki + link do notowań (przeniesione pod poranny skan) -->
+    <div class="sectionHead" style="margin-top:16px;">
+      <p class="h2">Cenniki i notowania</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych + linki do notowań</p>
     </div>
 
@@ -767,17 +793,15 @@
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
       </section>
 
-      <!-- NOTOWANIA (linki) -->
-      <section class="panel featuredQuotes">
+      <!-- NOTOWANIA (linki) — styl jak cenniki, bez wyróżniania i bez dolnej sekcji -->
+      <section class="panel">
         <div class="quotesBox">
-
           <div>
-            <p class="qTitle" style="color:rgba(250,204,21,.95)">Link do notowań</p>
+            <p class="qTitle">Link do notowań</p>
             <p class="qSub">Oficjalne strony giełdowe – dane źródłowe.</p>
           </div>
 
           <div class="qLinks">
-
             <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
               <span class="qIco">🇺🇸</span>
               <span class="qTxt">
@@ -817,35 +841,28 @@
                 <span class="qSmall">Niemcy • Dolny Ren</span>
               </span>
             </a>
-
           </div>
-
-          <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,.08)">
-            <div style="font-size:12px; color:rgba(250,204,21,.9); font-weight:900; margin-bottom:6px">
-              🔥 Najczęściej monitorowane przez klientów ACE
-            </div>
-
-            <div class="qLinks">
-              <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
-                <span class="qIco">🇺🇸</span>
-                <span class="qMain">Śruta sojowa CBOT</span>
-              </a>
-
-              <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
-                <span class="qIco">🇪🇺</span>
-                <span class="qMain">Rzepak MATIF</span>
-              </a>
-
-              <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
-                <span class="qIco">🇩🇪</span>
-                <span class="qMain">Rape meal Neuss</span>
-              </a>
-            </div>
-          </div>
-
         </div>
       </section>
     </section>
+
+    <hr class="sectionDivider" />
+
+    <!-- TYGODNIOWE: dawny "Szybki dostęp" -->
+    <div class="sectionHead">
+      <p class="h2">Raporty Tygodniowe</p>
+      <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
+    </div>
+    <section class="quickGrid" id="quickGrid"></section>
+
+    <hr class="sectionDivider" />
+
+    <!-- MIESIĘCZNE: dawny "Biblioteka raportów" -->
+    <div class="sectionHead">
+      <p class="h2">Raporty Miesięczne Fundamentalne</p>
+      <p class="hint">Foldery z raportami (klik → lista raportów w środku)</p>
+    </div>
+    <section class="folderGrid" id="folderGrid"></section>
 
     <div id="err" class="error" style="display:none"></div>
 
