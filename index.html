@@ -1293,6 +1293,7 @@ if(!listRaw.length){
 
   // centrowanie gdy są dokładnie 4 kafelki
   wrap.classList.toggle("center4", list.length === 4);
+console.log("MONTHLY count:", list.length, "class:", wrap.className);
 
 wrap.innerHTML = list.map(r => {
   const updISO = (r.updated || "").trim();
