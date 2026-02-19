@@ -9,9 +9,9 @@
     "category": "zboza"
   },
 
-  "Wykresy cenowe": {
-    "name": "Wykresy cenowe",
-    "description": "Pakiet wykresów i przekrojów rynkowych do szybkiego przeglądu.",
+  "Rynek na wykresach - Surowce i Waluty": {
+    "name": "Rynek na wykresach - Surowce i Waluty",
+    "description": "Pakiet wykresów spot do szybkiego przeglądu trendów.",
     "path": "raporty/chart-pack/",
     "updated": "2026-02-18",
     "frequency": "tygodniowo",
@@ -36,17 +36,16 @@
     "next_issue": "2026-02-20",
     "category": "zboza"
   },
-  "Analizy statystyczno-techniczna": {
-    "name": "Analizy statystyczno-techniczna",
-    "description": "Macierze decyzyjne i sygnały risk-management.",
-    "path": "raporty/decision-quadrants/",
-    "updated": "2026-02-02",
-    "frequency": "tygodniowo",
-    "next_issue": "2026-02-07",
-    "category": "zboza"
+  "Analizy statystyczno-techniczne": {
+    "name": "Analizy statystyczno-techniczne",
+    "description": "Pakiet szczegółowych analiz liczbowych dla wszystkich surowców i walut",
+     "path": "raporty/analizy-stat-tech/"
+      "type": "folder",
+    "category": "foldery"
   },
+  
   "Pogoda": {
-    "name": "Pogoda",
+    "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
     "updated": "2026-02-04",
