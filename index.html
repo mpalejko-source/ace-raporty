@@ -1329,34 +1329,48 @@
       }
     }
 
-    (async () => {
-      const errBox = document.getElementById("err");
-      const showErr = (msg) => { errBox.style.display = "block"; errBox.textContent = msg; };
+(async () => {
+  const errBox = document.getElementById("err");
+  const showErr = (msg) => {
+    if(!errBox) return;
+    errBox.style.display = "block";
+    errBox.textContent = msg;
+  };
 
-      try{
-        loadUserEmail();
+  // 1) Te rzeczy zawsze próbujemy odpalić
+  try { loadUserEmail(); } catch(e) {}
+  try {
+    const now = new Date();
+    const date = now.toLocaleDateString("pl-PL");
+    const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+    const asofEl = document.getElementById("asof");
+    if(asofEl){
+      asofEl.innerHTML = `<span class="ico">📍</span><strong>${CONFIG.location}</strong> <span class="ico">🕒</span>${date} ${time}`;
+    }
+  } catch(e) {}
 
-        const now = new Date();
-        const date = now.toLocaleDateString("pl-PL");
-        const time = now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
-        document.getElementById("asof").innerHTML =
-          `<span class="ico">📍</span><strong>${CONFIG.location}</strong> <span class="ico">🕒</span>${date} ${time}`;
+  // 2) Cenniki próbujemy niezależnie (żeby zawsze działały)
+  try { await loadPrices(); }
+  catch(e){ showErr("Błąd cenników: " + (e?.message || e)); }
 
-        const manifest = await loadManifest();
-        const items = toItems(manifest);
-        const scan = await loadPorannyScanJSON();
+  // 3) Reszta panelu (manifest/scan)
+  try{
+    const manifest = await loadManifest();
+    const items = toItems(manifest);
+    const scan = await loadPorannyScanJSON();
 
-        renderTodayTicker(items, scan);
-        renderFeatured(items, scan);
-        renderCalendar(items);
-        renderQuick(items);
-        renderFolders(items);
-        loadPrices();
+    try { renderTodayTicker(items, scan); } catch(e) { showErr("Błąd tickera: " + (e?.message || e)); }
+    try { renderFeatured(items, scan); } catch(e) { showErr("Błąd porannego skanu: " + (e?.message || e)); }
+    try { renderCalendar(items); } catch(e) { showErr("Błąd kalendarza: " + (e?.message || e)); }
+    try { renderQuick(items); } catch(e) { showErr("Błąd raportów tygodniowych: " + (e?.message || e)); }
+    try { renderFolders(items); } catch(e) { showErr("Błąd raportów miesięcznych: " + (e?.message || e)); }
 
-      } catch(e){
-        showErr("Błąd panelu: " + (e && e.message ? e.message : e));
-      }
-    })();
+  } catch(e){
+    showErr("Błąd manifest/scan: " + (e?.message || e));
+  }
+})();
+
+    
   </script>
 
 </body>
