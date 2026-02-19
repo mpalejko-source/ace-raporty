@@ -885,7 +885,8 @@
       <p class="h2">Raporty Miesięczne Fundamentalne</p>
       <p class="hint">Foldery z raportami (klik → lista raportów w środku)</p>
     </div>
-  <section class="quickGrid" id="monthlyGrid"></section>
+  <section class="monthlyGrid" id="monthlyGrid"></section>
+
 
 
     <div id="err" class="error" style="display:none"></div>
@@ -1244,7 +1245,6 @@ function renderMonthly(items){
 
   const map = Object.fromEntries(items.map(x => [x.id, x]));
   const listRaw = MONTHLY_KEYS.map(k => map[k]).filter(Boolean);
-wrap.classList.toggle("center4", list.length === 4);
 
   // jeśli coś nie dojechało z manifestu — pokaż komunikat zamiast “ciszy”
   if(!listRaw.length){
@@ -1253,6 +1253,9 @@ wrap.classList.toggle("center4", list.length === 4);
   }
 
   const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+
+  // centrowanie gdy są dokładnie 4 kafelki
+  wrap.classList.toggle("center4", list.length === 4);
 
   wrap.innerHTML = list.map(r => {
     const updISO = (r.updated || "").trim();
@@ -1276,6 +1279,7 @@ wrap.classList.toggle("center4", list.length === 4);
     `;
   }).join("");
 }
+
 
 
 
