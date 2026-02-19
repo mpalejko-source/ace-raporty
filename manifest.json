@@ -54,13 +54,7 @@
     "category": "zboza"
   },
 
-  "analizy-stat-tech": {
-    "name": "Analizy Statystyczno-Techniczne",
-    "description": "Waluty, zboża, śruty i energia – przeglądy i sygnały.",
-    "path": "raporty/analizy-stat-tech/",
-    "type": "folder",
-    "category": "foldery"
-  },
+
   "raporty-fundamentalne": {
     "name": "Raporty Fundamentalne",
     "description": "WASDE, IGC, FAO i ACE Indexy Światowe – kluczowe wnioski.",
