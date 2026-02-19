@@ -44,7 +44,7 @@
     "category": "foldery"
   },
   
-  "Pogoda": {
+  "Warunki pogodowe dla upraw kluczowych surowców": {
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
