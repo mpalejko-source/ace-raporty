@@ -166,7 +166,7 @@
     "section": "Energia",
     "category": "energia"
   },
-
+  
   "wasde": {
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
@@ -200,9 +200,9 @@
     "section": "Raporty",
     "category": "zboza"
   },
-  "ace-indexy-swiatowe": {
-    "name": "ACE Indexy Światowe",
-    "description": "Indeksy światowe i kontekst makro dla agro.",
+  "Indexy-światowe": {
+    "name": "Indexy Światowe",
+    "description": "Bloomberg Commodity Index, DXY, Baltic Dry i inne",
     "path": "raporty/raporty-fundamentalne/ace-indexy-swiatowe/",
     "updated": "2026-02-19",
     "frequency": "tygodniowo",
