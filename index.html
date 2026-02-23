@@ -1229,7 +1229,7 @@
     const nxt = r.next_issue ? fmtDatePL(r.next_issue) : "—";
 
     const isFolderLike = (r.type || "").toLowerCase() === "folder";
-    const todayInside = isFolderLike ? countTodayInside(r) : 0;
+    let todayInside = isFolderLike ? countTodayInside(r) : 0;
 
    // === POPRAWKA: stat-tech identycznie jak inne kafelki ===
     const isStatTechTile = (r.id === "Analizy statystyczno-techniczne");
