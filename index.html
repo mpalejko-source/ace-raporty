@@ -145,7 +145,7 @@
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
       margin-top:14px;
     }
-    .h2{ margin:0; font-size:16px; font-weight:950; letter-spacing:.2px; }
+    .h2{ margin:0; font-size:20px; font-weight:950; letter-spacing:.2px; }
     .hint{ margin:0; color: var(--muted2); font-size:12px; }
 
     /* ===== cards base ===== */
@@ -558,7 +558,7 @@
 
 /* Jeśli są 4 kafelki: przesuwamy pierwszy na kolumnę 2 (czyli wizualnie centrujemy pod układ 5) */
 .monthlyGrid.center4 > a:first-child{
-  grid-column: 2;
+  grid-column: 1;
 }
 
 /* Responsywność */
@@ -1240,21 +1240,24 @@
     const isFolderLike = (r.type || "").toLowerCase() === "folder";
     const todayInside = isFolderLike ? countTodayInside(r) : 0;
 
-    const clsToday = (isToday(updISO) || todayInside > 0) ? "today" : "";
+   // === POPRAWKA: stat-tech identycznie jak inne kafelki ===
+    const isStatTechTile = (r.id === "Analizy statystyczno-techniczne");
+    if(isStatTechTile) todayInside = 0;
 
-   const isStatTechTile = (r.id === "Analizy statystyczno-techniczne");
+    // "today" tylko po updated, jak wszędzie
+    const clsToday = isToday(updISO) ? "today" : "";
 
-// Aktualizacja: pokazuj tylko jeśli jest data (nie "—") i nie jest stat-tech
-const updBadge = (!isStatTechTile && updISO)
-  ? (isToday(updISO)
-      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-      : `<span class="badge">Aktualizacja: ${upd}</span>`)
-  : "";
+    // Aktualizacja: zawsze jak przy innych (jeśli jest data)
+    const updBadge = (updISO)
+      ? (isToday(updISO)
+          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+          : `<span class="badge">Aktualizacja: ${upd}</span>`)
+      : "";
 
-// Nowe dziś: tylko gdy są nowe
-const insideBadge = (todayInside > 0)
-  ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
-  : "";
+    // "Nowe dziś" zostaje dla folderów/pozostałych, ale NIE dla stat-tech (bo wyzerowane)
+    const insideBadge = (todayInside > 0)
+      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
+      : "";
 
 
 
