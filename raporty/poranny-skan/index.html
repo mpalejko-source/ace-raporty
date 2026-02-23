@@ -164,6 +164,12 @@
     .architem:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); }
     .archmeta{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:var(--muted2); font-size:12px; margin-top:6px}
 
+    /* wyróżnienie daty/godziny w archiwum */
+    .archdate{
+      color: rgba(234,240,255,.92);
+      font-weight:700;
+    }
+
     .footer{
       margin-top:20px;
       padding-top:14px;
@@ -341,19 +347,19 @@
   });
 
   function renderMediaColumn(mediaArr){
-  if(!mediaArr || !mediaArr.length) return "";
-  const cards = mediaArr.map(raw => {
-    const src = normalizeMediaSrc(raw);
-    if(!src) return "";
-    return `
-      <div class="imgCard">
-        <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}"
-             onerror="this.closest('.imgCard')?.remove()" />
-      </div>
-    `;
-  }).join("");
-  return `<div class="mediaCol">${cards}</div>`;
-}
+    if(!mediaArr || !mediaArr.length) return "";
+    const cards = mediaArr.map(raw => {
+      const src = normalizeMediaSrc(raw);
+      if(!src) return "";
+      return `
+        <div class="imgCard">
+          <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}"
+               onerror="this.closest('.imgCard')?.remove()" />
+        </div>
+      `;
+    }).join("");
+    return `<div class="mediaCol">${cards}</div>`;
+  }
 
   function section(icon, title, text, mediaArr){
     const hasIcon = (icon||"").toString().trim().length > 0;
@@ -380,27 +386,23 @@
     `;
   }
 
- function normalizeMediaSrc(src){
-  let s = (src ?? "").toString();
+  function normalizeMediaSrc(src){
+    let s = (src ?? "").toString();
 
-  // usuń whitespace (spacje, taby, nowe linie, NBSP, zero-width)
-  s = s
-    .replace(/[\u200B-\u200D\uFEFF]/g, "")   // zero-width
-    .replace(/\u00A0/g, " ")                 // nbsp
-    .trim();
+    s = s
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/\u00A0/g, " ")
+      .trim();
 
-  // usuń ewentualne podwójne slashe w środku (poza https://)
-  s = s.replace(/([^:])\/{2,}/g, "$1/");
+    s = s.replace(/([^:])\/{2,}/g, "$1/");
 
-  if(!s) return "";
+    if(!s) return "";
 
-  // jeśli ktoś podał samo "plik.png" bez folderu
-  if(!/^https?:\/\//i.test(s) && !s.startsWith("scan_media/")) {
-    s = "scan_media/" + s;
+    if(!/^https?:\/\//i.test(s) && !s.startsWith("scan_media/")) {
+      s = "scan_media/" + s;
+    }
+    return s;
   }
-  return s;
-}
-
 
   function renderMain(item){
     const t = item[LANG] || null;
@@ -422,7 +424,6 @@
     const title = (t.title || "").toString().trim() || (LANG==="pl" ? "ACE – Poranny Skan Rynku" : "ACE – Morning Market Scan");
     const lead = (t.lead || "").toString();
 
-    // ===== LEAD MEDIA: tylko z JSON (pl.lead_media / en.lead_media) =====
     let leadMedia = [];
     if (Array.isArray(t.lead_media) && t.lead_media.length) {
       leadMedia = t.lead_media
@@ -441,11 +442,8 @@
         )
       : "";
 
-    // ===== BLOCKS (preferowane) =====
     const blocks = Array.isArray(t.blocks) ? t.blocks : [];
     let blocksHtml = "";
-
-    let displayIndex = 0;
 
     for (let i = 0; i < blocks.length; i++){
       const b = blocks[i] || {};
@@ -469,9 +467,6 @@
       if(lead && bText.trim() === lead.trim()) continue;
       if(title && bText.trim() === title.trim()) continue;
 
-      displayIndex += 1;
-
-      // ===== SECTION MEDIA: tylko z JSON b.media =====
       let mediaArr = [];
       if(Array.isArray(b.media) && b.media.length){
         mediaArr = b.media
@@ -483,7 +478,6 @@
       blocksHtml += section(b.icon || "", bTitle, bText, mediaArr);
     }
 
-    // ===== fallback (gdybyś kiedyś zrobił JSON bez blocks) =====
     if(!blocksHtml){
       const fx = (t.fx||"").toString();
       const agri = (t.agri||"").toString();
@@ -514,19 +508,27 @@
 
   function renderArchive(){
     const box = document.getElementById("archive");
+
     const t = (LANG==="pl")
       ? {h:"Archiwum", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
-      : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet.", today:"TODAY"};
+      : {h:"Archive", open:"Open", empty:"No archive yet.", today:"TODAY"};
+
+    const pad2 = (n)=> String(n).padStart(2,"0");
+    const now = new Date();
+    const todayIso = `${now.getFullYear()}-${pad2(now.getMonth()+1)}-${pad2(now.getDate())}`;
 
     const today = ITEMS[0] || null;
-    const todayId = today ? today.id : null;
+    const isToday = !!(today && today.date && today.date === todayIso);
+
+    const startIdx = isToday ? 1 : 0;
+    const firstId = (ITEMS[0] || {}).id;
 
     const archItems = ITEMS
-      .slice(1)
-      .filter(x => x && x.id !== todayId)
+      .slice(startIdx)
+      .filter(x => x && x.id !== firstId)
       .slice(0, 10);
 
-    const todayTile = today ? `
+    const todayTile = isToday ? `
       <div class="architem" data-id="${esc(today.id)}" data-today="1">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
           <div style="font-weight:700">${esc(((today[LANG]||{})?.title) || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
@@ -535,7 +537,7 @@
           </div>
         </div>
         <div class="archmeta">
-          <span>${fmtDate(today.date)} | ${today.time || "—"}</span>
+          <span class="archdate">${fmtDate(today.date)} | ${today.time || "—"}</span>
           <span>${t.open} →</span>
         </div>
       </div>
@@ -552,7 +554,7 @@
               <div class="architem" data-id="${esc(it.id)}">
                 <div style="font-weight:700">${esc(tt.title || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
                 <div class="archmeta">
-                  <span>${fmtDate(it.date)} | ${it.time || "—"}</span>
+                  <span class="archdate">${fmtDate(it.date)} | ${it.time || "—"}</span>
                   <span>${t.open} →</span>
                 </div>
               </div>
