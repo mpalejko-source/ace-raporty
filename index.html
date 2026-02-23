@@ -1128,91 +1128,121 @@
     }
 
     function renderQuick(items){
-      const wrap = document.getElementById("quickGrid");
-      if(!wrap) return;
+  const wrap = document.getElementById("quickGrid");
+  if(!wrap) return;
 
-      // ID lub NAME (żeby Quick działał nawet jak klucze są "nazwami")
-      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-      const pick = (key) => mapById[key] || mapByName[key];
+  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+  const pick = (key) => mapById[key] || mapByName[key];
 
-      const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
-      if(!listRaw.length){
-        wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code>.</div>`;
-        return;
-      }
+  const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
+  if(!listRaw.length){
+    wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code>.</div>`;
+    return;
+  }
 
-      const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
-      const today = todayISO();
+  const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
+  const today = todayISO();
 
-      function countTodayInside(folder){
-        const folderPath = (folder.path || "").toString();
+  function childrenOf(folder){
+    const folderPath = (folder.path || "").toString();
 
-        let children = items.filter(it =>
-          it.id !== folder.id &&
-          it.type !== "folder" &&
-          it.group &&
-          it.group === folder.id
-        );
-
-        if(!children.length && folderPath){
-          children = items.filter(it =>
-            it.id !== folder.id &&
-            it.type !== "folder" &&
-            (it.path || "").toString().startsWith(folderPath)
-          );
-        }
-
-        if(!children.length && folderPath.includes("analizy-stat-tech")){
-          children = items.filter(it =>
-            it.type !== "folder" &&
-            it.group === "analizy-stat-tech"
-          );
-        }
-
-        return children.filter(x => (x.updated || "") === today).length;
-      }
-
-      wrap.innerHTML = list.map(r => {
-        const updISO = (r.updated || "").trim();
-        const upd = updISO ? fmtDatePL(updISO) : "—";
-        const nxt = (r.next_issue || "").trim() ? fmtDatePL(r.next_issue) : "—";
-
-        const isFolderLike = (r.type || "").toLowerCase() === "folder";
-        let todayInside = isFolderLike ? countTodayInside(r) : 0;
-
-        // stat-tech bez "Nowe dziś"
-        const isStatTechTile =
-          (r.id === "Analizy statystyczno-techniczne" || r.name === "Analizy statystyczno-techniczne");
-        if(isStatTechTile) todayInside = 0;
-
-        const clsToday = isToday(updISO) ? "today" : "";
-
-        const updBadge = (updISO)
-          ? (isToday(updISO)
-              ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-              : `<span class="badge">Aktualizacja: ${upd}</span>`)
-          : "";
-
-        const insideBadge = (todayInside > 0)
-          ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
-          : "";
-
-        return `
-          <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
-            <div class="topMeta">
-              ${updBadge}
-              ${insideBadge}
-            </div>
-            <p class="title">${r.name}</p>
-            <p class="desc">${r.description}</p>
-            <div class="metaLine">
-              <span><strong>Kolejne:</strong> ${nxt}</span>
-            </div>
-          </a>
-        `;
-      }).join("");
+    // 1) preferuj: dzieci po prefixie ścieżki
+    let children = [];
+    if(folderPath){
+      children = items.filter(it =>
+        it.type !== "folder" &&
+        it.id !== folder.id &&
+        (it.path || "").toString().startsWith(folderPath)
+      );
     }
+
+    // 2) jeśli ktoś kiedyś będzie używał group==folder.id
+    if(!children.length){
+      children = items.filter(it =>
+        it.type !== "folder" &&
+        it.id !== folder.id &&
+        it.group &&
+        it.group === folder.id
+      );
+    }
+
+    // 3) fallback pod Twoją strukturę: group = "analizy-stat-tech"
+    if(!children.length && folderPath.includes("analizy-stat-tech")){
+      children = items.filter(it => it.type !== "folder" && it.group === "analizy-stat-tech");
+    }
+
+    return children;
+  }
+
+  function folderMeta(folder){
+    const kids = childrenOf(folder);
+    if(!kids.length) return { updISO:"", nextISO:"", todayCount:0 };
+
+    // najnowsza aktualizacja w folderze
+    const updISO = kids
+      .map(k => (k.updated || "").trim())
+      .filter(Boolean)
+      .sort((a,b)=>parseISO(b)-parseISO(a))[0] || "";
+
+    // najbliższe next_issue w przyszłości (lub po prostu najbliższe > dziś)
+    const nextISO = kids
+      .map(k => (k.next_issue || "").trim())
+      .filter(Boolean)
+      .filter(d => parseISO(d) >= parseISO(today))   // >= dzisiaj
+      .sort((a,b)=>parseISO(a)-parseISO(b))[0] || "";
+
+    const todayCount = kids.filter(k => (k.updated || "") === today).length;
+
+    return { updISO, nextISO, todayCount };
+  }
+
+  wrap.innerHTML = list.map(r => {
+    const isFolderLike = (r.type || "").toLowerCase() === "folder";
+
+    let updISO = (r.updated || "").trim();
+    let nxtISO = (r.next_issue || "").trim();
+    let todayInside = 0;
+
+    if(isFolderLike){
+      const meta = folderMeta(r);
+      updISO = meta.updISO;         // <-- klucz: folder bierze z dzieci
+      nxtISO = meta.nextISO;        // <-- klucz: folder bierze z dzieci
+      todayInside = meta.todayCount;
+    }
+
+    const upd = updISO ? fmtDatePL(updISO) : "—";
+    const nxt = nxtISO ? fmtDatePL(nxtISO) : "—";
+
+    const clsToday = isToday(updISO) ? "today" : "";
+
+    const updBadge = updISO
+      ? (isToday(updISO)
+          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+          : `<span class="badge">Aktualizacja: ${upd}</span>`)
+      : "";
+
+    // UWAGA: dla folderów pokazujemy "Nowe dziś", dla zwykłych raportów nie trzeba
+    const insideBadge = (isFolderLike && todayInside > 0)
+      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
+      : "";
+
+    return `
+      <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+        <div class="topMeta">
+          ${updBadge}
+          ${insideBadge}
+        </div>
+        <p class="title">${r.name}</p>
+        <p class="desc">${r.description}</p>
+        <div class="metaLine">
+          <span><strong>Kolejne:</strong> ${nxt}</span>
+        </div>
+      </a>
+    `;
+  }).join("");
+}
+    
 
     function renderMonthly(items){
       const wrap = document.getElementById("monthlyGrid");
