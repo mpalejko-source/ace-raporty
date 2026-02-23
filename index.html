@@ -20,15 +20,12 @@
   </script>
 
   <style>
-    /* === TWÓJ CSS BEZ ZMIAN === */
     :root{
       --bg:#0b1220;
       --border:rgba(255,255,255,.10);
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
       --muted2:rgba(234,240,255,.55);
-      --accent:#7dd3fc;
-      --accent2:#a78bfa;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
 
@@ -64,6 +61,7 @@
       flex-direction:column;
     }
 
+    /* ===== HEADER ===== */
     header{
       display:flex;
       flex-direction:column;
@@ -130,8 +128,11 @@
       display:inline-flex;
       gap:8px;
       align-items:center;
+      text-decoration:none;
+      opacity:.9;
     }
 
+    /* ===== Subtelne separatory sekcji ===== */
     .sectionDivider{
       margin:16px 0 6px;
       height:1px;
@@ -146,6 +147,7 @@
     .h2{ margin:0; font-size:20px; font-weight:950; letter-spacing:.2px; }
     .hint{ margin:0; color: var(--muted2); font-size:12px; }
 
+    /* ===== cards base ===== */
     a.card, .cardStatic{
       display:flex;
       flex-direction:column;
@@ -171,6 +173,7 @@
     }
     a.card > *, .cardStatic > *{ position:relative; }
 
+    /* ===== wyróżnienie "today" ===== */
     a.card.today{
       border:2px solid var(--hiBorder);
       background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
@@ -207,19 +210,12 @@
       color:#ffffff;
       font-weight:900;
     }
-    .badge.folder{
-      border-color: rgba(167,139,250,.45);
-      background: rgba(167,139,250,.14);
-      color:#ffffff;
-      font-weight:900;
-    }
     .badge.updToday{
       border-color: rgba(250,204,21,.70);
       background: var(--todayYellow);
       color: var(--todayYellowText);
       font-weight: 950;
     }
-    .topMeta .badge.updToday{ margin-left:auto; margin-right:auto; }
 
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
     .desc{
@@ -247,6 +243,7 @@
     }
     .metaLine strong{color: rgba(234,240,255,.92); font-weight:900;}
 
+    /* ===== TICKER ===== */
     .ticker{
       margin-top:10px;
       border:1px solid rgba(250,204,21,.45);
@@ -299,6 +296,7 @@
       100%{ transform: translateX(-100%); }
     }
 
+    /* ===== TOP ROW ===== */
     .topRowGrid{
       display:grid;
       grid-template-columns: repeat(5, 1fr);
@@ -316,6 +314,189 @@
       #featuredWrap, #calWrap{ grid-column:auto; }
     }
 
+    /* ===== FEATURED ===== */
+    a.featured{
+      width:100%;
+      border: 2px solid rgba(125,211,252,.70);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
+      box-shadow: 0 18px 46px rgba(0,0,0,.48);
+      padding:18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+      text-decoration:none;
+      color:inherit;
+      transition: transform .08s ease, border-color .08s ease;
+      display:block;
+      height:100%;
+    }
+    a.featured:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
+    a.featured > *{ position:relative; }
+    a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
+
+    .fMetaLine{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+      font-size:12px;
+      color: rgba(234,240,255,.78);
+      padding-right:10px;
+    }
+    .fMetaLine .spacer{ flex:1 1 auto; min-width:10px; }
+    .fMetaLine .rightBox{ margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+    .fUpdToday{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(250,204,21,.70);
+      background: var(--todayYellow);
+      color: var(--todayYellowText);
+      font-weight:950;
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
+      white-space:nowrap;
+      max-width:100%;
+    }
+
+    .fTitle{ margin:0; font-size:20px; font-weight:950; line-height:1.15; color:#ffffff; }
+    .fNext{
+      margin-top:12px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.10);
+      font-size:12px;
+      color: var(--muted2);
+    }
+    .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
+
+    .fHero{
+      margin-top:12px;
+      height:140px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)),
+        url("");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow:
+        inset 0 18px 40px rgba(0,0,0,.45),
+        0 10px 30px rgba(0,0,0,.35);
+    }
+    .fHeroNote{
+      margin-top:8px;
+      font-size:12px;
+      color: rgba(234,240,255,.62);
+    }
+
+    /* ===== KALENDARZ (PN–PT) ===== */
+    .calPanel{
+      height:100%;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+    }
+    .calHead{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:10px;
+      margin:0 0 10px 0;
+      flex-wrap:wrap;
+    }
+    .calTitle{
+      margin:0;
+      font-size:14px;
+      font-weight:950;
+      color:#fff;
+      letter-spacing:.2px;
+    }
+    .calMeta{
+      margin:0;
+      font-size:12px;
+      color: rgba(234,240,255,.65);
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .calGrid{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex:1 1 auto;
+      justify-content:space-between;
+    }
+    .calItem{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      line-height:1.15;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, border-color .08s ease, background .08s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .calItem:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+    }
+    .calItem .dWrap{
+      min-width:64px;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .calItem .d{
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-weight:950;
+      font-size:10px;
+      color: rgba(234,240,255,.82);
+      line-height:1;
+    }
+    .calItem .dt{
+      font-size:10px;
+      color: rgba(234,240,255,.55);
+      font-weight:800;
+      line-height:1;
+    }
+    .calItem .n{
+      font-size:10.5px;
+      color: rgba(234,240,255,.92);
+      font-weight:800;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .calItem.today{
+      border:2px solid var(--hiBorder);
+      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
+      box-shadow: var(--hiShadow);
+    }
+    .calItem.today:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+      pointer-events:none;
+    }
+    .calItem.today > *{ position:relative; }
+
+    /* ===== QUICK grid ===== */
     .quickGrid{
       display:grid;
       grid-template-columns: repeat(5, 1fr);
@@ -332,6 +513,7 @@
       .quickGrid{ grid-template-columns: repeat(1, 1fr); }
     }
 
+    /* ===== MONTHLY grid ===== */
     .monthlyGrid{
       display:grid;
       grid-template-columns: repeat(5, 1fr);
@@ -345,6 +527,7 @@
       .monthlyGrid{ grid-template-columns: 1fr; }
     }
 
+    /* ===== PRICES ===== */
     .panel{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
@@ -355,6 +538,18 @@
       position:relative;
       overflow:hidden;
     }
+    .panel > *{ position:relative; }
+
+    .panelHead{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:6px;
+      min-height:56px;
+      margin-bottom:10px;
+    }
+    .panelTitle{ margin:0; font-weight:950; font-size:16px; line-height:1.15; }
+    .panelSub{ margin:0; font-size:12px; opacity:.75; line-height:1.2; min-height:14px; }
 
     .pricesGrid{
       display:grid;
@@ -391,12 +586,36 @@
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
 
-    .quotesBox{ height:100%; display:flex; flex-direction:column; gap:10px; }
-    .qTitle{ margin:0; font-weight:950; font-size:16px; line-height:1.15; color:#fff; }
-    .qSub{ margin:0; font-size:12px; color: rgba(234,240,255,.60); line-height:1.3; }
-    .qLinks{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+    /* ===== Notowania box ===== */
+    .quotesBox{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .qTitle{
+      margin:0;
+      font-weight:950;
+      font-size:16px;
+      line-height:1.15;
+      color:#fff;
+    }
+    .qSub{
+      margin:0;
+      font-size:12px;
+      color: rgba(234,240,255,.60);
+      line-height:1.3;
+    }
+    .qLinks{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
     .qLink{
-      display:flex; align-items:center; gap:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
       padding:10px 10px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
@@ -408,19 +627,42 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.18);
       transition: transform .08s ease, border-color .08s ease, background .08s ease;
     }
-    .qLink:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.06); }
+    .qLink:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+    }
     .qIco{
-      width:26px; height:26px;
-      display:inline-flex; align-items:center; justify-content:center;
+      width:26px;
+      height:26px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       border-radius:10px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       flex:0 0 auto;
       font-size:13px;
     }
-    .qTxt{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-    .qMain{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .qSmall{ font-weight:800; color: rgba(234,240,255,.60); font-size:11.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .qTxt{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .qMain{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .qSmall{
+      font-weight:800;
+      color: rgba(234,240,255,.60);
+      font-size:11.5px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
 
     .error{
       border:1px solid rgba(255,120,120,.25);
@@ -435,6 +677,7 @@
     footer{margin-top:18px; color:var(--muted2); font-size:12px}
     code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.10)}
 
+    /* ===== Responsive header ===== */
     @media (max-width: 720px){
       .topTitle{ font-size:28px; }
       .headerRow{
@@ -468,7 +711,7 @@
             <span>Zalogowany: —</span>
           </div>
 
-          <a href="/cdn-cgi/access/logout" class="pill" style="text-decoration:none; opacity:.85;" title="Wyloguj się">
+          <a href="/cdn-cgi/access/logout" class="pill" title="Wyloguj się">
             <span class="ico">🚪</span>
             <span>Wyloguj</span>
           </a>
@@ -488,17 +731,20 @@
 
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
+    <!-- Poranny skan + kalendarz -->
     <section class="topRowGrid">
       <div id="featuredWrap"></div>
       <div id="calWrap"></div>
     </section>
 
+    <!-- Cenniki + notowania -->
     <div class="sectionHead" style="margin-top:16px;">
       <p class="h2">Cenniki i notowania</p>
       <p class="hint">Szybki podgląd cen spot i giełdowych + linki do notowań</p>
     </div>
 
     <section class="pricesGrid">
+      <!-- CASH -->
       <section class="panel" id="cashPanel">
         <div class="panelHead">
           <div class="panelTitle">Ceny najważniejszych surowców do produkcji pasz</div>
@@ -508,6 +754,7 @@
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • rynek spot</div>
       </section>
 
+      <!-- FUTURES -->
       <section class="panel" id="futuresPanel">
         <div class="panelHead">
           <div class="panelTitle">Ceny giełdowe (close)</div>
@@ -517,6 +764,7 @@
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
       </section>
 
+      <!-- NOTOWANIA -->
       <section class="panel">
         <div class="quotesBox">
           <div>
@@ -525,7 +773,7 @@
           </div>
 
           <div class="qLinks">
-            <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank">
+            <a class="qLink" href="https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-meal.html" target="_blank" rel="noreferrer">
               <span class="qIco">🇺🇸</span>
               <span class="qTxt">
                 <span class="qMain">Śruta sojowa – CBOT (CME)</span>
@@ -533,7 +781,7 @@
               </span>
             </a>
 
-            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank">
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=ML" target="_blank" rel="noreferrer">
               <span class="qIco">🇪🇺</span>
               <span class="qTxt">
                 <span class="qMain">Pszenica – MATIF (ML)</span>
@@ -541,7 +789,7 @@
               </span>
             </a>
 
-            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank">
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XB" target="_blank" rel="noreferrer">
               <span class="qIco">🇪🇺</span>
               <span class="qTxt">
                 <span class="qMain">Kukurydza – MATIF (XB)</span>
@@ -549,7 +797,7 @@
               </span>
             </a>
 
-            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank">
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/euronext-commodities?future=XR" target="_blank" rel="noreferrer">
               <span class="qIco">🇪🇺</span>
               <span class="qTxt">
                 <span class="qMain">Rzepak – MATIF (XR)</span>
@@ -557,7 +805,7 @@
               </span>
             </a>
 
-            <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank">
+            <a class="qLink" href="https://www.rscom.nl/nl/prices/prices-rape" target="_blank" rel="noreferrer">
               <span class="qIco">🇩🇪</span>
               <span class="qTxt">
                 <span class="qMain">Rape meal – Neuss / Spyck</span>
@@ -571,6 +819,7 @@
 
     <hr class="sectionDivider" />
 
+    <!-- Raporty tygodniowe -->
     <div class="sectionHead">
       <p class="h2">Raporty Tygodniowe</p>
       <p class="hint">Najczęściej aktualizowane raporty (klik → otwiera raport)</p>
@@ -579,6 +828,7 @@
 
     <hr class="sectionDivider" />
 
+    <!-- Raporty miesięczne -->
     <div class="sectionHead">
       <p class="h2">Raporty Miesięczne Fundamentalne</p>
       <p class="hint">Foldery z raportami (klik → lista raportów w środku)</p>
@@ -597,7 +847,16 @@
     const CONFIG = { location: "Olsztyn" };
 
     const FEATURED_KEY = "Poranny Skan Rynku";
-    const QUICK_KEYS = ["Rynek na wykresach - Surowce i Waluty","Pozycje Funduszy","Portfele-ACE","Analizy statystyczno-techniczne","Pogoda"];
+
+    // UWAGA: to muszą być klucze, które realnie istnieją w manifest.json (ID lub NAME)
+    const QUICK_KEYS  = [
+      "Rynek na wykresach - Surowce i Waluty",
+      "Pozycje Funduszy",
+      "Portfele-ACE",
+      "Analizy statystyczno-techniczne",
+      "Pogoda"
+    ];
+
     const MONTHLY_KEYS = ["wasde","igc","fao","Indexy-światowe"];
 
     const CAL = [
@@ -619,6 +878,21 @@
       const t = Date.parse(iso + "T00:00:00Z");
       return isNaN(t) ? -Infinity : t;
     }
+    function parseISODateLocal(iso){
+      const p = (iso || "").split("-");
+      if(p.length !== 3) return null;
+      const dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+      return isNaN(dt.getTime()) ? null : dt;
+    }
+    function nextBusinessDay(dateObj){
+      const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+      do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+      return d;
+    }
+    function fmtDatePrettyPL(dt){
+      if(!(dt instanceof Date)) return "—";
+      return dt.toLocaleDateString("pl-PL", { day:"2-digit", month:"2-digit", year:"numeric" });
+    }
     function todayISO(){
       const d = new Date();
       const y = d.getFullYear();
@@ -633,6 +907,11 @@
       const s = (p || "").toString();
       if(/^https?:\/\//i.test(s)) return s;
       return url(s);
+    }
+    function pickTodayFromScan(scan){
+      const items = scan && Array.isArray(scan.items) ? scan.items : [];
+      if(!items.length) return null;
+      return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
     }
 
     async function loadManifest(){
@@ -663,11 +942,26 @@
       const box = document.getElementById("todayTicker");
       const today = todayISO();
 
+      let porannyToday = false;
+      const todayScan = pickTodayFromScan(scan);
+      if(todayScan && todayScan.date === today) porannyToday = true;
+
       const updatedToday = items
         .filter(x => x.type !== "folder")
         .filter(x => (x.updated || "") === today);
 
-      const names = updatedToday.map(x=>x.name).filter(Boolean);
+      const names = [];
+      const used = new Set();
+
+      if(porannyToday){
+        const ps = items.find(x=>x.id === FEATURED_KEY);
+        if(ps){ names.push(ps.name); used.add(ps.id); }
+      }
+      for(const it of updatedToday){
+        if(used.has(it.id)) continue;
+        names.push(it.name);
+        used.add(it.id);
+      }
 
       if(!names.length){
         box.style.display = "none";
@@ -685,35 +979,76 @@
       `;
     }
 
-    function renderFeatured(items){
+    function renderFeatured(items, scan){
       const wrap = document.getElementById("featuredWrap");
       const ps = items.find(x => x.id === FEATURED_KEY);
+
       if(!ps){
         wrap.innerHTML = `<div class="error">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
         return;
       }
+
+      const todayScan = pickTodayFromScan(scan);
+
+      const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
+      const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
+      const updatedLabel = updatedISO
+        ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
+        : "—";
+
+      const updRight = isToday(updatedISO)
+        ? `<span class="fUpdToday">Aktualizacja: ${updatedLabel}</span>`
+        : `<span style="color:rgba(234,240,255,.78)"><strong>Aktualizacja:</strong> ${updatedLabel}</span>`;
+
+      let nextTxt = "—";
+      if(todayScan && todayScan.date){
+        const dt = parseISODateLocal(todayScan.date);
+        if(dt) nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
+      } else if ((ps.next_issue || "").trim()){
+        nextTxt = fmtDatePL(ps.next_issue.trim());
+      }
+
       wrap.innerHTML = `
-        <a class="card today" href="${safePath(ps.path)}">
-          <div class="topMeta">
+        <a class="featured" href="${safePath(ps.path)}">
+          <div class="fMetaLine">
             <span class="badge primary">Poranny skan</span>
-            <span class="badge">Aktualizacja: ${ps.updated ? fmtDatePL(ps.updated) : "—"}</span>
+            <span class="spacer"></span>
+            <div class="rightBox">${updRight}</div>
           </div>
-          <p class="title">${ps.name}</p>
-          <p class="desc">${ps.description || ""}</p>
+
+          <p class="fTitle">${ps.name}</p>
+
+          <div class="fHero" id="psHero"></div>
+          <div class="fHeroNote">Skan newsów + szybki kontekst rynkowy (agro • FX • energia)</div>
+
+          <div class="fNext">
+            <span><strong>Kolejne wydanie:</strong> ${nextTxt}</span>
+          </div>
         </a>
       `;
+
+      // HERO obrazek przez BASE (działa na domenie i GitHub Pages)
+      const hero = document.getElementById("psHero");
+      if(hero){
+        hero.style.backgroundImage =
+          `linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)), url("${url("poranny-skan.png")}")`;
+      }
     }
 
     function renderCalendar(items){
-      const map = Object.fromEntries(items.map(x => [x.id, x]));
-      const nameOf = (key) => (map[key] && map[key].name) ? map[key].name : (key || "—");
-      const pathOf = (key) => (map[key] && map[key].path) ? safePath(map[key].path) : null;
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
+
+      const nameOf = (key) => (pick(key) && pick(key).name) ? pick(key).name : (key || "—");
+      const pathOf = (key) => (pick(key) && pick(key).path) ? safePath(pick(key).path) : null;
 
       const now = new Date();
       const jsDay = now.getDay();
       const isoDay = (jsDay === 0) ? 7 : jsDay;
 
       const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isoDay - 1));
+
       function dateForDow(dow){
         return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (dow - 1));
       }
@@ -722,6 +1057,26 @@
         const mm = String(dt.getMonth()+1).padStart(2,"0");
         return `${dd}.${mm}`;
       }
+      function fmtRange(mon, fri){
+        const monDD = String(mon.getDate()).padStart(2,"0");
+        const monMM = String(mon.getMonth()+1).padStart(2,"0");
+        const friDD = String(fri.getDate()).padStart(2,"0");
+        const friMM = String(fri.getMonth()+1).padStart(2,"0");
+        if(monMM === friMM) return `${monDD}–${friDD}.${friMM}`;
+        return `${monDD}.${monMM}–${friDD}.${friMM}`;
+      }
+      function isoWeekNumber(d){
+        const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        const dayNum = date.getUTCDay() || 7;
+        date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+        return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+      }
+
+      const weekNo = isoWeekNumber(now);
+      const weekFrom = dateForDow(1);
+      const weekTo   = dateForDow(5);
+      const rangeTxt = fmtRange(weekFrom, weekTo);
 
       const rows = CAL.map(r=>{
         const dt = dateForDow(r.dow);
@@ -750,6 +1105,7 @@
         <div class="cardStatic calPanel">
           <div class="calHead">
             <p class="calTitle">Kalendarz publikacji</p>
+            <p class="calMeta">Tydz. ${weekNo} • ${rangeTxt}</p>
           </div>
           <div class="calGrid">${rows}</div>
         </div>
@@ -771,19 +1127,18 @@
       });
     }
 
-    // ✅ JEDYNA wersja renderQuick (bez duplikatów)
     function renderQuick(items){
       const wrap = document.getElementById("quickGrid");
       if(!wrap) return;
 
+      // ID lub NAME (żeby Quick działał nawet jak klucze są "nazwami")
       const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
       const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
       const pick = (key) => mapById[key] || mapByName[key];
 
       const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
-
       if(!listRaw.length){
-        wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code> (sprawdź zgodność id/name).</div>`;
+        wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code>.</div>`;
         return;
       }
 
@@ -826,7 +1181,9 @@
         const isFolderLike = (r.type || "").toLowerCase() === "folder";
         let todayInside = isFolderLike ? countTodayInside(r) : 0;
 
-        const isStatTechTile = (r.id === "Analizy statystyczno-techniczne" || r.name === "Analizy statystyczno-techniczne");
+        // stat-tech bez "Nowe dziś"
+        const isStatTechTile =
+          (r.id === "Analizy statystyczno-techniczne" || r.name === "Analizy statystyczno-techniczne");
         if(isStatTechTile) todayInside = 0;
 
         const clsToday = isToday(updISO) ? "today" : "";
@@ -848,7 +1205,7 @@
               ${insideBadge}
             </div>
             <p class="title">${r.name}</p>
-            <p class="desc">${r.description || ""}</p>
+            <p class="desc">${r.description}</p>
             <div class="metaLine">
               <span><strong>Kolejne:</strong> ${nxt}</span>
             </div>
@@ -861,8 +1218,11 @@
       const wrap = document.getElementById("monthlyGrid");
       if(!wrap) return;
 
-      const mapById = Object.fromEntries(items.map(x => [x.id, x]));
-      const listRaw = MONTHLY_KEYS.map(k => mapById[k]).filter(Boolean);
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
+
+      const listRaw = MONTHLY_KEYS.map(k => pick(k)).filter(Boolean);
 
       if(!listRaw.length){
         wrap.innerHTML = `<div class="error">Brak pozycji z <code>MONTHLY_KEYS</code> w <code>manifest.json</code>.</div>`;
@@ -884,7 +1244,7 @@
           <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
             <div class="topMeta">${updBadge}</div>
             <p class="title">${r.name}</p>
-            <p class="desc">${r.description || ""}</p>
+            <p class="desc">${r.description}</p>
           </a>
         `;
       }).join("");
@@ -1011,8 +1371,8 @@
         errBox.textContent = msg;
       };
 
+      // header info
       try { loadUserEmail(); } catch(e) {}
-
       try {
         const now = new Date();
         const date = now.toLocaleDateString("pl-PL");
@@ -1023,13 +1383,14 @@
         }
       } catch(e) {}
 
+      // prices always
       try { await loadPrices(); }
       catch(e){ showErr("Błąd cenników: " + (e?.message || e)); }
 
+      // manifest + rest
       try{
         const manifest = await loadManifest();
         const items = toItems(manifest);
-
         const scan = await loadPorannyScanJSON();
 
         try { renderTodayTicker(items, scan); } catch(e) { showErr("Błąd tickera: " + (e?.message || e)); }
