@@ -67,7 +67,7 @@
     "name": "USD/PLN",
     "description": "Analiza statystyczno-techniczna pary USD/PLN.",
     "path": "raporty/analizy-stat-tech/waluty/usdpln/",
-    "updated": "2026-02-20",
+    "updated": "2026-02-23",
     "frequency": "dziennie",
     "group": "analizy-stat-tech",
     "section": "Waluty",
