@@ -151,7 +151,7 @@
       border-top:1px solid rgba(255,255,255,.10);
       padding-top:14px;
     }
-    .archive h3{margin:0 0 10px 0; font-size:14px; color:rgba(234,240,255,.9)}
+    .archive h3{margin:0 0 10px 0; font-size:20px; color:rgba(234,240,255,.9)}
     .archgrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px}
     .architem{
       border:1px solid rgba(255,255,255,.10);
@@ -515,7 +515,7 @@
   function renderArchive(){
     const box = document.getElementById("archive");
     const t = (LANG==="pl")
-      ? {h:"Archiwum (ostatnie 10 – bez dzisiejszego)", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
+      ? {h:"Archiwum", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
       : {h:"Archive (last 10 – excluding today)", open:"Open", empty:"No archive yet.", today:"TODAY"};
 
     const today = ITEMS[0] || null;
