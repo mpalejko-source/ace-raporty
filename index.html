@@ -1188,10 +1188,97 @@
 
    function renderQuick(items){
   const wrap = document.getElementById("quickGrid");
-  const map = Object.fromEntries(items.map(x => [x.id, x]));
-  const listRaw = QUICK_KEYS.map(k => map[k]).filter(Boolean);
+  if(!wrap) return;
+
+  // Szukamy po ID i po NAME (żeby QUICK_KEYS działały niezależnie od tego co jest w manifest)
+  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+  const pick = (key) => mapById[key] || mapByName[key];
+
+  const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
+
+  // Jeśli nic nie dopasowało — pokaż komunikat (zamiast pustej sekcji)
+  if(!listRaw.length){
+    wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code> (sprawdź zgodność id/name).</div>`;
+    return;
+  }
+
   const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
   const today = todayISO();
+
+  function countTodayInside(folder){
+    const folderPath = (folder.path || "").toString();
+
+    // 1) preferuj group==folder.id
+    let children = items.filter(it =>
+      it.id !== folder.id &&
+      it.type !== "folder" &&
+      it.group &&
+      it.group === folder.id
+    );
+
+    // 2) jeśli group nie pasuje, licz po path prefix
+    if(!children.length && folderPath){
+      children = items.filter(it =>
+        it.id !== folder.id &&
+        it.type !== "folder" &&
+        (it.path || "").toString().startsWith(folderPath)
+      );
+    }
+
+    // 3) fallback: znane mapowanie dla stat-tech
+    if(!children.length && folderPath.includes("analizy-stat-tech")){
+      children = items.filter(it =>
+        it.type !== "folder" &&
+        it.group === "analizy-stat-tech"
+      );
+    }
+
+    return children.filter(x => (x.updated || "") === today).length;
+  }
+
+  wrap.innerHTML = list.map(r => {
+    const updISO = (r.updated || "").trim();
+    const upd = updISO ? fmtDatePL(updISO) : "—";
+    const nxt = (r.next_issue || "").trim() ? fmtDatePL(r.next_issue) : "—";
+
+    const isFolderLike = (r.type || "").toLowerCase() === "folder";
+    let todayInside = isFolderLike ? countTodayInside(r) : 0;
+
+    // stat-tech ma być identyczny jak inne: bez "Nowe dziś"
+    const isStatTechTile = (r.id === "Analizy statystyczno-techniczne" || r.name === "Analizy statystyczno-techniczne");
+    if(isStatTechTile) todayInside = 0;
+
+    // "today" tylko po updated (jak w innych kafelkach)
+    const clsToday = isToday(updISO) ? "today" : "";
+
+    // Aktualizacja zawsze jak przy innych (jeśli jest data)
+    const updBadge = (updISO)
+      ? (isToday(updISO)
+          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+          : `<span class="badge">Aktualizacja: ${upd}</span>`)
+      : "";
+
+    // Nowe dziś: tylko jeśli jest co pokazać (i nie dla stat-tech)
+    const insideBadge = (todayInside > 0)
+      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
+      : "";
+
+    return `
+      <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+        <div class="topMeta">
+          ${updBadge}
+          ${insideBadge}
+        </div>
+        <p class="title">${r.name}</p>
+        <p class="desc">${r.description}</p>
+        <div class="metaLine">
+          <span><strong>Kolejne:</strong> ${nxt}</span>
+        </div>
+      </a>
+    `;
+  }).join("");
+}
 
   function countTodayInside(folder){
     const folderPath = (folder.path || "").toString();
