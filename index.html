@@ -556,28 +556,19 @@
   margin-top:14px;
 }
 
-/* Jeśli są 4 kafelki: przesuwamy pierwszy na kolumnę 2 (czyli wizualnie centrujemy pod układ 5) */
-.monthlyGrid.center4 > a:first-child{
-  grid-column: 1;
-}
+
 
 /* Responsywność */
 @media (max-width: 1100px){
   .monthlyGrid{
     grid-template-columns: repeat(3, 1fr);
   }
-  /* na mniejszych ekranach NIE przesuwamy, bo układ jest 3-kolumnowy */
-  .monthlyGrid.center4 > a:first-child{
-    grid-column: auto;
-  }
+
 }
 
 @media (max-width: 720px){
   .monthlyGrid{
     grid-template-columns: 1fr;
-  }
-  .monthlyGrid.center4 > a:first-child{
-    grid-column: auto;
   }
 }
 
@@ -1295,7 +1286,6 @@ if(!listRaw.length){
   const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
 
   // centrowanie gdy są dokładnie 4 kafelki
-  wrap.classList.toggle("center4", list.length === 4);
 console.log("MONTHLY count:", list.length, "class:", wrap.className);
 
 wrap.innerHTML = list.map(r => {
