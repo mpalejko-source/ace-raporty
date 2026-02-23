@@ -1223,9 +1223,7 @@
       : "";
 
     // UWAGA: dla folderów pokazujemy "Nowe dziś", dla zwykłych raportów nie trzeba
-    const insideBadge = (isFolderLike && todayInside > 0)
-      ? `<span class="badge updToday">Nowe dziś: ${todayInside}</span>`
-      : "";
+ const insideBadge = "";
 
     return `
       <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
