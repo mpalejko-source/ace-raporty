@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-02-24 08:45",
+  "asof": "2026-02-24 09:48",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
@@ -56,10 +56,10 @@
     },
     {
       "name": "Soymeal CBOT",
-      "close": 3008.70,
+      "close": 308.70,
       "d1": 0.00,
-      "w": 2699.50,
-      "m": 2708.80
+      "w": -0.50,
+      "m": 8.80
     },
     {
       "name": "Rapemeal Neuss/Spyck",
