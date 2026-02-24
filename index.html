@@ -296,22 +296,89 @@
       100%{ transform: translateX(-100%); }
     }
 
-    /* ===== TOP ROW ===== */
+    /* ===== KALENDARZ (POZIOMO 1 LINIA) ===== */
+    .calLineWrap{ margin-top:10px; }
+    .calLine{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      padding:8px 10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      overflow:hidden;
+    }
+    .calLine .calLbl{
+      flex:0 0 auto;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(250,204,21,.35);
+      background: rgba(250,204,21,.12);
+      font-weight:950;
+      color: rgba(234,240,255,.92);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .calLine .calItems{
+      flex:1 1 auto;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      overflow:auto;
+      scrollbar-width: none;
+    }
+    .calLine .calItems::-webkit-scrollbar{ display:none; }
+    .calPill{
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, border-color .08s ease, background .08s ease;
+      font-size:12px;
+      white-space:nowrap;
+      min-width: 150px;
+    }
+    .calPill:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.05); }
+    .calPill .d{
+      font-weight:950;
+      letter-spacing:.04em;
+      color: rgba(234,240,255,.92);
+    }
+    .calPill .dt{
+      color: rgba(234,240,255,.55);
+      font-weight:800;
+    }
+    .calPill .n{
+      color: rgba(234,240,255,.86);
+      font-weight:900;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width: 280px;
+    }
+    .calPill.today{
+      border:2px solid var(--hiBorder);
+      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
+      box-shadow: var(--hiShadow);
+    }
+
+    /* ===== TOP ROW: Poranny skan + Portfele (50/50) ===== */
     .topRowGrid{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap:12px;
-      margin-top:14px;
+      margin-top:12px;
       align-items:stretch;
     }
-    #featuredWrap{ grid-column: span 3; }
-    #calWrap{ grid-column: span 2; }
-    @media (max-width: 1100px){
-      #featuredWrap{ grid-column: span 3; }
-      #calWrap{ grid-column: span 3; }
-    }
-    @media (max-width: 720px){
-      #featuredWrap, #calWrap{ grid-column:auto; }
+    @media (max-width: 900px){
+      .topRowGrid{ grid-template-columns: 1fr; }
     }
 
     /* ===== FEATURED ===== */
@@ -380,7 +447,7 @@
 
     .fHero{
       margin-top:12px;
-      height:140px;
+      height:128px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
       background:
@@ -399,102 +466,66 @@
       color: rgba(234,240,255,.62);
     }
 
-    /* ===== KALENDARZ (PN–PT) ===== */
-    .calPanel{
-      height:100%;
-      padding:14px;
-      display:flex;
-      flex-direction:column;
+    /* ===== PORTFELE FEATURE (wyróżnienie) ===== */
+    .portfolioFeatured{
+      border:2px solid rgba(250,204,21,.65);
+      background: linear-gradient(135deg, rgba(250,204,21,.14), rgba(125,211,252,.08));
+      box-shadow: 0 18px 46px rgba(0,0,0,.48);
     }
-    .calHead{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
+    .portfolioFeatured:hover{
+      border-color: rgba(250,204,21,.90);
+    }
+    .pHero{
+      margin-top:12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      padding:12px;
+    }
+    .thumbGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
       gap:10px;
-      margin:0 0 10px 0;
-      flex-wrap:wrap;
     }
-    .calTitle{
-      margin:0;
-      font-size:14px;
-      font-weight:950;
-      color:#fff;
-      letter-spacing:.2px;
+    @media (max-width: 520px){
+      .thumbGrid{ grid-template-columns: 1fr; }
     }
-    .calMeta{
-      margin:0;
-      font-size:12px;
-      color: rgba(234,240,255,.65);
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .calGrid{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      flex:1 1 auto;
-      justify-content:space-between;
-    }
-    .calItem{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 10px;
+    .thumb{
+      display:block;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      line-height:1.15;
-      cursor:pointer;
-      user-select:none;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      text-decoration:none;
+      color:inherit;
       transition: transform .08s ease, border-color .08s ease, background .08s ease;
       position:relative;
-      overflow:hidden;
     }
-    .calItem:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
+    .thumb:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); }
+    .thumb img{
+      width:100%;
+      height:86px;
+      object-fit:cover;
+      display:block;
+      filter: contrast(1.02) saturate(1.04);
     }
-    .calItem .dWrap{
-      min-width:64px;
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .calItem .d{
-      text-transform:uppercase;
-      letter-spacing:.06em;
+    .thumb .cap{
+      padding:8px 10px;
+      font-size:12px;
       font-weight:950;
-      font-size:10px;
-      color: rgba(234,240,255,.82);
-      line-height:1;
-    }
-    .calItem .dt{
-      font-size:10px;
-      color: rgba(234,240,255,.55);
-      font-weight:800;
-      line-height:1;
-    }
-    .calItem .n{
-      font-size:10.5px;
       color: rgba(234,240,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .thumb .cap span.small{
       font-weight:800;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      color: rgba(234,240,255,.60);
+      font-size:11.5px;
       white-space:nowrap;
     }
-    .calItem.today{
-      border:2px solid var(--hiBorder);
-      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
-      box-shadow: var(--hiShadow);
-    }
-    .calItem.today:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
-                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
-      pointer-events:none;
-    }
-    .calItem.today > *{ position:relative; }
 
     /* ===== QUICK grid ===== */
     .quickGrid{
@@ -731,10 +762,13 @@
 
     <div id="todayTicker" class="ticker" style="display:none"></div>
 
-    <!-- Poranny skan + kalendarz -->
+    <!-- Kalendarz poziomy (PN–PT) -->
+    <div class="calLineWrap" id="calLineWrap"></div>
+
+    <!-- Poranny skan + Portfele -->
     <section class="topRowGrid">
       <div id="featuredWrap"></div>
-      <div id="calWrap"></div>
+      <div id="portfolioWrap"></div>
     </section>
 
     <!-- Cenniki + notowania -->
@@ -822,7 +856,6 @@
     <!-- Raporty tygodniowe -->
     <div class="sectionHead">
       <p class="h2">Raporty Tygodniowe</p>
-
     </div>
     <section class="quickGrid" id="quickGrid"></section>
 
@@ -831,7 +864,6 @@
     <!-- Raporty miesięczne -->
     <div class="sectionHead">
       <p class="h2">Raporty Miesięczne Fundamentalne</p>
-
     </div>
     <section class="monthlyGrid" id="monthlyGrid"></section>
 
@@ -847,6 +879,28 @@
     const CONFIG = { location: "Olsztyn" };
 
     const FEATURED_KEY = "Poranny Skan Rynku";
+
+    // Raport Portfele w manifest.json
+    const PORTFOLIO_KEY = "Portfele-ACE";
+
+    /**
+     * Jak dokleić "stronę" do linku raportu Portfele:
+     * - "hash":  /portfele/#page=2  (częste w pdf.js)
+     * - "query": /portfele/?page=2
+     * - "none":  tylko link do raportu bez strony
+     */
+    const PORTFOLIO_PAGE_MODE = "hash"; // <- jeśli u Ciebie nie działa, zmień na "query"
+
+    /**
+     * MINIATURY portfeli (wrzuć PNG do repo np. /assets/portfele/...)
+     * img: ścieżka względem root Twojej strony (obsłużone przez url())
+     * page: numer strony w raporcie Portfele (jak pisałeś: 2/3/4)
+     */
+    const PORTFOLIO_THUMBS = [
+      { label: "Śruta sojowa",   img: "assets/portfele/soymeal.png",  page: 2 },
+      { label: "USD/PLN",        img: "assets/portfele/usdpln.png",   page: 3 },
+      { label: "Śruta rzepakowa",img: "assets/portfele/rapemeal.png", page: 4 }
+    ];
 
     // UWAGA: to muszą być klucze, które realnie istnieją w manifest.json (ID lub NAME)
     const QUICK_KEYS  = [
@@ -912,6 +966,22 @@
       const items = scan && Array.isArray(scan.items) ? scan.items : [];
       if(!items.length) return null;
       return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
+    }
+
+    function portfolioLink(baseHref, pageNo){
+      const href = baseHref || "";
+      const p = Number(pageNo);
+      if(!p || p < 1) return href;
+
+      if(PORTFOLIO_PAGE_MODE === "query"){
+        const join = href.includes("?") ? "&" : "?";
+        return href + join + "page=" + encodeURIComponent(String(p));
+      }
+      if(PORTFOLIO_PAGE_MODE === "hash"){
+        // pdf.js często używa #page=2
+        return href + "#page=" + encodeURIComponent(String(p));
+      }
+      return href;
     }
 
     async function loadManifest(){
@@ -1027,7 +1097,6 @@
         </a>
       `;
 
-      // HERO obrazek przez BASE (działa na domenie i GitHub Pages)
       const hero = document.getElementById("psHero");
       if(hero){
         hero.style.backgroundImage =
@@ -1035,7 +1104,72 @@
       }
     }
 
-    function renderCalendar(items){
+    function renderPortfolioFeatured(items){
+      const wrap = document.getElementById("portfolioWrap");
+
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
+
+      const pf = pick(PORTFOLIO_KEY);
+
+      if(!pf){
+        wrap.innerHTML = `<div class="error">Brak wpisu <code>${PORTFOLIO_KEY}</code> w <code>manifest.json</code>.</div>`;
+        return;
+      }
+
+      const updISO = (pf.updated || "").trim();
+      const upd = updISO ? fmtDatePL(updISO) : "—";
+      const updBadge = updISO
+        ? (isToday(updISO)
+            ? `<span class="fUpdToday">Aktualizacja: ${upd}</span>`
+            : `<span style="color:rgba(234,240,255,.78)"><strong>Aktualizacja:</strong> ${upd}</span>`)
+        : `<span style="color:rgba(234,240,255,.65)">Aktualizacja: —</span>`;
+
+      const baseHref = safePath(pf.path);
+
+      const thumbs = PORTFOLIO_THUMBS.map(t => {
+        const imgSrc = url(t.img);
+        const href = portfolioLink(baseHref, t.page);
+        return `
+          <a class="thumb" href="${href}" title="Otwórz: ${t.label} (str. ${t.page})">
+            <img src="${imgSrc}" alt="${t.label}">
+            <div class="cap">
+              <span>${t.label}</span>
+              <span class="small">str. ${t.page}</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      wrap.innerHTML = `
+        <a class="featured portfolioFeatured" href="${baseHref}" style="text-decoration:none;color:inherit;">
+          <div class="fMetaLine">
+            <span class="badge primary" style="border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.14);">
+              Portfele zakupowe ACE
+            </span>
+            <span class="spacer"></span>
+            <div class="rightBox">${updBadge}</div>
+          </div>
+
+          <p class="fTitle">Rekomendacje • Zakupy • Zarządzanie ryzykiem</p>
+
+          <div class="pHero">
+            <div style="font-size:12px;color:rgba(234,240,255,.70);font-weight:900;margin-bottom:8px;">
+              Kliknij miniaturę, aby przejść do odpowiedniego portfela:
+            </div>
+            <div class="thumbGrid">${thumbs}</div>
+          </div>
+
+          <div class="fHeroNote">Twoje kluczowe narzędzie — szybko wchodzisz w konkretną stronę raportu.</div>
+        </a>
+      `;
+    }
+
+    function renderCalendarLine(items){
+      const wrap = document.getElementById("calLineWrap");
+      if(!wrap) return;
+
       const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
       const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
       const pick = (key) => mapById[key] || mapByName[key];
@@ -1046,7 +1180,6 @@
       const now = new Date();
       const jsDay = now.getDay();
       const isoDay = (jsDay === 0) ? 7 : jsDay;
-
       const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isoDay - 1));
 
       function dateForDow(dow){
@@ -1057,62 +1190,34 @@
         const mm = String(dt.getMonth()+1).padStart(2,"0");
         return `${dd}.${mm}`;
       }
-      function fmtRange(mon, fri){
-        const monDD = String(mon.getDate()).padStart(2,"0");
-        const monMM = String(mon.getMonth()+1).padStart(2,"0");
-        const friDD = String(fri.getDate()).padStart(2,"0");
-        const friMM = String(fri.getMonth()+1).padStart(2,"0");
-        if(monMM === friMM) return `${monDD}–${friDD}.${friMM}`;
-        return `${monDD}.${monMM}–${friDD}.${friMM}`;
-      }
-      function isoWeekNumber(d){
-        const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-        const dayNum = date.getUTCDay() || 7;
-        date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-        const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
-        return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-      }
 
-      const weekNo = isoWeekNumber(now);
-      const weekFrom = dateForDow(1);
-      const weekTo   = dateForDow(5);
-      const rangeTxt = fmtRange(weekFrom, weekTo);
-
-      const rows = CAL.map(r=>{
+      const pills = CAL.map(r=>{
         const dt = dateForDow(r.dow);
         const ddmm = fmtDDMM(dt);
-
         const titleText = nameOf(r.key);
         const href = pathOf(r.key);
 
-        const cls = (r.dow === isoDay) ? "calItem today" : "calItem";
+        const cls = (r.dow === isoDay) ? "calPill today" : "calPill";
         const dataHref = href ? `data-href="${href}"` : "";
         const tab = href ? `tabindex="0"` : `tabindex="-1"`;
 
         return `
-          <div class="${cls}" role="link" ${tab} ${dataHref}
-               title="${href ? `Otwórz: ${titleText}` : titleText}">
-            <div class="dWrap">
-              <div class="d">${r.short}</div>
-              <div class="dt">${ddmm}</div>
-            </div>
-            <div class="n">${titleText}</div>
+          <div class="${cls}" role="link" ${tab} ${dataHref} title="${href ? `Otwórz: ${titleText}` : titleText}">
+            <span class="d">${r.short}</span>
+            <span class="dt">${ddmm}</span>
+            <span class="n">${titleText}</span>
           </div>
         `;
       }).join("");
 
-      document.getElementById("calWrap").innerHTML = `
-        <div class="cardStatic calPanel">
-          <div class="calHead">
-            <p class="calTitle">Kalendarz publikacji</p>
-            <p class="calMeta">Tydz. ${weekNo} • ${rangeTxt}</p>
-          </div>
-          <div class="calGrid">${rows}</div>
+      wrap.innerHTML = `
+        <div class="calLine">
+          <div class="calLbl">Kalendarz PN–PT</div>
+          <div class="calItems">${pills}</div>
         </div>
       `;
 
-      const panel = document.getElementById("calWrap");
-      panel.querySelectorAll(".calItem[data-href]").forEach(el=>{
+      wrap.querySelectorAll(".calPill[data-href]").forEach(el=>{
         const go = () => {
           const href = el.getAttribute("data-href");
           if(href) window.location.href = href;
@@ -1128,119 +1233,107 @@
     }
 
     function renderQuick(items){
-  const wrap = document.getElementById("quickGrid");
-  if(!wrap) return;
+      const wrap = document.getElementById("quickGrid");
+      if(!wrap) return;
 
-  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-  const pick = (key) => mapById[key] || mapByName[key];
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
 
-  const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
-  if(!listRaw.length){
-    wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code>.</div>`;
-    return;
-  }
+      const listRaw = QUICK_KEYS.map(k => pick(k)).filter(Boolean);
+      if(!listRaw.length){
+        wrap.innerHTML = `<div class="error">Brak dopasowań dla <code>QUICK_KEYS</code> w <code>manifest.json</code>.</div>`;
+        return;
+      }
 
-  const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
-  const today = todayISO();
+      const list = [...listRaw].sort((a,b)=>parseISO(b.updated)-parseISO(a.updated));
 
-  function childrenOf(folder){
-    const folderPath = (folder.path || "").toString();
+      function childrenOf(folder){
+        const folderPath = (folder.path || "").toString();
 
-    // 1) preferuj: dzieci po prefixie ścieżki
-    let children = [];
-    if(folderPath){
-      children = items.filter(it =>
-        it.type !== "folder" &&
-        it.id !== folder.id &&
-        (it.path || "").toString().startsWith(folderPath)
-      );
+        let children = [];
+        if(folderPath){
+          children = items.filter(it =>
+            it.type !== "folder" &&
+            it.id !== folder.id &&
+            (it.path || "").toString().startsWith(folderPath)
+          );
+        }
+
+        if(!children.length){
+          children = items.filter(it =>
+            it.type !== "folder" &&
+            it.id !== folder.id &&
+            it.group &&
+            it.group === folder.id
+          );
+        }
+
+        if(!children.length && folderPath.includes("analizy-stat-tech")){
+          children = items.filter(it => it.type !== "folder" && it.group === "analizy-stat-tech");
+        }
+
+        return children;
+      }
+
+      function folderMeta(folder){
+        const kids = childrenOf(folder);
+        if(!kids.length) return { updISO:"", nextISO:"", todayCount:0 };
+
+        const updISO = kids
+          .map(k => (k.updated || "").trim())
+          .filter(Boolean)
+          .sort((a,b)=>parseISO(b)-parseISO(a))[0] || "";
+
+        const today = todayISO();
+        const nextISO = kids
+          .map(k => (k.next_issue || "").trim())
+          .filter(Boolean)
+          .filter(d => parseISO(d) >= parseISO(today))
+          .sort((a,b)=>parseISO(a)-parseISO(b))[0] || "";
+
+        const todayCount = kids.filter(k => (k.updated || "") === today).length;
+
+        return { updISO, nextISO, todayCount };
+      }
+
+      wrap.innerHTML = list.map(r => {
+        const isFolderLike = (r.type || "").toLowerCase() === "folder";
+
+        let updISO = (r.updated || "").trim();
+        let nxtISO = (r.next_issue || "").trim();
+
+        if(isFolderLike){
+          const meta = folderMeta(r);
+          updISO = meta.updISO;
+          nxtISO = meta.nextISO;
+        }
+
+        const upd = updISO ? fmtDatePL(updISO) : "—";
+        const nxt = nxtISO ? fmtDatePL(nxtISO) : "—";
+
+        const clsToday = isToday(updISO) ? "today" : "";
+
+        const updBadge = updISO
+          ? (isToday(updISO)
+              ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+              : `<span class="badge">Aktualizacja: ${upd}</span>`)
+          : "";
+
+        return `
+          <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
+            <div class="topMeta">
+              ${updBadge}
+            </div>
+            <p class="title">${r.name}</p>
+            <p class="desc">${r.description}</p>
+            <div class="metaLine">
+              <span><strong>Kolejne:</strong> ${nxt}</span>
+            </div>
+          </a>
+        `;
+      }).join("");
     }
-
-    // 2) jeśli ktoś kiedyś będzie używał group==folder.id
-    if(!children.length){
-      children = items.filter(it =>
-        it.type !== "folder" &&
-        it.id !== folder.id &&
-        it.group &&
-        it.group === folder.id
-      );
-    }
-
-    // 3) fallback pod Twoją strukturę: group = "analizy-stat-tech"
-    if(!children.length && folderPath.includes("analizy-stat-tech")){
-      children = items.filter(it => it.type !== "folder" && it.group === "analizy-stat-tech");
-    }
-
-    return children;
-  }
-
-  function folderMeta(folder){
-    const kids = childrenOf(folder);
-    if(!kids.length) return { updISO:"", nextISO:"", todayCount:0 };
-
-    // najnowsza aktualizacja w folderze
-    const updISO = kids
-      .map(k => (k.updated || "").trim())
-      .filter(Boolean)
-      .sort((a,b)=>parseISO(b)-parseISO(a))[0] || "";
-
-    // najbliższe next_issue w przyszłości (lub po prostu najbliższe > dziś)
-    const nextISO = kids
-      .map(k => (k.next_issue || "").trim())
-      .filter(Boolean)
-      .filter(d => parseISO(d) >= parseISO(today))   // >= dzisiaj
-      .sort((a,b)=>parseISO(a)-parseISO(b))[0] || "";
-
-    const todayCount = kids.filter(k => (k.updated || "") === today).length;
-
-    return { updISO, nextISO, todayCount };
-  }
-
-  wrap.innerHTML = list.map(r => {
-    const isFolderLike = (r.type || "").toLowerCase() === "folder";
-
-    let updISO = (r.updated || "").trim();
-    let nxtISO = (r.next_issue || "").trim();
-    let todayInside = 0;
-
-    if(isFolderLike){
-      const meta = folderMeta(r);
-      updISO = meta.updISO;         // <-- klucz: folder bierze z dzieci
-      nxtISO = meta.nextISO;        // <-- klucz: folder bierze z dzieci
-      todayInside = meta.todayCount;
-    }
-
-    const upd = updISO ? fmtDatePL(updISO) : "—";
-    const nxt = nxtISO ? fmtDatePL(nxtISO) : "—";
-
-    const clsToday = isToday(updISO) ? "today" : "";
-
-    const updBadge = updISO
-      ? (isToday(updISO)
-          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-          : `<span class="badge">Aktualizacja: ${upd}</span>`)
-      : "";
-
-    // UWAGA: dla folderów pokazujemy "Nowe dziś", dla zwykłych raportów nie trzeba
- const insideBadge = "";
-
-    return `
-      <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
-        <div class="topMeta">
-          ${updBadge}
-          ${insideBadge}
-        </div>
-        <p class="title">${r.name}</p>
-        <p class="desc">${r.description}</p>
-        <div class="metaLine">
-          <span><strong>Kolejne:</strong> ${nxt}</span>
-        </div>
-      </a>
-    `;
-  }).join("");
-}
-    
 
     function renderMonthly(items){
       const wrap = document.getElementById("monthlyGrid");
@@ -1264,11 +1357,11 @@
         const upd = updISO ? fmtDatePL(updISO) : "—";
         const clsToday = isToday(updISO) ? "today" : "";
 
- const updBadge = updISO
-  ? (isToday(updISO)
-      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-      : `<span class="badge">Aktualizacja: ${upd}</span>`)
-  : "";
+        const updBadge = updISO
+          ? (isToday(updISO)
+              ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+              : `<span class="badge">Aktualizacja: ${upd}</span>`)
+          : "";
 
         return `
           <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
@@ -1401,7 +1494,6 @@
         errBox.textContent = msg;
       };
 
-      // header info
       try { loadUserEmail(); } catch(e) {}
       try {
         const now = new Date();
@@ -1413,19 +1505,21 @@
         }
       } catch(e) {}
 
-      // prices always
       try { await loadPrices(); }
       catch(e){ showErr("Błąd cenników: " + (e?.message || e)); }
 
-      // manifest + rest
       try{
         const manifest = await loadManifest();
         const items = toItems(manifest);
         const scan = await loadPorannyScanJSON();
 
         try { renderTodayTicker(items, scan); } catch(e) { showErr("Błąd tickera: " + (e?.message || e)); }
+
+        // NOWY układ góry:
+        try { renderCalendarLine(items); } catch(e) { showErr("Błąd kalendarza (linia): " + (e?.message || e)); }
         try { renderFeatured(items, scan); } catch(e) { showErr("Błąd porannego skanu: " + (e?.message || e)); }
-        try { renderCalendar(items); } catch(e) { showErr("Błąd kalendarza: " + (e?.message || e)); }
+        try { renderPortfolioFeatured(items); } catch(e) { showErr("Błąd portfeli ACE (góra): " + (e?.message || e)); }
+
         try { renderQuick(items); } catch(e) { showErr("Błąd raportów tygodniowych: " + (e?.message || e)); }
         try { renderMonthly(items); } catch(e) { showErr("Błąd raportów miesięcznych: " + (e?.message || e)); }
 
