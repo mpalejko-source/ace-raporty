@@ -2,53 +2,54 @@ name: Notify when manifest has today's updates
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - manifest.json
+    branches: [main]
+    paths: [manifest.json]
+  workflow_dispatch:
 
 jobs:
   notify:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Check manifest for today's updates
-        id: check
+      - name: Check manifest and send email if needed
         run: |
           TODAY=$(TZ="Europe/Warsaw" date +%Y-%m-%d)
-          UPDATES=$(jq -r --arg today "$TODAY" '
-            to_entries[] | select(.value.updated == $today) | .value.name
-          ' manifest.json)
+          echo "TODAY=$TODAY"
+
+          UPDATES=$(python3 - <<PY
+import json
+today = "$TODAY"
+with open("manifest.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+names = []
+for k, v in data.items():
+    if isinstance(v, dict) and v.get("updated") == today:
+        names.append(v.get("name") or k)
+
+print("\n".join(names))
+PY
+          )
 
           if [ -z "$UPDATES" ]; then
-            echo "has_updates=false" >> $GITHUB_OUTPUT
-          else
-            echo "has_updates=true" >> $GITHUB_OUTPUT
-            echo "updates<<EOF" >> $GITHUB_OUTPUT
-            echo "$UPDATES" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            echo "No updates today. Email not sent."
+            exit 0
           fi
 
-      - name: Send email via SMTP
-        if: steps.check.outputs.has_updates == 'true'
-        run: |
-          python3 <<EOF
-          import smtplib
-          from email.mime.text import MIMEText
-          import os
+          python3 - <<PY
+import os, smtplib
+from email.mime.text import MIMEText
 
-          smtp_server = os.environ["SMTP_SERVER"]
-          smtp_port = int(os.environ["SMTP_PORT"])
-          username = os.environ["SMTP_USERNAME"]
-          password = os.environ["SMTP_PASSWORD"]
-          recipients = os.environ["RECIPIENTS"].split(",")
+smtp_server = os.environ["SMTP_SERVER"]
+smtp_port   = int(os.environ["SMTP_PORT"])
+username    = os.environ["SMTP_USERNAME"]
+password    = os.environ["SMTP_PASSWORD"]
+recipients  = [r.strip() for r in os.environ["RECIPIENTS"].split(",") if r.strip()]
+updates     = """$UPDATES"""
 
-          updates = """${{ steps.check.outputs.updates }}"""
-
-          body = f"""Nowy raport dostępny w ACE:
+subject = "Nowy raport na platformie ACE"
+body = f"""Nowy raport dostępny w ACE:
 
 {updates}
 
@@ -59,16 +60,17 @@ Pozdrawiamy,
 ACE – Agri Commodity Experts
 """
 
-          msg = MIMEText(body)
-          msg["Subject"] = "Nowy raport na platformie ACE"
-          msg["From"] = username
-          msg["To"] = ", ".join(recipients)
+msg = MIMEText(body, _charset="utf-8")
+msg["Subject"] = subject
+msg["From"] = username
+msg["To"] = ", ".join(recipients)
 
-          with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-              server.login(username, password)
-              server.sendmail(username, recipients, msg.as_string())
-          EOF
+with smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=30) as server:
+    server.login(username, password)
+    server.sendmail(username, recipients, msg.as_string())
 
+print("Sent to:", recipients)
+PY
         env:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
