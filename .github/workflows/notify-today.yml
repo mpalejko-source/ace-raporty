@@ -2,18 +2,29 @@ name: Notify when manifest has today's updates
 
 on:
   push:
-    branches: [main]
-    paths: [manifest.json]
-  workflow_dispatch:
+    branches:
+      - main
+    paths:
+      - manifest.json
+  workflow_dispatch: {}
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Check manifest and send email if needed
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          RECIPIENTS: ${{ secrets.RECIPIENTS }}
         run: |
+          set -e
+
           TODAY=$(TZ="Europe/Warsaw" date +%Y-%m-%d)
           echo "TODAY=$TODAY"
 
@@ -46,7 +57,8 @@ smtp_port   = int(os.environ["SMTP_PORT"])
 username    = os.environ["SMTP_USERNAME"]
 password    = os.environ["SMTP_PASSWORD"]
 recipients  = [r.strip() for r in os.environ["RECIPIENTS"].split(",") if r.strip()]
-updates     = """$UPDATES"""
+
+updates = """$UPDATES"""
 
 subject = "Nowy raport na platformie ACE"
 body = f"""Nowy raport dostępny w ACE:
@@ -71,9 +83,3 @@ with smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=30) as server:
 
 print("Sent to:", recipients)
 PY
-        env:
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          RECIPIENTS: ${{ secrets.RECIPIENTS }}
