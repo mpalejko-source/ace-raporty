@@ -1412,36 +1412,7 @@ function renderCalendarLine(items){
   });
 }
     
- 
-  const row1 = CAL.filter(x => x.dow === 1 || x.dow === 2).map(pillHTML).join("");
-  const row2 = CAL.filter(x => x.dow >= 3 && x.dow <= 5).map(pillHTML).join("");
-
-  wrap.innerHTML = `
-    <div class="calLine2">
-      <div class="calHdrPill">Kalendarz PN–PT • ${rangeTxt}</div>
-
-      <div class="calRows">
-        <div class="calRowGrid r1">${row1}</div>
-        <div class="calRowGrid r2">${row2}</div>
-      </div>
-    </div>
-  `;
-
-  wrap.querySelectorAll(".calPill[data-href]").forEach(el=>{
-    const go = () => {
-      const href = el.getAttribute("data-href");
-      if(href) window.location.href = href;
-    };
-    el.addEventListener("click", go);
-    el.addEventListener("keydown", (e)=>{
-      if(e.key === "Enter" || e.key === " "){
-        e.preventDefault();
-        go();
-      }
-    });
-  });
-}
-    
+   
 
     function renderQuick(items){
       const wrap = document.getElementById("quickGrid");
