@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - manifest.json
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   notify:
@@ -15,7 +15,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check manifest and send email if needed
+      - name: Compute updates list
+        id: updates
+        run: |
+          TODAY=$(TZ="Europe/Warsaw" date +%Y-%m-%d)
+          echo "TODAY=$TODAY"
+
+          UPDATES=$(python3 -c "import json; d=json.load(open('manifest.json','r',encoding='utf-8')); t='$TODAY'; print('\n'.join([(v.get('name') or k) for k,v in d.items() if isinstance(v,dict) and v.get('updated')==t]))")
+          echo "UPDATES<<EOF" >> $GITHUB_ENV
+          echo "$UPDATES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          if [ -z "$UPDATES" ]; then
+            echo "HAS_UPDATES=false" >> $GITHUB_ENV
+          else
+            echo "HAS_UPDATES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Send email via SMTP
+        if: env.HAS_UPDATES == 'true'
         env:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -23,63 +41,4 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           RECIPIENTS: ${{ secrets.RECIPIENTS }}
         run: |
-          set -e
-
-          TODAY=$(TZ="Europe/Warsaw" date +%Y-%m-%d)
-          echo "TODAY=$TODAY"
-
-          UPDATES=$(python3 - <<PY
-import json
-today = "$TODAY"
-with open("manifest.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
-
-names = []
-for k, v in data.items():
-    if isinstance(v, dict) and v.get("updated") == today:
-        names.append(v.get("name") or k)
-
-print("\n".join(names))
-PY
-          )
-
-          if [ -z "$UPDATES" ]; then
-            echo "No updates today. Email not sent."
-            exit 0
-          fi
-
-          python3 - <<PY
-import os, smtplib
-from email.mime.text import MIMEText
-
-smtp_server = os.environ["SMTP_SERVER"]
-smtp_port   = int(os.environ["SMTP_PORT"])
-username    = os.environ["SMTP_USERNAME"]
-password    = os.environ["SMTP_PASSWORD"]
-recipients  = [r.strip() for r in os.environ["RECIPIENTS"].split(",") if r.strip()]
-
-updates = """$UPDATES"""
-
-subject = "Nowy raport na platformie ACE"
-body = f"""Nowy raport dostępny w ACE:
-
-{updates}
-
-Pojawił się na platformie:
-https://raporty.ace-group.pl
-
-Pozdrawiamy,
-ACE – Agri Commodity Experts
-"""
-
-msg = MIMEText(body, _charset="utf-8")
-msg["Subject"] = subject
-msg["From"] = username
-msg["To"] = ", ".join(recipients)
-
-with smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=30) as server:
-    server.login(username, password)
-    server.sendmail(username, recipients, msg.as_string())
-
-print("Sent to:", recipients)
-PY
+          python3 -c "import os,smtplib; from email.mime.text import MIMEText; s=os.environ['SMTP_SERVER']; p=int(os.environ['SMTP_PORT']); u=os.environ['SMTP_USERNAME']; pw=os.environ['SMTP_PASSWORD']; r=[x.strip() for x in os.environ['RECIPIENTS'].split(',') if x.strip()]; updates=os.environ.get('UPDATES','').strip(); subj='Nowy raport na platformie ACE'; body=f\"Nowy raport dostępny w ACE:\\n\\n{updates}\\n\\nPojawił się na platformie:\\nhttps://raporty.ace-group.pl\\n\\nPozdrawiamy,\\nACE – Agri Commodity Experts\\n\"; msg=MIMEText(body,_charset='utf-8'); msg['Subject']=subj; msg['From']=u; msg['To']=', '.join(r); srv=smtplib.SMTP_SSL(s,p,timeout=30); srv.login(u,pw); srv.sendmail(u,r,msg.as_string()); srv.quit(); print('Sent to:', r)"
