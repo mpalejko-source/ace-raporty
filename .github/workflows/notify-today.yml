@@ -1,0 +1,84 @@
+name: Notify when manifest has today's updates
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "manifest.json"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find reports updated today (Europe/Warsaw)
+        id: today
+        run: |
+          python - << 'PY'
+          import json
+          from datetime import datetime
+          try:
+            from zoneinfo import ZoneInfo
+            tz = ZoneInfo("Europe/Warsaw")
+          except Exception:
+            tz = None
+
+          today = datetime.now(tz).strftime("%Y-%m-%d") if tz else datetime.utcnow().strftime("%Y-%m-%d")
+
+          with open("manifest.json", "r", encoding="utf-8") as f:
+            m = json.load(f)
+
+          hits = []
+          for key, obj in m.items():
+            if not isinstance(obj, dict):
+              continue
+            upd = obj.get("updated")
+            path = obj.get("path", "")
+            name = obj.get("name", key)
+
+            if upd == today and path:
+              url = "https://raporty.ace-group.pl/" + path.lstrip("/")
+              hits.append((name, url))
+
+          has_updates = "true" if hits else "false"
+          subject = f"ACE: Nowa publikacja ({today})"
+
+          if hits:
+            lines = [f"Nowe/odświeżone raporty z dnia {today}:", ""]
+            for n, u in hits:
+              lines.append(f"- {n}: {u}")
+            lines += [
+              "",
+              "Zapraszamy do odwiedzin: https://raporty.ace-group.pl",
+              "",
+              "Jeśli nie otrzymujesz kodu logowania, sprawdź SPAM/Oferty. W razie problemów skontaktuj się z administratorem ACE."
+            ]
+            body = "\n".join(lines)
+          else:
+            body = f"Dziś ({today}) nie wykryto wpisów z updated == {today} w manifest.json."
+
+          print(f"has_updates={has_updates}")
+          print(f"subject={subject}")
+          print("body<<EOF")
+          print(body)
+          print("EOF")
+          PY
+
+      - name: Stop if no updates today
+        if: steps.today.outputs.has_updates != 'true'
+        run: echo "No updated==today entries. No email."
+
+      - name: Send email
+        if: steps.today.outputs.has_updates == 'true'
+        uses: hilarion5/send-mail@v1
+        with:
+          smtp-server: ${{ secrets.SMTP_SERVER }}
+          smtp-port: ${{ secrets.SMTP_PORT }}
+          smtp-secure: true
+          from-email: ${{ secrets.FROM_EMAIL }}
+          to-email: ${{ secrets.TO_EMAILS }}
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: ${{ steps.today.outputs.subject }}
+          body: ${{ steps.today.outputs.body }}
