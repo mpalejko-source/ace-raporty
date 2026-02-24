@@ -903,9 +903,9 @@
      * page: numer strony w raporcie Portfele (jak pisałeś: 2/3/4)
      */
 const PORTFOLIO_THUMBS = [
-  { label: "Śruta sojowa",   img: "portfele/soymeal.png",  page: 2 },
-  { label: "USD/PLN",        img: "portfele/usdpln.png",   page: 3 },
-  { label: "Śruta rzepakowa",img: "portfele/rapemeal.png", page: 4 }
+  { label:"Śruta sojowa",    img:"portfele/soymeal.png",  hash:"#soymeal" },
+  { label:"USD/PLN",         img:"portfele/usdpln.png",   hash:"#usdpln" },
+  { label:"Śruta rzepakowa", img:"portfele/rapemeal.png", hash:"#rapemeal" }
 ];
 
     // UWAGA: to muszą być klucze, które realnie istnieją w manifest.json (ID lub NAME)
@@ -974,21 +974,13 @@ const PORTFOLIO_THUMBS = [
       return [...items].sort((a,b)=>parseISO(b.date)-parseISO(a.date))[0] || null;
     }
 
-    function portfolioLink(baseHref, pageNo){
-      const href = baseHref || "";
-      const p = Number(pageNo);
-      if(!p || p < 1) return href;
-
-      if(PORTFOLIO_PAGE_MODE === "query"){
-        const join = href.includes("?") ? "&" : "?";
-        return href + join + "page=" + encodeURIComponent(String(p));
-      }
-      if(PORTFOLIO_PAGE_MODE === "hash"){
-        // pdf.js często używa #page=2
-        return href + "#page=" + encodeURIComponent(String(p));
-      }
-      return href;
-    }
+function portfolioLink(baseHref, hash){
+  const href = baseHref || "";
+  const h = (hash || "").toString().trim();
+  if(!h) return href;
+  // usuń ewentualny stary hash w baseHref i doklej nowy
+  return href.replace(/#.*$/, "") + h;
+}
 
     async function loadManifest(){
       const finalUrl = url("manifest.json?ts=" + Date.now());
@@ -1136,7 +1128,7 @@ const PORTFOLIO_THUMBS = [
 
       const thumbs = PORTFOLIO_THUMBS.map(t => {
         const imgSrc = url(t.img);
-        const href = portfolioLink(baseHref, t.page);
+        const href = portfolioLink(baseHref, t.hash);
         return `
           <a class="thumb" href="${href}" title="Otwórz: ${t.label} (str. ${t.page})">
             <img src="${imgSrc}" alt="${t.label}">
