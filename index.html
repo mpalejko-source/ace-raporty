@@ -413,6 +413,29 @@
     a.featured > *{ position:relative; }
     a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
 
+/* portfolio featured jako DIV ma wyglądać identycznie jak a.featured */
+div.featured{
+  width:100%;
+  border: 2px solid rgba(125,211,252,.70);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
+  box-shadow: 0 18px 46px rgba(0,0,0,.48);
+  padding:18px 18px 16px;
+  position:relative;
+  overflow:hidden;
+  color:inherit;
+  display:block;
+}
+div.featured:before{
+  content:"";
+  position:absolute; inset:-1px;
+  background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
+              radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
+  pointer-events:none;
+}
+div.featured > *{ position:relative; }
+
+    
     .fMetaLine{
       display:flex;
       align-items:center;
@@ -1102,73 +1125,84 @@ function portfolioLink(baseHref, hash){
       }
     }
 
-    function renderPortfolioFeatured(items){
-      const wrap = document.getElementById("portfolioWrap");
+   function renderPortfolioFeatured(items){
+  const wrap = document.getElementById("portfolioWrap");
+  if(!wrap) return;
 
-      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-      const pick = (key) => mapById[key] || mapByName[key];
+  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+  const pick = (key) => mapById[key] || mapByName[key];
 
-      const pf = pick(PORTFOLIO_KEY);
+  const pf = pick(PORTFOLIO_KEY);
 
-      if(!pf){
-        wrap.innerHTML = `<div class="error">Brak wpisu <code>${PORTFOLIO_KEY}</code> w <code>manifest.json</code>.</div>`;
-        return;
-      }
+  if(!pf){
+    wrap.innerHTML = `<div class="error">Brak wpisu <code>${PORTFOLIO_KEY}</code> w <code>manifest.json</code>.</div>`;
+    return;
+  }
 
-      const updISO = (pf.updated || "").trim();
-      const upd = updISO ? fmtDatePL(updISO) : "—";
-      const updBadge = updISO
-        ? (isToday(updISO)
-            ? `<span class="fUpdToday">Aktualizacja: ${upd}</span>`
-            : `<span style="color:rgba(234,240,255,.78)"><strong>Aktualizacja:</strong> ${upd}</span>`)
-        : `<span style="color:rgba(234,240,255,.65)">Aktualizacja: —</span>`;
+  // ===== aktualizacja: identyczna logika jak Poranny Skan =====
+  const updISO   = (pf.updated || "").trim();
+  const updLabel = updISO ? fmtDatePL(updISO) : "—";
 
-      const baseHref = safePath(pf.path);
+  const updRight = updISO
+    ? (isToday(updISO)
+        ? `<span class="fUpdToday">Aktualizacja: ${updLabel}</span>`
+        : `<span style="color:rgba(234,240,255,.78)"><strong>Aktualizacja:</strong> ${updLabel}</span>`)
+    : `<span style="color:rgba(234,240,255,.78)"><strong>Aktualizacja:</strong> —</span>`;
 
-      const thumbs = PORTFOLIO_THUMBS.map(t => {
-        const imgSrc = url(t.img);
-        const href = portfolioLink(baseHref, t.hash);
-        return `
-          <a class="thumb" href="${href}" title="Otwórz: ${t.label} (str. ${t.page})">
-            <img src="${imgSrc}" alt="${t.label}">
-            <div class="cap">
-              <span>${t.label}</span>
-              <span class="small">str. ${t.page}</span>
-            </div>
-          </a>
-        `;
-      }).join("");
+  const baseHref = safePath(pf.path);
 
-    wrap.innerHTML = `
-  <div class="featured portfolioFeatured cardStatic">
-    <div class="fMetaLine">
-      <span class="badge primary" style="border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.14);">
-        Portfele zakupowe ACE
-      </span>
-      <span class="spacer"></span>
-      <div class="rightBox">${updBadge}</div>
-    </div>
+  // ===== miniaturki =====
+  const thumbs = PORTFOLIO_THUMBS.map(t => {
+    const imgSrc = url(t.img);
+    const href   = portfolioLink(baseHref, t.hash);
 
-    <p class="fTitle">Rekomendacje • Zakupy • Zarządzanie ryzykiem</p>
+    // opcjonalnie: jeśli masz t.page to pokaż, jeśli nie – ukryj
+    const pageTxt = (t.page !== undefined && t.page !== null && t.page !== "")
+      ? ` • str. ${t.page}`
+      : "";
 
-    <div class="pHero">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
-        <div style="font-size:12px;color:rgba(234,240,255,.70);font-weight:900;">
-          Kliknij miniaturę, aby przejść do odpowiedniego portfela:
+    const capSmall = (t.page !== undefined && t.page !== null && t.page !== "")
+      ? `<span class="small">str. ${t.page}</span>`
+      : `<span class="small">&nbsp;</span>`;
+
+    return `
+      <a class="thumb" href="${href}" title="Otwórz: ${t.label}${pageTxt}">
+        <img src="${imgSrc}" alt="${t.label}">
+        <div class="cap">
+          <span>${t.label}</span>
+          ${capSmall}
         </div>
-        <a class="pill" href="${baseHref}" style="text-decoration:none;">
-          📄 Otwórz raport Portfele-ACE
-        </a>
+      </a>
+    `;
+  }).join("");
+
+  // ===== karta: wygląda jak featured (Poranny Skan), żółte tylko gdy today =====
+  wrap.innerHTML = `
+    <div class="featured portfolioFeatured cardStatic">
+      <div class="fMetaLine">
+        <span class="badge primary">Portfele zakupowe ACE</span>
+        <span class="spacer"></span>
+        <div class="rightBox">${updRight}</div>
       </div>
 
-      <div class="thumbGrid">${thumbs}</div>
-    </div>
+      <p class="fTitle">Rekomendacje • Zakupy • Zarządzanie ryzykiem</p>
 
-    <div class="fHeroNote">Twoje kluczowe narzędzie — szybkie wejście w konkretną stronę raportu.</div>
-  </div>
-`;
-    }
+      <div class="pHero">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+          <div style="font-size:12px;color:rgba(234,240,255,.70);font-weight:900;">
+            Kliknij miniaturę, aby przejść do odpowiedniego portfela:
+          </div>
+          <a class="pill" href="${baseHref}" style="text-decoration:none;">
+            📄 Otwórz raport Portfele-ACE
+          </a>
+        </div>
+
+        <div class="thumbGrid">${thumbs}</div>
+      </div>
+    </div>
+  `;
+}
 
    function renderCalendarLine(items){
   const wrap = document.getElementById("calLineWrap");
