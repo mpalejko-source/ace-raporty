@@ -1,17 +1,17 @@
 ﻿{
-  "asof": "2026-02-24 08:42",
+  "asof": "2026-02-24 08:45",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
-      "price": 805.00,
-      "w": 5.00,
-      "m": -5.00
+      "price": 820.00,
+      "w": 20.00,
+      "m": 10.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",
-      "price": 785.00,
-      "w": 0.00,
-      "m": -5.00
+      "price": 790.00,
+      "w": 5.00,
+      "m": 0.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
