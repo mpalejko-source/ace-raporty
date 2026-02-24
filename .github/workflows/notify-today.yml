@@ -2,83 +2,76 @@ name: Notify when manifest has today's updates
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
-      - "manifest.json"
+      - manifest.json
 
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Find reports updated today (Europe/Warsaw)
-        id: today
+      - name: Check manifest for today's updates
+        id: check
         run: |
-          python - << 'PY'
-          import json
-          from datetime import datetime
-          try:
-            from zoneinfo import ZoneInfo
-            tz = ZoneInfo("Europe/Warsaw")
-          except Exception:
-            tz = None
+          TODAY=$(TZ="Europe/Warsaw" date +%Y-%m-%d)
+          UPDATES=$(jq -r --arg today "$TODAY" '
+            to_entries[] | select(.value.updated == $today) | .value.name
+          ' manifest.json)
 
-          today = datetime.now(tz).strftime("%Y-%m-%d") if tz else datetime.utcnow().strftime("%Y-%m-%d")
+          if [ -z "$UPDATES" ]; then
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_updates=true" >> $GITHUB_OUTPUT
+            echo "updates<<EOF" >> $GITHUB_OUTPUT
+            echo "$UPDATES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
-          with open("manifest.json", "r", encoding="utf-8") as f:
-            m = json.load(f)
+      - name: Send email via SMTP
+        if: steps.check.outputs.has_updates == 'true'
+        run: |
+          python3 <<EOF
+          import smtplib
+          from email.mime.text import MIMEText
+          import os
 
-          hits = []
-          for key, obj in m.items():
-            if not isinstance(obj, dict):
-              continue
-            upd = obj.get("updated")
-            path = obj.get("path", "")
-            name = obj.get("name", key)
+          smtp_server = os.environ["SMTP_SERVER"]
+          smtp_port = int(os.environ["SMTP_PORT"])
+          username = os.environ["SMTP_USERNAME"]
+          password = os.environ["SMTP_PASSWORD"]
+          recipients = os.environ["RECIPIENTS"].split(",")
 
-            if upd == today and path:
-              url = "https://raporty.ace-group.pl/" + path.lstrip("/")
-              hits.append((name, url))
+          updates = """${{ steps.check.outputs.updates }}"""
 
-          has_updates = "true" if hits else "false"
-          subject = f"ACE: Nowa publikacja ({today})"
+          body = f"""Nowy raport dostępny w ACE:
 
-          if hits:
-            lines = [f"Nowe/odświeżone raporty z dnia {today}:", ""]
-            for n, u in hits:
-              lines.append(f"- {n}: {u}")
-            lines += [
-              "",
-              "Zapraszamy do odwiedzin: https://raporty.ace-group.pl",
-              "",
-              "Jeśli nie otrzymujesz kodu logowania, sprawdź SPAM/Oferty. W razie problemów skontaktuj się z administratorem ACE."
-            ]
-            body = "\n".join(lines)
-          else:
-            body = f"Dziś ({today}) nie wykryto wpisów z updated == {today} w manifest.json."
+{updates}
 
-          print(f"has_updates={has_updates}")
-          print(f"subject={subject}")
-          print("body<<EOF")
-          print(body)
-          print("EOF")
-          PY
+Pojawił się na platformie:
+https://raporty.ace-group.pl
 
-      - name: Stop if no updates today
-        if: steps.today.outputs.has_updates != 'true'
-        run: echo "No updated==today entries. No email."
+Pozdrawiamy,
+ACE – Agri Commodity Experts
+"""
 
-      - name: Send email
-        if: steps.today.outputs.has_updates == 'true'
-        uses: hilarion5/send-mail@v1
-        with:
-          smtp-server: ${{ secrets.SMTP_SERVER }}
-          smtp-port: ${{ secrets.SMTP_PORT }}
-          smtp-secure: true
-          from-email: ${{ secrets.FROM_EMAIL }}
-          to-email: ${{ secrets.TO_EMAILS }}
-          username: ${{ secrets.SMTP_USER }}
-          password: ${{ secrets.SMTP_PASS }}
-          subject: ${{ steps.today.outputs.subject }}
-          body: ${{ steps.today.outputs.body }}
+          msg = MIMEText(body)
+          msg["Subject"] = "Nowy raport na platformie ACE"
+          msg["From"] = username
+          msg["To"] = ", ".join(recipients)
+
+          with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+              server.login(username, password)
+              server.sendmail(username, recipients, msg.as_string())
+          EOF
+
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          RECIPIENTS: ${{ secrets.RECIPIENTS }}
