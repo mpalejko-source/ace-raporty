@@ -296,78 +296,84 @@
       100%{ transform: translateX(-100%); }
     }
 
-    /* ===== KALENDARZ (POZIOMO 1 LINIA) ===== */
-    .calLineWrap{ margin-top:10px; }
-    .calLine{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      padding:8px 10px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      overflow:hidden;
-    }
-    .calLine .calLbl{
-      flex:0 0 auto;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(250,204,21,.35);
-      background: rgba(250,204,21,.12);
-      font-weight:950;
-      color: rgba(234,240,255,.92);
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .calLine .calItems{
-      flex:1 1 auto;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      overflow:auto;
-      scrollbar-width: none;
-    }
-    .calLine .calItems::-webkit-scrollbar{ display:none; }
-    .calPill{
-      flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .08s ease, border-color .08s ease, background .08s ease;
-      font-size:12px;
-      white-space:nowrap;
-      min-width: 150px;
-    }
-    .calPill:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.05); }
-    .calPill .d{
-      font-weight:950;
-      letter-spacing:.04em;
-      color: rgba(234,240,255,.92);
-    }
-    .calPill .dt{
-      color: rgba(234,240,255,.55);
-      font-weight:800;
-    }
-    .calPill .n{
-      color: rgba(234,240,255,.86);
-      font-weight:900;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      max-width: 280px;
-    }
-    .calPill.today{
-      border:2px solid var(--hiBorder);
-      background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
-      box-shadow: var(--hiShadow);
-    }
+  /* ===== KALENDARZ (2 LINIE) ===== */
+.calLineWrap{ margin-top:10px; }
+
+.calLine2{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding:10px 10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.calLine2 .row1,
+.calLine2 .row2{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.calLine2 .calLbl{
+  flex:0 0 auto;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(250,204,21,.35);
+  background: rgba(250,204,21,.12);
+  font-weight:950;
+  color: rgba(234,240,255,.92);
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.calLine2 .calWeek{
+  flex:0 0 auto;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  font-weight:900;
+  color: rgba(234,240,255,.75);
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.calPill{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  cursor:pointer;
+  user-select:none;
+  transition: transform .08s ease, border-color .08s ease, background .08s ease;
+  font-size:12px;
+  white-space:nowrap;
+  min-width: 150px;
+}
+.calPill:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.05); }
+.calPill .d{ font-weight:950; letter-spacing:.04em; color: rgba(234,240,255,.92); }
+.calPill .dt{ color: rgba(234,240,255,.55); font-weight:800; }
+.calPill .n{
+  color: rgba(234,240,255,.86);
+  font-weight:900;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width: 280px;
+}
+.calPill.today{
+  border:2px solid var(--hiBorder);
+  background: linear-gradient(135deg, var(--hiBg1), var(--hiBg2));
+  box-shadow: var(--hiShadow);
+}
 
     /* ===== TOP ROW: Poranny skan + Portfele (50/50) ===== */
     .topRowGrid{
@@ -1166,71 +1172,95 @@ const PORTFOLIO_THUMBS = [
       `;
     }
 
-    function renderCalendarLine(items){
-      const wrap = document.getElementById("calLineWrap");
-      if(!wrap) return;
+   function renderCalendarLine(items){
+  const wrap = document.getElementById("calLineWrap");
+  if(!wrap) return;
 
-      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-      const pick = (key) => mapById[key] || mapByName[key];
+  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+  const pick = (key) => mapById[key] || mapByName[key];
 
-      const nameOf = (key) => (pick(key) && pick(key).name) ? pick(key).name : (key || "—");
-      const pathOf = (key) => (pick(key) && pick(key).path) ? safePath(pick(key).path) : null;
+  const nameOf = (key) => (pick(key) && pick(key).name) ? pick(key).name : (key || "—");
+  const pathOf = (key) => (pick(key) && pick(key).path) ? safePath(pick(key).path) : null;
 
-      const now = new Date();
-      const jsDay = now.getDay();
-      const isoDay = (jsDay === 0) ? 7 : jsDay;
-      const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isoDay - 1));
+  const now = new Date();
+  const jsDay = now.getDay();
+  const isoDay = (jsDay === 0) ? 7 : jsDay;
 
-      function dateForDow(dow){
-        return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (dow - 1));
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((isoDay - 1)));
+
+  function dateForDow(dow){
+    return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (dow - 1));
+  }
+  function fmtDDMM(dt){
+    const dd = String(dt.getDate()).padStart(2,"0");
+    const mm = String(dt.getMonth()+1).padStart(2,"0");
+    return `${dd}.${mm}`;
+  }
+  function fmtRange(mon, fri){
+    const monDD = String(mon.getDate()).padStart(2,"0");
+    const monMM = String(mon.getMonth()+1).padStart(2,"0");
+    const friDD = String(fri.getDate()).padStart(2,"0");
+    const friMM = String(fri.getMonth()+1).padStart(2,"0");
+    if(monMM === friMM) return `${monDD}–${friDD}.${friMM}`;
+    return `${monDD}.${monMM}–${friDD}.${friMM}`;
+  }
+
+  const weekFrom = dateForDow(1);
+  const weekTo   = dateForDow(5);
+  const rangeTxt = fmtRange(weekFrom, weekTo);
+
+  const pillHTML = (r) => {
+    const dt = dateForDow(r.dow);
+    const ddmm = fmtDDMM(dt);
+    const titleText = nameOf(r.key);
+    const href = pathOf(r.key);
+
+    const cls = (r.dow === isoDay) ? "calPill today" : "calPill";
+    const dataHref = href ? `data-href="${href}"` : "";
+    const tab = href ? `tabindex="0"` : `tabindex="-1"`;
+
+    return `
+      <div class="${cls}" role="link" ${tab} ${dataHref}
+           title="${href ? `Otwórz: ${titleText}` : titleText}">
+        <span class="d">${r.short}</span>
+        <span class="dt">${ddmm}</span>
+        <span class="n">${titleText}</span>
+      </div>
+    `;
+  };
+
+  // PN+WT w 1 linii, ŚR–PT w 2 linii
+  const row1 = CAL.filter(x => x.dow === 1 || x.dow === 2).map(pillHTML).join("");
+  const row2 = CAL.filter(x => x.dow >= 3 && x.dow <= 5).map(pillHTML).join("");
+
+  wrap.innerHTML = `
+    <div class="calLine2">
+      <div class="row1">
+        <div class="calLbl">Kalendarz PN–PT</div>
+        <div class="calWeek">${rangeTxt}</div>
+        ${row1}
+      </div>
+      <div class="row2">
+        ${row2}
+      </div>
+    </div>
+  `;
+
+  wrap.querySelectorAll(".calPill[data-href]").forEach(el=>{
+    const go = () => {
+      const href = el.getAttribute("data-href");
+      if(href) window.location.href = href;
+    };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        go();
       }
-      function fmtDDMM(dt){
-        const dd = String(dt.getDate()).padStart(2,"0");
-        const mm = String(dt.getMonth()+1).padStart(2,"0");
-        return `${dd}.${mm}`;
-      }
-
-      const pills = CAL.map(r=>{
-        const dt = dateForDow(r.dow);
-        const ddmm = fmtDDMM(dt);
-        const titleText = nameOf(r.key);
-        const href = pathOf(r.key);
-
-        const cls = (r.dow === isoDay) ? "calPill today" : "calPill";
-        const dataHref = href ? `data-href="${href}"` : "";
-        const tab = href ? `tabindex="0"` : `tabindex="-1"`;
-
-        return `
-          <div class="${cls}" role="link" ${tab} ${dataHref} title="${href ? `Otwórz: ${titleText}` : titleText}">
-            <span class="d">${r.short}</span>
-            <span class="dt">${ddmm}</span>
-            <span class="n">${titleText}</span>
-          </div>
-        `;
-      }).join("");
-
-      wrap.innerHTML = `
-        <div class="calLine">
-          <div class="calLbl">Kalendarz PN–PT</div>
-          <div class="calItems">${pills}</div>
-        </div>
-      `;
-
-      wrap.querySelectorAll(".calPill[data-href]").forEach(el=>{
-        const go = () => {
-          const href = el.getAttribute("data-href");
-          if(href) window.location.href = href;
-        };
-        el.addEventListener("click", go);
-        el.addEventListener("keydown", (e)=>{
-          if(e.key === "Enter" || e.key === " "){
-            e.preventDefault();
-            go();
-          }
-        });
-      });
-    }
+    });
+  });
+}
 
     function renderQuick(items){
       const wrap = document.getElementById("quickGrid");
