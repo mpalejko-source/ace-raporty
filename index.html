@@ -381,7 +381,7 @@
       grid-template-columns: 1fr 1fr;
       gap:12px;
       margin-top:12px;
-      align-items:stretch;
+      align-items:start;
     }
     @media (max-width: 900px){
       .topRowGrid{ grid-template-columns: 1fr; }
@@ -401,7 +401,7 @@
       color:inherit;
       transition: transform .08s ease, border-color .08s ease;
       display:block;
-      height:100%;
+      height:auto;
     }
     a.featured:before{
       content:"";
@@ -453,7 +453,7 @@
 
     .fHero{
       margin-top:12px;
-      height:128px;
+      height:78px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
       background:
@@ -511,7 +511,7 @@
     .thumb:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); }
     .thumb img{
       width:100%;
-      height:86px;
+      height:56px;
       object-fit:cover;
       display:block;
       filter: contrast(1.02) saturate(1.04);
@@ -1148,28 +1148,34 @@ const PORTFOLIO_THUMBS = [
         `;
       }).join("");
 
-      wrap.innerHTML = `
-        <a class="featured portfolioFeatured" href="${baseHref}" style="text-decoration:none;color:inherit;">
-          <div class="fMetaLine">
-            <span class="badge primary" style="border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.14);">
-              Portfele zakupowe ACE
-            </span>
-            <span class="spacer"></span>
-            <div class="rightBox">${updBadge}</div>
-          </div>
+    wrap.innerHTML = `
+  <div class="featured portfolioFeatured cardStatic">
+    <div class="fMetaLine">
+      <span class="badge primary" style="border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.14);">
+        Portfele zakupowe ACE
+      </span>
+      <span class="spacer"></span>
+      <div class="rightBox">${updBadge}</div>
+    </div>
 
-          <p class="fTitle">Rekomendacje • Zakupy • Zarządzanie ryzykiem</p>
+    <p class="fTitle">Rekomendacje • Zakupy • Zarządzanie ryzykiem</p>
 
-          <div class="pHero">
-            <div style="font-size:12px;color:rgba(234,240,255,.70);font-weight:900;margin-bottom:8px;">
-              Kliknij miniaturę, aby przejść do odpowiedniego portfela:
-            </div>
-            <div class="thumbGrid">${thumbs}</div>
-          </div>
-
-          <div class="fHeroNote">Twoje kluczowe narzędzie — szybko wchodzisz w konkretną stronę raportu.</div>
+    <div class="pHero">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+        <div style="font-size:12px;color:rgba(234,240,255,.70);font-weight:900;">
+          Kliknij miniaturę, aby przejść do odpowiedniego portfela:
+        </div>
+        <a class="pill" href="${baseHref}" style="text-decoration:none;">
+          📄 Otwórz raport Portfele-ACE
         </a>
-      `;
+      </div>
+
+      <div class="thumbGrid">${thumbs}</div>
+    </div>
+
+    <div class="fHeroNote">Twoje kluczowe narzędzie — szybkie wejście w konkretną stronę raportu.</div>
+  </div>
+`;
     }
 
    function renderCalendarLine(items){
