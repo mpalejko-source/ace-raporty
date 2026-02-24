@@ -129,7 +129,7 @@
     "name": "Śruta sojowa",
     "description": "Analiza statystyczno-techniczna śruty sojowej.",
     "path": "raporty/analizy-stat-tech/sruty/sojowa/",
-    "updated": "2026-02-18",
+    "updated": "2026-02-24",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Śruty",
