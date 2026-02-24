@@ -1264,9 +1264,11 @@
         const upd = updISO ? fmtDatePL(updISO) : "—";
         const clsToday = isToday(updISO) ? "today" : "";
 
-        const updBadge = isToday(updISO)
-          ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
-          : ``;
+        const updBadge = updISO
+  ? (isToday(updISO)
+      ? `<span class="badge updToday">Aktualizacja: ${upd}</span>`
+      : `<span class="badge">Aktualizacja: ${upd}</span>`)
+  : "";
 
         return `
           <a class="card quickCard ${clsToday}" href="${safePath(r.path)}">
