@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-02-25 09:05",
+  "asof": "2026-02-25 09:28",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
@@ -35,10 +35,10 @@
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 197.25,
+      "close": 195.25,
       "d1": 0.00,
-      "w": 6.75,
-      "m": 6.25
+      "w": 4.75,
+      "m": 4.25
     },
     {
       "name": "Corn MATIF",
