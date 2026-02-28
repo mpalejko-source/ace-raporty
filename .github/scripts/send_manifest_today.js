@@ -75,34 +75,32 @@ async function main() {
     return;
   }
 
-  const subject = `ACE – nowe raporty (${today})`;
+const namesForSubject = items.map(it => it.name).join(", ");
+const subject = `ACE – nowe wydanie (${today}${namesForSubject ? ", " + namesForSubject : ""})`;
 
   // TEXT body (fallback)
-  const linesText = items.map((it, i) => {
-    return [
-      `${i + 1}. ${it.name}`,
-      it.description ? `   ${it.description}` : "",
-      it.category ? `   Kategoria: ${it.category}` : "",
-      it.frequency ? `   Częstotliwość: ${it.frequency}` : "",
-      it.next_issue ? `   Kolejna: ${it.next_issue}` : "",
-      it.url ? `   Link: ${it.url}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-  });
+ const linesText = items.map((it, i) => {
+  return [
+    `${i + 1}. ${it.name}`,
+    it.description ? `   ${it.description}` : "",
+    it.frequency ? `   Częstotliwość: ${it.frequency}` : "",
+    it.next_issue ? `   Kolejna: ${it.next_issue}` : "",
+  ].filter(Boolean).join("\n");
+});
 
-  const textBody = `Cześć,
-Poniżej raporty zaktualizowane dziś (${today}):
+const textBody =
+`Nowe Wydanie Agri Commodity Experts:
+Data: ${today}
 
 ${linesText.join("\n\n")}
 
+Panel: https://raporty.ace-group.pl/
 — ACE`;
 
   // HTML items (ładne boksy)
-  const htmlItems = items
-    .map(
-      (it) => `
-  <div style="margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #eee;">
+ const htmlItems = items
+  .map((it) => `
+  <div style="margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #eee;">
     <div style="font-size:15px;">
       <strong>${escapeHtml(it.name)}</strong>
     </div>
@@ -112,22 +110,12 @@ ${linesText.join("\n\n")}
         : ""
     }
     <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
-      ${it.category ? `Kategoria: ${escapeHtml(it.category)}<br>` : ""}
       ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
       ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
     </div>
-    ${
-      it.url
-        ? `<div style="margin-top:10px;">
-             <a href="${it.url}" style="color:#0b1220;text-decoration:none;">
-               Zobacz raport →
-             </a>
-           </div>`
-        : ""
-    }
   </div>`
-    )
-    .join("");
+  )
+  .join("");
 
   // HTML template
   const templatePath = path.join(process.cwd(), ".github", "email-template.html");
