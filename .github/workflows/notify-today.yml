@@ -15,8 +15,9 @@ jobs:
 
     steps:
       - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: DEBUG - workflow is running
+      - name: DEBUG - workflow is running
         run: |
           echo "Workflow started OK"
           echo "UTC now: $(date -u)"
@@ -25,7 +26,6 @@ jobs:
           ls -la
           echo "manifest.json preview:"
           head -n 20 manifest.json || true
-        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
