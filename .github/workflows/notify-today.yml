@@ -35,14 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm i nodemailer
 
-      - name: Send email if manifest has today's updates
+           - name: Send email if manifest has today's updates
         env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_HOST: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_FROM: ${{ secrets.MAIL_FROM }}
-          MAIL_TO: ${{ secrets.MAIL_TO }} # np. "a@x.pl,b@y.pl"
-          BASE_URL: ${{ secrets.BASE_URL }} # np. "https://raporty.ace-group.pl/"
+          MAIL_FROM: ${{ secrets.FROM_EMAIL }}
+          MAIL_TO: ${{ secrets.TO_EMAILS }}
+          BASE_URL: ${{ secrets.BASE_URL }}
           TZ: "Europe/Warsaw"
         run: node .github/scripts/send_manifest_today.js
