@@ -15,6 +15,16 @@ jobs:
 
     steps:
       - name: Checkout
+
+            - name: DEBUG - workflow is running
+        run: |
+          echo "Workflow started OK"
+          echo "UTC now: $(date -u)"
+          echo "Warsaw now: $(TZ=Europe/Warsaw date)"
+          echo "Files in repo root:"
+          ls -la
+          echo "manifest.json preview:"
+          head -n 20 manifest.json || true
         uses: actions/checkout@v4
 
       - name: Setup Node
