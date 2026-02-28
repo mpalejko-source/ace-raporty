@@ -173,13 +173,14 @@ Panel: https://raporty.ace-group.pl/
     tls: { minVersion: "TLSv1.2" },
   });
 
-  const info = await transporter.sendMail({
-    from,
-    to: toList.join(","),
-    subject,
-    text: textBody,
-    html: htmlBody,
-  });
+const info = await transporter.sendMail({
+  from,
+  to: from,              // Ty jako adresat "To"
+  bcc: toList,           // klienci w UDW/BCC (tablica jest OK)
+  subject,
+  text: textBody,
+  html: htmlBody,
+});
 
   console.log("Email sent:", info.messageId);
 }
