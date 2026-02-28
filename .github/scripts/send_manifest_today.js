@@ -20,6 +20,15 @@ function safeJoinUrl(base, p) {
   return b + pp;
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 async function main() {
   const manifestPath = path.join(process.cwd(), "manifest.json");
   if (!fs.existsSync(manifestPath)) {
@@ -36,8 +45,8 @@ async function main() {
   for (const [key, v] of Object.entries(manifest)) {
     if (!v || typeof v !== "object") continue;
 
-    // U Ciebie pola to np. updated / next_issue / frequency / path / category
-    const updated = v.updated || "";
+    // Wysyłka tylko, gdy updated == dziś (YYYY-MM-DD)
+    const updated = (v.updated || "").toString().trim();
     if (updated === today) {
       items.push({
         name: v.name || key,
@@ -58,7 +67,7 @@ async function main() {
 
   const toList = (process.env.MAIL_TO || "")
     .split(",")
-    .map(s => s.trim())
+    .map((s) => s.trim())
     .filter(Boolean);
 
   if (toList.length === 0) {
@@ -68,6 +77,7 @@ async function main() {
 
   const subject = `ACE – nowe raporty (${today})`;
 
+  // TEXT body (fallback)
   const linesText = items.map((it, i) => {
     return [
       `${i + 1}. ${it.name}`,
@@ -76,40 +86,62 @@ async function main() {
       it.frequency ? `   Częstotliwość: ${it.frequency}` : "",
       it.next_issue ? `   Kolejna: ${it.next_issue}` : "",
       it.url ? `   Link: ${it.url}` : "",
-    ].filter(Boolean).join("\n");
+    ]
+      .filter(Boolean)
+      .join("\n");
   });
 
-  const textBody =
-`Cześć,
+  const textBody = `Cześć,
 Poniżej raporty zaktualizowane dziś (${today}):
 
 ${linesText.join("\n\n")}
 
 — ACE`;
 
-  const htmlItems = items.map(it => `
-    <li style="margin:0 0 12px 0;">
-      <div><strong>${escapeHtml(it.name)}</strong></div>
-      ${it.description ? `<div>${escapeHtml(it.description)}</div>` : ""}
-      <div style="color:#444;">
-        ${it.category ? `Kategoria: ${escapeHtml(it.category)}<br>` : ""}
-        ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
-        ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
-        ${it.url ? `Link: <a href="${it.url}">${it.url}</a>` : ""}
-      </div>
-    </li>
-  `).join("");
+  // HTML items (ładne boksy)
+  const htmlItems = items
+    .map(
+      (it) => `
+  <div style="margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #eee;">
+    <div style="font-size:15px;">
+      <strong>${escapeHtml(it.name)}</strong>
+    </div>
+    ${
+      it.description
+        ? `<div style="margin-top:4px;color:#333;">${escapeHtml(it.description)}</div>`
+        : ""
+    }
+    <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
+      ${it.category ? `Kategoria: ${escapeHtml(it.category)}<br>` : ""}
+      ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
+      ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
+    </div>
+    ${
+      it.url
+        ? `<div style="margin-top:10px;">
+             <a href="${it.url}" style="color:#0b1220;text-decoration:none;">
+               Zobacz raport →
+             </a>
+           </div>`
+        : ""
+    }
+  </div>`
+    )
+    .join("");
 
-  const htmlBody =
-`<div style="font-family:Arial, sans-serif; font-size:14px; line-height:1.4;">
-  <p>Cześć,<br>
-  Poniżej raporty zaktualizowane dziś (<strong>${today}</strong>):</p>
-  <ul style="padding-left:18px; margin:0;">
-    ${htmlItems}
-  </ul>
-  <p style="margin-top:16px;">— ACE</p>
-</div>`;
+  // HTML template
+  const templatePath = path.join(process.cwd(), ".github", "email-template.html");
+  if (!fs.existsSync(templatePath)) {
+    console.log("Missing .github/email-template.html. Not sending.");
+    return;
+  }
 
+  const template = fs.readFileSync(templatePath, "utf8");
+  const htmlBody = template
+    .replaceAll("{{DATE}}", escapeHtml(today))
+    .replace("{{CONTENT}}", htmlItems);
+
+  // SMTP
   const host = process.env.SMTP_HOST;
   const port = Number(process.env.SMTP_PORT || "587");
   const user = process.env.SMTP_USER;
@@ -117,7 +149,9 @@ ${linesText.join("\n\n")}
   const from = process.env.MAIL_FROM;
 
   if (!host || !port || !user || !pass || !from) {
-    console.log("Missing SMTP env vars (SMTP_HOST/PORT/USER/PASS or MAIL_FROM). Not sending.");
+    console.log(
+      "Missing SMTP env vars (SMTP_HOST/PORT/USER/PASS or MAIL_FROM). Not sending."
+    );
     return;
   }
 
@@ -126,6 +160,7 @@ ${linesText.join("\n\n")}
     port,
     secure: port === 465, // 465 = SSL
     auth: { user, pass },
+    tls: { minVersion: "TLSv1.2" },
   });
 
   const info = await transporter.sendMail({
@@ -139,16 +174,7 @@ ${linesText.join("\n\n")}
   console.log("Email sent:", info.messageId);
 }
 
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-main().catch(err => {
+main().catch((err) => {
   console.error("ERROR:", err);
   process.exit(1);
 });
