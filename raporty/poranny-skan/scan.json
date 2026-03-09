@@ -1,9 +1,22 @@
 {"items":[
   {
-    "id":"2026-03-06",
-    "date":"2026-03-06",
-    "time":"08:37",
+    "id":"2026-03-09",
+    "date":"2026-03-09",
+    "time":"08:57",
     "hide_in_history":true,
+    "pl":{
+      "title":"Rekordowe zakupy funduszy na rynkach towarowych.  Wpompowały aż +17,4 mld USD w ropę Brent - największy napływ kapitału w historii. Silne napływy kapitału widać również w kukurydzy, ziarnie soi, śrucie sojowej oraz rzepaku. ",
+      "lead":"PORANNY SKAN RYNKU Z SYSTEMU REUTERS",
+      "lead_media":[{"type":"image","src":"scan_media/2026-03-09_lead_1.png"}],
+      "fx":"",
+      "agri":"",
+      "focus":[]
+    }
+  },
+  {
+    "id":"06.03.2026",
+    "date":"06.03.2026",
+    "time":"08:37",
     "pl":{
       "title":"Nawozy stają się jednym z kluczowych tematów rynku rolnego.",
       "lead":"KOMENTARZ PORANNY- NASZA OCENA\nKonflikt na Bliskim Wschodzie pozostaje głównym czynnikiem wpływającym na globalne rynki finansowe i surowcowe. Jednocześnie fundamenty rynku rolnego pozostają relatywnie stabilne. Globalna produkcja zbóż jest bardzo wysoka, a podaż białka paszowego również pozostaje komfortowa. Dlatego na razie nie widać silnego fundamentalnego impulsu wzrostowego dla zbóż czy śrut.\nNiepewność przesuwa się natomiast w stronę kosztów produkcji w kolejnym sezonie. Największe ryzyko dotyczy obecnie energii i nawozów, które mogą znacząco podnieść koszty upraw w nadchodzącym cyklu produkcyjnym. ",
