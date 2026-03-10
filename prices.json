@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-03-10 08:13",
+  "asof": "2026-03-10 08:16",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
@@ -21,9 +21,9 @@
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1077.00,
-      "w": 123.00,
-      "m": 109.00
+      "price": 1064.00,
+      "w": 110.00,
+      "m": 96.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
