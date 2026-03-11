@@ -36,11 +36,11 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-03-04",
+    "updated": "2026-03-11",
     "frequency": "tygodniowo",
-    "next_issue": "2026-03-11",
+    "next_issue": "2026-03-18",
     "category": "zboza",
-    "alert_comment": "Tu komentarz"
+    "alert_comment": "Śruta sojowa: Nowe dane pokazują spokojny rynek w Polsce i wysokie pokrycie zakupów, podczas gdy my pozostajemy lekko poniżej rynku i czekamy z zakupami. Śruta rzepakowa: Na śrucie rzepakowej trwa prawdziwy rollercoaster – ceny na Dolnym Renie skaczą nawet o +20/-20 EUR dziennie, dlatego rozkładamy zakupy w czasie, aby budować średnią w warunkach dużej zmienności. Portfel USD: Po pierwszym szoku wojennym dolar wyraźnie koryguje, a przy wysokiej zmienności USD/PLN pozostajemy przy strategii zakupów wyłącznie spot."
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
