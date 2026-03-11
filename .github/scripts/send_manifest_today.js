@@ -75,7 +75,7 @@ async function main() {
         path: after.path || "",
         frequency: after.frequency || "",
         next_issue: after.next_issue || "",
-        // url (opcjonalnie) – obecnie nie używamy w HTML jako link per raport, ale zostawiamy na przyszłość
+        alert_comment: (after.alert_comment || "").toString().trim(),
         url: safeJoinUrl(baseUrl, after.path || ""),
       });
     }
@@ -96,17 +96,18 @@ async function main() {
     return;
   }
 
-  // SUBJECT: ACE – nowe wydanie (data, Nazwa1, Nazwa2...)
   const namesForSubject = items.map((it) => it.name).join(", ");
   const subject = `ACE – nowe wydanie (${today}${namesForSubject ? ", " + namesForSubject : ""})`;
 
-  // TEXT body (bez kategorii, bez linków per raport)
+  // TEXT body
   const linesText = items.map((it, i) => {
     return [
       `${i + 1}. ${it.name}`,
       it.description ? `   ${it.description}` : "",
+      it.alert_comment ? `   Komentarz ACE: ${it.alert_comment}` : "",
       it.frequency ? `   Częstotliwość: ${it.frequency}` : "",
       it.next_issue ? `   Kolejna: ${it.next_issue}` : "",
+      it.url ? `   Link: ${it.url}` : "",
     ]
       .filter(Boolean)
       .join("\n");
@@ -120,26 +121,76 @@ ${linesText.join("\n\n")}
 Panel: https://raporty.ace-group.pl/
 — ACE`;
 
-  // HTML items – bez kategorii i bez "Zobacz raport" (tylko lista)
+  // HTML items
   const htmlItems = items
-    .map(
-      (it) => `
-  <div style="margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #eee;">
-    <div style="font-size:15px;">
-      <strong>${escapeHtml(it.name)}</strong>
-    </div>
-    ${
-      it.description
-        ? `<div style="margin-top:4px;color:#333;">${escapeHtml(it.description)}</div>`
-        : ""
-    }
-    <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
-      ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
-      ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
-    </div>
-  </div>`
-    )
-    .join("");
+  .map((it) => {
+
+    const commentBlock = it.alert_comment
+      ? `
+      <div style="
+        margin-top:6px;
+        margin-bottom:10px;
+        padding:10px 12px;
+        background:#eef3ff;
+        border-left:4px solid #244a9b;
+        border-radius:6px;
+        font-size:13px;
+        line-height:1.6;
+        color:#24324a;
+      ">
+        <strong style="color:#244a9b;">Komentarz ACE:</strong>
+        ${escapeHtml(it.alert_comment)}
+      </div>
+      `
+      : "";
+
+    const reportLink = it.url
+      ? `
+      <div style="margin-top:12px;">
+        <a href="${escapeHtml(it.url)}"
+        style="
+          color:#0b1220;
+          font-size:13px;
+          font-weight:700;
+          text-decoration:none;
+        ">
+          Otwórz publikację →
+        </a>
+      </div>`
+      : "";
+
+    return `
+      <div style="
+        margin-bottom:20px;
+        padding-bottom:16px;
+        border-bottom:1px solid #eee;
+      ">
+
+        <div style="font-size:16px;margin-bottom:4px;">
+          <strong>${escapeHtml(it.name)}</strong>
+        </div>
+
+        ${commentBlock}
+
+        ${
+          it.description
+            ? `<div style="color:#333;margin-top:4px;">
+                ${escapeHtml(it.description)}
+               </div>`
+            : ""
+        }
+
+        <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
+          ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
+          ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
+        </div>
+
+        ${reportLink}
+
+      </div>
+    `;
+  })
+  .join("");
 
   // HTML template
   const templatePath = path.join(process.cwd(), ".github", "email-template.html");
@@ -173,14 +224,14 @@ Panel: https://raporty.ace-group.pl/
     tls: { minVersion: "TLSv1.2" },
   });
 
-const info = await transporter.sendMail({
-  from,
-  to: from,              // Ty jako adresat "To"
-  bcc: toList,           // klienci w UDW/BCC (tablica jest OK)
-  subject,
-  text: textBody,
-  html: htmlBody,
-});
+  const info = await transporter.sendMail({
+    from,
+    to: from,
+    bcc: toList,
+    subject,
+    text: textBody,
+    html: htmlBody,
+  });
 
   console.log("Email sent:", info.messageId);
 }
