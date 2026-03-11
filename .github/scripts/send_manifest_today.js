@@ -123,53 +123,74 @@ Panel: https://raporty.ace-group.pl/
 
   // HTML items
   const htmlItems = items
-    .map((it) => {
-      const commentBlock = it.alert_comment
-        ? `
-          <div style="margin-top:10px;padding:12px 14px;background:#f1f5ff;border-left:4px solid #244a9b;border-radius:8px;">
-            <div style="font-size:12px;font-weight:700;color:#244a9b;margin-bottom:4px;">
-              Komentarz ACE
-            </div>
-            <div style="font-size:13px;color:#24324a;line-height:1.6;">
-              ${escapeHtml(it.alert_comment)}
-            </div>
-          </div>
-        `
-        : "";
+  .map((it) => {
 
-      const reportLink = it.url
-        ? `
-          <div style="margin-top:12px;">
-            <a href="${escapeHtml(it.url)}" style="color:#0b1220;font-size:13px;font-weight:700;text-decoration:none;">
-              Otwórz publikację →
-            </a>
-          </div>
-        `
-        : "";
+    const commentBlock = it.alert_comment
+      ? `
+      <div style="
+        margin-top:6px;
+        margin-bottom:10px;
+        padding:10px 12px;
+        background:#eef3ff;
+        border-left:4px solid #244a9b;
+        border-radius:6px;
+        font-size:13px;
+        line-height:1.6;
+        color:#24324a;
+      ">
+        <strong style="color:#244a9b;">Komentarz ACE:</strong>
+        ${escapeHtml(it.alert_comment)}
+      </div>
+      `
+      : "";
 
-      return `
-        <div style="margin-bottom:18px;padding:16px 18px;border:1px solid #e6eaf2;border-radius:10px;background:#fafbfe;">
-          <div style="font-size:15px;">
-            <strong>${escapeHtml(it.name)}</strong>
-          </div>
+    const reportLink = it.url
+      ? `
+      <div style="margin-top:12px;">
+        <a href="${escapeHtml(it.url)}"
+        style="
+          color:#0b1220;
+          font-size:13px;
+          font-weight:700;
+          text-decoration:none;
+        ">
+          Otwórz publikację →
+        </a>
+      </div>`
+      : "";
 
-          ${
-            it.description
-              ? `<div style="margin-top:4px;color:#333;line-height:1.6;">${escapeHtml(it.description)}</div>`
-              : ""
-          }
+    return `
+      <div style="
+        margin-bottom:20px;
+        padding-bottom:16px;
+        border-bottom:1px solid #eee;
+      ">
 
-          ${commentBlock}
+        <div style="font-size:16px;margin-bottom:4px;">
+          <strong>${escapeHtml(it.name)}</strong>
+        </div>
 
-          <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
-            ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
-            ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
-          </div>
+        ${commentBlock}
 
-          ${reportLink}
-        </div>`;
-    })
-    .join("");
+        ${
+          it.description
+            ? `<div style="color:#333;margin-top:4px;">
+                ${escapeHtml(it.description)}
+               </div>`
+            : ""
+        }
+
+        <div style="margin-top:8px;color:#666;font-size:12px;line-height:1.5;">
+          ${it.frequency ? `Częstotliwość: ${escapeHtml(it.frequency)}<br>` : ""}
+          ${it.next_issue ? `Kolejna: ${escapeHtml(it.next_issue)}<br>` : ""}
+        </div>
+
+        ${reportLink}
+
+      </div>
+    `;
+  })
+  .join("");
 
   // HTML template
   const templatePath = path.join(process.cwd(), ".github", "email-template.html");
