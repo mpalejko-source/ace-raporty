@@ -6,7 +6,8 @@
     "updated": "2026-03-11",
     "frequency": "dziennie",
     "next_issue": "2026-03-12",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": "Dzisiejszy skan zbiera najważniejsze poranne impulsy dla zbóż, śrut i walut oraz pokazuje naszą szybką ocenę sytuacji rynkowej."
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
@@ -16,7 +17,9 @@
     "updated": "2026-03-05",
     "frequency": "tygodniowo",
     "next_issue": "2026-03-12",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   },
   "Pozycje Funduszy": {
     "name": "Pozycje Funduszy",
@@ -25,7 +28,9 @@
     "updated": "2026-03-09",
     "frequency": "tygodniowo",
     "next_issue": "2026-03-16",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   },
   "Portfele-ACE": {
     "name": "Portfele-ACE",
@@ -34,14 +39,17 @@
     "updated": "2026-03-04",
     "frequency": "tygodniowo",
     "next_issue": "2026-03-11",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": "Tu komentarz"
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
     "description": "Pakiet szczegółowych analiz liczbowych dla wszystkich surowców i walut",
      "path": "raporty/analizy-stat-tech/",
       "type": "folder",
-    "category": "foldery"
+    "category": "foldery",
+    "alert_comment": ""
+
   },
   
   "Pogoda": {
@@ -51,7 +59,9 @@
     "updated": "2026-03-06",
     "frequency": "tygodniowo",
     "next_issue": "2026-03-13",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   },
 
 
@@ -176,7 +186,9 @@
     "next_issue": "2026-03-10",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": "Wczorajszy raport WASDE nie wniósł niemal nic nowego dla rynku soi. Największe zmiany (pro-spadkowe) dotyczą rynku kukurydzy. Zapraszamy do przeczytania całego raportu"
+
   },
   "igc": {
     "name": "IGC",
@@ -187,7 +199,9 @@
     "next_issue": "2026-03",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   },
   "fao": {
     "name": "FAO",
@@ -198,7 +212,9 @@
     "next_issue": "2026-04-03",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   },
   "Indexy-światowe": {
     "name": "Indexy Światowe",
@@ -209,6 +225,8 @@
     "next_issue": "2026-03-18",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
-    "category": "zboza"
+    "category": "zboza",
+    "alert_comment": ""
+
   }
 }
