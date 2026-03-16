@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-03-13",
+    "updated": "2026-03-16",
     "frequency": "dziennie",
-    "next_issue": "2026-03-14",
+    "next_issue": "2026-03-17",
     "category": "zboza",
-    "alert_comment": "Napięcia na Bliskim Wschodzie oraz obawy o zakłócenia dostaw przez Cieśninę Ormuz ponownie podbijają ceny ropy, co wspiera wzrosty na rynkach surowców rolnych. Mimo że Międzynarodowa Agencja Energetyczna (IEA) uwolniła rekordowe 400 mln baryłek ropy z rezerw strategicznych, rynek nadal obawia się niedoborów, a konflikt w regionie trwa. W efekcie drożeją m.in. pszenica i rzepak. Więcej w porannym skanie."
+    "alert_comment": "Rynki rolnicze pozostają pod wpływem napływu kapitału funduszy hedgingowych – rekordowe zakupy kontraktów na kukurydzę i inne zboża utrzymują presję wzrostową. Jednocześnie soja w Chicago lekko spada po informacji o możliwym opóźnieniu spotkania Trump–Xi, a ceny pszenicy i kukurydzy rosną pod wpływem czynników geopolitycznych i wysokich cen ropy. Na rynku globalnym uwagę przyciągają również rosnące ceny nawozów w USA oraz napięcia wokół Cieśniny Ormuz, które utrudniają handel energią i materiałami rolniczymi."
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
