@@ -10,8 +10,8 @@
     "alert_comment": "Rynki rolnicze pozostają pod wpływem napływu kapitału funduszy hedgingowych – rekordowe zakupy kontraktów na kukurydzę i inne zboża utrzymują presję wzrostową. Jednocześnie soja w Chicago lekko spada po informacji o możliwym opóźnieniu spotkania Trump–Xi, a ceny pszenicy i kukurydzy rosną pod wpływem czynników geopolitycznych i wysokich cen ropy. Na rynku globalnym uwagę przyciągają również rosnące ceny nawozów w USA oraz napięcia wokół Cieśniny Ormuz, które utrudniają handel energią i materiałami rolniczymi."
   },
 
-  "Analiza wg ACE": {
-  "name": "Analiza wg ACE",
+  "ACE Market View": {
+  "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
   "updated": "2026-03-10",
