@@ -224,35 +224,33 @@
         0 10px 24px rgba(0,0,0,.20),
         0 0 0 1px rgba(250,204,21,.18);
     }
-.bottomBadge{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  line-height:1;
-  color: rgba(234,240,255,.92);
-  border:1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  box-shadow: 0 10px 24px rgba(0,0,0,.20);
-  white-space:nowrap;
-  flex:0 0 auto;
-}
 
-.bottomBadge.today{
-  border-color: rgba(250,204,21,.70);
-  background: var(--todayYellow);
-  color: var(--todayYellowText);
-  font-weight:950;
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.20),
-    0 0 0 1px rgba(250,204,21,.18);
-}
+    .bottomBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      line-height:1;
+      color: rgba(234,240,255,.92);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
 
+    .bottomBadge.today{
+      border-color: rgba(250,204,21,.70);
+      background: var(--todayYellow);
+      color: var(--todayYellowText);
+      font-weight:950;
+      box-shadow:
+        0 10px 24px rgba(0,0,0,.20),
+        0 0 0 1px rgba(250,204,21,.18);
+    }
 
-
-    
     .title{margin:0; font-size:16px; font-weight:950; line-height:1.15; color:#fff}
     .desc{
       margin:10px 0 0 0;
@@ -280,76 +278,77 @@
     .metaLine strong{color: rgba(234,240,255,.92); font-weight:900;}
 
     /* ===== Wspólny dolny blok meta dla górnych kafelków ===== */
-   .bottomMeta{
-  margin-top:auto;
-  padding-top:12px;
-  border-top:1px solid rgba(255,255,255,.10);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:nowrap;
-  font-size:12px;
-  color:var(--muted2);
-}
+    .bottomMeta{
+      margin-top:auto;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:nowrap;
+      font-size:12px;
+      color:var(--muted2);
+    }
 
-.bottomMeta .left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-  flex:1 1 auto;
-}
+    .bottomMeta .left{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      flex:1 1 auto;
+    }
 
-.bottomMeta .right{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:8px;
-  text-align:right;
-  min-width:0;
-  flex:0 0 auto;
-  margin-left:auto;
-}
+    .bottomMeta .right{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:8px;
+      text-align:right;
+      min-width:0;
+      flex:0 0 auto;
+      margin-left:auto;
+    }
 
-.bottomMeta strong{
-  color:rgba(234,240,255,.92);
-  font-weight:900;
-}
+    .bottomMeta strong{
+      color:rgba(234,240,255,.92);
+      font-weight:900;
+    }
 
-.bottomMeta .nextText{
-  color:var(--muted2);
-  white-space:nowrap;
-}
-.updateLine{
-  margin-top:16px;
-  padding-top:12px;
-  border-top:1px solid rgba(255,255,255,.08);
-  display:flex;
-  justify-content:center;
-}
+    .bottomMeta .nextText{
+      color:var(--muted2);
+      white-space:nowrap;
+    }
 
-.updateBadge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:6px 14px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.06);
-  color:rgba(234,240,255,.92);
-  white-space:nowrap;
-}
+    .updateLine{
+      margin-top:16px;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:center;
+    }
 
-.updateBadge.today{
-  background:#FACC15;
-  border-color:#FACC15;
-  color:#111827;
-  font-weight:900;
-}
-    
+    .updateBadge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.06);
+      color:rgba(234,240,255,.92);
+      white-space:nowrap;
+    }
+
+    .updateBadge.today{
+      background:#FACC15;
+      border-color:#FACC15;
+      color:#111827;
+      font-weight:900;
+    }
+
     /* ===== TICKER ===== */
     .ticker{
       margin-top:10px;
@@ -604,28 +603,28 @@
     div.featured > *{ position:relative; }
 
     .fMetaLine{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:10px;
-  flex-wrap:nowrap;
-  margin-bottom:10px;
-  font-size:12px;
-  color: rgba(234,240,255,.78);
-  min-height:34px;
-}
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:10px;
+      flex-wrap:nowrap;
+      margin-bottom:10px;
+      font-size:12px;
+      color: rgba(234,240,255,.78);
+      min-height:34px;
+    }
 
-.fMetaLine .leftBox{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-  flex:1 1 auto;
-}
+    .fMetaLine .leftBox{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      flex:1 1 auto;
+    }
 
-.fMetaLine .rightBox{
-  display:none;
-}
+    .fMetaLine .rightBox{
+      display:none;
+    }
 
     .fUpdToday{
       display:inline-flex;
@@ -726,62 +725,59 @@
       .thumbGrid{ grid-template-columns: 1fr; }
     }
 
-.thumb{
-  display:block;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
-  box-shadow: 0 10px 24px rgba(0,0,0,.22);
-  text-decoration:none;
-  color:inherit;
-  transition: transform .08s ease, border-color .08s ease, background .08s ease;
-  position:relative;
-}
+    .thumb{
+      display:block;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      text-decoration:none;
+      color:inherit;
+      transition: transform .08s ease, border-color .08s ease, background .08s ease;
+      position:relative;
+    }
 
-.thumbToday{
-  border:1px solid rgba(250,204,21,.75) !important;
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.22),
-    0 0 0 1px rgba(250,204,21,.20);
-  background: linear-gradient(180deg, rgba(250,204,21,.10), rgba(255,255,255,.03));
-}
+    .thumbToday{
+      border:1px solid rgba(250,204,21,.75) !important;
+      box-shadow:
+        0 10px 24px rgba(0,0,0,.22),
+        0 0 0 1px rgba(250,204,21,.20);
+      background: linear-gradient(180deg, rgba(250,204,21,.10), rgba(255,255,255,.03));
+    }
 
-.thumb:hover{
-  transform: translateY(-1px);
-  border-color: rgba(255,255,255,.20);
-  background: rgba(255,255,255,.05);
-}
+    .thumb:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.05);
+    }
 
-.thumb img{
-  width:100%;
-  height:56px;
-  object-fit:cover;
-  display:block;
-  filter: contrast(1.02) saturate(1.04);
-}
+    .thumb img{
+      width:100%;
+      height:56px;
+      object-fit:cover;
+      display:block;
+      filter: contrast(1.02) saturate(1.04);
+    }
 
-.thumb .cap{
-  padding:8px 10px;
-  font-size:12px;
-  font-weight:950;
-  color: rgba(234,240,255,.92);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-}
+    .thumb .cap{
+      padding:8px 10px;
+      font-size:12px;
+      font-weight:950;
+      color: rgba(234,240,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
 
-.thumb .cap span.small{
-  font-weight:800;
-  color: rgba(234,240,255,.60);
-  font-size:11.5px;
-  white-space:nowrap;
-}
+    .thumb .cap span.small{
+      font-weight:800;
+      color: rgba(234,240,255,.60);
+      font-size:11.5px;
+      white-space:nowrap;
+    }
 
-
-
-    
     /* ===== ANALIZA WG ACE ===== */
     a.analysisFeatured{
       width:100%;
@@ -1429,7 +1425,6 @@
       if(todayScan && todayScan.date === today) porannyToday = true;
 
       const updatedToday = items
-        .filter(x => x.type !== "folder")
         .filter(x => (x.updated || "") === today);
 
       const names = [];
@@ -1461,202 +1456,186 @@
       `;
     }
 
-function renderFeatured(items, scan){
-  const wrap = document.getElementById("featuredWrap");
-  const ps = items.find(x => x.id === FEATURED_KEY);
+    function renderFeatured(items, scan){
+      const wrap = document.getElementById("featuredWrap");
+      const ps = items.find(x => x.id === FEATURED_KEY);
 
-  if(!ps){
-    wrap.innerHTML = `<div class="error">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
-    return;
-  }
+      if(!ps){
+        wrap.innerHTML = `<div class="error">Brak wpisu <code>${FEATURED_KEY}</code> w <code>manifest.json</code>.</div>`;
+        return;
+      }
 
-  const todayScan = pickTodayFromScan(scan);
+      const todayScan = pickTodayFromScan(scan);
 
-  const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
-  const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
-  const updatedLabel = updatedISO
-    ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
-    : "—";
+      const updatedISO  = (todayScan && todayScan.date) ? todayScan.date : (ps.updated || "");
+      const updatedTime = (todayScan && todayScan.time) ? todayScan.time : "";
+      const updatedLabel = updatedISO
+        ? (updatedTime ? `${fmtDatePL(updatedISO)} | ${updatedTime}` : fmtDatePL(updatedISO))
+        : "—";
 
-  let nextTxt = "—";
-  if(todayScan && todayScan.date){
-    const dt = parseISODateLocal(todayScan.date);
-    if(dt) nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
-  } else if ((ps.next_issue || "").trim()){
-    nextTxt = fmtDatePL(ps.next_issue.trim());
-  }
+      let nextTxt = "—";
+      if(todayScan && todayScan.date){
+        const dt = parseISODateLocal(todayScan.date);
+        if(dt) nextTxt = fmtDatePrettyPL(nextBusinessDay(dt));
+      } else if ((ps.next_issue || "").trim()){
+        nextTxt = fmtDatePL(ps.next_issue.trim());
+      }
 
-  wrap.innerHTML = `
-    <a class="featured" href="${safePath(ps.path)}">
-      <div class="fMetaLine">
-        <div class="leftBox">
-          <span class="badge primary">Poranny skan</span>
-        </div>
-      </div>
+      wrap.innerHTML = `
+        <a class="featured" href="${safePath(ps.path)}">
+          <div class="fMetaLine">
+            <div class="leftBox">
+              <span class="badge primary">Poranny skan</span>
+            </div>
+          </div>
 
-      <p class="fTitle">${ps.name}</p>
+          <p class="fTitle">${ps.name}</p>
 
-      <div class="fHero" id="psHero"></div>
-      <div class="fHeroNote">Skan newsów + szybki kontekst rynkowy (agro • FX)</div>
+          <div class="fHero" id="psHero"></div>
+          <div class="fHeroNote">Skan newsów + szybki kontekst rynkowy (agro • FX)</div>
 
-      <div class="updateLine">
-        <span class="updateBadge ${isToday(updatedISO) ? "today" : ""}">
-          Aktualizacja: ${updatedLabel}
-        </span>
-      </div>
+          <div class="updateLine">
+            <span class="updateBadge ${isToday(updatedISO) ? "today" : ""}">
+              Aktualizacja: ${updatedLabel}
+            </span>
+          </div>
 
-      <div class="bottomMeta">
-        <div class="left"></div>
-        <div class="right">
-          ${nextTxt !== "—" ? `<span class="nextText"><strong>Kolejne wydanie:</strong> ${nextTxt}</span>` : ``}
-        </div>
-      </div>
-    </a>
-  `;
+          <div class="bottomMeta">
+            <div class="left"></div>
+            <div class="right">
+              ${nextTxt !== "—" ? `<span class="nextText"><strong>Kolejne wydanie:</strong> ${nextTxt}</span>` : ``}
+            </div>
+          </div>
+        </a>
+      `;
 
-  const hero = document.getElementById("psHero");
-  if(hero){
-    hero.style.backgroundImage =
-      `linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)), url("${url("poranny-skan.png")}")`;
-  }
-}
-    
-    
-function renderPortfolioFeatured(items){
-  const wrap = document.getElementById("portfolioWrap");
-  if(!wrap) return;
-
-  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-  const pick = (key) => mapById[key] || mapByName[key];
-
-  const pf = pick(PORTFOLIO_KEY);
-
-  if(!pf){
-    wrap.innerHTML = `<div class="error">Brak wpisu <code>${PORTFOLIO_KEY}</code> w <code>manifest.json</code>.</div>`;
-    return;
-  }
-
-  const baseHref = safePath(pf.path);
-  const today = todayISO();
-
-  const portfolioChildren = PORTFOLIO_THUMBS
-    .map(t => {
-      const href = portfolioLink(baseHref, t.hash);
-      const cleanHref = (href || "").replace(/#.*$/, "");
-
-      return items.find(it => {
-        const itemPath = safePath(it.path || "").replace(/#.*$/, "");
-        return itemPath === cleanHref;
-      }) || null;
-    })
-    .filter(Boolean);
-
-  let updISO = (pf.updated || "").trim();
-
-  if(portfolioChildren.length){
-    const latestChildUpd = portfolioChildren
-      .map(x => (x.updated || "").trim())
-      .filter(Boolean)
-      .sort((a,b)=>parseISO(b)-parseISO(a))[0] || "";
-
-    if(latestChildUpd){
-      updISO = latestChildUpd;
+      const hero = document.getElementById("psHero");
+      if(hero){
+        hero.style.backgroundImage =
+          `linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)), url("${url("poranny-skan.png")}")`;
+      }
     }
-  }
 
-  const updLabel = updISO ? fmtDatePL(updISO) : "—";
+    function renderPortfolioFeatured(items){
+      const wrap = document.getElementById("portfolioWrap");
+      if(!wrap) return;
 
-  const hasTodayChild = portfolioChildren.some(x => (x.updated || "").trim() === today);
-  const isPortfolioToday = hasTodayChild || isToday(updISO);
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
 
-  const thumbs = PORTFOLIO_THUMBS.map(t => {
-    const imgSrc = url(t.img);
-    const href   = portfolioLink(baseHref, t.hash);
+      const pf = pick(PORTFOLIO_KEY);
 
-    const child = portfolioChildren.find(x => {
-      const childPath = safePath(x.path || "").replace(/#.*$/, "");
-      const targetPath = href.replace(/#.*$/, "");
-      return childPath === targetPath;
-    });
+      if(!pf){
+        wrap.innerHTML = `<div class="error">Brak wpisu <code>${PORTFOLIO_KEY}</code> w <code>manifest.json</code>.</div>`;
+        return;
+      }
 
-    const childUpd = child && child.updated ? child.updated.trim() : "";
-    const thumbTodayClass = childUpd === today ? " thumbToday" : "";
+      const baseHref = safePath(pf.path);
+      const today = todayISO();
 
-    return `
-      <a class="thumb${thumbTodayClass}" href="${href}" title="Otwórz: ${t.label}">
-        <img src="${imgSrc}" alt="${t.label}">
-        <div class="cap">
-          <span>${t.label}</span>
+      const portfolioChildren = PORTFOLIO_THUMBS
+        .map(t => {
+          const href = portfolioLink(baseHref, t.hash);
+          const cleanHref = (href || "").replace(/#.*$/, "");
+
+          return items.find(it => {
+            const itemPath = safePath(it.path || "").replace(/#.*$/, "");
+            return itemPath === cleanHref;
+          }) || null;
+        })
+        .filter(Boolean);
+
+      const updISO = (pf.updated || "").trim();
+      const updLabel = updISO ? fmtDatePL(updISO) : "—";
+      const isPortfolioToday = isToday(updISO);
+
+      const thumbs = PORTFOLIO_THUMBS.map(t => {
+        const imgSrc = url(t.img);
+        const href   = portfolioLink(baseHref, t.hash);
+
+        const child = portfolioChildren.find(x => {
+          const childPath = safePath(x.path || "").replace(/#.*$/, "");
+          const targetPath = href.replace(/#.*$/, "");
+          return childPath === targetPath;
+        });
+
+        const childUpd = child && child.updated ? child.updated.trim() : "";
+        const thumbTodayClass = childUpd === today ? " thumbToday" : "";
+
+        return `
+          <a class="thumb${thumbTodayClass}" href="${href}" title="Otwórz: ${t.label}">
+            <img src="${imgSrc}" alt="${t.label}">
+            <div class="cap">
+              <span>${t.label}</span>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      wrap.innerHTML = `
+        <div class="featured portfolioFeatured cardStatic">
+          <div class="fMetaLine">
+            <div class="leftBox">
+              <span class="badge primary">Portfele zakupowe ACE</span>
+            </div>
+          </div>
+
+          <p class="fTitle">ZAKUPY ACE - REKOMENDACJE<br>BENCHMARK</p>
+
+          <div class="pHero pHeroTight">
+            <div class="thumbGrid thumbGridBig">${thumbs}</div>
+          </div>
+
+          <div class="updateLine">
+            <span class="updateBadge ${isPortfolioToday ? "today" : ""}">
+              Aktualizacja: ${updLabel}
+            </span>
+          </div>
         </div>
-      </a>
-    `;
-  }).join("");
+      `;
+    }
 
-  wrap.innerHTML = `
-    <div class="featured portfolioFeatured cardStatic">
-      <div class="fMetaLine">
-        <div class="leftBox">
-          <span class="badge primary">Portfele zakupowe ACE</span>
-        </div>
-      </div>
+    function renderAnalysisAceFeatured(items){
+      const wrap = document.getElementById("analysisAceWrap");
+      if(!wrap) return;
 
-      <p class="fTitle">ZAKUPY ACE - REKOMENDACJE<br>BENCHMARK</p>
+      const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
+      const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
+      const pick = (key) => mapById[key] || mapByName[key];
 
-      <div class="pHero pHeroTight">
-        <div class="thumbGrid thumbGridBig">${thumbs}</div>
-      </div>
+      const aa = pick(ANALYSIS_ACE_KEY);
 
-      <div class="updateLine">
-        <span class="updateBadge ${isPortfolioToday ? "today" : ""}">
-          Aktualizacja: ${updLabel}
-        </span>
-      </div>
-    </div>
-  `;
-}
+      const href = aa ? safePath(aa.path) : safePath(ANALYSIS_ACE_FALLBACK_PATH);
+      const updISO = aa ? (aa.updated || "").trim() : "";
+      const updLabel = updISO ? fmtDatePL(updISO) : "—";
 
-    
-  function renderAnalysisAceFeatured(items){
-  const wrap = document.getElementById("analysisAceWrap");
-  if(!wrap) return;
+      wrap.innerHTML = `
+        <a class="analysisFeatured" href="${href}">
+          <div class="fMetaLine">
+            <div class="leftBox">
+              <span class="badge primary">ACE Market View</span>
+            </div>
+          </div>
 
-  const mapById   = Object.fromEntries(items.map(x => [x.id, x]));
-  const mapByName = Object.fromEntries(items.map(x => [x.name, x]));
-  const pick = (key) => mapById[key] || mapByName[key];
+          <div class="analysisBox">
+            <p class="analysisTitle">Nasze spojrzenie na rynek</p>
+            <p class="analysisDesc">
+              Autorski komentarz rynkowy ACE: syntetyczne spojrzenie na rynek,
+              najważniejsze impulsy cenowe i praktyczne wnioski.
+            </p>
 
-  const aa = pick(ANALYSIS_ACE_KEY);
+            <div class="analysisHeroMini"></div>
 
-  const href = aa ? safePath(aa.path) : safePath(ANALYSIS_ACE_FALLBACK_PATH);
-  const updISO = aa ? (aa.updated || "").trim() : "";
-  const updLabel = updISO ? fmtDatePL(updISO) : "—";
-
-  wrap.innerHTML = `
-    <a class="analysisFeatured" href="${href}">
-      <div class="fMetaLine">
-        <div class="leftBox">
-          <span class="badge primary">ACE Market View</span>
-        </div>
-      </div>
-
-      <div class="analysisBox">
-        <p class="analysisTitle">Nasze spojrzenie na rynek</p>
-        <p class="analysisDesc">
-          Autorski komentarz rynkowy ACE: syntetyczne spojrzenie na rynek,
-          najważniejsze impulsy cenowe i praktyczne wnioski.
-        </p>
-
-        <div class="analysisHeroMini"></div>
-
-        <div class="updateLine">
-          <span class="updateBadge ${isToday(updISO) ? "today" : ""}">
-            Aktualizacja: ${updLabel}
-          </span>
-        </div>
-      </div>
-    </a>
-  `;
-}
+            <div class="updateLine">
+              <span class="updateBadge ${isToday(updISO) ? "today" : ""}">
+                Aktualizacja: ${updLabel}
+              </span>
+            </div>
+          </div>
+        </a>
+      `;
+    }
 
     function renderCalendarLine(items){
       const wrap = document.getElementById("calLineWrap");
@@ -1836,8 +1815,8 @@ function renderPortfolioFeatured(items){
 
         if(isFolderLike){
           const meta = folderMeta(r);
-          updISO = meta.updISO;
-          nxtISO = meta.nextISO;
+          if(!updISO) updISO = meta.updISO;
+          if(!nxtISO) nxtISO = meta.nextISO;
         }
 
         const upd = updISO ? fmtDatePL(updISO) : "—";
