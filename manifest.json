@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-03-19",
+    "updated": "2026-03-20",
     "frequency": "dziennie",
-    "next_issue": "2026-03-20",
+    "next_issue": "2026-03-23",
     "category": "zboza",
-    "alert_comment": "Eskalacja konfliktu na Bliskim Wschodzie coraz silniej oddziałuje nie tylko na rynek ropy i gazu, ale również na globalny handel nawozami, koszty produkcji rolnej oraz wyceny zbóż i oleistych. Wzrost cen energii, zakłócenia w logistyce przez Cieśninę Ormuz, napięcia na rynku nawozowym w Brazylii i Azji zaczynają kształtować krótkoterminowy obraz rynku pszenicy, kukurydzy, soi i surowców rolnych"
+    "alert_comment": "W dzisiejszym porannym skanie przyglądamy się źródłom wzrostu cen śruty sojowej, porównujemy zachowanie zbóż na MATIF i CBOT oraz analizujemy, jak Chiny próbują pozycjonować się wobec konfliktu na Bliskim Wschodzie i zaburzeń na rynku energii. Dodatkowo sprawdzamy sytuację na dolarze, który pozostaje jednym z kluczowych czynników wpływających dziś na wyceny surowców i nastroje na rynkach."
   },
 
   "ACE Market View": {
