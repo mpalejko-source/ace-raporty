@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-03-16",
+    "updated": "2026-03-23",
     "frequency": "tygodniowo",
-    "next_issue": "2026-03-23",
+    "next_issue": "2026-03-30",
     "category": "zboza",
-    "alert_comment": ""
+    "alert_comment": "Kolejny tydzień zakupów zbóż i oleistych przez spekulantów. Rośnie ryzyko masowej wyprzedaży, aby zrealizować zyski. Dlatego nie kupujemy w przód."
 
   },
   "Portfele-ACE": {
