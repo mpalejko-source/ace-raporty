@@ -14,9 +14,9 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-03-17",
+  "updated": "2026-03-24",
   "type": "report",
-  "alert_comment": "Wrzucamy 4 wykresy pokazujące składowe ceny śruty sojowej: premię, CBOT, flat w USD i flat w PLN. Pokazujemy, która część rynku najbardziej odpowiada dziś za wzrost końcowej ceny surowca."
+  "alert_comment": "Przedstawiamy bieżącą sytuację na rynku śruty sojowej, łącząc analizę techniczną (CBOT), zachowanie funduszy spekulacyjnych oraz zmiany w premiach i kosztach frachtu."
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
