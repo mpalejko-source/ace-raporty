@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-03-23",
+    "updated": "2026-03-24",
     "frequency": "dziennie",
-    "next_issue": "2026-03-24",
+    "next_issue": "2026-03-25",
     "category": "zboza",
-    "alert_comment": "Fundusze hedgingowe utrzymują rekordowe długie pozycje na kukurydzy, soi, bawełnie i rzepaku, a rynek pozostaje silnie powiązany z cenami ropy i sytuacją geopolityczną. Jednocześnie wysokie koszty paliwa i nawozów napędzają wzrost cen produkcji rolnej, co może przekładać się na wyższą inflację żywności."
+    "alert_comment": "Silna reakcja rynków na zmienne sygnały geopolityczne wokół konfliktu USA–Iran – od chwilowej deeskalacji po ponowną eskalację, co wywołuje dużą zmienność na ropie, walutach i surowcach rolnych. Jednocześnie zboża i oleiste pozostają pod wpływem powiązań z rynkiem energii, przy presji podażowej w pszenicy oraz mieszanych fundamentach dla kukurydzy, rzepaku i soi."
   },
 
   "ACE Market View": {
