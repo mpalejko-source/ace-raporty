@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-03-23",
+    "updated": "2026-03-30",
     "frequency": "tygodniowo",
-    "next_issue": "2026-03-30",
+    "next_issue": "2026-04-06",
     "category": "zboza",
-    "alert_comment": "Kolejny tydzień zakupów zbóż i oleistych przez spekulantów. Rośnie ryzyko masowej wyprzedaży, aby zrealizować zyski. Dlatego nie kupujemy w przód."
+    "alert_comment": "Fundusze wyraźnie zwiększają zaangażowanie w surowce, a kapitał kontynuuje zakupy na rynku zbóż i oleistych. Najnowsze dane pokazują jedne z najwyższych pozycji od lat, przy jednoczesnym silnym wpływie rynku ropy na cały sektor agro. Sprawdź, gdzie dokładnie płynie kapitał i co to może oznaczać dla cen w najbliższych tygodniach."
 
   },
   "Portfele-ACE": {
@@ -229,13 +229,13 @@
     "name": "Indexy Światowe",
     "description": "Bloomberg Commodity Index, DXY, Baltic Dry i inne",
     "path": "raporty/raporty-fundamentalne/ace-indexy-swiatowe/",
-    "updated": "2026-02-18",
+    "updated": "2026-03-30",
     "frequency": "miesięcznie",
-    "next_issue": "2026-03-18",
+    "next_issue": "2026-04-20",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": ""
+    "alert_comment": "Globalny rynek surowców znów przyciąga kapitał, ale agro nadal pozostaje w cieniu energii i metali. W tle stabilny dolar i rosnące koszty transportu zaczynają budować potencjał pod większe ruchy cenowe. Sprawdź, co naprawdę pokazują globalne indeksy i co to oznacza dla rynku zbóż i pasz."
 
   }
 }
