@@ -232,7 +232,12 @@ h1{
   <div class="divider"></div>
 
   <div class="sectionTitle">⚡ ENERGIA</div>
-  <div class="grid-2" id="sec-energia"></div>
+  <div class="grid-3" id="sec-energia"></div>
+
+  <div class="divider"></div>
+
+  <div class="sectionTitle">📊 WSKAŹNIKI</div>
+  <div class="grid-3" id="sec-wskazniki"></div>
 
 </div>
 
@@ -241,6 +246,14 @@ function parseUpdated(iso){
   if(!iso) return -Infinity;
   const t = Date.parse(iso + "T00:00:00");
   return isNaN(t) ? -Infinity : t;
+}
+
+function todayIsoLocal(){
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 // zostawiamy "NOWE" jak było: dziś / wczoraj (<= 1.5 dnia)
@@ -261,27 +274,159 @@ function fmtDatePL(iso){
   return `${p[2]}.${p[1]}.${p[0]}`;
 }
 
-function card(r){
-  const isnew = isNew(r.updated);
-
+function renderBadges(updated){
+  const isnew = isNew(updated);
   const newBadge = isnew ? `<span class="badgeNew">NOWE</span>` : "";
-
-  // data w żółtej ramce gdy NOWE, w zwykłej gdy nie
-  const dateBadge = (r.updated || "")
+  const dateBadge = updated
     ? (isnew
-        ? `<span class="badgeUpdToday">Aktualizacja: ${fmtDatePL(r.updated)}</span>`
-        : `<span class="badge">Aktualizacja: ${fmtDatePL(r.updated)}</span>`)
+        ? `<span class="badgeUpdToday">Aktualizacja: ${fmtDatePL(updated)}</span>`
+        : `<span class="badge">Aktualizacja: ${fmtDatePL(updated)}</span>`)
     : `<span class="badge">Aktualizacja: —</span>`;
 
+  return `${newBadge}${dateBadge}`;
+}
+
+function card(r){
+  const href = url(r.path);
+
   return `
-    <a class="card" href="${url(r.path)}">
+    <a class="card js-card" href="${href}" data-source="${href}" data-updated="${r.updated || ""}">
       <div class="badges">
-        ${newBadge}
-        ${dateBadge}
+        ${renderBadges(r.updated || "")}
       </div>
       <p class="cardTitle">${r.name}</p>
       <p class="cardDesc">${r.description || ""}</p>
     </a>`;
+}
+
+function normalizeDate(raw){
+  if(!raw) return null;
+
+  const value = String(raw).trim().replace(/\s+/g, " ");
+  let m;
+
+  m = value.match(/^(\d{4})[.\-\/](\d{2})[.\-\/](\d{2})$/);
+  if(m){
+    return { iso: `${m[1]}-${m[2]}-${m[3]}` };
+  }
+
+  m = value.match(/^(\d{2})[.\-\/](\d{2})[.\-\/](\d{4})$/);
+  if(m){
+    return { iso: `${m[3]}-${m[2]}-${m[1]}` };
+  }
+
+  return null;
+}
+
+function extractDateFromHtml(htmlText){
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, "text/html");
+
+  const directCandidates = [];
+
+  const metaSelectors = [
+    'meta[name="report-updated"]',
+    'meta[name="updated"]',
+    'meta[name="last-updated"]',
+    'meta[property="report-updated"]'
+  ];
+
+  metaSelectors.forEach(selector => {
+    const el = doc.querySelector(selector);
+    if(el && el.content) directCandidates.push(el.content);
+  });
+
+  const dataSelectors = [
+    '[data-report-updated]',
+    '[data-updated]',
+    '.reportDate',
+    '.updateDate',
+    '.updated',
+    '.aktualizacja'
+  ];
+
+  dataSelectors.forEach(selector => {
+    const el = doc.querySelector(selector);
+    if(!el) return;
+
+    const attrDate = el.getAttribute('data-report-updated') || el.getAttribute('data-updated');
+    if(attrDate) directCandidates.push(attrDate);
+    if(el.textContent) directCandidates.push(el.textContent.trim());
+  });
+
+  for(const candidate of directCandidates){
+    const parsed = normalizeDate(candidate);
+    if(parsed) return parsed;
+  }
+
+  const bodyText = (doc.body ? doc.body.textContent : htmlText)
+    .replace(/\u00A0/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const patterns = [
+    /Aktualizacja\s*:?\s*(\d{2}[.\-\/]\d{2}[.\-\/]\d{4})/i,
+    /Aktualizacja\s*:?\s*(\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/i,
+    /Updated\s*:?\s*(\d{2}[.\-\/]\d{2}[.\-\/]\d{4})/i,
+    /Updated\s*:?\s*(\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/i
+  ];
+
+  for(const pattern of patterns){
+    const match = bodyText.match(pattern);
+    if(match && match[1]){
+      const parsed = normalizeDate(match[1]);
+      if(parsed) return parsed;
+    }
+  }
+
+  const genericMatch = bodyText.match(/(\d{2}[.\-\/]\d{2}[.\-\/]\d{4}|\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/);
+  if(genericMatch && genericMatch[1]){
+    const parsed = normalizeDate(genericMatch[1]);
+    if(parsed) return parsed;
+  }
+
+  return null;
+}
+
+async function hydrateMissingDates(){
+  const cards = [...document.querySelectorAll(".js-card")];
+  const todayISO = todayIsoLocal();
+
+  await Promise.all(cards.map(async cardEl => {
+    const existingUpdated = cardEl.dataset.updated || "";
+    if(existingUpdated) return;
+
+    const source = cardEl.dataset.source;
+    if(!source) return;
+
+    try{
+      const separator = source.includes("?") ? "&" : "?";
+      const response = await fetch(`${source}${separator}v=${Date.now()}`, { cache: "no-store" });
+      if(!response.ok) return;
+
+      const htmlText = await response.text();
+      const parsed = extractDateFromHtml(htmlText);
+      if(!parsed || !parsed.iso) return;
+
+      cardEl.dataset.updated = parsed.iso;
+      const badges = cardEl.querySelector(".badges");
+      if(badges){
+        badges.innerHTML = renderBadges(parsed.iso === todayISO ? todayISO : parsed.iso);
+      }
+    }catch(err){
+      // zostawiamy "Aktualizacja: —"
+    }
+  }));
+}
+
+function normalizePath(path){
+  return "/" + String(path || "").replace(/^\/+|\/+$/g, "") + "/";
+}
+
+function ensureExtraCard(arr, extra){
+  const wanted = normalizePath(extra.path);
+  const exists = arr.some(item => normalizePath(item.path) === wanted);
+  if(!exists) arr.push(extra);
 }
 
 async function load(){
@@ -295,25 +440,47 @@ async function load(){
   const zboza  = [];
   const sruty  = [];
   const energia= [];
+  const wskazniki = [];
 
   all.forEach(r=>{
     const sec = (r.section || "").toLowerCase();
-    if(sec==="waluty") waluty.push(r);
-    else if(sec==="zboża" || sec==="zboza") zboza.push(r);
-    else if(sec==="śruty" || sec==="sruty") sruty.push(r);
-    else if(sec==="energia") energia.push(r);
+    if(sec === "waluty") waluty.push(r);
+    else if(sec === "zboża" || sec === "zboza") zboza.push(r);
+    else if(sec === "śruty" || sec === "sruty") sruty.push(r);
+    else if(sec === "energia") energia.push(r);
+    else if(sec === "wskaźniki" || sec === "wskazniki") wskazniki.push(r);
+  });
+
+  /* dodane bezpośrednio w kodzie, bez zmian w manifest.json */
+  ensureExtraCard(energia, {
+    name: "Ropa",
+    description: "Analiza statystyczno-techniczna rynku ropy.",
+    path: "/ropa/",
+    updated: ""
+  });
+
+  ensureExtraCard(wskazniki, {
+    name: "Ratio",
+    description: "Analiza relacji cenowych między surowcami i wskaźników względnej wyceny.",
+    path: "/ratio/",
+    updated: ""
   });
 
   const sortByDateDesc = (a,b)=>parseUpdated(b.updated)-parseUpdated(a.updated);
+
   waluty.sort(sortByDateDesc);
   zboza.sort(sortByDateDesc);
   sruty.sort(sortByDateDesc);
   energia.sort(sortByDateDesc);
+  wskazniki.sort(sortByDateDesc);
 
   waluty.forEach(r => document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r)));
   zboza.forEach(r  => document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r)));
   sruty.forEach(r  => document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r)));
   energia.forEach(r=> document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r)));
+  wskazniki.forEach(r=> document.getElementById("sec-wskazniki").insertAdjacentHTML("beforeend", card(r)));
+
+  await hydrateMissingDates();
 }
 
 load();
