@@ -45,11 +45,11 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-03-25",
+    "updated": "2026-04-01",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-01",
+    "next_issue": "2026-04-08",
     "category": "zboza",
-    "alert_comment": "W skrócie, pozostajemy przy spokojnym i ostrożnym podejściu, koncentrując się głównie na rynku spot. Najbliższe potrzeby mamy zabezpieczone, a na dalsze okresy nadal widzimy przestrzeń do spadków, dlatego nie przyspieszamy decyzji zakupowych."
+    "alert_comment": "Na śrucie sojowej nie wychylamy się z zakupami przy relatywnie wysokich cenach w krótkim terminie; na śrucie rzepakowej pozostajemy w spocie i w najbliższych dniach prawdopodobnie rozpoczniemy stopniowe zamykanie pozycji majowych; na dolarze natomiast nie realizujemy zakupów forward, pozostając przy podejściu ostrożnym wobec bieżącej zmienności. Dodatkowo zostały zaktualizowane dane dotyczące pokrycia rynku"
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
