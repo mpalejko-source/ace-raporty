@@ -29,7 +29,6 @@
   --shadow:0 10px 30px rgba(0,0,0,.35);
   --radius:16px;
 
-  /* żółty "Aktualizacja" jak NOWE (dziś/wczoraj) */
   --todayYellow: rgba(250,204,21,.95);
   --todayYellowText: #0b1220;
 }
@@ -64,7 +63,6 @@ h1{
   color:var(--muted);
 }
 
-/* === PRZYCISK POWROT DO PANELU === */
 .backRow{
   margin:10px 0 18px;
   display:flex;
@@ -157,7 +155,6 @@ h1{
   white-space:nowrap;
 }
 
-/* NOWE (gradient) */
 .badgeNew{
   font-size:11px;
   padding:5px 9px;
@@ -170,7 +167,6 @@ h1{
   white-space:nowrap;
 }
 
-/* ŻÓŁTA RAMKA dla "Aktualizacja: data" gdy NOWE (dziś/wczoraj) */
 .badgeUpdToday{
   font-size:12px;
   padding:5px 10px;
@@ -183,7 +179,6 @@ h1{
   white-space:nowrap;
 }
 
-/* wyśrodkowanie żółtej daty w wierszu badge */
 .badges .badgeUpdToday{
   margin-left:auto;
   margin-right:auto;
@@ -234,11 +229,6 @@ h1{
   <div class="sectionTitle">⚡ ENERGIA</div>
   <div class="grid-3" id="sec-energia"></div>
 
-  <div class="divider"></div>
-
-  <div class="sectionTitle">📊 WSKAŹNIKI</div>
-  <div class="grid-3" id="sec-wskazniki"></div>
-
 </div>
 
 <script>
@@ -256,7 +246,6 @@ function todayIsoLocal(){
   return `${y}-${m}-${d}`;
 }
 
-// zostawiamy "NOWE" jak było: dziś / wczoraj (<= 1.5 dnia)
 function isNew(dateStr){
   if(!dateStr) return false;
   const d = new Date(dateStr + "T00:00:00");
@@ -266,7 +255,6 @@ function isNew(dateStr){
   return diffDays <= 1.5;
 }
 
-// format 2026-02-04 -> 04.02.2026
 function fmtDatePL(iso){
   if(!iso) return "";
   const p = String(iso).split("-");
@@ -440,7 +428,6 @@ async function load(){
   const zboza  = [];
   const sruty  = [];
   const energia= [];
-  const wskazniki = [];
 
   all.forEach(r=>{
     const sec = (r.section || "").toLowerCase();
@@ -448,21 +435,12 @@ async function load(){
     else if(sec === "zboża" || sec === "zboza") zboza.push(r);
     else if(sec === "śruty" || sec === "sruty") sruty.push(r);
     else if(sec === "energia") energia.push(r);
-    else if(sec === "wskaźniki" || sec === "wskazniki") wskazniki.push(r);
   });
 
-  /* dodane bezpośrednio w kodzie, bez zmian w manifest.json */
   ensureExtraCard(energia, {
     name: "Ropa",
     description: "Analiza statystyczno-techniczna rynku ropy.",
     path: "/raporty/analizy-stat-tech/energia/ropa/",
-    updated: ""
-  });
-
-  ensureExtraCard(wskazniki, {
-    name: "Ratio",
-    description: "Analiza relacji cenowych między surowcami i wskaźników względnej wyceny.",
-    path: "/raporty/analizy-stat-tech/ratio/",
     updated: ""
   });
 
@@ -472,13 +450,11 @@ async function load(){
   zboza.sort(sortByDateDesc);
   sruty.sort(sortByDateDesc);
   energia.sort(sortByDateDesc);
-  wskazniki.sort(sortByDateDesc);
 
   waluty.forEach(r => document.getElementById("sec-waluty").insertAdjacentHTML("beforeend", card(r)));
   zboza.forEach(r  => document.getElementById("sec-zboza").insertAdjacentHTML("beforeend", card(r)));
   sruty.forEach(r  => document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r)));
   energia.forEach(r=> document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r)));
-  wskazniki.forEach(r=> document.getElementById("sec-wskazniki").insertAdjacentHTML("beforeend", card(r)));
 
   await hydrateMissingDates();
 }
