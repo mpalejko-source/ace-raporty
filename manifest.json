@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-03-31",
+    "updated": "2026-04-01",
     "frequency": "dziennie",
-    "next_issue": "2026-04-01",
+    "next_issue": "2026-04-02",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy poranny skan obejmuje zmiany na rynku ropy i olejów roślinnych, wpływ programu B50 w Indonezji oraz sytuację na rynku nawozów w UE. Dodatkowo zachowanie cen zbóż i oleistych (pszenica, kukurydza, soja) oraz oczekiwania przed dzisiejszym raportem USDA o zasiewach."
+    "alert_comment": "Dzisiejszy poranny skan wskazuje na wzrosty na rynkach zbóż i oleistych wspierane przez suszę w USA, zmiany w zasiewach oraz napięcia geopolityczne i drożejącą ropę."
   },
 
   "ACE Market View": {
