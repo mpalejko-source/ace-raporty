@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-07",
+    "updated": "2026-04-08",
     "frequency": "dziennie",
-    "next_issue": "2026-04-08",
+    "next_issue": "2026-04-09",
     "category": "zboza",
-    "alert_comment": "Kluczowym driverem dla rynków agro pozostaje ropa powyżej 100 USD oraz napięcia geopolityczne, które podbijają ceny nawozów, energii i wspierają napływ kapitału spekulacyjnego. Jednocześnie rynek balansuje między byczą narracją a ryzykiem korekty wysokiego pozycjonowania funduszy."
+    "alert_comment": "W dzisiejszy skanie rynku: spadek cen ropy i poprawę nastrojów po zawieszeniu broni USA–Iran, przy jednoczesnym utrzymaniu presji podażowej na rynkach zbóż i soi. Dodatkowo rośnie znaczenie olejów roślinnych (biopaliwa), które wspierają część kompleksu."
   },
 
   "ACE Market View": {
