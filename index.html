@@ -1323,7 +1323,7 @@
       id: "Wskaźniki",
       name: "Wskaźniki",
       description: "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
-      path: "raporty/analizy-stat-tech/ratio/",
+      path: "raporty/raporty-fundamentalne/wskazniki/",
       updated: "",
       next_issue: ""
     };
@@ -1867,7 +1867,7 @@
         const p = safePath(x.path || "");
         const id = (x.id || "").toString().toLowerCase();
         const name = (x.name || "").toString().toLowerCase();
-        return /analizy-stat-tech\/ratio\/?$/i.test(p) || id === "ratio" || name === "ratio";
+        return /raporty-fundamentalne/wskazniki\/?$/i.test(p) || id === "ratio" || name === "ratio";
       });
 
       const extraCard = {
@@ -1884,7 +1884,7 @@
           id === "wskazniki" ||
           name === "wskaźniki" ||
           name === "wskazniki" ||
-          /analizy-stat-tech\/ratio\/?$/i.test(path)
+          /raporty-fundamentalne/wskazniki\/?$/i.test(path)
         );
       });
 
