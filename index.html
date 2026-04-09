@@ -321,9 +321,8 @@
     }
 
     .updateLine{
-      margin-top:16px;
-      padding-top:12px;
-      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:auto;
+      padding-top:16px;
       display:flex;
       justify-content:center;
     }
@@ -1320,6 +1319,15 @@
 
     const MONTHLY_KEYS = ["wasde","igc","fao","Indexy-światowe"];
 
+    const EXTRA_MONTHLY_CARD = {
+      id: "Wskaźniki",
+      name: "Wskaźniki",
+      description: "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
+      path: "raporty/analizy-stat-tech/ratio/",
+      updated: "",
+      next_issue: ""
+    };
+
     const CAL = [
       { dow:1, short:"PN", key:"Pozycje Funduszy" },
       { dow:2, short:"WT", key:"Analizy statystyczno-techniczne" },
@@ -1854,6 +1862,35 @@
       const pick = (key) => mapById[key] || mapByName[key];
 
       const listRaw = MONTHLY_KEYS.map(k => pick(k)).filter(Boolean);
+
+      const ratioSource = items.find(x => {
+        const p = safePath(x.path || "");
+        const id = (x.id || "").toString().toLowerCase();
+        const name = (x.name || "").toString().toLowerCase();
+        return /analizy-stat-tech\/ratio\/?$/i.test(p) || id === "ratio" || name === "ratio";
+      });
+
+      const extraCard = {
+        ...EXTRA_MONTHLY_CARD,
+        updated: (ratioSource && ratioSource.updated) ? ratioSource.updated : EXTRA_MONTHLY_CARD.updated
+      };
+
+      const alreadyExists = listRaw.some(r => {
+        const id = (r.id || "").toString().toLowerCase();
+        const name = (r.name || "").toString().toLowerCase();
+        const path = safePath(r.path || "");
+        return (
+          id === "wskaźniki" ||
+          id === "wskazniki" ||
+          name === "wskaźniki" ||
+          name === "wskazniki" ||
+          /analizy-stat-tech\/ratio\/?$/i.test(path)
+        );
+      });
+
+      if(!alreadyExists){
+        listRaw.push(extraCard);
+      }
 
       if(!listRaw.length){
         wrap.innerHTML = `<div class="error">Brak pozycji z <code>MONTHLY_KEYS</code> w <code>manifest.json</code>.</div>`;
