@@ -247,5 +247,18 @@
     "category": "zboza",
     "alert_comment": "Globalny rynek surowców znów przyciąga kapitał, ale agro nadal pozostaje w cieniu energii i metali. W tle stabilny dolar i rosnące koszty transportu zaczynają budować potencjał pod większe ruchy cenowe. Sprawdź, co naprawdę pokazują globalne indeksy i co to oznacza dla rynku zbóż i pasz."
 
+  },
+    "Wskaźniki": {
+    "name": "Wskaźniki",
+    "description": "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
+    "path": "raporty/raporty-fundamentalne/wskazniki/",
+    "updated": "2026-04-10",
+    "frequency": "miesięcznie",
+    "next_issue": "2026-04-25",
+    "group": "raporty-fundamentalne",
+    "section": "Raporty",
+    "category": "zboza",
+    "alert_comment": "Nowy raport dostępny: sprawdź aktualne relacje cenowe i kluczowe wskaźniki między surowcami, które pokazują opłacalność i ukryte przewagi rynkowe."
+
   }
 }
