@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-09",
+    "updated": "2026-04-10",
     "frequency": "dziennie",
-    "next_issue": "2026-04-10",
+    "next_issue": "2026-04-13",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy skan rynku pokazuje, że agro znajduje się w fazie korekty, a kierunek cen w dużej mierze wyznaczają czynniki geopolityczne, energia oraz FX. Jednocześnie rynek balansuje między odbiciami technicznymi a rosnącą podażą globalną i zmianami w handlu (UE, Ameryka Południowa), a kluczowym krótkoterminowym wydarzeniem pozostaje dzisiejszy raport WASDE."
+    "alert_comment": "Dzisiejszy skan rynku koncentruje się na reakcji rynków na raport WASDE, który przyniósł niedźwiedzi sygnał dla pszenicy i kukurydzy (wyższe zapasy), przy relatywnie stabilnym obrazie soi wspieranej przez przerób. Jednocześnie kluczowym tłem pozostaje geopolityka i rynek energii(napięcia wokół Iranu)."
   },
 
   "ACE Market View": {
@@ -200,13 +200,13 @@
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
     "path": "raporty/raporty-fundamentalne/wasde/",
-    "updated": "2026-03-11",
+    "updated": "2026-04-10",
     "frequency": "miesięcznie",
-    "next_issue": "2026-04-09",
+    "next_issue": "2026-05-12",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Wczorajszy raport WASDE nie wniósł niemal nic nowego dla rynku soi. Największe zmiany (pro-spadkowe) dotyczą rynku kukurydzy. Zapraszamy do przeczytania całego raportu"
+    "alert_comment": "Raport WASDE przyniósł bardziej niedźwiedzi obraz dla pszenicy i lekko negatywny dla kukurydzy ze względu na wyższe zapasy oraz komfortowy bilans podaży, podczas gdy w soi utrzymał relatywnie stabilny obraz rynku dzięki mocniejszemu przerobowi i niższym zapasom końcowym — zapraszamy do zapoznania się z pełnym raportem."
 
   },
   "igc": {
