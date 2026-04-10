@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
@@ -1320,6 +1320,15 @@
 
     const MONTHLY_KEYS = ["wasde","igc","fao","Indexy-światowe"];
 
+    const EXTRA_MONTHLY_CARD = {
+      id: "wskazniki",
+      name: "Wskaźniki",
+      description: "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
+      path: "raporty-fundamentalne/wskazniki/",
+      updated: "",
+      next_issue: ""
+    };
+
     const CAL = [
       { dow:1, short:"PN", key:"Pozycje Funduszy" },
       { dow:2, short:"WT", key:"Analizy statystyczno-techniczne" },
@@ -1854,6 +1863,23 @@
       const pick = (key) => mapById[key] || mapByName[key];
 
       const listRaw = MONTHLY_KEYS.map(k => pick(k)).filter(Boolean);
+
+      const alreadyExists = listRaw.some(r => {
+        const id = (r.id || "").toString().toLowerCase();
+        const name = (r.name || "").toString().toLowerCase();
+        const path = safePath(r.path || "");
+        return (
+          id === "wskazniki" ||
+          id === "wskaźniki" ||
+          name === "wskazniki" ||
+          name === "wskaźniki" ||
+          /raporty-fundamentalne\/wskazniki\/?$/i.test(path)
+        );
+      });
+
+      if(!alreadyExists){
+        listRaw.push(EXTRA_MONTHLY_CARD);
+      }
 
       if(!listRaw.length){
         wrap.innerHTML = `<div class="error">Brak pozycji z <code>MONTHLY_KEYS</code> w <code>manifest.json</code>.</div>`;
