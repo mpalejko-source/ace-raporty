@@ -65,9 +65,9 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-04-07",
+    "updated": "2026-04-10",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-09",
+    "next_issue": "2026-04-17",
     "category": "zboza",
     "alert_comment": "W Europie kluczowy jest chłodniejszy i miejscami suchy scenariusz w centrum kontynentu, który może pogłębiać deficyt wilgoci dla pszenicy, przy jednoczesnych nadmiarach opadów na południowym wschodzie. W USA utrzymuje się ciepło i susza na Równinach z presją na pszenicę, w Ameryce Południowej kontrast między suchą Brazylią a wilgotną Argentyną wpływa na zbiory i rozwój kukurydzy, a w Australii najważniejszym czynnikiem pozostaje cyklon i poprawa wilgotności gleb przed siewami."
 
