@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-04-07",
+    "updated": "2026-04-13",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-13",
+    "next_issue": "2026-04-20",
     "category": "zboza",
-    "alert_comment": "Fundusze wyraźnie zwiększają zaangażowanie w surowce, a kapitał kontynuuje zakupy na rynku zbóż i oleistych. Najnowsze dane pokazują jedne z najwyższych pozycji od lat, przy jednoczesnym silnym wpływie rynku ropy na cały sektor agro. Sprawdź, gdzie dokładnie płynie kapitał i co to może oznaczać dla cen w najbliższych tygodniach."
+    "alert_comment": "Fundusze wyraźnie ograniczyły ryzyko i zredukowały część pozycji w surowcach, ale z rynku agro wciąż nie wychodzą. Nadal utrzymują mocne zaangażowanie w soję, kukurydzę i rzepak, choć po wcześniejszych wzrostach widać coraz większą ostrożność i realizację części zysków."
 
   },
   "Portfele-ACE": {
