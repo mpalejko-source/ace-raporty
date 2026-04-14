@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
@@ -61,7 +61,6 @@
       flex-direction:column;
     }
 
-    /* ===== HEADER ===== */
     header{
       display:flex;
       flex-direction:column;
@@ -140,7 +139,11 @@
     }
 
     .sectionHead{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       margin-top:14px;
     }
     .h2{ margin:0; font-size:20px; font-weight:950; letter-spacing:.2px; }
@@ -164,7 +167,8 @@
     a.card{ height:100%; }
     a.card:before, .cardStatic:before{
       content:"";
-      position:absolute; inset:-1px;
+      position:absolute;
+      inset:-1px;
       background: radial-gradient(600px 180px at 10% 0%, rgba(125,211,252,.15), transparent 60%),
                   radial-gradient(600px 220px at 90% 0%, rgba(167,139,250,.14), transparent 60%);
       pointer-events:none;
@@ -213,32 +217,6 @@
     }
 
     .badge.updToday{
-      border-color: rgba(250,204,21,.70);
-      background: var(--todayYellow);
-      color: var(--todayYellowText);
-      font-weight:950;
-      box-shadow:
-        0 10px 24px rgba(0,0,0,.20),
-        0 0 0 1px rgba(250,204,21,.18);
-    }
-
-    .bottomBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      line-height:1;
-      color: rgba(234,240,255,.92);
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-
-    .bottomBadge.today{
       border-color: rgba(250,204,21,.70);
       background: var(--todayYellow);
       color: var(--todayYellowText);
@@ -543,7 +521,7 @@
       .topRowGrid{ grid-template-columns: 1fr; }
     }
 
-    a.featured{
+    a.featured, div.featured{
       width:100%;
       border: 2px solid rgba(125,211,252,.70);
       border-radius: var(--radius);
@@ -552,47 +530,22 @@
       padding:18px 18px 16px;
       position:relative;
       overflow:hidden;
-      text-decoration:none;
-      color:inherit;
-      transition: transform .08s ease, border-color .08s ease;
       display:flex;
       flex-direction:column;
       height:100%;
       min-height:420px;
+      color:inherit;
     }
-    a.featured:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
-                  radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
-      pointer-events:none;
-    }
-    a.featured > *{ position:relative; }
+    a.featured{text-decoration:none; transition: transform .08s ease, border-color .08s ease;}
     a.featured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
-
-    div.featured{
-      width:100%;
-      border: 2px solid rgba(125,211,252,.70);
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.10));
-      box-shadow: 0 18px 46px rgba(0,0,0,.48);
-      padding:18px 18px 16px;
-      position:relative;
-      overflow:hidden;
-      color:inherit;
-      display:flex;
-      flex-direction:column;
-      height:100%;
-      min-height:420px;
-    }
-    div.featured:before{
+    a.featured:before, div.featured:before{
       content:"";
       position:absolute; inset:-1px;
       background: radial-gradient(680px 220px at 10% 0%, rgba(125,211,252,.18), transparent 60%),
                   radial-gradient(680px 260px at 90% 0%, rgba(167,139,250,.16), transparent 60%);
       pointer-events:none;
     }
-    div.featured > *{ position:relative; }
+    a.featured > *, div.featured > *{ position:relative; }
 
     .fMetaLine{
       display:flex;
@@ -614,28 +567,6 @@
       flex:1 1 auto;
     }
 
-    .fMetaLine .rightBox{
-      display:none;
-    }
-
-    .fUpdToday{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid rgba(250,204,21,.70);
-      background: var(--todayYellow);
-      color: var(--todayYellowText);
-      font-weight:950;
-      box-shadow:
-        0 10px 24px rgba(0,0,0,.20),
-        0 0 0 1px rgba(250,204,21,.18);
-      white-space:nowrap;
-      flex:0 0 auto;
-      max-width:none;
-    }
-
     .fTitle{
       margin:0;
       font-size:20px;
@@ -647,29 +578,16 @@
       align-items:flex-start;
     }
 
-    .fNext{
-      margin-top:auto;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.10);
-      font-size:12px;
-      color: var(--muted2);
-    }
-    .fNext strong{ color: rgba(234,240,255,.92); font-weight:900; }
-
     .fHero{
       margin-top:12px;
       height:145px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
-      background:
-        linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)),
-        url("");
+      background: linear-gradient(180deg, rgba(11,18,32,.15), rgba(11,18,32,.55)), url("");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      box-shadow:
-        inset 0 18px 40px rgba(0,0,0,.45),
-        0 10px 30px rgba(0,0,0,.35);
+      box-shadow: inset 0 18px 40px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
     }
     .fHeroNote{
       margin-top:8px;
@@ -794,14 +712,7 @@
       pointer-events:none;
     }
     a.analysisFeatured > *{ position:relative; }
-    a.analysisFeatured:hover{
-      transform: translateY(-2px);
-      border-color: rgba(125,211,252,.92);
-    }
-
-    .analysisFeatured .fMetaLine{
-      margin-bottom:12px;
-    }
+    a.analysisFeatured:hover{ transform: translateY(-2px); border-color: rgba(125,211,252,.92); }
 
     .analysisBox{
       flex:1;
@@ -831,14 +742,6 @@
       line-height:1.45;
     }
 
-    .analysisNote{
-      margin-top:0;
-      padding-top:0;
-      border-top:0;
-      font-size:12px;
-      color: rgba(234,240,255,.72);
-    }
-
     .analysisHeroMini{
       margin-top:10px;
       height:96px;
@@ -849,9 +752,7 @@
         url("raporty/analiza-ace/analiza-ace-chart.jpg");
       background-size:cover;
       background-position:center;
-      box-shadow:
-        inset 0 18px 40px rgba(0,0,0,.38),
-        0 10px 30px rgba(0,0,0,.28);
+      box-shadow: inset 0 18px 40px rgba(0,0,0,.38), 0 10px 30px rgba(0,0,0,.28);
     }
 
     .quickGrid{
@@ -908,7 +809,7 @@
 
     .pricesGrid{
       display:grid;
-      grid-template-columns: 1.2fr 1.2fr .9fr;
+      grid-template-columns: 1.7fr .8fr;
       gap:14px;
       margin-top:14px;
       align-items:stretch;
@@ -917,29 +818,71 @@
       .pricesGrid{ grid-template-columns: 1fr; }
     }
 
+    .tableScroll{
+      overflow:visible;
+      margin:0;
+      padding-bottom:0;
+    }
+
     table.prTable{
       width:100%;
+      table-layout:fixed;
       border-collapse:separate;
       border-spacing:0 8px;
     }
     table.prTable th{
       text-align:left;
-      font-size:12px;
+      font-size:11px;
       color: var(--muted2);
-      padding: 0 10px 6px;
+      padding: 0 6px 6px;
       font-weight:900;
+      letter-spacing:.01em;
+      white-space:normal;
     }
     table.prTable td{
-      padding:12px 10px;
+      padding:9px 6px;
       background: rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.08);
-      font-size:13px;
+      font-size:11px;
       color: rgba(234,240,255,.92);
       vertical-align:middle;
     }
     table.prTable tr td:first-child{ border-radius:14px 0 0 14px; }
     table.prTable tr td:last-child{ border-radius:0 14px 14px 0; }
     .right{text-align:right}
+
+    #cashTable th:nth-child(1), #cashTable td:nth-child(1),
+    #futuresTable th:nth-child(1), #futuresTable td:nth-child(1){
+      width:48%;
+    }
+
+    #cashTable th:nth-child(2), #cashTable td:nth-child(2),
+    #futuresTable th:nth-child(2), #futuresTable td:nth-child(2){
+      width:12%;
+    }
+
+    #cashTable th:nth-child(3), #cashTable td:nth-child(3),
+    #cashTable th:nth-child(4), #cashTable td:nth-child(4),
+    #cashTable th:nth-child(5), #cashTable td:nth-child(5),
+    #futuresTable th:nth-child(3), #futuresTable td:nth-child(3),
+    #futuresTable th:nth-child(4), #futuresTable td:nth-child(4),
+    #futuresTable th:nth-child(5), #futuresTable td:nth-child(5){
+      width:13.3%;
+    }
+
+    #cashTable td:first-child,
+    #futuresTable td:first-child{
+      white-space:normal;
+      line-height:1.25;
+      word-break:break-word;
+    }
+
+    #cashTable td:not(:first-child),
+    #futuresTable td:not(:first-child),
+    #cashTable th:not(:first-child),
+    #futuresTable th:not(:first-child){
+      white-space:nowrap;
+    }
 
     .quotesBox{
       height:100%;
@@ -1021,7 +964,9 @@
     .error{
       border:1px solid rgba(255,120,120,.25);
       background: rgba(255,120,120,.08);
-      padding:12px 14px; border-radius:14px; color:rgba(255,220,220,.92);
+      padding:12px 14px;
+      border-radius:14px;
+      color:rgba(255,220,220,.92);
       margin-top:14px;
       font-size:13px;
       box-shadow: var(--shadow);
@@ -1086,30 +1031,12 @@
     }
     .thumbGridBig .thumb .cap .small{ display:none; }
 
-    #featuredWrap .featured .fHero{
-      flex:0 0 auto;
-    }
-
-    #featuredWrap .featured .fHeroNote{
-      flex:0 0 auto;
-    }
-
-    #featuredWrap .featured .fNext{
-      margin-top:auto;
-    }
-
-    #portfolioWrap .featured,
-    #analysisAceWrap .analysisFeatured{
-      height:100%;
-    }
-
-    #portfolioWrap .pHero{
-      margin-top:12px;
-    }
-
-    #analysisAceWrap .analysisBox{
-      height:100%;
-    }
+    #featuredWrap .featured .fHero{ flex:0 0 auto; }
+    #featuredWrap .featured .fHeroNote{ flex:0 0 auto; }
+    #featuredWrap .featured .fNext{ margin-top:auto; }
+    #portfolioWrap .featured, #analysisAceWrap .analysisFeatured{ height:100%; }
+    #portfolioWrap .pHero{ margin-top:12px; }
+    #analysisAceWrap .analysisBox{ height:100%; }
   </style>
 </head>
 
@@ -1162,21 +1089,25 @@
     </div>
 
     <section class="pricesGrid">
-      <section class="panel" id="cashPanel">
+      <section class="panel" id="pricesLeftPanel">
         <div class="panelHead">
           <div class="panelTitle">Ceny najważniejszych surowców rolniczych</div>
           <div class="panelSub" id="pricesAsOf">Aktualizacja: —</div>
         </div>
-        <table id="cashTable" class="prTable"></table>
+        <div class="tableScroll">
+          <table id="cashTable" class="prTable"></table>
+        </div>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • rynek spot</div>
-      </section>
 
-      <section class="panel" id="futuresPanel">
-        <div class="panelHead">
+        <div class="sectionDivider" style="margin:14px 0 10px;"></div>
+
+        <div class="panelHead" style="min-height:auto; margin-bottom:10px;">
           <div class="panelTitle">Ceny giełdowe (close)</div>
           <div class="panelSub" id="futuresAsOf">&nbsp;</div>
         </div>
-        <table id="futuresTable" class="prTable"></table>
+        <div class="tableScroll">
+          <table id="futuresTable" class="prTable"></table>
+        </div>
         <div style="margin-top:8px;font-size:12px;color:rgba(234,240,255,.55)">Źródło: ACE Group • futures</div>
       </section>
 
@@ -1225,6 +1156,14 @@
               <span class="qTxt">
                 <span class="qMain">Rape meal – Neuss / Spyck</span>
                 <span class="qSmall">Niemcy • Dolny Ren</span>
+              </span>
+            </a>
+
+            <a class="qLink" href="https://www.barchart.com/futures/prices-by-exchange/ice-eu-energies?future=CB" target="_blank" rel="noreferrer">
+              <span class="qIco">🛢️</span>
+              <span class="qTxt">
+                <span class="qMain">ICE Brent Crude Oil</span>
+                <span class="qSmall">Benchmark ropy Brent</span>
               </span>
             </a>
 
@@ -1285,8 +1224,6 @@
     const PORTFOLIO_KEY = "Portfele-ACE";
     const ANALYSIS_ACE_KEY = "ACE Market View";
     const ANALYSIS_ACE_FALLBACK_PATH = "raporty/analiza-ace/";
-
-    const PORTFOLIO_PAGE_MODE = "hash";
 
     const PORTFOLIO_THUMBS = [
       { label:"Śruta sojowa",    img:"portfele/soymeal.png",  hash:"#soymeal" },
@@ -1417,8 +1354,7 @@
       const todayScan = pickTodayFromScan(scan);
       if(todayScan && todayScan.date === today) porannyToday = true;
 
-      const updatedToday = items
-        .filter(x => (x.updated || "") === today);
+      const updatedToday = items.filter(x => (x.updated || "") === today);
 
       const names = [];
       const used = new Set();
@@ -1924,17 +1860,20 @@
         <tr>
           <th>Surowiec</th>
           <th class="right">Cena</th>
-          <th class="right">Zmiana tyg.</th>
-          <th class="right">Zmiana mies.</th>
+          <th class="right">1 dzień</th>
+          <th class="right">1 tyzień</th>
+          <th class="right">1 miesiąc</th>
         </tr>
       `;
       const body = rows.map(r=>{
+        const d = arrowCell(r.d);
         const w = arrowCell(r.w);
         const m = arrowCell(r.m);
         return `
           <tr>
             <td>${r.name ?? ""}</td>
             <td class="right" style="font-weight:900">${r.price ?? ""}</td>
+            <td class="right" style="color:${d.col}">${d.sym} ${d.txt}</td>
             <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
             <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
           </tr>
@@ -1949,17 +1888,20 @@
         <tr>
           <th>Instrument</th>
           <th class="right">Close</th>
-          <th class="right">Zmiana tyg.</th>
-          <th class="right">Zmiana mies.</th>
+          <th class="right">1D</th>
+          <th class="right">1T</th>
+          <th class="right">1M</th>
         </tr>
       `;
       const body = rows.map(r=>{
+        const d = arrowCell(r.d);
         const w = arrowCell(r.w);
         const m = arrowCell(r.m);
         return `
           <tr>
             <td>${r.name ?? ""}</td>
             <td class="right" style="font-weight:900">${r.close ?? ""}</td>
+            <td class="right" style="color:${d.col}">${d.sym} ${d.txt}</td>
             <td class="right" style="color:${w.col}">${w.sym} ${w.txt}</td>
             <td class="right" style="color:${m.col}">${m.sym} ${m.txt}</td>
           </tr>
@@ -1976,7 +1918,7 @@
 
         const asof = (data.asof || "—");
         document.getElementById("pricesAsOf").textContent = "Aktualizacja: " + asof;
-        document.getElementById("futuresAsOf").innerHTML = "&nbsp;";
+        document.getElementById("futuresAsOf").innerHTML = "Aktualizacja: " + asof;
 
         const cashRows = Array.isArray(data.cash) ? data.cash : [];
         const futRows  = Array.isArray(data.futures) ? data.futures : [];
@@ -1984,8 +1926,7 @@
         renderCashTable(cashRows);
         renderFuturesTable(futRows);
       } catch(e){
-        document.getElementById("cashPanel").innerHTML = `<div class="error">Błąd cennika: ${e.message}</div>`;
-        document.getElementById("futuresPanel").innerHTML = `<div class="error">Błąd giełd: ${e.message}</div>`;
+        document.getElementById("pricesLeftPanel").innerHTML = `<div class="error">Błąd cenników: ${e.message}</div>`;
       }
     }
 
@@ -2053,7 +1994,6 @@
         try { renderFeatured(items, scan); } catch(e) { showErr("Błąd porannego skanu: " + (e?.message || e)); }
         try { renderPortfolioFeatured(items); } catch(e) { showErr("Błąd portfeli ACE (góra): " + (e?.message || e)); }
         try { renderAnalysisAceFeatured(items); } catch(e) { showErr("Błąd Analizy wg ACE: " + (e?.message || e)); }
-
         try { renderQuick(items); } catch(e) { showErr("Błąd raportów tygodniowych: " + (e?.message || e)); }
         try { renderMonthly(items); } catch(e) { showErr("Błąd raportów miesięcznych: " + (e?.message || e)); }
 
