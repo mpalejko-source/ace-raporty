@@ -1,33 +1,38 @@
 ﻿{
-  "asof": "2026-04-13 08:14",
+  "asof": "2026-04-13 13:50",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
       "price": 830.00,
+      "d": -5.00,
       "w": -20.00,
       "m": -5.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",
       "price": 850.00,
+      "d": 10.00,
       "w": 20.00,
       "m": 40.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
       "price": 1572.00,
+      "d": 33.00,
       "w": -13.00,
       "m": -13.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
       "price": 1049.00,
+      "d": 4.00,
       "w": 0.00,
       "m": 8.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
       "price": 973.00,
+      "d": -5.00,
       "w": -21.00,
       "m": 11.00
     }
@@ -36,35 +41,40 @@
     {
       "name": "Wheat MATIF",
       "close": 194.75,
-      "d1": 0.00,
+      "d1": null,
+      "d": -0.75,
       "w": -7.75,
       "m": -11.25
     },
     {
       "name": "Corn MATIF",
       "close": 202.75,
-      "d1": 0.00,
+      "d1": null,
+      "d": -0.75,
       "w": -5.25,
       "m": -3.50
     },
     {
       "name": "Rapeseed MATIF",
       "close": 499.75,
-      "d1": 0.00,
+      "d1": null,
+      "d": 2.75,
       "w": -6.00,
       "m": -12.50
     },
     {
       "name": "Soymeal CBOT",
       "close": 331.80,
-      "d1": 0.00,
+      "d1": null,
+      "d": 14.20,
       "w": 16.60,
       "m": 16.40
     },
     {
       "name": "Rapemeal Neuss/Spyck",
       "close": 260.00,
-      "d1": 0.00,
+      "d1": null,
+      "d": 11.00,
       "w": 10.00,
       "m": 13.00
     }
