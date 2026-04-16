@@ -23,9 +23,9 @@
     "name": "Rynek na wykresach - Surowce i Waluty",
     "description": "Pakiet wykresów spot do szybkiego przeglądu trendów.",
     "path": "raporty/chart-pack/",
-    "updated": "2026-04-09",
+    "updated": "2026-04-16",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-16",
+    "next_issue": "2026-04-23",
     "category": "zboza",
     "alert_comment": ""
 
