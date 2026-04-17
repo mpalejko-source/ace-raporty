@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <title>Śruta sojowa na rynku globalnym i krajowym- ujęcie własne ACE</title>
+  <title>Analiza składowych ceny śruty sojowej na 15. dzień miesiąca</title>
   <style>
   :root{
     --bg:#0b1220;
@@ -18,9 +18,7 @@
   }
   html,body{height:100%}
   *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);
-      background:radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.14), transparent 60%),
-      radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.12), transparent 55%),var(--bg);}
+  body{margin:0;font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:var(--bg);}
   .wrap{max-width:1640px;margin:0 auto;padding:24px 22px 56px;}
   .pageHead{border-bottom:1px solid rgba(255,255,255,.10);padding-bottom:16px;margin-bottom:18px;}
   .brandRow{display:flex;align-items:center;gap:18px;}
@@ -28,8 +26,6 @@
   .brandText{min-width:0;}
   .brandTitle{font-size:24px;line-height:1.1;font-weight:900;color:#f4f8ff;margin:0 0 4px;}
   .brandSub{font-size:15px;line-height:1.4;color:rgba(234,240,255,.84);margin:0;}
-  .headBadges{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
-  .headBadge{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(234,240,255,.92);font-size:14px;box-shadow:0 10px 24px rgba(0,0,0,.22);}
   .topbar{display:flex;justify-content:flex-start;align-items:center;gap:16px;margin-bottom:18px;}
   .back{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(234,240,255,.92);padding:10px 12px;border-radius:14px;text-decoration:none;font-size:14px;box-shadow:0 10px 24px rgba(0,0,0,.25);}
   .back:hover{background:rgba(255,255,255,.10)}
@@ -40,22 +36,14 @@
   .title{font-size:46px;line-height:1.04;font-weight:900;color:rgba(234,240,255,.96);margin:0 0 10px;}
   .archiveEntryTitle{font-size:34px;line-height:1.08;font-weight:900;color:rgba(234,240,255,.96);margin:0 0 10px;}
   .submeta{color:var(--muted);font-size:14px;margin-bottom:18px;}
-  .lead{font-size:19px;line-height:1.65;color:var(--postColor);margin:0 0 24px;padding:16px 18px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(255,255,255,.03);}
-  .hero{margin:0 0 26px;}
-  .hero img{display:block;width:100%;height:auto;border-radius:18px;cursor:zoom-in;box-shadow:0 10px 30px rgba(0,0,0,.28);}
-  .caption{margin-top:10px;color:var(--muted2);font-size:13px;line-height:1.5;}
-  .captionRight{margin:0 0 0 14px;min-width:180px;max-width:260px;color:var(--muted2);font-size:13px;line-height:1.5;}
-  .block{margin:0 0 26px;}
-  .block h3{font-size:22px;line-height:1.2;margin:0 0 10px;color:#f4f8ff;}
   .text{font-size:18px;line-height:1.72;color:var(--postColor);white-space:pre-wrap;}
-  .mixed:after,.floatWrap:after{content:'';display:block;clear:both;}
-  .imgFloatLeft,.imgFloatRight{width:min(var(--imgw,42%), 520px);margin-bottom:10px;}
+  .imgFloatLeft,.imgFloatRight{display:block;width:var(--imgw,40%);max-width:100%;margin-bottom:10px;}
   .imgFloatLeft{float:left;margin-right:18px;}
   .imgFloatRight{float:right;margin-left:18px;}
-  .imgTop,.imgFull,.imgOnly{display:block;}
-  .imgTop img,.imgFull img,.imgOnly img,.imgFloatLeft img,.imgFloatRight img{display:block;width:100%;height:auto;border-radius:18px;cursor:zoom-in;box-shadow:0 10px 30px rgba(0,0,0,.28);}
-  .captionRow{display:flex;align-items:flex-start;gap:14px;}
-  .captionRow .imgOnly{flex:1 1 auto;}
+  .imgCenter{display:block;margin:10px auto 18px;max-width:100%;}
+  .imgFloatLeft img,.imgFloatRight img,.imgCenter img{display:block;width:100%;height:auto;border-radius:18px;cursor:zoom-in;box-shadow:0 10px 30px rgba(0,0,0,.28);}
+  .caption{margin-top:10px;color:var(--muted2);font-size:13px;line-height:1.5;}
+  .clearBoth{clear:both;height:0;overflow:hidden;}
   .archive{position:sticky;top:18px;border:1px solid var(--border);border-radius:22px;background:rgba(255,255,255,.04);box-shadow:var(--shadow);padding:16px;}
   .archiveTitle{font-size:14px;font-weight:900;letter-spacing:.3px;color:#f4f8ff;text-transform:uppercase;margin:0 0 10px;}
   .tiles{display:grid;grid-template-columns:1fr;gap:10px;}
@@ -63,23 +51,18 @@
   .tile:hover{background:rgba(255,255,255,.07)}
   .tileDate{font-size:12px;color:var(--muted2);margin-bottom:6px;}
   .tileTitle{font-size:15px;line-height:1.35;font-weight:700;color:#eef5ff;}
-  .archiveStream{margin-top:24px;}
-  .archiveStreamHead{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 12px;}
-  .archiveStreamTitle{font-size:18px;font-weight:900;color:#eef5ff;letter-spacing:.2px;margin:0;}
-  .archiveTag{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-size:12px;color:var(--muted);}
-  .emptyArchive{font-size:14px;color:var(--muted2);}
-  #ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;padding:0;margin:0;align-items:center;justify-content:center}
-  #ov img{width:99vw;height:99vh;object-fit:contain;border-radius:0}
-  #ov .x{position:fixed;top:12px;right:16px;color:#fff;font-size:26px;cursor:pointer;user-select:none;padding:6px 10px;border-radius:10px;background:rgba(0,0,0,.35)}
-  @media (max-width:1200px){.layout{grid-template-columns:1fr}.archive{position:static}.title{font-size:38px}.archiveEntryTitle{font-size:30px}}
-  @media (max-width:820px){.wrap{padding:18px 14px 42px}.brandRow{align-items:flex-start}.brandLogo{width:62px}.brandTitle{font-size:22px}.brandSub{font-size:14px}.article{padding:20px 18px}.text{font-size:17px}.imgFloatLeft,.imgFloatRight{float:none;width:100%;margin:0 0 12px}.captionRow{display:block}.captionRight{margin:10px 0 0;max-width:none}}
   .entryPanel{display:none;}
   .entryPanel.isActive{display:block;}
   .tile.isActive{background:rgba(125,211,252,.10);border-color:rgba(125,211,252,.35);}
+  #ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;padding:0;margin:0;}
+  #ov img{width:99vw;height:99vh;object-fit:contain;border-radius:0;}
+  #ov .x{position:fixed;top:12px;right:16px;color:#fff;font-size:26px;cursor:pointer;user-select:none;padding:6px 10px;border-radius:10px;background:rgba(0,0,0,.35)}
+  @media (max-width:1200px){.layout{grid-template-columns:1fr}.archive{position:static}.title{font-size:38px}.archiveEntryTitle{font-size:30px}}
+  @media (max-width:820px){.wrap{padding:18px 14px 42px}.brandRow{align-items:flex-start}.brandLogo{width:62px}.brandTitle{font-size:22px}.brandSub{font-size:14px}.article{padding:20px 18px}.text{font-size:17px}.imgFloatLeft,.imgFloatRight{float:none;width:100%;margin:0 0 12px}}
   </style>
   <script>
-    function showImg(src){document.getElementById('ovimg').src=src;document.getElementById('ov').style.display='flex'}
-    function hideImg(){document.getElementById('ov').style.display='none';document.getElementById('ovimg').src=''}
+    function showImg(src){document.getElementById('ovimg').src=src;document.getElementById('ov').style.display='flex';}
+    function hideImg(){document.getElementById('ov').style.display='none';document.getElementById('ovimg').src='';}
     function showEntry(entryId, el){
       var panels=document.querySelectorAll('.entryPanel');
       var tiles=document.querySelectorAll('.tile');
@@ -104,9 +87,6 @@
           <div class='brandSub'>Nasze spojrzenie na rynek</div>
         </div>
       </div>
-      <div class='headBadges'>
-        <div class='headBadge'>Aktualizacja: 2026-03-24 | 16:00</div>
-      </div>
     </div>
     <div class='topbar'>
       <a class='back' href='https://raporty.ace-group.pl/index.html'>&lsaquo; Powr&#243;t do panelu</a>
@@ -114,106 +94,133 @@
     <div class='layout'>
       <div class='mainCol'>
         <article class='article entryPanel isActive' id='entry-current'>
-          <h1 class='title'>Śruta sojowa na rynku globalnym i krajowym- ujęcie własne ACE</h1>
-          <div class='submeta'>2026-03-24 &bull; 16:00</div>
-          <section class='block'>
-            <div class='text'>ANALIZA TECHNICZNA ŚRUTA SOJOWA CBOT<br>Zacznijmy od spojrzenia na CBOT – poniżej wykres na wczorajsze zamknięcie (23.03.2026). W piątek mieliśmy dojście intraday do poziomu 335+, lecz my myśleliśmy że będziemy testowali szczyty z grudnia na poziomie 340. Tym razem zawrót nastąpił lekko szybciej. <br>Mamy dwie czerwone świeczki – które są jednak zbyt „delikatne” w swoich korpusach aby jednoznacznie mówić o możliwej formacji spadkowej. Zobaczymy co dziś się wydarzy. Technicznie jest od połowy lutego dość silny trend wzrostowy i można to czytać, że przy obecnym dolnym jego ograniczeniu na krótki czas jest to uzasadniony moment na jakiś zakup (my wczoraj zrobiliśmy zatem tylko resztkę marca) w okolicach CBOT 327,5.  Obserwujemy, gdyż fundamentalnie uważamy, że long-term jest mimo wszystko pro-spadkowy.</div>
-          </section>
-          <section class='block'>
-            <div class='imgTop' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s1.png' onclick="showImg(this.src)">
-            </div>
-            <div class='text'>No ale z dużą dozą humoru musimy pokazać poniższego mema – czujemy się dziś „totalnie pokonani” i stety/niestety musimy przyznać panu z mema rację…. Czyli to na tyle…</div>
-          </section>
-          <section class='block'>
-            <div class='imgOnly' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s2.png' onclick="showImg(this.src)">
-            </div>
-          </section>
-          <section class='block'>
-            <div class='mixed floatWrap'>
-              <div class='imgFloatRight' style='--imgw:50%'>
-                <img alt='' src='media/2026-03-24_s3.png' onclick="showImg(this.src)">
-              </div>
-              <div class='text'>FUNDUSZE SPEKULACYJNE<br>W okresach napięć geopolitycznych, takich jak obecnie, tzw. „smart money” (czyli fundusze) zazwyczaj działają jako pierwsi. Nie inaczej jest teraz na rynku śruty sojowej. Po prawej mamy dwa wykresy – ten słupkowy czytamy od prawej czyli w tygodniach od 1 do 7 wstecz spekulanci kupowali kolejno śrutę sojową. Zobaczmy na analogię do listopadowo/grudniowych szczytów na poziomach 340. Wtedy także fundusze spowodowały cały rajd na podstawie shutdown w USA. Historia nie musi się powtórzyć, ale tak mocna akumulacja, która spowodowała że pozycja netto (wykres powierzchniowy) jest już wyższa niż była wtedy w grudniu – jest to wręcz idealny moment dla spekulantów aby „zcashowali” swój zysk w postaci około 40 USD  (start rajdu od poziomów około 295 do 335). Jeśli to się zacznie – a zapalnikiem może być jeden wpis Donalda to możemy mieć powtórkę z grudniowo/styczniowej korekty w dół. Fundamenty są ku temu jak najbardziej odpowiednie. Dla nas to argument, aby w przód nie kupować dziś giełdy.</div>
-            </div>
-          </section>
-          <section class='block'>
-            <div class='text'>PREMIA I ANALIZA FRACHTU<br><br>a)	Premia na śrutę sojową Paranagua – Brazylia na marzec/kwiecień (spot). Widać od początku konfliktu w Iranie faktycznie dynamiczne wzrosty od około -10 do +11 czyli ~ 20 USD.</div>
-          </section>
-          <section class='block'>
-            <div class='imgTop' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s4.png' onclick="showImg(this.src)">
-              <div class='caption'>Źródło: LSEG Workspace</div>
-            </div>
-            <div class='text'>b)	Premia na śrutę sojową Paranagua – Brazylia na maj. Tutaj początkowy wyskok wynosił bliżej 10 USD (a nie 20 jak w przypadku spot), z czego połowa została już zniwelowana i obecnie na ten miesiąc różnica vs koniec lutego wynosi +5 USD. <br>A dalsze premie wykazują jeszcze niższe zmiany.</div>
-          </section>
-          <section class='block'>
-            <div class='imgTop' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s5.png' onclick="showImg(this.src)">
-              <div class='caption'>Źródło: LSEG Workspace</div>
-            </div>
-            <div class='text'>c)	Ceny frachtu za tonę z Ameryki Południowej  (River Plate - Argentyna) do Rotterdamu – śruta sojowa i ziarno soi. Historia cen spot oraz aktualne poziomy.<br>Jak widać na poniższym wykresie od początku marca ceny te wzrosły relatywnie niewiele – o około 3 do 4 USD za tonę.</div>
-          </section>
-          <section class='block'>
-            <div class='imgTop' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s6.png' onclick="showImg(this.src)">
-              <div class='caption'>Źródło: LSEG Workspace</div>
-            </div>
-            <div class='text'>d)	Szacowane kontrakty na za rok – nas interesuje w kontekście śruty sojowej linia zielona (Panamax). Obecnie średnia cena na trasach atlantyckich na za rok wynosi 17 USD/tony (ale to z różnych tras, więc nie patrzmy na cenę a na zmianę)  <br>Ten wykres jest długoterminowy pokazuje ostatnie 5 lat. Od wybuchu wojny w Iranie jest tak naprawdę ostatni „kwadracik” na wykresie. Jak widać, wyraźny wzrost jest na najmniejszych statkach – tz Capesize. Na pozostałych wzrost jest niemal niezauważalny, nieodbiegający od wieloletniej normy. <br>Można to porównać z krzywą terminową notowań na ropę. Ropa rośnie drastycznie na spot, a każdy kolejny kontrakt jest tańszy. A więc tutaj „paniki” nie widać – a wręcz ten wykres pokazuje, że oczekiwania są na uspokojenie rynku. Pro spadkowo dla premii.</div>
-          </section>
-          <section class='block'>
-            <div class='imgTop' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s7.png' onclick="showImg(this.src)">
-              <div class='caption'>Źródło: LSEG Workspace</div>
-            </div>
-            <div class='text'>e)	Premie w Polsce:</div>
-          </section>
-          <section class='block'>
-            <div class='imgOnly' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s8.png' onclick="showImg(this.src)">
-            </div>
-          </section>
-          <section class='block'>
-            <div class='imgOnly' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s9.png' onclick="showImg(this.src)">
-            </div>
-          </section>
-          <section class='block'>
-            <div class='imgOnly' style='max-width:100%'>
-              <img alt='' src='media/2026-03-24_s10.png' onclick="showImg(this.src)">
-            </div>
-          </section>
-          <section class='block'>
-            <div class='text'><br>Wniosek: Jeśli zatem dodamy wzrost premii spot na rynkach bazowych o około +20 USD oraz fracht (z nawiązką przyjmijmy +5 USD/t) to mamy łącznie +25 USD do tony. U nas natomiast mamy na wczoraj tj 23.03 premie na hipro   83 vs 61 z 24.02.  A więc 22 USD różnicy. Można powiedzieć, że jest to fair u importerów. <br>Naszym zdaniem, jeśli oni podwyższają realnie o tyle ile pokazują nam niezależne wykresy – może to oznaczać, że mają mimo wszystko dużo towaru (choć z rozmów wynika że opóźnienia hipro będą przez wolniejsze statki).  <br>Najważniejszy jednak nasz wniosek, że poza kwietniem czyli od maja w górę – wzrost w Polsce jest z  43 (koniec lutego) na 59 obecnie czyli 16 USD. A nasze wykresy pokazują, że rynki bazowe już korygują premie na przyszłość. Nas to utwierdza aby poczekać i nie robić ruchów w przód. <br></div>
-          </section>
-          <section class='block'>
-            <div class='mixed floatWrap'>
-              <div class='imgFloatRight' style='--imgw:50%'>
-                <img alt='' src='media/2026-03-24_s11.png' onclick="showImg(this.src)">
-                <div class='caption'>Źródło: LSEG Workspace</div>
-              </div>
-              <div class='text'><br>FUNDAMENTY – ŚRUTA SOJOWA (NIE ZIARNO SOI)<br><br>a)	Śruta sojowa – produkcja światowa. Obecnie świat produkuje najwięcej śruty sojowej w historii – poniższy wykres to tylko ostatnie 5 lat, ale wcześniej było to dużo dużo mniej. Jak widać, nie ma póki co żadnego trendu spadkowego – a więc śruty jest.</div>
-            </div>
-          </section>
-          <section class='block'>
-            <div class='mixed floatWrap'>
-              <div class='imgFloatLeft' style='--imgw:50%'>
-                <img alt='' src='media/2026-03-24_s12.png' onclick="showImg(this.src)">
-                <div class='caption'>Źródło: LSEG Workspace</div>
-              </div>
-              <div class='text'>b)	Zapasy początkowe śruty sojowej na świecie.<br>Również największe w historii. To już pozostawiamy bez zbędnego komentarza.</div>
-            </div>
-          </section>
-          <section class='block'>
-            <div class='mixed floatWrap'>
-              <div class='imgFloatRight' style='--imgw:50%'>
-                <img alt='' src='media/2026-03-24_s13.png' onclick="showImg(this.src)">
-                <div class='caption'>Źródło: LSEG Workspace</div>
-              </div>
-              <div class='text'>c)	Światowa konsumpcja śruty sojowej – także rekordowa <br>Jednak jak przyjrzymy się konkretnie cyfrom to większe zapasy i produkcja są niemal idealnie o tyle ile wynosi większa produkcja. Czyli podsumowując ani nie brakuje ani nie ma dużych nadwyżek (choć są lekko większe niż przed rokiem) <br>A więc fundamentalnie najwięcej mówi się o soi (której też jest w „brud”), jednak w przypadku śruty sojowej nie ma wielkich zmian, w skrócie bilans jest komfortowy. Co ciekawe największe zwiększenie użytku wewnętrznego śruty sojowej notuje się w USA.</div>
-            </div>
-          </section>
+          <h1 class='title'>Analiza składowych ceny śruty sojowej na 15. dzień miesiąca</h1>
+          <div class='submeta'>2026-04-17</div>
+          <div class='text'>Porównaliśmy, jak co miesiąc, premie, futures i flat śruty sojowej według stanu na 15. dzień miesiąca, tym razem na danych z 15.04.2026. W premiach widać, że od początku roku rynek przesuwa się w górę, ale w układzie miesiąc do miesiąca zmiany nie są już jednolite na całej krzywej. Kwiecień został skorygowany w dół, maj również lekko potaniał, czerwiec wzrósł, a dalsze miesiące pozostały blisko poziomów z marca. Oznacza to, że rynek premii utrzymuje podwyższone wyceny względem początku roku, ale w najbliższych terminach pojawiło się częściowe cofnięcie, bez zmiany szerszego, wzrostowego układu.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-04-17_s1.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>Na rynku futures CBOT obraz jest znacznie bardziej jednoznaczny, ponieważ cała krzywa jest wyżej niż miesiąc wcześniej. Tak jak w 2025 roku mocno wybijał się listopad (ceny w połowie listopada 2025) , tak obecnie najbardziej „odjechanym” miesiącem jest kwiecień 2026( ceny w połowie danego miesiąca). Rynek bazowy wycenia dziś śrutę wyraźnie wyżej nie tylko niż miesiąc temu, a i na przestrzeni całego roku. Miesiące maj–październik są bardzo mocne i wcześniej były wyżej tylko w listopadzie 2025. Od początku roku kierunek na futures pozostaje więc wzrostowy.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-04-17_s2.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>To bezpośrednio przekłada się na ceny flat w USD, które są wyraźnie wyższe niż miesiąc wcześniej.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-04-17_s3.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>Inaczej wygląda jednak obraz w PLN. Tu wzrosty są znacznie słabsze, a w części miesięcy ceny są nawet niższe niż przed miesiącem, przykładowo listopad jest tańszy o ok. 32 zł/t, a kwiecień o ok. 15 zł/t, mimo że w USD wycena jest wyższa. Bardzo dobrze pokazuje to, jak duże znaczenie w zakupie śruty sojowej ma dziś kurs dolara. Przy tak zmiennym USD/PLN sam wzrost rynku amerykańskiego nie musi automatycznie oznaczać równie mocnego wzrostu ceny końcowej dla polskiego odbiorcy.<br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-04-17_s4.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+
+        </article>
+        <article class='article entryPanel' id='arc-1'>
+          <h2 class='archiveEntryTitle'>Śruta sojowa na rynku globalnym i krajowym- ujęcie własne ACE</h2>
+          <div class='submeta'>2026-03-24</div>
+<div class='text'>ANALIZA TECHNICZNA ŚRUTA SOJOWA CBOT<br>Zacznijmy od spojrzenia na CBOT – poniżej wykres na wczorajsze zamknięcie (23.03.2026). W piątek mieliśmy dojście intraday do poziomu 335+, lecz my myśleliśmy że będziemy testowali szczyty z grudnia na poziomie 340. Tym razem zawrót nastąpił lekko szybciej. <br>Mamy dwie czerwone świeczki – które są jednak zbyt „delikatne” w swoich korpusach aby jednoznacznie mówić o możliwej formacji spadkowej. Zobaczymy co dziś się wydarzy. Technicznie jest od połowy lutego dość silny trend wzrostowy i można to czytać, że przy obecnym dolnym jego ograniczeniu na krótki czas jest to uzasadniony moment na jakiś zakup (my wczoraj zrobiliśmy zatem tylko resztkę marca) w okolicach CBOT 327,5.  Obserwujemy, gdyż fundamentalnie uważamy, że long-term jest mimo wszystko pro-spadkowy.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-03-24_s1.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>No ale z dużą dozą humoru musimy pokazać poniższego mema – czujemy się dziś „totalnie pokonani” i stety/niestety musimy przyznać panu z mema rację…. Czyli to na tyle…<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:90%'>
+            <img alt='' src='media/2026-03-24_s2.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='imgFloatRight' style='--imgw:40%'>
+            <img alt='' src='media/2026-03-24_s3.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='text'><br>FUNDUSZE SPEKULACYJNE<br>W okresach napięć geopolitycznych, takich jak obecnie, tzw. „smart money” (czyli fundusze) zazwyczaj działają jako pierwsi. Nie inaczej jest teraz na rynku śruty sojowej. Po prawej mamy dwa wykresy – ten słupkowy czytamy od prawej czyli w tygodniach od 1 do 7 wstecz spekulanci kupowali kolejno śrutę sojową. Zobaczmy na analogię do listopadowo/grudniowych szczytów na poziomach 340. Wtedy także fundusze spowodowały cały rajd na podstawie shutdown w USA. Historia nie musi się powtórzyć, ale tak mocna akumulacja, która spowodowała że pozycja netto (wykres powierzchniowy) jest już wyższa niż była wtedy w grudniu – jest to wręcz idealny moment dla spekulantów aby „zcashowali” swój zysk w postaci około 40 USD  (start rajdu od poziomów około 295 do 335). Jeśli to się zacznie – a zapalnikiem może być jeden wpis Donalda to możemy mieć powtórkę z grudniowo/styczniowej korekty w dół. Fundamenty są ku temu jak najbardziej odpowiednie. Dla nas to argument, aby w przód nie kupować dziś giełdy.<br><br><br><br>PREMIA I ANALIZA FRACHTU<br><br>a) Premia na śrutę sojową Paranagua – Brazylia na marzec/kwiecień (spot). Widać od początku konfliktu w Iranie faktycznie dynamiczne wzrosty od około -10 do +11 czyli ~ 20 USD.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:70%'>
+            <img alt='' src='media/2026-03-24_s4.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>b) Premia na śrutę sojową Paranagua – Brazylia na maj. Tutaj początkowy wyskok wynosił bliżej 10 USD (a nie 20 jak w przypadku spot), z czego połowa została już zniwelowana i obecnie na ten miesiąc różnica vs koniec lutego wynosi +5 USD. <br>A dalsze premie wykazują jeszcze niższe zmiany.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:60%'>
+            <img alt='' src='media/2026-03-24_s5.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>c) Ceny frachtu za tonę z Ameryki Południowej  (River Plate - Argentyna) do Rotterdamu – śruta sojowa i ziarno soi. Historia cen spot oraz aktualne poziomy.<br>Jak widać na poniższym wykresie od początku marca ceny te wzrosły relatywnie niewiele – o około 3 do 4 USD za tonę.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:60%'>
+            <img alt='' src='media/2026-03-24_s6.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>d) Szacowane kontrakty na za rok – nas interesuje w kontekście śruty sojowej linia zielona (Panamax). Obecnie średnia cena na trasach atlantyckich na za rok wynosi 17 USD/tony (ale to z różnych tras, więc nie patrzmy na cenę a na zmianę)  <br>Ten wykres jest długoterminowy pokazuje ostatnie 5 lat. Od wybuchu wojny w Iranie jest tak naprawdę ostatni „kwadracik” na wykresie. Jak widać, wyraźny wzrost jest na najmniejszych statkach – tz Capesize. Na pozostałych wzrost jest niemal niezauważalny, nieodbiegający od wieloletniej normy. <br>Można to porównać z krzywą terminową notowań na ropę. Ropa rośnie drastycznie na spot, a każdy kolejny kontrakt jest tańszy. A więc tutaj „paniki” nie widać – a wręcz ten wykres pokazuje, że oczekiwania są na uspokojenie rynku. Pro spadkowo dla premii.<br><br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:70%'>
+            <img alt='' src='media/2026-03-24_s7.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br><br>e) Premie w Polsce:<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-03-24_s8.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-03-24_s9.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='clearBoth'></div>
+          <div class='imgCenter' style='width:100%'>
+            <img alt='' src='media/2026-03-24_s10.png' onclick="showImg(this.src)">
+          </div>
+
+          <div class='clearBoth'></div>
+          <div class='text'><br>Wniosek: Jeśli zatem dodamy wzrost premii spot na rynkach bazowych o około +20 USD oraz fracht (z nawiązką przyjmijmy +5 USD/t) to mamy łącznie +25 USD do tony. U nas natomiast mamy na wczoraj tj 23.03 premie na hipro   83 vs 61 z 24.02.  A więc 22 USD różnicy. Można powiedzieć, że jest to fair u importerów. <br>Naszym zdaniem, jeśli oni podwyższają realnie o tyle ile pokazują nam niezależne wykresy – może to oznaczać, że mają mimo wszystko dużo towaru (choć z rozmów wynika że opóźnienia hipro będą przez wolniejsze statki).  <br>Najważniejszy jednak nasz wniosek, że poza kwietniem czyli od maja w górę – wzrost w Polsce jest z  43 (koniec lutego) na 59 obecnie czyli 16 USD. A nasze wykresy pokazują, że rynki bazowe już korygują premie na przyszłość. Nas to utwierdza aby poczekać i nie robić ruchów w przód. <br><br>FUNDAMENTY – ŚRUTA SOJOWA (NIE ZIARNO SOI)<br><br></div>
+          <div class='imgFloatRight' style='--imgw:50%'>
+            <img alt='' src='media/2026-03-24_s11.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='text'><br><br>a) Śruta sojowa – produkcja światowa. Obecnie świat produkuje najwięcej śruty sojowej w historii – poniższy wykres to tylko ostatnie 5 lat, ale wcześniej było to dużo dużo mniej. Jak widać, nie ma póki co żadnego trendu spadkowego – a więc śruty jest.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgFloatLeft' style='--imgw:50%'>
+            <img alt='' src='media/2026-03-24_s12.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='text'><br><br>b) Zapasy początkowe śruty sojowej na świecie.<br>Również największe w historii. To już pozostawiamy bez zbędnego komentarza.<br><br></div>
+          <div class='clearBoth'></div>
+          <div class='imgFloatRight' style='--imgw:50%'>
+            <img alt='' src='media/2026-03-24_s13.png' onclick="showImg(this.src)">
+            <div class='caption'>Źródło: LSEG Workspace</div>
+          </div>
+
+          <div class='text'><br>c) Światowa konsumpcja śruty sojowej – także rekordowa <br>Jednak jak przyjrzymy się konkretnie cyfrom to większe zapasy i produkcja są niemal idealnie o tyle ile wynosi większa produkcja. Czyli podsumowując ani nie brakuje ani nie ma dużych nadwyżek (choć są lekko większe niż przed rokiem) <br>A więc fundamentalnie najwięcej mówi się o soi (której też jest w „brud”), jednak w przypadku śruty sojowej nie ma wielkich zmian, w skrócie bilans jest komfortowy. Co ciekawe największe zwiększenie użytku wewnętrznego śruty sojowej notuje się w USA.<br></div>
+          <div class='clearBoth'></div>
 
         </article>
 
@@ -224,6 +231,10 @@
           <a class='tile isActive' href='#' onclick="return showEntry('entry-current', this)">
             <div class='tileDate'></div>
             <div class='tileTitle'>Najnowszy wpis</div>
+          </a>
+          <a class='tile' href='#' onclick="return showEntry('arc-1', this)">
+            <div class='tileDate'>2026-03-24</div>
+            <div class='tileTitle'>Śruta sojowa na rynku globalnym i krajowym- ujęcie własne ACE</div>
           </a>
         </div>
 
