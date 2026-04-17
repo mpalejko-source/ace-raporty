@@ -14,9 +14,9 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-03-24",
+  "updated": "2026-04-17",
   "type": "report",
-  "alert_comment": "Przedstawiamy bieżącą sytuację na rynku śruty sojowej, łącząc analizę techniczną (CBOT), zachowanie funduszy spekulacyjnych oraz zmiany w premiach i kosztach frachtu."
+  "alert_comment": "Śruta sojowa na 15. dzień miesiąca – analiza 4 wykresów"
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
