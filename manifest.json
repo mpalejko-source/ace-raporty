@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-16",
+    "updated": "2026-04-17",
     "frequency": "dziennie",
-    "next_issue": "2026-04-17",
+    "next_issue": "2026-04-20",
     "category": "zboza",
-    "alert_comment": "W dzisiejszym porannym skanie rynku uwagę zwracają drożejące nawozy i energia, słabszy od oczekiwań raport NOPA o przerobie soi w USA oraz planowane przez UE wsparcie dla rolnictwa w odpowiedzi na rosnące koszty wywołane konfliktem Iran–USA."
+    "alert_comment": "Dzisiejszy poranny skan rynku koncentruje się na wpływie słabego dolara i poprawy nastrojów na rynkach finansowych, zmianach na rynku zbóż i oleistych pod wpływem pogody oraz na tym, jak sytuacja na Bliskim Wschodzie nadal oddziałuje na ropę, nawozy i ceny surowców rolnych."
   },
 
   "ACE Market View": {
