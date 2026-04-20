@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-17",
+    "updated": "2026-04-20",
     "frequency": "dziennie",
-    "next_issue": "2026-04-20",
+    "next_issue": "2026-04-21",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy poranny skan rynku koncentruje się na wpływie słabego dolara i poprawy nastrojów na rynkach finansowych, zmianach na rynku zbóż i oleistych pod wpływem pogody oraz na tym, jak sytuacja na Bliskim Wschodzie nadal oddziałuje na ropę, nawozy i ceny surowców rolnych."
+    "alert_comment": "Dzisiejszy skan koncentruje się na wpływie zamknięcia cieśniny Ormuz na ropę i nawozy, rekordowym napływie kapitału spekulacyjnego do agro (zwłaszcza śruty sojowej), spadkach pszenicy w UE przez euro i słaby eksport oraz wejściu rynku w fazę „weather market” w USA."
   },
 
   "ACE Market View": {
