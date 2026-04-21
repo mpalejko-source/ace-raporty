@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-20",
+    "updated": "2026-04-21",
     "frequency": "dziennie",
-    "next_issue": "2026-04-21",
+    "next_issue": "2026-04-22",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy skan koncentruje się na wpływie zamknięcia cieśniny Ormuz na ropę i nawozy, rekordowym napływie kapitału spekulacyjnego do agro (zwłaszcza śruty sojowej), spadkach pszenicy w UE przez euro i słaby eksport oraz wejściu rynku w fazę „weather market” w USA."
+    "alert_comment": "Dzisiejszy poranny skan rynku pokazuje, jak napięcia wokół Cieśnina Ormuz i drożejąca ropa wpływają na kompleks surowców, podczas gdy pogoda w USA wspiera pszenicę, a wysoka podaż z Ameryki Południowej i słabszy popyt ograniczają wzrosty na rynku zbóż i pasz."
   },
 
   "ACE Market View": {
