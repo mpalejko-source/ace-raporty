@@ -45,11 +45,11 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-04-15",
+    "updated": "2026-04-22",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-22",
+    "next_issue": "2026-04-29",
     "category": "zboza",
-    "alert_comment": "W skrócie: w śrucie sojowej mamy już zabezpieczone 70% kwietnia, a wraz ze zbliżającym się końcem miesiąca przypominamy o wygaśnięciu kontraktu majowego na CBOT i konieczności zamknięcia otwartych premii na maj–czerwiec; w śrucie rzepakowej domykamy maj, natomiast na dalsze miesiące na razie wstrzymujemy zakupy, a na rynku walutowym USD/PLN zszedł poniżej 3,60, co ponownie otwiera interesujące poziomy zakupowe - zachęcamy do przeczytania całego komentarza, gdzie szerzej omawiamy nasze bieżące decyzje zakupowe."
+    "alert_comment": "W skrócie:Sojowa: nowe pozycje Polski i spreadowanie premii przez ACE; rzepakowa: maj zamknięty, czerwiec na razie bez zakupów; USD/PLN: pozostajemy na spocie z rozważeniem większego zakupu w okolicach 3,58 – zapraszamy do pełnego komentarza."
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
