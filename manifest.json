@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-21",
+    "updated": "2026-04-22",
     "frequency": "dziennie",
-    "next_issue": "2026-04-22",
+    "next_issue": "2026-04-23",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy poranny skan rynku pokazuje, jak napięcia wokół Cieśnina Ormuz i drożejąca ropa wpływają na kompleks surowców, podczas gdy pogoda w USA wspiera pszenicę, a wysoka podaż z Ameryki Południowej i słabszy popyt ograniczają wzrosty na rynku zbóż i pasz."
+    "alert_comment": "UE przyspiesza działania energetyczne, USA reagują na słabe uprawy, Ameryka Południowa z problemami w eksporcie, Bliski Wschód podbija ceny energii"
   },
 
   "ACE Market View": {
