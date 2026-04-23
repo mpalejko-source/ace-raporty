@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-04-22",
+    "updated": "2026-04-23",
     "frequency": "dziennie",
-    "next_issue": "2026-04-23",
+    "next_issue": "2026-04-24",
     "category": "zboza",
-    "alert_comment": "UE przyspiesza działania energetyczne, USA reagują na słabe uprawy, Ameryka Południowa z problemami w eksporcie, Bliski Wschód podbija ceny energii"
+    "alert_comment": "Ropa powyżej 100 USD i skok cen nawozów podnoszą koszty produkcji, ale globalna nadpodaż zbóż  utrzymuje presję na ceny, przy rosnącym znaczeniu pogody i geopolityki."
   },
 
   "ACE Market View": {
