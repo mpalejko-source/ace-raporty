@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-04-17",
+    "updated": "2026-04-24",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-24",
+    "next_issue": "2026-05-04",
     "category": "zboza",
-    "alert_comment": "Globalnie pogoda pozostaje zróżnicowana: w Europie poprawa wilgotności w centrum i na zachodzie wspiera oziminy, choć lokalnie opóźnia siewy, a w USA ciepło i umiarkowane opady sprzyjają pracom polowym przy nadal nierównym bilansie wody. W Ameryce Południowej utrzymuje się kontrast między suchą Brazylią (presja na kukurydzę drugiego plonu) a wilgotniejszą Argentyną (opóźnienia zbiorów), natomiast w Australii dominują suche i cieplejsze warunki sprzyjające siewom zbóż."
+    "alert_comment": "Europa pozostaje pod wpływem chłodniejszego i miejscami suchego układu w centrum oraz wilgotniejszego na południowym wschodzie, co tworzy mieszane warunki dla upraw. W USA dominuje ciepło z kontrastem opadów (wilgotniej na północy, sucho na południowym wschodzie), w Ameryce Południowej utrzymuje się podział na suchą Brazylię i bardziej wilgotną Argentynę, a w Australii kluczowa jest zmiana z ciepłego i suchego układu w kierunku chłodniejszego i bardziej wilgotnego na wschodzie."
 
   },
 
