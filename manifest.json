@@ -213,13 +213,13 @@
     "name": "IGC",
     "description": "International Grain Council: bilanse, handel, prognozy.",
     "path": "raporty/raporty-fundamentalne/igc/",
-    "updated": "2026-03-20",
+    "updated": "2026-03-27",
     "frequency": "miesięcznie",
-    "next_issue": "2026-04",
+    "next_issue": "2026-05",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Indeks pszenicy IGC GOI wzrósł o 6%, kukurydzy o 2%, a ryżu spadł o 3%, podczas gdy indeks soi obniżył się o 1% głównie z powodu niższych cen w Argentynie. Światowa prognoza produkcji zbóż na sezon 2025/26 została podniesiona o 10 mln ton m/m do 2 470 mln ton, a konsumpcja o 8 mln ton do 2 423 mln ton, wzrost indeksu IGC GOI wyniósł o 1% m/m."
+    "alert_comment": "Nowa publikacja prezentuje dane z raportu IGC, wskazujące na komfortowy bilans zbóż w sezonie 2025/26 (wyższa produkcja i rosnące zapasy), a także zawiera porównanie prognoz IGC i WASDE dla tego okresu."
 
   },
   "fao": {
