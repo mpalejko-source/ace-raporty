@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-04-20",
+    "updated": "2026-04-27",
     "frequency": "tygodniowo",
-    "next_issue": "2026-04-27",
+    "next_issue": "2026-05-04",
     "category": "zboza",
-    "alert_comment": "Fundusze w ostatnim tygodniu ograniczyły część ryzyka w surowcach, szczególnie w paliwach, kukurydzy i pszenicy. Jednocześnie kapitał nie wychodzi z rynku agro – najmocniejszym sygnałem jest ponowny wzrost zaangażowania w śrucie sojowej. Rynek przechodzi z fazy szerokich zakupów do bardziej selektywnej gry pod konkretne fundamenty."
+    "alert_comment": "Fundusze ograniczają ryzyko na całym rynku surowców, ale z rynku agro nadal nie wychodzą. Kapitał wciąż mocno wspiera soję, kukurydzę i produkty sojowe, podczas gdy najsłabszym ogniwem pozostaje pszenica, szczególnie na rynku europejskim."
 
   },
   "Portfele-ACE": {
