@@ -1,5 +1,5 @@
-﻿{
-  "asof": "2026-04-28 08:24",
+{
+  "asof": "2026-04-29 08:16",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
@@ -17,66 +17,66 @@
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 1576.00,
-      "d": 26.00,
-      "w": 0.00,
-      "m": -35.00
+      "price": 1613.00,
+      "d": 37.00,
+      "w": 59.00,
+      "m": 2.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1213.00,
-      "d": -30.00,
-      "w": 88.00,
-      "m": 177.00
+      "price": 1239.00,
+      "d": 26.00,
+      "w": 98.00,
+      "m": 203.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
-      "price": 987.00,
-      "d": -4.00,
-      "w": 15.00,
-      "m": 12.00
+      "price": 992.00,
+      "d": 5.00,
+      "w": 20.00,
+      "m": 17.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 194.50,
+      "close": 197.00,
       "d1": null,
-      "d": -0.75,
-      "w": 0.50,
-      "m": -8.75
+      "d": 2.50,
+      "w": 1.25,
+      "m": -6.25
     },
     {
       "name": "Corn MATIF",
-      "close": 218.50,
+      "close": 220.25,
       "d1": null,
-      "d": 1.00,
-      "w": 14.25,
-      "m": 10.25
+      "d": 1.75,
+      "w": 13.75,
+      "m": 12.00
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 552.00,
+      "close": 513.00,
       "d1": null,
-      "d": -7.50,
-      "w": 43.75,
-      "m": 51.75
+      "d": -39.00,
+      "w": -4.75,
+      "m": 12.75
     },
     {
       "name": "Soymeal CBOT",
-      "close": 333.80,
+      "close": 333.40,
       "d1": null,
-      "d": 9.50,
-      "w": 8.70,
-      "m": 18.50
+      "d": -0.40,
+      "w": 8.10,
+      "m": 18.10
     },
     {
       "name": "Rapemeal Neuss/Spyck",
-      "close": 300.00,
+      "close": 297.00,
       "d1": null,
-      "d": 2.00,
-      "w": 22.00,
-      "m": 52.00
+      "d": -3.00,
+      "w": 18.00,
+      "m": 49.00
     }
   ]
 }
