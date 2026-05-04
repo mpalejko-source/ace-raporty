@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-04-24",
+    "updated": "2026-05-04",
     "frequency": "tygodniowo",
-    "next_issue": "2026-05-04",
+    "next_issue": "2026-05-08",
     "category": "zboza",
-    "alert_comment": "Europa pozostaje pod wpływem chłodniejszego i miejscami suchego układu w centrum oraz wilgotniejszego na południowym wschodzie, co tworzy mieszane warunki dla upraw. W USA dominuje ciepło z kontrastem opadów (wilgotniej na północy, sucho na południowym wschodzie), w Ameryce Południowej utrzymuje się podział na suchą Brazylię i bardziej wilgotną Argentynę, a w Australii kluczowa jest zmiana z ciepłego i suchego układu w kierunku chłodniejszego i bardziej wilgotnego na wschodzie."
+    "alert_comment": "Europa pozostaje pod wpływem cieplejszego układu z lokalnymi opadami, podczas gdy w USA pojawia się większa zmienność temperatur i presja suszy na Równinach. W Ameryce Południowej rośnie ryzyko suszy w Brazylii przy chłodniejszej Argentynie, a w Australii wzrasta wilgotność, co poprawia warunki glebowe, ale może spowalniać siewy."
 
   },
 
