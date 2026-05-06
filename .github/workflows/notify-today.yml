@@ -4,8 +4,6 @@ on:
   push:
     paths:
       - "manifest.json"
-  schedule:
-    - cron: "5 7 * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -50,6 +48,7 @@ jobs:
         run: npm i nodemailer
 
       - name: Send email if manifest has today's NEW updates (diff-based)
+        if: github.event_name == 'push'
         env:
           SMTP_HOST: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
