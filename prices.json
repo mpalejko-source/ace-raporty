@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-05-06 08:19",
+  "asof": "2026-05-07 08:23",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
@@ -17,66 +17,66 @@
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 1572.00,
-      "d": 22.00,
-      "w": -41.00,
-      "m": -13.00
+      "price": 1560.00,
+      "d": -12.00,
+      "w": -54.00,
+      "m": -6.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1226.00,
-      "d": -12.00,
-      "w": -13.00,
-      "m": 177.00
+      "price": 1213.00,
+      "d": -13.00,
+      "w": -23.00,
+      "m": 165.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
-      "price": 994.00,
-      "d": 3.00,
-      "w": 2.00,
-      "m": 0.00
+      "price": 981.00,
+      "d": -13.00,
+      "w": -12.00,
+      "m": -8.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 211.00,
+      "close": 207.50,
       "d1": null,
-      "d": -2.50,
-      "w": 14.00,
-      "m": 8.50
+      "d": -3.50,
+      "w": 12.25,
+      "m": 5.00
     },
     {
       "name": "Corn MATIF",
-      "close": 224.75,
+      "close": 217.75,
       "d1": null,
-      "d": -0.50,
-      "w": 4.50,
-      "m": 16.75
+      "d": -7.00,
+      "w": -7.00,
+      "m": 9.75
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 525.50,
+      "close": 516.75,
       "d1": null,
-      "d": -2.50,
-      "w": 12.50,
-      "m": 19.75
+      "d": -8.75,
+      "w": -4.75,
+      "m": 11.00
     },
     {
       "name": "Soymeal CBOT",
-      "close": 320.40,
+      "close": 317.30,
       "d1": null,
-      "d": -0.50,
-      "w": -13.00,
-      "m": 5.20
+      "d": -3.10,
+      "w": -10.70,
+      "m": 0.70
     },
     {
       "name": "Rapemeal Neuss/Spyck",
-      "close": 283.00,
+      "close": 280.00,
       "d1": null,
       "d": -3.00,
-      "w": -14.00,
-      "m": 33.00
+      "w": -12.00,
+      "m": 30.00
     }
   ]
 }
