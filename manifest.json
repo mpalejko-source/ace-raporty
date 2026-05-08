@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-07",
+    "updated": "2026-05-08",
     "frequency": "dziennie",
-    "next_issue": "2026-05-08",
+    "next_issue": "2026-05-11",
     "category": "zboza",
-    "alert_comment": "Silny spadek cen ropy (m.in. po doniesieniach o możliwym porozumieniu USA–Iran) wywołał szeroką przecenę rynków rolnych i olejów roślinnych (pszenica, soja, kukurydza, canola, palmowy), dodatkowo wzmacnianą przez realizację zysków funduszy, poprawę warunków pogodowych w części regionów"
+    "alert_comment": "Mimo utrzymujących się napięć wokół Ormuzu i dużej zmienności na rynku ropy, inwestorzy coraz szybciej rotują kapitał między rynkami agro"
   },
 
   "ACE Market View": {
