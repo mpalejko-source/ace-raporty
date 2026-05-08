@@ -65,9 +65,9 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-05-04",
+    "updated": "2026-05-08",
     "frequency": "tygodniowo",
-    "next_issue": "2026-05-08",
+    "next_issue": "2026-05-15",
     "category": "zboza",
     "alert_comment": "Europa pozostaje pod wpływem cieplejszego układu z lokalnymi opadami, podczas gdy w USA pojawia się większa zmienność temperatur i presja suszy na Równinach. W Ameryce Południowej rośnie ryzyko suszy w Brazylii przy chłodniejszej Argentynie, a w Australii wzrasta wilgotność, co poprawia warunki glebowe, ale może spowalniać siewy."
 
