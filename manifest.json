@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-08",
+    "updated": "2026-05-11",
     "frequency": "dziennie",
-    "next_issue": "2026-05-11",
+    "next_issue": "2026-05-12",
     "category": "zboza",
-    "alert_comment": "Mimo utrzymujących się napięć wokół Ormuzu i dużej zmienności na rynku ropy, inwestorzy coraz szybciej rotują kapitał między rynkami agro"
+    "alert_comment": "Fundusze mają rekordowo duże pozycje long w agro, rynek czeka na CPI i WASDE, ropa oraz konflikt USA–Iran podbijają zmienność, a soja i kukurydza pozostają mocno wspierane przez Chiny, biopaliwa i drożejącą energię."
   },
 
   "ACE Market View": {
