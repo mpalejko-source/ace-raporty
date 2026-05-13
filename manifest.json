@@ -200,13 +200,13 @@
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
     "path": "raporty/raporty-fundamentalne/wasde/",
-    "updated": "2026-04-10",
+    "updated": "2026-05-13",
     "frequency": "miesięcznie",
-    "next_issue": "2026-05-12",
+    "next_issue": "2026-06-11",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Raport WASDE przyniósł bardziej niedźwiedzi obraz dla pszenicy i lekko negatywny dla kukurydzy ze względu na wyższe zapasy oraz komfortowy bilans podaży, podczas gdy w soi utrzymał relatywnie stabilny obraz rynku dzięki mocniejszemu przerobowi i niższym zapasom końcowym — zapraszamy do zapoznania się z pełnym raportem."
+    "alert_comment": "Majowy raport WASDE najmocniej zaskoczył rynek pszenicy, pokazując wyraźne pogorszenie globalnego bilansu i spadek produkcji u głównych eksporterów, podczas gdy w kukurydzy utrzymuje się napięty układ zapasów, a rynek soi nadal wspierany jest przez silny światowy popyt."
 
   },
   "igc": {
