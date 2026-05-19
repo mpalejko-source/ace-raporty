@@ -1,82 +1,82 @@
 ﻿{
-  "asof": "2026-05-18 08:15",
+  "asof": "2026-05-19 08:04",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
       "price": 880.00,
-      "d": 5.00,
+      "d": 0.00,
       "w": 30.00,
-      "m": 20.00
+      "m": 45.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",
       "price": 880.00,
-      "d": -10.00,
+      "d": 0.00,
       "w": 10.00,
       "m": 40.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
       "price": 1619.00,
-      "d": -7.00,
-      "w": 89.00,
-      "m": 35.00
+      "d": 0.00,
+      "w": 65.00,
+      "m": 37.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1266.00,
-      "d": 45.00,
-      "w": 45.00,
-      "m": 188.00
+      "price": 1261.00,
+      "d": -5.00,
+      "w": 33.00,
+      "m": 95.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
       "price": 1007.00,
-      "d": 7.00,
+      "d": 0.00,
       "w": 22.00,
-      "m": 35.00
+      "m": 38.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 209.75,
+      "close": 213.25,
       "d1": null,
-      "d": -3.75,
-      "w": 3.50,
-      "m": 15.50
+      "d": 3.50,
+      "w": 5.00,
+      "m": 22.00
     },
     {
       "name": "Corn MATIF",
-      "close": 207.25,
+      "close": 210.50,
       "d1": null,
-      "d": -2.50,
-      "w": -4.25,
-      "m": 2.75
+      "d": 3.25,
+      "w": -2.25,
+      "m": 7.75
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 522.75,
+      "close": 528.75,
       "d1": null,
-      "d": 5.75,
-      "w": 11.50,
-      "m": 13.50
+      "d": 6.00,
+      "w": 13.75,
+      "m": 23.00
     },
     {
       "name": "Soymeal CBOT",
-      "close": 334.30,
+      "close": 334.50,
       "d1": null,
-      "d": 1.80,
-      "w": 14.60,
-      "m": -0.10
+      "d": 0.20,
+      "w": 9.70,
+      "m": 2.70
     },
     {
       "name": "Rapemeal Neuss/Spyck",
-      "close": 288.00,
+      "close": 290.00,
       "d1": null,
       "d": 2.00,
-      "w": 2.00,
-      "m": 23.00
+      "w": 7.00,
+      "m": 7.00
     }
   ]
 }
