@@ -14,9 +14,9 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-04-23",
+  "updated": "2026-05-20",
   "type": "report",
-  "alert_comment": "Kukurydza. Dlaczego wzrosty cen mogą mieć ograniczony potencjał?"
+  "alert_comment": "Analiza składowych śruty sojowej na 15.dzień miesiąca."
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
