@@ -3,20 +3,20 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-19",
+    "updated": "2026-05-21",
     "frequency": "dziennie",
-    "next_issue": "2026-05-20",
+    "next_issue": "2026-05-22",
     "category": "zboza",
-    "alert_comment": "Dziś w porannym skanie pszenica wraca na pierwszy plan: mocne odbicie na CBOT i w Paryżu wspierają deklaracje zakupów Chin, słaba kondycja upraw w USA, eksport polskiej pszenicy za ocean oraz pogorszone prognozy plonów w UE i Australii, przy jednoczesnym wzroście soi i kukurydzy po chińskim impulsie popytowym"
+    "alert_comment": "W dzisiejszym skanie rynku: jak przecena ropy naftowej schłodziła nastroje na rynkach zbóż i oleistych, podczas gdy inwestorzy analizują rosnący import zbóż przez Chiny, rekordowe zapasy soi w Brazylii oraz coraz silniejsze powiązanie rynku olejów roślinnych z sektorem energii."
   },
 
   "ACE Market View": {
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-04-23",
+  "updated": "2026-05-20",
   "type": "report",
-  "alert_comment": "Kukurydza. Dlaczego wzrosty cen mogą mieć ograniczony potencjał?"
+  "alert_comment": "Analiza składowych śruty sojowej na 15.dzień miesiąca."
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
@@ -45,11 +45,11 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-05-13",
+    "updated": "2026-05-20",
     "frequency": "tygodniowo",
-    "next_issue": "2026-05-20",
+    "next_issue": "2026-05-27",
     "category": "zboza",
-    "alert_comment": "Śruta sojowa na CBOT notuje kolejne wzrosty, mimo to porównując rynek do benchmarku krajowego decydujemy się dziś na zakup 10% Flat maja, w śrucie rzepakowej etapowo domykamy czerwcową ramówkę, natomiast w walutach od jutra przechodzimy na zakupy SPOT przy obecnych poziomach kursu USD/PLN."
+    "alert_comment": "W sojowej benchmarkujemy się do rynku krajowego i nie podejmujemy zakupów z dużym wyprzedzeniem; w rzepakowej czerwiec mamy zamknięty, natomiast z lipcem obecnie się wstrzymujemy; w walutach pozostajemy przy zakupach spot, a większe pakiety będziemy rozważać dopiero bliżej okolic 3,60."
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
