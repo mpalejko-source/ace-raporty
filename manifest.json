@@ -213,13 +213,13 @@
     "name": "IGC",
     "description": "International Grain Council: bilanse, handel, prognozy.",
     "path": "raporty/raporty-fundamentalne/igc/",
-    "updated": "2026-04-27",
+    "updated": "2026-05-22",
     "frequency": "miesięcznie",
-    "next_issue": "2026-05",
+    "next_issue": "2026-06",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Nowa publikacja prezentuje dane z raportu IGC, wskazujące na komfortowy bilans zbóż w sezonie 2025/26 (wyższa produkcja i rosnące zapasy), a także zawiera porównanie prognoz IGC i WASDE dla tego okresu."
+    "alert_comment": "Majowy raport International Grains Council koncentruje się przede wszystkim na rekordowej podaży zbóż i soi w sezonie 2025/26 oraz ryzyku pogorszenia globalnego bilansu w 2026/27, kiedy światowa produkcja zbóż ma po raz pierwszy od czterech sezonów spaść z powodu mniejszych areałów i słabszych plonów."
 
   },
   "fao": {
