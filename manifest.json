@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-22",
+    "updated": "2026-05-25",
     "frequency": "dziennie",
-    "next_issue": "2026-05-25",
+    "next_issue": "2026-05-26",
     "category": "zboza",
-    "alert_comment": "W dzisiejszym porannym skanie m.in.o najnowszym raporcie IGC pokazującym spadające globalne zapasy zbóż, presji pogodowej i spadkach na CBOT, mocniejszym eksporcie pszenicy z Europy oraz o crush spreadzie, czyli marży tłoczni soi i tym, co mówi ona o rynku śruty i olejów roślinnych."
+    "alert_comment": "W dzisiejszym porannym skanie: fundusze ograniczają pozycje long w ags, dolar pozostaje uporczywie silny, ropa gwałtownie tanieje po sygnałach możliwego porozumienia USA–Iran, Europa czasowo znosi cła na nawozy, Argentyna zapowiada dalsze obniżki podatków eksportowych na soję i kukurydzę, a rynek zbóż balansuje pomiędzy mocnym eksportem, pogodą w USA."
   },
 
   "ACE Market View": {
