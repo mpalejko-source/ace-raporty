@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-25",
+    "updated": "2026-05-26",
     "frequency": "dziennie",
-    "next_issue": "2026-05-26",
+    "next_issue": "2026-05-27",
     "category": "zboza",
-    "alert_comment": "W dzisiejszym porannym skanie: fundusze ograniczają pozycje long w ags, dolar pozostaje uporczywie silny, ropa gwałtownie tanieje po sygnałach możliwego porozumienia USA–Iran, Europa czasowo znosi cła na nawozy, Argentyna zapowiada dalsze obniżki podatków eksportowych na soję i kukurydzę, a rynek zbóż balansuje pomiędzy mocnym eksportem, pogodą w USA."
+    "alert_comment": "Dzisiejszy poranny skan obejmuje przede wszystkim presję na pszenicę, kukurydzę, soję i canolę, zmienność ropy po sygnałach z USA–Iran, mocniejsze euro osłabiające eksport z UE oraz sytuację na rynku nawozów i olejów roślinnych."
   },
 
   "ACE Market View": {
