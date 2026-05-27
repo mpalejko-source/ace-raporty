@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-26",
+    "updated": "2026-05-27",
     "frequency": "dziennie",
-    "next_issue": "2026-05-27",
+    "next_issue": "2026-05-28",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy poranny skan obejmuje przede wszystkim presję na pszenicę, kukurydzę, soję i canolę, zmienność ropy po sygnałach z USA–Iran, mocniejsze euro osłabiające eksport z UE oraz sytuację na rynku nawozów i olejów roślinnych."
+    "alert_comment": "Pogoda i geopolityka ponownie mocno wpływają na rynki agro. Presję na CBOT wywierają szybkie zasiewy i korzystne warunki pogodowe w USA, podczas gdy MATIF wspierają obawy o falę upałów w Europie. Jednocześnie rynek nadal uważnie śledzi rozwój sytuacji wokół Iranu, ropy naftowej oraz nawozów."
   },
 
   "ACE Market View": {
