@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-27",
+    "updated": "2026-05-28",
     "frequency": "dziennie",
-    "next_issue": "2026-05-28",
+    "next_issue": "2026-05-29",
     "category": "zboza",
-    "alert_comment": "Pogoda i geopolityka ponownie mocno wpływają na rynki agro. Presję na CBOT wywierają szybkie zasiewy i korzystne warunki pogodowe w USA, podczas gdy MATIF wspierają obawy o falę upałów w Europie. Jednocześnie rynek nadal uważnie śledzi rozwój sytuacji wokół Iranu, ropy naftowej oraz nawozów."
+    "alert_comment": "W dzisiejszym Porannym Skanie m.in. o przerwanym strajku w argentyńskim sektorze olejowym, podniesionej przez SovEcon prognozie zbiorów pszenicy w Rosji do 90,3 mln ton, a także o wpływie napięć wokół cieśniny Ormuz."
   },
 
   "ACE Market View": {
