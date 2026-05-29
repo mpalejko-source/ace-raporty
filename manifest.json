@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-05-22",
+    "updated": "2026-05-29",
     "frequency": "tygodniowo",
-    "next_issue": "2026-05-29",
+    "next_issue": "2026-06-08",
     "category": "zboza",
-    "alert_comment": "Europa pozostaje pod wpływem ciepłej, ale coraz bardziej suchej pogody, która wspiera tempo siewów kukurydzy, jednocześnie zwiększając presję na pszenicę i rzepak poza bardziej wilgotną Wielką Brytanią. W USA rynek obserwuje poprawę sytuacji wilgotnościowej dzięki opadom na Równinach i w Corn Belt, podczas gdy Brazylia nadal zmaga się z suszą obciążającą drugą kukurydzę. W Australii kluczowe pozostają intensywniejsze opady we wschodnich regionach, poprawiające wilgotność gleb pod zasiewy zbóż ozimych."
+    "alert_comment": "Europa pozostaje pod wpływem ciepłej i miejscami suchej pogody, co zwiększa presję na uprawy w regionach z deficytem wilgoci. W USA narastają obawy o niedobory opadów w Corn Belcie, podczas gdy w Brazylii susza nadal szkodzi kukurydzy safrinha, a w Australii opady poprawiają warunki przed siewami zbóż ozimych i rzepaku."
 
   },
 
