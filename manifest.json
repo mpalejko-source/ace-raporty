@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-28",
+    "updated": "2026-05-29",
     "frequency": "dziennie",
-    "next_issue": "2026-05-29",
+    "next_issue": "2026-06-01",
     "category": "zboza",
-    "alert_comment": "W dzisiejszym Porannym Skanie m.in. o przerwanym strajku w argentyńskim sektorze olejowym, podniesionej przez SovEcon prognozie zbiorów pszenicy w Rosji do 90,3 mln ton, a także o wpływie napięć wokół cieśniny Ormuz."
+    "alert_comment": "Poranny skan rynku koncentruje się dziś na wpływie możliwej deeskalacji USA–Iran na ropę, dolara i koszty produkcji rolnej, a także na reakcjach rynków pszenicy, kukurydzy, soi i canoli, gdzie geopolityka ściera się z pogodą, biopaliwami oraz presją globalnej podaży."
   },
 
   "ACE Market View": {
