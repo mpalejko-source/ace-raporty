@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-05-29",
+    "updated": "2026-06-01",
     "frequency": "dziennie",
-    "next_issue": "2026-06-01",
+    "next_issue": "2026-06-02",
     "category": "zboza",
-    "alert_comment": "Poranny skan rynku koncentruje się dziś na wpływie możliwej deeskalacji USA–Iran na ropę, dolara i koszty produkcji rolnej, a także na reakcjach rynków pszenicy, kukurydzy, soi i canoli, gdzie geopolityka ściera się z pogodą, biopaliwami oraz presją globalnej podaży."
+    "alert_comment": "Dziś w skanie: odpływ kapitału funduszy z rynków rolnych, napięcia USA–Iran i wpływ tańszej ropy, presja pogodowa na zboża, słabnąca soja na CBOT, mocny olej sojowy, niższe prognozy rzepaku w UE oraz korekta kukurydzy, pszenicy na CBOT."
   },
 
   "ACE Market View": {
