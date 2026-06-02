@@ -1,10 +1,10 @@
 ﻿{
-  "asof": "2026-06-01 08:11",
+  "asof": "2026-06-02 08:17",
   "cash": [
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
       "price": 875.00,
-      "d": -5.00,
+      "d": 0.00,
       "w": -10.00,
       "m": 35.00
     },
@@ -13,70 +13,70 @@
       "price": 925.00,
       "d": 0.00,
       "w": 20.00,
-      "m": 75.00
+      "m": 55.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 1574.00,
-      "d": -9.00,
-      "w": -3.00,
-      "m": -40.00
+      "price": 1566.00,
+      "d": -8.00,
+      "w": -15.00,
+      "m": -11.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
       "price": 1158.00,
       "d": 0.00,
-      "w": -46.00,
-      "m": -78.00
+      "w": -38.00,
+      "m": -71.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
       "price": 1073.00,
-      "d": -4.00,
-      "w": 12.00,
-      "m": 80.00
+      "d": 0.00,
+      "w": 18.00,
+      "m": 78.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 207.50,
+      "close": 206.50,
       "d1": null,
-      "d": -2.75,
-      "w": -7.50,
-      "m": 12.25
+      "d": -1.00,
+      "w": -6.00,
+      "m": 15.00
     },
     {
       "name": "Corn MATIF",
-      "close": 227.00,
+      "close": 224.25,
       "d1": null,
-      "d": -26.25,
-      "w": 5.50,
-      "m": 2.25
+      "d": -2.75,
+      "w": 5.00,
+      "m": 0.75
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 524.25,
+      "close": 528.50,
       "d1": null,
-      "d": -2.50,
-      "w": -2.25,
-      "m": 2.75
+      "d": 4.25,
+      "w": 13.25,
+      "m": 7.75
     },
     {
       "name": "Soymeal CBOT",
-      "close": 329.80,
+      "close": 326.50,
       "d1": null,
-      "d": -4.30,
-      "w": -2.10,
-      "m": 1.80
+      "d": -3.30,
+      "w": -5.40,
+      "m": 7.20
     },
     {
       "name": "Rapemeal Neuss/Spyck",
-      "close": 251.00,
+      "close": 250.00,
       "d1": null,
-      "d": -3.00,
-      "w": -20.00,
-      "m": -41.00
+      "d": -1.00,
+      "w": -21.00,
+      "m": -38.00
     }
   ]
 }
