@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-01",
+    "updated": "2026-06-02",
     "frequency": "dziennie",
-    "next_issue": "2026-06-02",
+    "next_issue": "2026-06-03",
     "category": "zboza",
-    "alert_comment": "Dziś w skanie: odpływ kapitału funduszy z rynków rolnych, napięcia USA–Iran i wpływ tańszej ropy, presja pogodowa na zboża, słabnąca soja na CBOT, mocny olej sojowy, niższe prognozy rzepaku w UE oraz korekta kukurydzy, pszenicy na CBOT."
+    "alert_comment": "Rynki agro pozostają dziś pod wpływem dwóch przeciwstawnych sił: presji nadchodzących zbiorów i rosnącego ryzyka geopolitycznego wokół cieśniny Ormuz. Pszenica, kukurydza i soja są pod presją dobrych prognoz podaży, ale drożejąca ropa ponownie wspiera oleje roślinne, biopaliwa i koszty nawozów. W centrum uwagi pozostają USA, Morze Czarne, Australia oraz Bliski Wschód."
   },
 
   "ACE Market View": {
