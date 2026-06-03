@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-02",
+    "updated": "2026-06-03",
     "frequency": "dziennie",
-    "next_issue": "2026-06-03",
+    "next_issue": "2026-06-08",
     "category": "zboza",
-    "alert_comment": "Rynki agro pozostają dziś pod wpływem dwóch przeciwstawnych sił: presji nadchodzących zbiorów i rosnącego ryzyka geopolitycznego wokół cieśniny Ormuz. Pszenica, kukurydza i soja są pod presją dobrych prognoz podaży, ale drożejąca ropa ponownie wspiera oleje roślinne, biopaliwa i koszty nawozów. W centrum uwagi pozostają USA, Morze Czarne, Australia oraz Bliski Wschód."
+    "alert_comment": "Taniejące zboża, mocny rzepak i canola, napięty bilans oleistych w UE oraz powrót El Niño w centrum uwagi rynku."
   },
 
   "ACE Market View": {
