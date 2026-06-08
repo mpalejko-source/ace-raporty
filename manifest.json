@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-06-01",
+    "updated": "2026-06-08",
     "frequency": "tygodniowo",
-    "next_issue": "2026-06-08",
+    "next_issue": "2026-06-15",
     "category": "zboza",
-    "alert_comment": "Fundusze wyraźnie zmniejszyły ryzyko w szerokim rynku surowców, ale w agro nie wycofują się całkowicie. Najmocniej schłodziła się kukurydza na CBOT, podczas gdy soja, śruta sojowa i rzepak nadal utrzymują relatywnie mocniejsze wsparcie kapitału."
+    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na wielu rynkach, a najmocniejsze cofnięcie było widoczne w paliwach, kukurydzy CBOT i pszenicy MATIF. Mimo tego kapitał nie znika całkowicie z agro — relatywnie lepiej nadal wyglądają soja, śruta sojowa i rzepak."
 
   },
   "Portfele-ACE": {
