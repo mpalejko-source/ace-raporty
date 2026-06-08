@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-03",
+    "updated": "2026-06-08",
     "frequency": "dziennie",
-    "next_issue": "2026-06-08",
+    "next_issue": "2026-06-09",
     "category": "zboza",
-    "alert_comment": "Taniejące zboża, mocny rzepak i canola, napięty bilans oleistych w UE oraz powrót El Niño w centrum uwagi rynku."
+    "alert_comment": "Pszenica: rekordowa wyprzedaż przez fundusze i presja globalnej podaży/ Soja: najniżej od 4 miesięcy przez korzystną pogodę w USA i słaby popyt z Chin/ Rzepak/Canola: pod wpływem wyprzedaży na rynku oleistych i surowców / Fundusze wycofały z agro ok. 7,5 mld USD, a sezonowość, pogoda i mocny dolar nadal wspierają stronę podażową / FAO: ceny żywności lekko spadają, ale pozostają blisko najwyższych poziomów od 3 lat."
   },
 
   "ACE Market View": {
