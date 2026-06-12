@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-11",
+    "updated": "2026-06-12",
     "frequency": "dziennie",
-    "next_issue": "2026-06-12",
+    "next_issue": "2026-06-15",
     "category": "zboza",
-    "alert_comment": "Rynek oczekuje czerwcowego raportu WASDE, podczas gdy pszenica i soja odbijają od ostatnich minimów, Coceral podnosi prognozy zbiorów pszenicy w Europie, Argentyna zwiększa prognozy produkcji soi i pszenicy, a wzrost napięć między USA i Iranem wspiera kompleks olejów roślinnych"
+    "alert_comment": "Poranny skan pokazuje spokojny, bezprzełomowy WASDE, tańszą ropę po sygnałach deeskalacji wokół Iranu oraz rosnące ryzyko pogodowe związane z El Niño i ukraińską logistyką eksportową."
   },
 
   "ACE Market View": {
