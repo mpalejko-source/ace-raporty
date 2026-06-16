@@ -45,11 +45,11 @@
     "name": "Portfele-ACE",
     "description": "Szybkie podsumowanie i ruchy zakupowe ACE w trakcie tygodnia.",
     "path": "raporty/benchmark-tygodnia/",
-    "updated": "2026-06-10",
+    "updated": "2026-06-16",
     "frequency": "tygodniowo",
-    "next_issue": "2026-06-17",
+    "next_issue": "2026-06-24",
     "category": "zboza",
-    "alert_comment": "Komentarz ruchów zakupowych ACE + aktualizacja pokrycia rynku Polska"
+    "alert_comment": "Komentarz ruchów zakupowych ACE"
   },
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
