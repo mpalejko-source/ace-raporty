@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-16",
+    "updated": "2026-06-17",
     "frequency": "dziennie",
-    "next_issue": "2026-06-17",
+    "next_issue": "2026-06-18",
     "category": "zboza",
-    "alert_comment": "Dziś w porannym skanie: spadek pszenicy MATIF poniżej 200 EUR/t, techniczne odbicie CBOT po minimach, presja tańszej ropy na kukurydzę, soję, rzepak i kanolę, rekordowe perspektywy zbiorów pszenicy w Rumunii, dobre warunki dla upraw w Ukrainie oraz rosnące ryzyka finansowe w brazylijskim rolnictwie."
+    "alert_comment": "Po gwałtownym spadku cen ropy po porozumieniu USA–Iran rynki rolne wracają do analizy fundamentów. Kukurydza i canola pozostają pod presją dużej podaży oraz tańszej energii, podczas gdy pszenica próbuje odbić od wielomiesięcznych minimów. Sprawdzamy, czy rynek zakończył już wycenę geopolityki i ponownie skupia się na perspektywach tegorocznych zbiorów."
   },
 
   "ACE Market View": {
