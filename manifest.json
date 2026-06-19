@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-17",
+    "updated": "2026-06-19",
     "frequency": "dziennie",
-    "next_issue": "2026-06-18",
+    "next_issue": "2026-06-22",
     "category": "zboza",
-    "alert_comment": "Po gwałtownym spadku cen ropy po porozumieniu USA–Iran rynki rolne wracają do analizy fundamentów. Kukurydza i canola pozostają pod presją dużej podaży oraz tańszej energii, podczas gdy pszenica próbuje odbić od wielomiesięcznych minimów. Sprawdzamy, czy rynek zakończył już wycenę geopolityki i ponownie skupia się na perspektywach tegorocznych zbiorów."
+    "alert_comment": "Dzisiejszy przegląd rynków pokazuje coraz większy wpływ pogody i geopolityki na ceny surowców agro. Europejska kukurydza reaguje na falę upałów we Francji, podczas gdy rynek soi, pszenicy i kukurydzy w USA pozostaje pod presją mocnego dolara, taniejącej ropy oraz perspektyw wysokiej podaży. Dodatkowo inwestorzy śledzą rozwój El Niño w Ameryce Południowej, sytuację eksportową Ukrainy oraz rosnącą niepewność wokół rozmów USA–Iran, które nadal wpływają na rynki energii i oleistych."
   },
 
   "ACE Market View": {
@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-06-12",
+    "updated": "2026-06-19",
     "frequency": "tygodniowo",
-    "next_issue": "2026-06-19",
+    "next_issue": "2026-06-26",
     "category": "zboza",
-    "alert_comment": "Pogoda na głównych obszarach rolniczych świata pozostaje bardzo zróżnicowana. Europa zmaga się z narastającym ryzykiem upałów i suszy, Ameryka Północna otrzyma potrzebne opady w części Corn Belt, a Ameryka Południowa korzysta z deszczy wspierających kukurydzę w Brazylii i siewy pszenicy w Argentynie. W Australii utrzymują się chłodniejsze warunki, ale bez większych zagrożeń dla zasiewów pszenicy i rzepaku."
+    "alert_comment": "Na światowych rynkach rolnych pogoda pozostaje zróżnicowana – Europa wchodzi w kolejny okres wysokich temperatur i narastającej suszy, podczas gdy w USA opady wspierają rozwój kukurydzy i soi, choć lokalnie mogą opóźniać żniwa pszenicy. W Ameryce Południowej warunki są w większości korzystne dla upraw, a Australia pozostaje pod wpływem chłodniejszej, ale nadal sprzyjającej zasiewom pszenicy i rzepaku pogody."
 
   },
 
