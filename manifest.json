@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-19",
+    "updated": "2026-06-22",
     "frequency": "dziennie",
-    "next_issue": "2026-06-22",
+    "next_issue": "2026-06-23",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy przegląd rynków pokazuje coraz większy wpływ pogody i geopolityki na ceny surowców agro. Europejska kukurydza reaguje na falę upałów we Francji, podczas gdy rynek soi, pszenicy i kukurydzy w USA pozostaje pod presją mocnego dolara, taniejącej ropy oraz perspektyw wysokiej podaży. Dodatkowo inwestorzy śledzą rozwój El Niño w Ameryce Południowej, sytuację eksportową Ukrainy oraz rosnącą niepewność wokół rozmów USA–Iran, które nadal wpływają na rynki energii i oleistych."
+    "alert_comment": "Dzisiejszy przegląd pokazuje, że rynki agro coraz mocniej reagują na połączenie pogody, geopolityki i przepływów kapitału. Upały we Francji wspierają kukurydzę, Ormuz nadal miesza w nawozach, LNG i ropie, a fundusze wyraźnie ograniczają ryzyko na surowcach. Dodatkowo USD/PLN testuje ważne techniczne poziomy, co może mieć znaczenie dla krajowych wycen surowców importowanych."
   },
 
   "ACE Market View": {
