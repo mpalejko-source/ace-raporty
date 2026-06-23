@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-06-22",
+    "updated": "2026-06-23",
     "frequency": "tygodniowo",
     "next_issue": "2026-06-29",
     "category": "zboza",
-    "alert_comment": "Fundusze wyraźnie schłodziły zaangażowanie w agro, najmocniej redukując pozycje w kukurydzy CBOT, śrucie sojowej i pszenicy. Na tym tle relatywnie najlepiej nadal wygląda rzepak, który wciąż utrzymuje wsparcie kapitału i pozostaje jednym z mocniejszych elementów całego koszyka agro."
+    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na rynku surowców, a w agro najmocniejsza redukcja pojawiła się w kompleksie soi, kukurydzy oraz pszenicy MATIF. Rzepak pozostaje jednak relatywnie mocny, co pokazuje, że kapitał spekulacyjny nie wychodzi całkowicie z rynku rolnego, ale coraz bardziej selektywnie wybiera kierunki zaangażowania."
 
   },
   "Portfele-ACE": {
