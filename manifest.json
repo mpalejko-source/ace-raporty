@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-22",
+    "updated": "2026-06-23",
     "frequency": "dziennie",
-    "next_issue": "2026-06-23",
+    "next_issue": "2026-06-24",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy przegląd pokazuje, że rynki agro coraz mocniej reagują na połączenie pogody, geopolityki i przepływów kapitału. Upały we Francji wspierają kukurydzę, Ormuz nadal miesza w nawozach, LNG i ropie, a fundusze wyraźnie ograniczają ryzyko na surowcach. Dodatkowo USD/PLN testuje ważne techniczne poziomy, co może mieć znaczenie dla krajowych wycen surowców importowanych."
+    "alert_comment": "Dzisiejszy poranny skan koncentruje się na wzrostach cen pszenicy i kukurydzy w Europie wywołanych falą upałów, rosnących obawach o plony w UE oraz presji konkurencyjnej ze strony regionu Morza Czarnego, przy jednoczesnym wpływie rynku ropy, dolara i pogody w USA na notowania zbóż i oleistych na światowych giełdach."
   },
 
   "ACE Market View": {
@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-06-22",
+    "updated": "2026-06-23",
     "frequency": "tygodniowo",
     "next_issue": "2026-06-29",
     "category": "zboza",
-    "alert_comment": "Fundusze wyraźnie schłodziły zaangażowanie w agro, najmocniej redukując pozycje w kukurydzy CBOT, śrucie sojowej i pszenicy. Na tym tle relatywnie najlepiej nadal wygląda rzepak, który wciąż utrzymuje wsparcie kapitału i pozostaje jednym z mocniejszych elementów całego koszyka agro."
+    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na rynku surowców, a w agro najmocniejsza redukcja pojawiła się w kompleksie soi, kukurydzy oraz pszenicy MATIF. Rzepak pozostaje jednak relatywnie mocny, co pokazuje, że kapitał spekulacyjny nie wychodzi całkowicie z rynku rolnego, ale coraz bardziej selektywnie wybiera kierunki zaangażowania."
 
   },
   "Portfele-ACE": {
