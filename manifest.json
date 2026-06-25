@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-24",
+    "updated": "2026-06-25",
     "frequency": "dziennie",
-    "next_issue": "2026-06-25",
+    "next_issue": "2026-06-26",
     "category": "zboza",
-    "alert_comment": "Rynki zbóż i oleistych pozostają pod wpływem sprzecznych impulsów: Europa czeka na realną skalę strat po fali upałów, podczas gdy Chicago pozostaje pod presją szybkich żniw, mocnego dolara i tańszej ropy. W tle wraca francuska pszenica do Chin, canola próbuje odrabiać straty, a olej palmowy koryguje po rajdzie. Geopolityka nadal miesza w wycenach – Rosja zaostrza ton wobec USA, a ruch przez Ormuz stopniowo się odbudowuje."
+    "alert_comment": "Dzisiaj w porannym skanie: wpływ fali upałów w Europie na wzrost cen zbóż na MATIF, utrzymującą się presję na rynkach CBOT ze strony korzystnej pogody i mocnego dolara, sytuację na rynku oleistych oraz najnowsze informacje z Ukrainy dotyczące warunków upraw i reform sektora rolnego."
   },
 
   "ACE Market View": {
