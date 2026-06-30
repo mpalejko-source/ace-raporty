@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-29",
+    "updated": "2026-06-30",
     "frequency": "dziennie",
-    "next_issue": "2026-06-30",
+    "next_issue": "2026-07-01",
     "category": "zboza",
-    "alert_comment": "Fundusze pozostają defensywne przed raportami USDA i dalej redukują ekspozycję, Europa notuje spadki pszenicy przy jednoczesnej presji na kukurydzę z powodu upałów i słabej kondycji upraw, soja jest stabilizowana przez wysokie przeroby i przepływy logistyczne, a Rosja rozpoczęła kampanię żniwną 2026 przy pierwszych dobrych sygnałach plonów."
+    "alert_comment": "W dzisiejszym skanie rynku: Pszenica w Europie stabilną mimo ryzyk pogodowych i rosnącej podaży z Rosji/ kukurydza na MATIF rośnie w obawach o suszę we Francji i możliwe dalsze straty plonów/pogarszającą się kondycja upraw w USA i wyczekiwanie rynku na raport USDA/podwyższone prognozy zbiorów pszenicy w Rosji (presja podażowa globalnie)/ zróżnicowane sygnały na rynku oleistych według Expana (m.in. rzepak w górę, słonecznik i soja pod presją)/szacunki zbiorów w Kanadzie."
   },
 
   "ACE Market View": {
@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-06-23",
+    "updated": "2026-06-29",
     "frequency": "tygodniowo",
-    "next_issue": "2026-06-29",
+    "next_issue": "2026-07-06",
     "category": "zboza",
-    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na rynku surowców, a w agro najmocniejsza redukcja pojawiła się w kompleksie soi, kukurydzy oraz pszenicy MATIF. Rzepak pozostaje jednak relatywnie mocny, co pokazuje, że kapitał spekulacyjny nie wychodzi całkowicie z rynku rolnego, ale coraz bardziej selektywnie wybiera kierunki zaangażowania."
+    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na rynku surowców, szczególnie w paliwach oraz ziarnach CBOT. W agro największe redukcje pozycji widać w soi, kukurydzy, śrucie sojowej i rzepaku, co sugeruje przejście z fazy mocnego zaangażowania do bardziej ostrożnej gry. Pszenica nadal pozostaje relatywnie słaba pod względem pozycjonowania, choć fundusze lekko zmniejszyły negatywne nastawienie. Całość pokazuje, że kapitał spekulacyjny nie wycofuje się całkowicie z rynku agro, ale działa dziś znacznie bardziej selektywnie."
 
   },
   "Portfele-ACE": {
