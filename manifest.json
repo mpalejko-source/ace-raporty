@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-06-30",
+    "updated": "2026-07-01",
     "frequency": "dziennie",
-    "next_issue": "2026-07-01",
+    "next_issue": "2026-07-02",
     "category": "zboza",
-    "alert_comment": "W dzisiejszym skanie rynku: Pszenica w Europie stabilną mimo ryzyk pogodowych i rosnącej podaży z Rosji/ kukurydza na MATIF rośnie w obawach o suszę we Francji i możliwe dalsze straty plonów/pogarszającą się kondycja upraw w USA i wyczekiwanie rynku na raport USDA/podwyższone prognozy zbiorów pszenicy w Rosji (presja podażowa globalnie)/ zróżnicowane sygnały na rynku oleistych według Expana (m.in. rzepak w górę, słonecznik i soja pod presją)/szacunki zbiorów w Kanadzie."
+    "alert_comment": "USDA pokazało mniejszy areał kukurydzy i wyższe zapasy zbóż w USA, co wsparło wzrosty kukurydzy i pszenicy, a rynek jednocześnie reaguje na ryzyka pogodowe w Indiach i na Ukrainie oraz dane o eksporcie i imporcie zbóż i oleistych w UE."
   },
 
   "ACE Market View": {
