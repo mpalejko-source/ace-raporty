@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-01",
+    "updated": "2026-07-02",
     "frequency": "dziennie",
-    "next_issue": "2026-07-02",
+    "next_issue": "2026-07-03",
     "category": "zboza",
-    "alert_comment": "USDA pokazało mniejszy areał kukurydzy i wyższe zapasy zbóż w USA, co wsparło wzrosty kukurydzy i pszenicy, a rynek jednocześnie reaguje na ryzyka pogodowe w Indiach i na Ukrainie oraz dane o eksporcie i imporcie zbóż i oleistych w UE."
+    "alert_comment": "Dziś w porannym skanie dominują pogoda i koszty: pszenica odbija po niższych szacunkach areału w USA i Kanadzie, kukurydza oraz cukier pozostają pod presją suszy w Europie, a energia, paliwa i nawozy nadal reagują na napięcia wokół Iranu, Rosji i cieśniny Ormuz."
   },
 
   "ACE Market View": {
