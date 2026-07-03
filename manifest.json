@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-02",
+    "updated": "2026-07-03",
     "frequency": "dziennie",
-    "next_issue": "2026-07-03",
+    "next_issue": "2026-07-06",
     "category": "zboza",
-    "alert_comment": "Dziś w porannym skanie dominują pogoda i koszty: pszenica odbija po niższych szacunkach areału w USA i Kanadzie, kukurydza oraz cukier pozostają pod presją suszy w Europie, a energia, paliwa i nawozy nadal reagują na napięcia wokół Iranu, Rosji i cieśniny Ormuz."
+    "alert_comment": "Dzisiejszy skan koncentruje się na rynku oleistych — rosnących zapasach oleju palmowego w Malezji, słabszym imporcie Indii, mieszanych nastrojach na soi i kanoli oraz napięciu między ambitnymi celami biopaliwowymi USA a realną produkcją."
   },
 
   "ACE Market View": {
