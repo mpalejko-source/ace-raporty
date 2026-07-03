@@ -226,13 +226,13 @@
     "name": "FAO",
     "description": "FAO: dane i trendy globalne w agro.",
     "path": "raporty/raporty-fundamentalne/fao/",
-    "updated": "2026-06-08",
+    "updated": "2026-07-03",
     "frequency": "miesięcznie",
-    "next_issue": "2026-07",
+    "next_issue": "2026-08-07",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "W maju 2026 r. światowe ceny żywności pozostały zasadniczo stabilne, ponieważ wzrost cen zbóż i cukru, wywołany obawami o podaż, pogodę oraz koszty energii, został zrównoważony przez spadek cen olejów roślinnych i produktów mlecznych."
+    "alert_comment": "W czerwcu 2026 r. globalne ceny żywności lekko spadły, bo tańsze zboża, cukier i nabiał przeważyły nad dalszym wzrostem cen olejów roślinnych oraz drogim mięsem."
 
   },
   "Indexy-światowe": {
