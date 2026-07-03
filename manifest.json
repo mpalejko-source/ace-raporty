@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-06-26",
+    "updated": "2026-07-03",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-03",
+    "next_issue": "2026-07-10",
     "category": "zboza",
-    "alert_comment": "Europa pozostaje pod presją bardzo wysokich temperatur, szczególnie w centrum kontynentu, choć opady w Europie Centralnej i Północnej mogą częściowo złagodzić stres dla upraw. W Ameryce Północnej krótkoterminowo pomagają deszcze na Równinach i w Corn Belt, ale w lipcu rośnie ryzyko cieplejszego i bardziej suchego scenariusza. W Ameryce Południowej ciepła i sucha pogoda w Brazylii sprzyja zbiorom drugiej kukurydzy, natomiast chłód i przymrozki w Argentynie oraz Paragwaju mogą spowalniać prace polowe. W Australii poprawa opadów na wschodzie wspiera pszenicę i rzepak, podczas gdy zachód pozostaje bardziej suchy."
+    "alert_comment": "Europa pozostaje pod presją upałów i deficytu wilgoci, szczególnie w centrum i na zachodzie, co zwiększa ryzyko stresu dla kukurydzy, pszenicy i rzepaku. W Ameryce Północnej opady na Równinach i w Corn Belt wspierają kukurydzę i soję, ale miejscami mogą opóźniać żniwa pszenicy, a w tle rośnie ryzyko cieplejszego i suchszego lipca. W Ameryce Południowej sucha pogoda w Brazylii sprzyja zbiorom drugiej kukurydzy i kawy, natomiast w Argentynie chłód i późniejsze opady mogą utrudniać siewy pszenicy. Australia pozostaje bez większych zagrożeń, choć intensywne opady na południowym wschodzie poprawiają wilgotność gleb pod pszenicę i rzepak."
 
   },
 
