@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-03",
+    "updated": "2026-07-06",
     "frequency": "dziennie",
-    "next_issue": "2026-07-06",
+    "next_issue": "2026-07-07",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy skan koncentruje się na rynku oleistych — rosnących zapasach oleju palmowego w Malezji, słabszym imporcie Indii, mieszanych nastrojach na soi i kanoli oraz napięciu między ambitnymi celami biopaliwowymi USA a realną produkcją."
+    "alert_comment": "Pszenica w UE lekko słabsza po realizacji zysków i postępie żniw/ Kukurydza dalej rośnie przez stres pogodowy (upały, susza we Francji) i spadek ocen upraw/ Wysoka premia kukurydzy wobec pszenicy utrzymuje się/ Chicago wspiera sentyment, ale globalna podaż ogranicza wzrosty/ Oleje roślinne mieszane: kanola lekko w górę, olej palmowy pod presją/ Rynek ogólnie „weather-driven” + wyczekiwanie na WASDE i dalsze prognozy pogody."
   },
 
   "ACE Market View": {
