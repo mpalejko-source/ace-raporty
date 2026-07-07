@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-06-29",
+    "updated": "2026-07-07",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-06",
+    "next_issue": "2026-07-13",
     "category": "zboza",
-    "alert_comment": "Fundusze w ostatnim tygodniu wyraźnie ograniczyły ryzyko na rynku surowców, szczególnie w paliwach oraz ziarnach CBOT. W agro największe redukcje pozycji widać w soi, kukurydzy, śrucie sojowej i rzepaku, co sugeruje przejście z fazy mocnego zaangażowania do bardziej ostrożnej gry. Pszenica nadal pozostaje relatywnie słaba pod względem pozycjonowania, choć fundusze lekko zmniejszyły negatywne nastawienie. Całość pokazuje, że kapitał spekulacyjny nie wycofuje się całkowicie z rynku agro, ale działa dziś znacznie bardziej selektywnie."
+    "alert_comment": "W najnowszym podsumowaniu pozycji funduszy widać wyraźną selekcję kapitału na rynkach agro. Fundusze ograniczały zaangażowanie w części kompleksu sojowego i ziaren CBOT, ale jednocześnie rzepak MATIF nadal pozostaje relatywnie mocnym punktem całego zestawienia. To ważny sygnał dla rynku paszowego, bo presja spekulacyjna nie znika, ale coraz wyraźniej przesuwa się między poszczególnymi surowcami. Sprawdź pełny komentarz, aby zobaczyć, gdzie fundusze redukują ryzyko, a gdzie nadal utrzymują mocniejsze pozycje."
 
   },
   "Portfele-ACE": {
