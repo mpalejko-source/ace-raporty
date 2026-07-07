@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-06",
+    "updated": "2026-07-07",
     "frequency": "dziennie",
-    "next_issue": "2026-07-07",
+    "next_issue": "2026-07-08",
     "category": "zboza",
-    "alert_comment": "Pszenica w UE lekko słabsza po realizacji zysków i postępie żniw/ Kukurydza dalej rośnie przez stres pogodowy (upały, susza we Francji) i spadek ocen upraw/ Wysoka premia kukurydzy wobec pszenicy utrzymuje się/ Chicago wspiera sentyment, ale globalna podaż ogranicza wzrosty/ Oleje roślinne mieszane: kanola lekko w górę, olej palmowy pod presją/ Rynek ogólnie „weather-driven” + wyczekiwanie na WASDE i dalsze prognozy pogody."
+    "alert_comment": "Dzisiejszy Poranny Skan pokazuje powrót kapitału na rynek rolny, silną reakcję zbóż i soi na ryzyko pogodowe w USA i Europie, chińskie zakupy amerykańskiej soi oraz ważne sygnały z globalnego handlu — od rekordowego eksportu soi z Brazylii po słabszy eksport zbóż z Rosji."
   },
 
   "ACE Market View": {
