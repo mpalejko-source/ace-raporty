@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-07",
+    "updated": "2026-07-08",
     "frequency": "dziennie",
-    "next_issue": "2026-07-08",
+    "next_issue": "2026-07-09",
     "category": "zboza",
-    "alert_comment": "Dzisiejszy Poranny Skan pokazuje powrót kapitału na rynek rolny, silną reakcję zbóż i soi na ryzyko pogodowe w USA i Europie, chińskie zakupy amerykańskiej soi oraz ważne sygnały z globalnego handlu — od rekordowego eksportu soi z Brazylii po słabszy eksport zbóż z Rosji."
+    "alert_comment": "Eskalacja napięć na linii USA–Iran podbija ceny ropy i wspiera oleje roślinne, podczas gdy rynki zbóż koncentrują się na pogodzie w Europie i USA, suszy na Ukrainie oraz oczekiwaniu na lipcowy raport USDA."
   },
 
   "ACE Market View": {
