@@ -200,13 +200,13 @@
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
     "path": "raporty/raporty-fundamentalne/wasde/",
-    "updated": "2026-06-12",
+    "updated": "2026-07-13",
     "frequency": "miesięcznie",
-    "next_issue": "2026-07-10",
+    "next_issue": "2026-08-12",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Raport USDA był spokojny i nie zmienił istotnie układu sił na rynku: w pszenicy cięcia produkcji w USA zostały zneutralizowane przez wyższą globalną podaż i zapasy, a w kukurydzy bilans pozostał komfortowy dzięki wzrostowi światowych zapasów do 281,2 mln ton.W soi również zabrakło mocniejszego impulsu cenowego, ponieważ prognozy dla USA pozostały bez zmian, a globalne zapasy końcowe lekko wzrosły do 124,9 mln ton, głównie za sprawą wyższej podaży w Argentynie."
+    "alert_comment": "Raport ma ogólnie prowzrostowy wydźwięk dla pszenicy i kukurydzy, ponieważ wskazuje na niższą podaż, wyraźny spadek zapasów oraz większe wykorzystanie i handel, szczególnie w USA. W przypadku soi obraz jest bardziej neutralny: wyższa produkcja i podaż w USA równoważą wzrost eksportu, choć globalne zapasy zostały lekko obniżone."
 
   },
   "igc": {
