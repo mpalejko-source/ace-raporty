@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-16",
+    "updated": "2026-07-17",
     "frequency": "dziennie",
-    "next_issue": "2026-07-17",
+    "next_issue": "2026-07-18",
     "category": "zboza",
-    "alert_comment": "Rynki rolne pod presją geopolityki, pogody i logistyki. Napięcia na Morzu Czarnym i ograniczenie możliwości eksportowych Ukrainy wywindowały pszenicę na Euronext do najwyższego poziomu od 17 miesięcy. Jednocześnie słabsze prognozy zbiorów we Francji, susza na Zachodzie USA oraz rekordowo niskie stany wody na Renie zwiększają presję na podaż i koszty transportu. Na rynku oleistych uwagę zwracają rekordowy przerób soi w USA, szybko malejące zapasy oleju sojowego oraz korekta cen oleju palmowego."
+    "alert_comment": "W dzisiejszym Porannym Skanie o rosnącym ryzyku El Niño, eskalacji na Morzu Czarnym, prognozach IGC oraz coraz ciaśniejszych bilansach zbóż, które mogą wspierać ceny i zwiększać szanse eksportowe Polski."
   },
 
   "ACE Market View": {
@@ -245,7 +245,7 @@
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Szeroki rynek surowców nadal utrzymuje relatywnie mocne tło, ale w samym agro obraz pozostaje spokojniejszy i bardziej selektywny. Coraz ważniejszym czynnikiem stają się koszty frachtu, które wyraźnie rosną, podczas gdy dolar pozostaje relatywnie stabilny i nie stanowi dziś głównej bariery dla rynku."
+    "alert_comment": "Po czerwcowym schłodzeniu światowy rynek surowców ponownie się umacnia, a wraz z nim odbija także segment agro. Jednocześnie wyższe koszty frachtu zaczynają coraz mocniej wpływać na ceny, podczas gdy dolar pozostaje względnie stabilny. W najnowszym wpisie pokazujemy, jak zmieniło się globalne otoczenie rynku w ciągu ostatniego miesiąca."
 
   },
     "Wskaźniki": {
