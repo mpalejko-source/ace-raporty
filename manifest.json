@@ -213,13 +213,13 @@
     "name": "IGC",
     "description": "International Grain Council: bilanse, handel, prognozy.",
     "path": "raporty/raporty-fundamentalne/igc/",
-    "updated": "2026-06-26",
+    "updated": "2026-07-17",
     "frequency": "miesięcznie",
-    "next_issue": "2026-07",
+    "next_issue": "2026-08-20",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Czerwcowy raport International Grains Council pokazuje wyraźną poprawę krótkoterminowego obrazu podaży – prognozy produkcji zbóż na sezony 2025/26 i 2026/27 zostały podniesione głównie dzięki lepszym perspektywom kukurydzy w Ameryce Południowej, Indiach i RPA, a w sezonie 2025/26 produkcja, konsumpcja i handel mają osiągnąć rekordowe poziomy. Jednocześnie w sezonie 2026/27 globalny bilans może ponownie się pogorszyć: produkcja zbóż ma spaść o ok. 2%, konsumpcja dalej rosnąć, a zapasy końcowe obniżyć się o 3%. Coraz większą niewiadomą pozostaje El Niño, a na rynku cenowym dominuje presja dobrej podaży – indeks IGC GOI spadł w skali miesiąca o 5%, najmocniej pod wpływem przeceny pszenicy, kukurydzy i soi."
+    "alert_comment": "Międzynarodowa Rada Zbożowa obniżyła prognozę światowej produkcji zbóż w sezonie 2026/27 o 5 mln ton m/m, do 2,422 mld ton. A główny indeks cen zbóż i roślin oleistych wzrósł od czerwcowego raportu o 7%, osiągając najwyższy poziom od czerwca 2024 roku."
 
   },
   "fao": {
