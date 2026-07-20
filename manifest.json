@@ -34,11 +34,11 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-07-13",
+    "updated": "2026-07-20",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-20",
+    "next_issue": "2026-07-27",
     "category": "zboza",
-    "alert_comment": "W najnowszym zestawieniu fundusze ponownie mocniej weszły w ziarna CBOT, szczególnie w soję, kukurydzę i śrutę sojową. To ważny sygnał dla rynku paszowego, bo po wcześniejszych redukcjach kapitał spekulacyjny znów zaczyna budować ekspozycję na kluczowe komponenty. Jednocześnie obraz nie jest jednolity — pszenica pozostaje słabsza, a w rzepaku widać realizację części wcześniejszych zysków. W pełnym komentarzu pokazujemy, gdzie fundusze faktycznie wracają do zakupów, a gdzie nadal zachowują ostrożność."
+    "alert_comment": "W najnowszym zestawieniu fundusze znów mocniej weszły w zboża i oleiste, szczególnie w kukurydzę, soję, śrutę sojową i rzepak. Pszenica nadal pozostaje słabsza, ale szybkie zamykanie krótkich pozycji pokazuje, że rynek zaczyna inaczej wyceniać pogodę i geopolitykę. W pełnym komentarzu pokazujemy, gdzie fundusze faktycznie wracają do zakupów, a gdzie nadal tylko ograniczają wcześniejszy pesymizm."
 
   },
   "Portfele-ACE": {
