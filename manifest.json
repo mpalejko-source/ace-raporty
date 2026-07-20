@@ -14,9 +14,9 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-06-15",
+  "updated": "2026-07-20",
   "type": "report",
-  "alert_comment": "Analiza terminowa Rynku Śruty Sojowej: Anatomia Dołków z 2025 roku a Obecna Wycena Futures. Pozytywna ocena zachowania Polski."
+  "alert_comment": "Analiza składowych śruty sojowej (ceny z 15 dnia każdego miesiąca)"
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
