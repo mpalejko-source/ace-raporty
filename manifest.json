@@ -3,11 +3,11 @@
     "name": "Poranny Skan Rynku",
     "description": "Codzienny skan newsów i poranny komentarz (PL/EN) + archiwum.",
     "path": "raporty/poranny-skan/",
-    "updated": "2026-07-22",
+    "updated": "2026-07-23",
     "frequency": "dziennie",
-    "next_issue": "2026-07-23",
+    "next_issue": "2026-07-24",
     "category": "zboza",
-    "alert_comment": "Rynki śledzą wpływ napięć geopolitycznych na ceny zbóż, rosnącą rolę Argentyny w eksporcie kukurydzy oraz wzrost importu soi przez Chiny."
+    "alert_comment": "W porannym skanie: rosnące ceny pszenicy na Euronext, wsparcie dla soi i śruty sojowej ze strony pogody oraz ropy, a także nowe sygnały z rynku olejów roślinnych."
   },
 
   "ACE Market View": {
