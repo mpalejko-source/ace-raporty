@@ -65,11 +65,11 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-07-17",
+    "updated": "2026-07-24",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-24",
+    "next_issue": "2026-07-31",
     "category": "zboza",
-    "alert_comment": "Europa pozostaje ciepła i sucha na zachodzie, co wspiera żniwa pszenicy i rzepaku, ale zwiększa presję na kukurydzę, podczas gdy opady w Polsce, Alpach i Rumunii lokalnie poprawiają wilgotność. W USA rośnie ryzyko cieplejszego i suchszego końca lipca dla kukurydzy i soi, Kanada wygląda korzystniej dzięki opadom, a w Ameryce Południowej deszcze w południowej Brazylii i Pampie wspierają gleby, ale mogą utrudniać prace polowe. Australia pozostaje neutralna dla pszenicy i rzepaku dzięki dobrym zapasom wilgoci na południowym wschodzie."
+    "alert_comment": ""
 
   },
 
