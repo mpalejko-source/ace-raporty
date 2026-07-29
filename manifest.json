@@ -14,9 +14,9 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-07-20",
+  "updated": "2026-07-29",
   "type": "report",
-  "alert_comment": "Analiza składowych śruty sojowej (ceny z 15 dnia każdego miesiąca)"
+  "alert_comment": ""
   },
 
   "Rynek na wykresach - Surowce i Waluty": {
