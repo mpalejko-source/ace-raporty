@@ -99,68 +99,129 @@
       white-space:pre-wrap;
     }
 
-    .sec{margin-top:18px}
+    .sec{
+      margin-top:20px;
+      overflow:flow-root;
+    }
+    .sec + .sec{
+      border-top:1px solid rgba(255,255,255,.12);
+      padding-top:22px;
+      margin-top:22px;
+    }
     .sec h2{
-      margin:0 0 10px 0; font-size:16px;
-      display:flex; align-items:center; gap:10px;
+      margin:0 0 10px 0;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .icons{
+      display:inline-flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:6px;
+      flex:0 0 auto;
     }
     .icon{
-      width:28px; height:28px;
-      display:inline-flex; align-items:center; justify-content:center;
+      width:28px;
+      height:28px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       border-radius:10px;
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      box-shadow: var(--shadow);
+      background:rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
       font-size:16px;
       flex:0 0 auto;
     }
 
-    /* ====== Layout tekst+media (60/40) ====== */
-    .row{
-      display:grid;
-      grid-template-columns: 1.55fr 1fr; /* ~60/40 */
-      gap:14px;
-      align-items:start;
+    /* ====== Automatyczne opływanie tekstu i układ 1–5 obrazów ====== */
+    .articleBody{
+      display:block;
     }
-    @media (max-width: 760px){
-      .row{ grid-template-columns: 1fr; }
+    .articleBody::after{
+      content:"";
+      display:block;
+      clear:both;
+    }
+    .leadBody{ margin-top:12px; }
+
+    .mediaFloat{
+      float:right;
+      width:min(38%, 360px);
+      margin:0 0 12px 18px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    /* Przy długim tekście dwa obrazy po prawej są układane pionowo. */
+    .mediaFloat.mediaCount2{
+      width:min(38%, 360px);
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .mediaBelow{
+      clear:both;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
+      margin-top:14px;
     }
 
     /* sekcje: białe, normalne */
     .text{
       margin:0;
-      color: rgba(234,240,255,.92);
+      color:rgba(234,240,255,.92);
       line-height:1.6;
       font-size:14px;
-      font-style: normal;
+      font-style:normal;
       white-space:pre-wrap;
-    }
-
-    .mediaCol{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-end;
-    }
-    @media (max-width: 760px){
-      .mediaCol{ align-items:stretch; }
     }
 
     .imgCard{
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
+      background:rgba(255,255,255,.04);
       border-radius:14px;
       padding:8px;
-      box-shadow: var(--shadow);
-      max-width: 360px;
+      box-shadow:var(--shadow);
       width:100%;
+      min-width:0;
     }
+
     .imgCard img{
       width:100%;
       height:auto;
       display:block;
       border-radius:10px;
-      cursor: zoom-in;
+      cursor:zoom-in;
+    }
+
+    @media (max-width:760px){
+      .articleBody{
+        display:flex;
+        flex-direction:column;
+      }
+      .articleBody > .text,
+      .articleBody > .lead{
+        order:1;
+      }
+      .mediaFloat,
+      .mediaFloat.mediaCount2{
+        float:none;
+        width:100%;
+        margin:12px 0 0 0;
+        order:2;
+        grid-template-columns:1fr;
+      }
+      .mediaBelow{
+        grid-template-columns:1fr;
+        margin-top:10px;
+        order:3;
+      }
     }
 
     .archive{
@@ -400,42 +461,162 @@
     if(e.target.id === "lb" || e.target.id === "lbImg") closeLightbox();
   });
 
-  function renderMediaColumn(mediaArr){
-    if(!mediaArr || !mediaArr.length) return "";
-    const cards = mediaArr.map(raw => {
-      const src = normalizeMediaSrc(raw);
-      if(!src) return "";
-      return `
-        <div class="imgCard">
-          <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}"
-               onerror="this.closest('.imgCard')?.remove()" />
-        </div>
-      `;
-    }).join("");
-    return `<div class="mediaCol">${cards}</div>`;
+  function mediaCardHtml(src, order=0){
+    return `
+      <div class="imgCard" data-media-order="${Number(order) || 0}">
+        <img src="${esc(src)}" alt="media" data-zoom="${esc(src)}"
+             onerror="this.closest('.imgCard')?.remove(); scheduleSmartMediaLayout()" />
+      </div>
+    `;
+  }
+
+  function prepareMedia(mediaArr){
+    if(!Array.isArray(mediaArr)) return [];
+    return mediaArr
+      .map(raw => normalizeMediaSrc(raw))
+      .filter(Boolean)
+      .slice(0, 5);
+  }
+
+  function splitIcons(iconText){
+    const raw = (iconText || "").toString().trim();
+    if(!raw) return [];
+
+    let parts;
+    if(typeof Intl !== "undefined" && Intl.Segmenter){
+      const segmenter = new Intl.Segmenter(undefined, {granularity:"grapheme"});
+      parts = Array.from(segmenter.segment(raw), x => x.segment);
+    } else {
+      parts = Array.from(raw);
+    }
+
+    return parts.filter(x => x.trim() && !/^[,;|/]+$/.test(x.trim()));
+  }
+
+  function renderIcons(iconText){
+    const icons = splitIcons(iconText);
+    if(!icons.length) return "";
+    return `<span class="icons">${icons.map(icon => `<span class="icon">${esc(icon)}</span>`).join("")}</span>`;
+  }
+
+  const SMART_LONG_TEXT_LINES = 17;
+  let smartLayoutTimer = null;
+
+  function directChildrenByClass(parent, className){
+    return Array.from(parent.children).filter(el => el.classList && el.classList.contains(className));
+  }
+
+  function orderedMediaCards(body){
+    return Array.from(body.querySelectorAll(".imgCard"))
+      .sort((a, b) => Number(a.dataset.mediaOrder || 0) - Number(b.dataset.mediaOrder || 0));
+  }
+
+  function placeMediaCards(body, sideCount){
+    const textEl = Array.from(body.children).find(el =>
+      el.classList && (el.classList.contains("text") || el.classList.contains("lead"))
+    );
+    if(!textEl) return;
+
+    const cards = orderedMediaCards(body);
+    directChildrenByClass(body, "mediaFloat").forEach(el => el.remove());
+    directChildrenByClass(body, "mediaBelow").forEach(el => el.remove());
+
+    const actualSideCount = Math.max(0, Math.min(sideCount, cards.length));
+    const sideCards = cards.slice(0, actualSideCount);
+    const belowCards = cards.slice(actualSideCount);
+
+    if(sideCards.length){
+      const side = document.createElement("div");
+      side.className = sideCards.length === 2 ? "mediaFloat mediaCount2" : "mediaFloat";
+      sideCards.forEach(card => side.appendChild(card));
+      body.insertBefore(side, textEl);
+    }
+
+    if(belowCards.length){
+      const below = document.createElement("div");
+      below.className = "mediaBelow";
+      belowCards.forEach(card => below.appendChild(card));
+      body.appendChild(below);
+    }
+  }
+
+  function applySmartMediaLayout(body){
+    const count = orderedMediaCards(body).length;
+    if(!count) return;
+
+    // Układy nieparzyste są stałe: 1 obok tekstu, reszta pod tekstem.
+    if(count === 1 || count === 3 || count === 5){
+      placeMediaCards(body, 1);
+      return;
+    }
+
+    // Na telefonie CSS przenosi obrazy pod tekst. Decyzję desktopową
+    // odświeżamy ponownie po powrocie do szerszego widoku.
+    if(window.innerWidth <= 760) return;
+
+    // Najpierw ustawiamy wariant dla długiego tekstu, aby zmierzyć
+    // rzeczywistą liczbę linii w zwężonej kolumnie tekstowej.
+    placeMediaCards(body, 2);
+
+    const textEl = Array.from(body.children).find(el =>
+      el.classList && (el.classList.contains("text") || el.classList.contains("lead"))
+    );
+    if(!textEl) return;
+
+    const styles = window.getComputedStyle(textEl);
+    const lineHeight = parseFloat(styles.lineHeight) || (parseFloat(styles.fontSize) || 14) * 1.6;
+    const lineCount = Math.ceil(textEl.getBoundingClientRect().height / lineHeight);
+    const isLongText = lineCount >= SMART_LONG_TEXT_LINES;
+
+    // Krótki tekst + parzysta liczba obrazów: wszystkie obrazy parami pod tekstem.
+    // Długi tekst + parzysta liczba obrazów: dwa obrazy pionowo po prawej,
+    // a ewentualne kolejne dwa pod tekstem.
+    placeMediaCards(body, isLongText ? 2 : 0);
+    body.dataset.smartLayout = isLongText ? "long" : "short";
+  }
+
+  function applySmartMediaLayouts(){
+    document.querySelectorAll(".articleBody[data-media-count]").forEach(applySmartMediaLayout);
+  }
+
+  function scheduleSmartMediaLayout(){
+    window.clearTimeout(smartLayoutTimer);
+    smartLayoutTimer = window.setTimeout(applySmartMediaLayouts, 40);
+  }
+
+  window.addEventListener("resize", scheduleSmartMediaLayout);
+
+  function renderArticleBody(text, textClass, mediaArr, bodyClass=""){
+    const media = prepareMedia(mediaArr);
+    const textHtml = `<p class="${esc(textClass)}">${esc(text)}</p>`;
+
+    if(!media.length){
+      return `<div class="articleBody ${esc(bodyClass)}">${textHtml}</div>`;
+    }
+
+    // Układ startowy. Po wyrenderowaniu funkcja smart ocenia rzeczywistą
+    // liczbę linii tekstu i w razie potrzeby przenosi parzystą liczbę obrazów.
+    const sideCount = media.length % 2 === 0 ? Math.min(2, media.length) : 1;
+    const side = media.slice(0, sideCount);
+    const below = media.slice(sideCount);
+
+    const sideClass = side.length === 2 ? "mediaFloat mediaCount2" : "mediaFloat";
+    const sideHtml = side.length
+      ? `<div class="${sideClass}">${side.map((src, index) => mediaCardHtml(src, index)).join("")}</div>`
+      : "";
+
+    const belowHtml = below.length
+      ? `<div class="mediaBelow">${below.map((src, index) => mediaCardHtml(src, sideCount + index)).join("")}</div>`
+      : "";
+
+    return `<div class="articleBody ${esc(bodyClass)}" data-media-count="${media.length}">${sideHtml}${textHtml}${belowHtml}</div>`;
   }
 
   function section(icon, title, text, mediaArr){
-    const hasIcon = (icon||"").toString().trim().length > 0;
-    const textHtml = isNonEmptyText(text) ? `<p class="text">${esc(text)}</p>` : `<p class="text">—</p>`;
-    const mediaHtml = renderMediaColumn(mediaArr);
-
-    if(!mediaHtml){
-      return `
-        <div class="sec">
-          <h2>${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}${esc(title)}</h2>
-          ${textHtml}
-        </div>
-      `;
-    }
-
     return `
       <div class="sec">
-        <h2>${hasIcon ? `<span class="icon">${esc(icon)}</span>` : ``}${esc(title)}</h2>
-        <div class="row">
-          <div>${textHtml}</div>
-          ${mediaHtml}
-        </div>
+        <h2>${renderIcons(icon)}${esc(title)}</h2>
+        ${renderArticleBody(text, "text", mediaArr)}
       </div>
     `;
   }
@@ -487,13 +668,7 @@
     }
 
     const leadHtml = isNonEmptyText(lead)
-      ? (leadMedia.length
-          ? `<div class="row" style="margin-top:12px">
-               <div><p class="lead leadBlue">${esc(lead)}</p></div>
-               ${renderMediaColumn(leadMedia)}
-             </div>`
-          : `<p class="lead leadBlue" style="margin-top:12px">${esc(lead)}</p>`
-        )
+      ? renderArticleBody(lead, "lead leadBlue", leadMedia, "leadBody")
       : "";
 
     const blocks = Array.isArray(t.blocks) ? t.blocks : [];
@@ -561,15 +736,19 @@
 
     document.getElementById("main").querySelectorAll("img[data-zoom]").forEach(img=>{
       img.addEventListener("click", ()=>openLightbox(img.dataset.zoom));
+      img.addEventListener("load", scheduleSmartMediaLayout, {once:true});
+      img.addEventListener("error", scheduleSmartMediaLayout, {once:true});
     });
+
+    scheduleSmartMediaLayout();
   }
 
   function renderArchive(){
     const box = document.getElementById("archive");
 
     const t = (LANG==="pl")
-      ? {h:"Archiwum", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ"}
-      : {h:"Archive", open:"Open", empty:"No archive yet.", today:"TODAY"};
+      ? {h:"Archiwum", open:"Otwórz", empty:"Brak archiwum.", today:"DZIŚ", latest:"NAJNOWSZE"}
+      : {h:"Archive", open:"Open", empty:"No archive yet.", today:"TODAY", latest:"LATEST"};
 
     const pad2 = (n)=> String(n).padStart(2,"0");
     const now = new Date();
@@ -578,7 +757,9 @@
     const today = ITEMS[0] || null;
     const isToday = !!(today && today.date && today.date === todayIso);
 
-    const startIdx = isToday ? 1 : 0;
+    // Pierwszy element JSON jest zawsze najnowszym skanem. Kafel pozostaje
+    // dostępny również wtedy, gdy użytkownik otworzy wpis sprzed kilku dni.
+    const startIdx = today ? 1 : 0;
     const firstId = (ITEMS[0] || {}).id;
 
     const archItems = ITEMS
@@ -586,12 +767,12 @@
       .filter(x => x && x.id !== firstId)
       .slice(0, 10);
 
-    const todayTile = isToday ? `
+    const todayTile = today ? `
       <div class="architem" data-id="${esc(today.id)}" data-today="1">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
           <div style="font-weight:700">${esc(((today[LANG]||{})?.title) || (LANG==="pl"?"Poranny Skan":"Morning Scan"))}</div>
           <div class="pill" style="padding:4px 8px; font-size:11px; box-shadow:none; background: rgba(125,211,252,.10); border-color: rgba(125,211,252,.35); color: rgba(234,240,255,.9)">
-            ${t.today}
+            ${isToday ? t.today : t.latest}
           </div>
         </div>
         <div class="archmeta">
