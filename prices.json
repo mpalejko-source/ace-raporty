@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-07-31 08:21",
+  "asof": "2026-07-31 09:18",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
@@ -10,17 +10,17 @@
     },
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
-      "price": 0.00,
+      "price": 970.00,
       "d": null,
-      "w": null,
-      "m": null
+      "w": 0.00,
+      "m": 100.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",
-      "price": 0.00,
+      "price": 990.00,
       "d": null,
-      "w": null,
-      "m": null
+      "w": 50.00,
+      "m": 90.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
