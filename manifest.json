@@ -23,9 +23,9 @@
     "name": "Rynek na wykresach - Surowce i Waluty",
     "description": "Pakiet wykresów spot do szybkiego przeglądu trendów.",
     "path": "raporty/chart-pack/",
-    "updated": "2026-07-23",
+    "updated": "2026-07-30",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-30",
+    "next_issue": "2026-08-06",
     "category": "zboza",
     "alert_comment": ""
 
@@ -34,9 +34,9 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-07-20",
+    "updated": "2026-07-27",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-27",
+    "next_issue": "2026-08-03",
     "category": "zboza",
     "alert_comment": "W najnowszym zestawieniu fundusze znów mocniej weszły w zboża i oleiste, szczególnie w kukurydzę, soję, śrutę sojową i rzepak. Pszenica nadal pozostaje słabsza, ale szybkie zamykanie krótkich pozycji pokazuje, że rynek zaczyna inaczej wyceniać pogodę i geopolitykę. W pełnym komentarzu pokazujemy, gdzie fundusze faktycznie wracają do zakupów, a gdzie nadal tylko ograniczają wcześniejszy pesymizm."
 
@@ -65,9 +65,9 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-07-24",
+    "updated": "2026-07-31",
     "frequency": "tygodniowo",
-    "next_issue": "2026-07-31",
+    "next_issue": "2026-08-07",
     "category": "zboza",
     "alert_comment": ""
 
