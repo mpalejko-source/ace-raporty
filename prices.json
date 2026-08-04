@@ -1,88 +1,88 @@
-﻿{
-  "asof": "2026-08-03 08:10",
+{
+  "asof": "2026-08-04 08:34",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
-      "price": 2215.00,
-      "d": -55.00,
-      "w": -145.00,
-      "m": -15.00
+      "price": 2270.00,
+      "d": 55.00,
+      "w": -50.00,
+      "m": 40.00
     },
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]",
-      "price": 940.00,
-      "d": -30.00,
-      "w": -30.00,
-      "m": 90.00
+      "price": 930.00,
+      "d": -10.00,
+      "w": -40.00,
+      "m": 85.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t]",
-      "price": 995.00,
+      "price": 1000.00,
       "d": 5.00,
-      "w": 55.00,
-      "m": 115.00
+      "w": 60.00,
+      "m": 125.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
       "price": 1658.00,
-      "d": 16.00,
-      "w": -62.00,
-      "m": 135.00
+      "d": 0.00,
+      "w": -12.00,
+      "m": 145.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1094.00,
-      "d": -8.00,
-      "w": -66.00,
-      "m": 139.00
+      "price": 1072.00,
+      "d": -22.00,
+      "w": -36.00,
+      "m": 101.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
       "price": 1084.00,
-      "d": -2.00,
-      "w": -6.00,
-      "m": -6.00
+      "d": 0.00,
+      "w": -10.00,
+      "m": 1.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 222.75,
+      "close": 225.75,
       "d1": null,
-      "d": -6.75,
-      "w": -10.00,
-      "m": 19.75
+      "d": 3.00,
+      "w": -3.50,
+      "m": 24.25
     },
     {
       "name": "Corn MATIF",
-      "close": 242.75,
+      "close": 243.00,
       "d1": null,
-      "d": -4.50,
-      "w": -16.75,
-      "m": 8.50
+      "d": 0.25,
+      "w": -12.50,
+      "m": 7.75
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 513.00,
+      "close": 523.50,
       "d1": null,
-      "d": -14.75,
-      "w": -2.75,
-      "m": 4.25
+      "d": 10.50,
+      "w": -13.00,
+      "m": 19.50
     },
     {
       "name": "Soymeal CBOT",
-      "close": 314.90,
+      "close": 315.40,
       "d1": null,
-      "d": 0.80,
-      "w": -16.40,
-      "m": 9.60
+      "d": 0.50,
+      "w": -5.40,
+      "m": 9.90
     },
     {
       "name": "Rapemeal Neuss/Spyck",
-      "close": 248.00,
+      "close": 247.00,
       "d1": null,
-      "d": -5.00,
-      "w": -15.00,
+      "d": -1.00,
+      "w": -6.00,
       "m": 18.00
     }
   ]
