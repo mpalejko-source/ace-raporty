@@ -1,5 +1,5 @@
 ﻿{
-  "asof": "2026-08-10 08:45",
+  "asof": "2026-08-10 10:24",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
@@ -71,11 +71,11 @@
     },
     {
       "name": "Soymeal CBOT",
-      "close": 208.90,
+      "close": 308.90,
       "d1": null,
-      "d": -102.70,
-      "w": -106.00,
-      "m": -103.40
+      "d": -2.70,
+      "w": -6.00,
+      "m": -3.40
     },
     {
       "name": "Rapemeal Neuss/Spyck",
