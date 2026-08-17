@@ -34,9 +34,9 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-08-10",
+    "updated": "2026-08-17",
     "frequency": "tygodniowo",
-    "next_issue": "2026-08-17",
+    "next_issue": "2026-08-24",
     "category": "zboza",
     "alert_comment": ""
 
