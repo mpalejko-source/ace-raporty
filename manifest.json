@@ -252,13 +252,13 @@
     "name": "Wskaźniki",
     "description": "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
     "path": "raporty/raporty-fundamentalne/wskazniki/",
-    "updated": "2026-07-23",
+    "updated": "2026-08-17",
     "frequency": "miesięcznie",
-    "next_issue": "2026-07-30",
+    "next_issue": "2026-09-17",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Nowy raport dostępny: sprawdź aktualne relacje cenowe i kluczowe wskaźniki między surowcami, które pokazują opłacalność i ukryte przewagi rynkowe."
+    "alert_comment": ""
 
   }
 }
