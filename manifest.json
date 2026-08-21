@@ -213,13 +213,13 @@
     "name": "IGC",
     "description": "International Grain Council: bilanse, handel, prognozy.",
     "path": "raporty/raporty-fundamentalne/igc/",
-    "updated": "2026-07-17",
+    "updated": "2026-08-21",
     "frequency": "miesięcznie",
-    "next_issue": "2026-08-20",
+    "next_issue": "2026-09-15",
     "group": "raporty-fundamentalne",
     "section": "Raporty",
     "category": "zboza",
-    "alert_comment": "Międzynarodowa Rada Zbożowa obniżyła prognozę światowej produkcji zbóż w sezonie 2026/27 o 5 mln ton m/m, do 2,422 mld ton. A główny indeks cen zbóż i roślin oleistych wzrósł od czerwcowego raportu o 7%, osiągając najwyższy poziom od czerwca 2024 roku."
+    "alert_comment": ""
 
   },
   "fao": {
