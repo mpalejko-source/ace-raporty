@@ -179,7 +179,7 @@
     "name": "Prąd",
     "description": "Analiza statystyczno-techniczna rynku energii elektrycznej.",
     "path": "raporty/analizy-stat-tech/energia/prad/",
-    "updated": "2026-08-18",
+    "updated": "2026-08-25",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Energia",
