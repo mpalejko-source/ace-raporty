@@ -14,7 +14,7 @@
   "name": "ACE Market View",
   "description": "Autorska analiza rynkowa ACE.",
   "path": "raporty/analiza-ace/",
-  "updated": "2026-09-16",
+  "updated": "2026-09-21",
   "type": "report",
   "alert_comment": ""
   },
@@ -34,9 +34,9 @@
     "name": "Pozycje Funduszy",
     "description": "Pozycjonowanie spekulantów / funduszy i wnioski rynkowe.",
     "path": "raporty/pozycje-funduszy/",
-    "updated": "2026-09-14",
+    "updated": "2026-09-21",
     "frequency": "tygodniowo",
-    "next_issue": "2026-09-21",
+    "next_issue": "2026-09-28",
     "category": "zboza",
     "alert_comment": ""
 
