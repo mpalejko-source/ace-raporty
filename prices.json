@@ -1,12 +1,12 @@
 {
-  "asof": "2026-09-23 08:12",
+  "asof": "2026-09-24 08:18",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
       "price": 2370.00,
-      "d": -30.00,
-      "w": 0.00,
-      "m": 50.00
+      "d": 0.00,
+      "w": -20.00,
+      "m": 115.00
     },
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]- październik",
@@ -25,65 +25,65 @@
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
       "price": 1945.00,
-      "d": 42.00,
-      "w": 64.00,
-      "m": 232.00
+      "d": 0.00,
+      "w": 2.00,
+      "m": 211.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1227.00,
-      "d": 7.00,
-      "w": 54.00,
-      "m": 120.00
+      "price": 1232.00,
+      "d": 5.00,
+      "w": 46.00,
+      "m": 110.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
       "price": 1047.00,
       "d": 0.00,
-      "w": -7.00,
-      "m": 15.00
+      "w": 8.00,
+      "m": 11.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 243.75,
+      "close": 240.50,
       "d1": null,
-      "d": 0.00,
-      "w": 2.75,
-      "m": 20.25
+      "d": -3.25,
+      "w": -4.00,
+      "m": 13.00
     },
     {
       "name": "Corn MATIF",
-      "close": 276.00,
+      "close": 274.75,
       "d1": null,
-      "d": 7.25,
-      "w": 14.00,
-      "m": 15.00
+      "d": -1.25,
+      "w": 12.75,
+      "m": 11.75
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 552.00,
+      "close": 554.00,
       "d1": null,
-      "d": -4.25,
-      "w": -2.25,
-      "m": 13.75
+      "d": 2.00,
+      "w": 3.25,
+      "m": 32.00
     },
     {
       "name": "Soymeal CBOT",
-      "close": 368.90,
+      "close": 370.20,
       "d1": null,
-      "d": 2.30,
-      "w": 8.80,
-      "m": 51.20
+      "d": 1.30,
+      "w": 9.30,
+      "m": 49.90
     },
     {
       "name": "Rapemeal Neuss/Spyck",
       "close": 288.00,
       "d1": null,
-      "d": 3.00,
-      "w": 15.00,
-      "m": 28.00
+      "d": 0.00,
+      "w": 6.00,
+      "m": 25.00
     }
   ]
 }
