@@ -1,11 +1,11 @@
 {
-  "asof": "2026-09-24 08:18",
+  "asof": "2026-09-25 07:41",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
       "price": 2370.00,
       "d": 0.00,
-      "w": -20.00,
+      "w": -10.00,
       "m": 115.00
     },
     {
@@ -24,66 +24,66 @@
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 1945.00,
-      "d": 0.00,
-      "w": 2.00,
-      "m": 211.00
+      "price": 1999.00,
+      "d": 54.00,
+      "w": 33.00,
+      "m": 264.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1232.00,
-      "d": 5.00,
-      "w": 46.00,
-      "m": 110.00
+      "price": 1254.00,
+      "d": 22.00,
+      "w": 23.00,
+      "m": 140.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
-      "price": 1047.00,
-      "d": 0.00,
-      "w": 8.00,
-      "m": 11.00
+      "price": 1065.00,
+      "d": 18.00,
+      "w": 15.00,
+      "m": 46.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 240.50,
+      "close": 237.50,
       "d1": null,
-      "d": -3.25,
-      "w": -4.00,
-      "m": 13.00
+      "d": -3.00,
+      "w": -6.00,
+      "m": 0.75
     },
     {
       "name": "Corn MATIF",
-      "close": 274.75,
+      "close": 275.25,
       "d1": null,
-      "d": -1.25,
-      "w": 12.75,
-      "m": 11.75
+      "d": 0.50,
+      "w": 13.50,
+      "m": 14.00
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 554.00,
+      "close": 549.50,
       "d1": null,
-      "d": 2.00,
-      "w": 3.25,
-      "m": 32.00
+      "d": -4.50,
+      "w": 1.00,
+      "m": 16.50
     },
     {
       "name": "Soymeal CBOT",
-      "close": 370.20,
+      "close": 376.10,
       "d1": null,
-      "d": 1.30,
-      "w": 9.30,
-      "m": 49.90
+      "d": 5.90,
+      "w": 7.40,
+      "m": 55.80
     },
     {
-      "name": "Rapemeal Neuss/Spyck",
-      "close": 288.00,
+      "name": "Rapemeal Neuss/Spyck (November)",
+      "close": 290.00,
       "d1": null,
-      "d": 0.00,
-      "w": 6.00,
-      "m": 25.00
+      "d": 2.00,
+      "w": 4.00,
+      "m": 29.00
     }
   ]
 }
