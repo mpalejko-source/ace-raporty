@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>ACE – Przepływy handlowe UE</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --text: #eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --border: rgba(255,255,255,.12);
+      --yellow: #facc15;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+      font-family: Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1000px 600px at 10% 0%,rgba(125,211,252,.14),transparent 60%),
+        radial-gradient(900px 500px at 90% 10%,rgba(167,139,250,.12),transparent 55%),
+        var(--bg);
+    }
+    .wrap { width: 100%; max-width: 760px; }
+    .brand {
+      margin: 0 0 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--muted);
+    }
+    .panel {
+      padding: clamp(26px,5vw,44px);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--yellow);
+      border-radius: 18px;
+      background: linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .badge {
+      display: inline-block;
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: #0b1220;
+      background: var(--yellow);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    h1 {
+      margin: 23px 0 14px;
+      font-size: clamp(26px,4.5vw,38px);
+      line-height: 1.15;
+      font-weight: 900;
+      color: #fff;
+    }
+    .lead {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+    .description {
+      margin: 0;
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .backCard {
+      margin-top: 18px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(135deg,rgba(125,211,252,.10),rgba(167,139,250,.07));
+      color: var(--text);
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: background .15s ease,border-color .15s ease;
+    }
+    .backCard:hover {
+      border-color: rgba(125,211,252,.55);
+      background: rgba(125,211,252,.14);
+    }
+    .backCard:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+    .arrow {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      padding: 10px;
+      border: 1px solid rgba(125,211,252,.25);
+      border-radius: 12px;
+      background: rgba(125,211,252,.10);
+      color: #7dd3fc;
+    }
+    .backTitle { display: block; font-size: 16px; font-weight: 900; }
+    .backDescription { display: block; margin-top: 5px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+    footer { margin-top: 24px; text-align: center; font-size: 12px; color: rgba(234,240,255,.5); }
+    @media (max-width: 480px) {
+      body { padding: 28px 16px; }
+      .backCard { padding: 18px; gap: 14px; }
+      .lead { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="brand">AGRI COMMODITY EXPERTS · PANEL MONITOROWANIA RYNKU</p>
+    <section class="panel" aria-labelledby="reportTitle">
+      <span class="badge">WKRÓTCE</span>
+      <h1 id="reportTitle">Przepływy handlowe UE</h1>
+      <p class="lead">Raport jest w przygotowaniu.</p>
+      <p class="description">Pracujemy nad cotygodniowym przeglądem importu i eksportu zbóż oraz surowców oleistych w UE. Raport pojawi się tutaj wkrótce.</p>
+    </section>
+    <a class="backCard" href="../../index.html">
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      <span>
+        <span class="backTitle">Powrót do panelu głównego</span>
+        <span class="backDescription">Przejdź do raportów i pozostałych aktualizacji ACE.</span>
+      </span>
+    </a>
+    <footer>Agri Commodity Experts Sp. z o.o.</footer>
+  </main>
+</body>
+</html>
