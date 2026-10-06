@@ -757,18 +757,20 @@
 
     .quickGrid{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: 1fr;
       gap:12px;
       margin-top:14px;
     }
     .quickCard{ padding:14px; min-height:140px; }
+    .quickGrid .quickCard{ min-height:195px; }
     .quickCard .title{ font-size:14px; }
     .quickCard .desc{ font-size:12.5px; }
-    @media (max-width: 1100px){
-      .quickGrid{ grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px){
+      .quickGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    @media (max-width: 720px){
-      .quickGrid{ grid-template-columns: repeat(1, 1fr); }
+    @media (max-width: 600px){
+      .quickGrid{ grid-template-columns: 1fr; }
     }
 
     .monthlyGrid{
@@ -1236,7 +1238,8 @@
       "Pozycje Funduszy",
       "Portfele-ACE",
       "Analizy statystyczno-techniczne",
-      "Pogoda"
+      "Pogoda",
+      "Przepływy handlowe UE"
     ];
 
     const MONTHLY_KEYS = ["wasde","igc","fao","Indexy-światowe"];

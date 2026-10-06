@@ -9,16 +9,14 @@
     "category": "zboza",
     "alert_comment": ""
   },
-
   "ACE Market View": {
-  "name": "ACE Market View",
-  "description": "Autorska analiza rynkowa ACE.",
-  "path": "raporty/analiza-ace/",
-  "updated": "2026-09-21",
-  "type": "report",
-  "alert_comment": ""
+    "name": "ACE Market View",
+    "description": "Autorska analiza rynkowa ACE.",
+    "path": "raporty/analiza-ace/",
+    "updated": "2026-09-21",
+    "type": "report",
+    "alert_comment": ""
   },
-
   "Rynek na wykresach - Surowce i Waluty": {
     "name": "Rynek na wykresach - Surowce i Waluty",
     "description": "Pakiet wykresów spot do szybkiego przeglądu trendów.",
@@ -28,7 +26,6 @@
     "next_issue": "2026-10-08",
     "category": "zboza",
     "alert_comment": ""
-
   },
   "Pozycje Funduszy": {
     "name": "Pozycje Funduszy",
@@ -39,7 +36,6 @@
     "next_issue": "2026-10-12",
     "category": "zboza",
     "alert_comment": ""
-
   },
   "Portfele-ACE": {
     "name": "Portfele-ACE",
@@ -54,13 +50,14 @@
   "Analizy statystyczno-techniczne": {
     "name": "Analizy statystyczno-techniczne",
     "description": "Pakiet szczegółowych analiz liczbowych dla wszystkich surowców i walut",
-     "path": "raporty/analizy-stat-tech/",
-      "type": "folder",
+    "path": "raporty/analizy-stat-tech/",
+    "type": "folder",
     "category": "foldery",
-    "alert_comment": ""
-
+    "alert_comment": "",
+    "updated": "2026-09-29",
+    "next_issue": "",
+    "frequency": "tygodniowo"
   },
-  
   "Pogoda": {
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
@@ -70,10 +67,7 @@
     "next_issue": "2026-10-09",
     "category": "zboza",
     "alert_comment": ""
-
   },
-
-
   "raporty-fundamentalne": {
     "name": "Raporty Fundamentalne",
     "description": "WASDE, IGC, FAO i ACE Indexy Światowe – kluczowe wnioski.",
@@ -81,12 +75,10 @@
     "type": "folder",
     "category": "foldery"
   },
-
   "usdpln": {
     "name": "USD/PLN",
     "description": "Analiza statystyczno-techniczna pary USD/PLN.",
     "path": "raporty/analizy-stat-tech/waluty/usdpln/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Waluty",
@@ -96,7 +88,6 @@
     "name": "EUR/PLN",
     "description": "Analiza statystyczno-techniczna pary EUR/PLN.",
     "path": "raporty/analizy-stat-tech/waluty/eurpln/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Waluty",
@@ -106,18 +97,15 @@
     "name": "EUR/USD",
     "description": "Analiza statystyczno-techniczna pary EUR/USD.",
     "path": "raporty/analizy-stat-tech/waluty/eurusd/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Waluty",
     "category": "fx"
   },
-
   "pszenica": {
     "name": "Pszenica",
     "description": "Analiza statystyczno-techniczna pszenicy.",
     "path": "raporty/analizy-stat-tech/zboza/pszenica/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Zboża",
@@ -127,7 +115,6 @@
     "name": "Kukurydza",
     "description": "Analiza statystyczno-techniczna kukurydzy.",
     "path": "raporty/analizy-stat-tech/zboza/kukurydza/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Zboża",
@@ -137,18 +124,15 @@
     "name": "Rzepak",
     "description": "Analiza statystyczno-techniczna rzepaku.",
     "path": "raporty/analizy-stat-tech/zboza/rzepak/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Zboża",
     "category": "zboza"
   },
-
   "sojowa": {
     "name": "Śruta sojowa",
     "description": "Analiza statystyczno-techniczna śruty sojowej.",
     "path": "raporty/analizy-stat-tech/sruty/sojowa/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Śruty",
@@ -158,18 +142,15 @@
     "name": "Śruta rzepakowa",
     "description": "Analiza statystyczno-techniczna śruty rzepakowej.",
     "path": "raporty/analizy-stat-tech/sruty/rzepakowa/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Śruty",
     "category": "bialko"
   },
-
   "gaz": {
     "name": "Gaz",
     "description": "Analiza statystyczno-techniczna rynku gazu.",
     "path": "raporty/analizy-stat-tech/energia/gaz/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Energia",
@@ -179,7 +160,6 @@
     "name": "Prąd",
     "description": "Analiza statystyczno-techniczna rynku energii elektrycznej.",
     "path": "raporty/analizy-stat-tech/energia/prad/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Energia",
@@ -189,13 +169,11 @@
     "name": "Ropa",
     "description": "Analiza statystyczno-techniczna rynku energii elektrycznej.",
     "path": "raporty/analizy-stat-tech/energia/ropa/",
-    "updated": "2026-09-29",
     "frequency": "tygodniowo",
     "group": "analizy-stat-tech",
     "section": "Energia",
     "category": "energia"
   },
-  
   "wasde": {
     "name": "WASDE",
     "description": "USDA: bilanse, zmiany i konsekwencje rynkowe.",
@@ -207,7 +185,6 @@
     "section": "Raporty",
     "category": "zboza",
     "alert_comment": ""
-
   },
   "igc": {
     "name": "IGC",
@@ -220,7 +197,6 @@
     "section": "Raporty",
     "category": "zboza",
     "alert_comment": ""
-
   },
   "fao": {
     "name": "FAO",
@@ -233,7 +209,6 @@
     "section": "Raporty",
     "category": "zboza",
     "alert_comment": ""
-
   },
   "Indexy-światowe": {
     "name": "Indexy Światowe",
@@ -246,9 +221,8 @@
     "section": "Raporty",
     "category": "zboza",
     "alert_comment": ""
-
   },
-    "Wskaźniki": {
+  "Wskaźniki": {
     "name": "Wskaźniki",
     "description": "Analiza relacji cenowych między surowcami i wskaźników względem ceny.",
     "path": "raporty/raporty-fundamentalne/wskazniki/",
@@ -259,6 +233,15 @@
     "section": "Raporty",
     "category": "zboza",
     "alert_comment": ""
-
+  },
+  "Przepływy handlowe UE": {
+    "name": "Przepływy handlowe UE",
+    "description": "Cotygodniowy przegląd importu i eksportu zbóż oraz surowców oleistych w UE.",
+    "path": "raporty/handel/",
+    "updated": "",
+    "frequency": "tygodniowo",
+    "next_issue": "",
+    "category": "zboza",
+    "alert_comment": ""
   }
 }
