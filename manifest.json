@@ -238,9 +238,9 @@
     "name": "Przepływy handlowe UE",
     "description": "Cotygodniowy przegląd importu i eksportu zbóż oraz surowców oleistych w UE.",
     "path": "raporty/handel/",
-    "updated": "",
+    "updated": "2026-10-08",
     "frequency": "tygodniowo",
-    "next_issue": "",
+    "next_issue": "2026-10-14",
     "category": "zboza",
     "alert_comment": ""
   }
