@@ -13,7 +13,7 @@
     "name": "ACE Market View",
     "description": "Autorska analiza rynkowa ACE.",
     "path": "raporty/analiza-ace/",
-    "updated": "2026-09-21",
+    "updated": "2026-10-16",
     "type": "report",
     "alert_comment": ""
   },
