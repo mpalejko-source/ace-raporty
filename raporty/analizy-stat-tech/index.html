@@ -287,126 +287,6 @@ function card(r){
     </a>`;
 }
 
-function normalizeDate(raw){
-  if(!raw) return null;
-
-  const value = String(raw).trim().replace(/\s+/g, " ");
-  let m;
-
-  m = value.match(/^(\d{4})[.\-\/](\d{2})[.\-\/](\d{2})$/);
-  if(m){
-    return { iso: `${m[1]}-${m[2]}-${m[3]}` };
-  }
-
-  m = value.match(/^(\d{2})[.\-\/](\d{2})[.\-\/](\d{4})$/);
-  if(m){
-    return { iso: `${m[3]}-${m[2]}-${m[1]}` };
-  }
-
-  return null;
-}
-
-function extractDateFromHtml(htmlText){
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlText, "text/html");
-
-  const directCandidates = [];
-
-  const metaSelectors = [
-    'meta[name="report-updated"]',
-    'meta[name="updated"]',
-    'meta[name="last-updated"]',
-    'meta[property="report-updated"]'
-  ];
-
-  metaSelectors.forEach(selector => {
-    const el = doc.querySelector(selector);
-    if(el && el.content) directCandidates.push(el.content);
-  });
-
-  const dataSelectors = [
-    '[data-report-updated]',
-    '[data-updated]',
-    '.reportDate',
-    '.updateDate',
-    '.updated',
-    '.aktualizacja'
-  ];
-
-  dataSelectors.forEach(selector => {
-    const el = doc.querySelector(selector);
-    if(!el) return;
-
-    const attrDate = el.getAttribute('data-report-updated') || el.getAttribute('data-updated');
-    if(attrDate) directCandidates.push(attrDate);
-    if(el.textContent) directCandidates.push(el.textContent.trim());
-  });
-
-  for(const candidate of directCandidates){
-    const parsed = normalizeDate(candidate);
-    if(parsed) return parsed;
-  }
-
-  const bodyText = (doc.body ? doc.body.textContent : htmlText)
-    .replace(/\u00A0/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  const patterns = [
-    /Aktualizacja\s*:?\s*(\d{2}[.\-\/]\d{2}[.\-\/]\d{4})/i,
-    /Aktualizacja\s*:?\s*(\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/i,
-    /Updated\s*:?\s*(\d{2}[.\-\/]\d{2}[.\-\/]\d{4})/i,
-    /Updated\s*:?\s*(\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/i
-  ];
-
-  for(const pattern of patterns){
-    const match = bodyText.match(pattern);
-    if(match && match[1]){
-      const parsed = normalizeDate(match[1]);
-      if(parsed) return parsed;
-    }
-  }
-
-  const genericMatch = bodyText.match(/(\d{2}[.\-\/]\d{2}[.\-\/]\d{4}|\d{4}[.\-\/]\d{2}[.\-\/]\d{2})/);
-  if(genericMatch && genericMatch[1]){
-    const parsed = normalizeDate(genericMatch[1]);
-    if(parsed) return parsed;
-  }
-
-  return null;
-}
-
-async function hydrateMissingDates(){
-  const cards = [...document.querySelectorAll(".js-card")];
-  const todayISO = todayIsoLocal();
-
-  await Promise.all(cards.map(async cardEl => {
-    const existingUpdated = cardEl.dataset.updated || "";
-    if(existingUpdated) return;
-
-    const source = cardEl.dataset.source;
-    if(!source) return;
-
-    try{
-      const separator = source.includes("?") ? "&" : "?";
-      const response = await fetch(`${source}${separator}v=${Date.now()}`, { cache: "no-store" });
-      if(!response.ok) return;
-
-      const htmlText = await response.text();
-      const parsed = extractDateFromHtml(htmlText);
-      if(!parsed || !parsed.iso) return;
-
-      cardEl.dataset.updated = parsed.iso;
-      const badges = cardEl.querySelector(".badges");
-      if(badges){
-        badges.innerHTML = renderBadges(parsed.iso === todayISO ? todayISO : parsed.iso);
-      }
-    }catch(err){
-      // zostawiamy "Aktualizacja: —"
-    }
-  }));
-}
-
 function normalizePath(path){
   return "/" + String(path || "").replace(/^\/+|\/+$/g, "") + "/";
 }
@@ -421,8 +301,17 @@ async function load(){
   const res = await fetch(url("manifest.json") + "?t=" + Date.now(), {cache:"no-store"});
   const data = await res.json();
 
+  // Wspólne daty pakietu ustawiamy wyłącznie w sekcji folderu w manifest.json.
+  const folder = data["Analizy statystyczno-techniczne"] || {};
+  const sharedUpdated = Object.prototype.hasOwnProperty.call(folder, "updated");
+  const sharedNextIssue = Object.prototype.hasOwnProperty.call(folder, "next_issue");
   const all = Object.values(data)
-    .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech");
+    .filter(x => (x.group || "").toLowerCase() === "analizy-stat-tech")
+    .map(r => ({
+      ...r,
+      updated: sharedUpdated ? folder.updated : (r.updated || ""),
+      next_issue: sharedNextIssue ? folder.next_issue : (r.next_issue || "")
+    }));
 
   const waluty = [];
   const zboza  = [];
@@ -441,7 +330,8 @@ async function load(){
     name: "Ropa",
     description: "Analiza statystyczno-techniczna rynku ropy.",
     path: "/raporty/analizy-stat-tech/energia/ropa/",
-    updated: ""
+    updated: folder.updated || "",
+    next_issue: folder.next_issue || ""
   });
 
   const sortByDateDesc = (a,b)=>parseUpdated(b.updated)-parseUpdated(a.updated);
@@ -456,7 +346,6 @@ async function load(){
   sruty.forEach(r  => document.getElementById("sec-sruty").insertAdjacentHTML("beforeend", card(r)));
   energia.forEach(r=> document.getElementById("sec-energia").insertAdjacentHTML("beforeend", card(r)));
 
-  await hydrateMissingDates();
 }
 
 load();
