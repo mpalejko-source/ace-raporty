@@ -1,19 +1,19 @@
 {
-  "asof": "2026-10-16 08:05",
+  "asof": "2026-10-19 08:15",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
-      "price": 2450.00,
-      "d": 0.00,
-      "w": 50.00,
-      "m": 80.00
+      "price": 2425.00,
+      "d": -25.00,
+      "w": 25.00,
+      "m": 35.00
     },
     {
       "name": "Pszenica konsumpcyjna – port Gdańsk/Gdynia [PLN/t]- październik",
-      "price": 1030.00,
-      "d": 0.00,
-      "w": -15.00,
-      "m": 9.00
+      "price": 1045.00,
+      "d": 15.00,
+      "w": 0.00,
+      "m": 24.00
     },
     {
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t] - październik",
@@ -24,66 +24,66 @@
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 2067.00,
-      "d": 10.00,
-      "w": 77.00,
-      "m": 186.00
+      "price": 2010.00,
+      "d": -57.00,
+      "w": 6.00,
+      "m": 67.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1244.00,
+      "price": 1235.00,
       "d": -9.00,
-      "w": -26.00,
-      "m": 71.00
+      "w": -30.00,
+      "m": 49.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
-      "price": 1109.00,
-      "d": 16.00,
-      "w": 52.00,
-      "m": 55.00
+      "price": 1106.00,
+      "d": -3.00,
+      "w": 53.00,
+      "m": 67.00
     }
   ],
   "futures": [
     {
       "name": "Wheat MATIF",
-      "close": 246.25,
+      "close": 243.75,
       "d1": null,
-      "d": -2.00,
-      "w": 2.00,
-      "m": 5.25
+      "d": -2.50,
+      "w": 1.75,
+      "m": -0.75
     },
     {
       "name": "Corn MATIF",
-      "close": 301.25,
+      "close": 292.50,
       "d1": null,
-      "d": -1.75,
-      "w": 27.25,
-      "m": 39.25
+      "d": -8.75,
+      "w": 19.25,
+      "m": 30.50
     },
     {
       "name": "Rapeseed MATIF",
-      "close": 499.75,
+      "close": 501.75,
       "d1": null,
-      "d": -22.25,
-      "w": -12.50,
-      "m": -54.50
+      "d": 2.00,
+      "w": -0.25,
+      "m": -49.00
     },
     {
       "name": "Soymeal CBOT (Dec, SMZ26)",
-      "close": 359.80,
+      "close": 357.10,
       "d1": null,
-      "d": -4.70,
-      "w": 2.20,
-      "m": -0.30
+      "d": -2.70,
+      "w": -8.50,
+      "m": -3.80
     },
     {
       "name": "Rapemeal Neuss/Spyck (November)",
       "close": 289.00,
       "d1": null,
       "d": 0.00,
-      "w": -7.00,
-      "m": 16.00
+      "w": -5.00,
+      "m": 7.00
     }
   ]
 }
