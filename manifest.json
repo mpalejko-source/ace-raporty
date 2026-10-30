@@ -62,9 +62,9 @@
     "name": "Warunki pogodowe dla upraw kluczowych surowców",
     "description": "Mapki pogodowe z krótką prognozą i wpływem na uprawy.",
     "path": "raporty/weather-watch/",
-    "updated": "2026-10-23",
+    "updated": "2026-10-30",
     "frequency": "tygodniowo",
-    "next_issue": "2026-10-30",
+    "next_issue": "2026-11-06",
     "category": "zboza",
     "alert_comment": ""
   },
