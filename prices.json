@@ -1,5 +1,5 @@
 {
-  "asof": "2026-11-17 07:36",
+  "asof": "2026-11-18 07:32",
   "cash": [
     {
       "name": "Rzepak – centralna Polska [PLN/t]",
@@ -19,22 +19,22 @@
       "name": "Kukurydza – port Gdańsk/Gdynia [PLN/t] - listopad",
       "price": 990.00,
       "d": 0.00,
-      "w": 30.00,
+      "w": 15.00,
       "m": -60.00
     },
     {
       "name": "Śruta sojowa – port Gdańsk/Gdynia [PLN/t]",
-      "price": 1916.00,
-      "d": 23.00,
-      "w": 111.00,
-      "m": -94.00
+      "price": 1937.00,
+      "d": 21.00,
+      "w": 105.00,
+      "m": -73.00
     },
     {
       "name": "Śruta rzepakowa – centralna Polska [PLN/t]",
-      "price": 1283.00,
-      "d": -1.00,
-      "w": 5.00,
-      "m": 48.00
+      "price": 1296.00,
+      "d": 13.00,
+      "w": 23.00,
+      "m": 61.00
     },
     {
       "name": "Śruta słonecznikowa – granica PL–UA [PLN/t]",
@@ -47,43 +47,43 @@
   "futures": [
     {
       "name": "Wheat MATIF (Dec'26)",
-      "close": 235.25,
+      "close": 235.75,
       "d1": null,
-      "d": 1.75,
-      "w": 8.50,
-      "m": -8.50
+      "d": 0.50,
+      "w": 5.25,
+      "m": -8.00
     },
     {
       "name": "Corn MATIF (Mar'27)",
-      "close": 261.75,
+      "close": 263.50,
       "d1": null,
-      "d": 2.25,
-      "w": 12.00,
-      "m": -30.75
+      "d": 1.75,
+      "w": 8.50,
+      "m": -29.00
     },
     {
       "name": "Rapeseed MATIF (Feb'27)",
-      "close": 541.75,
+      "close": 543.50,
       "d1": null,
-      "d": -1.25,
-      "w": 16.75,
-      "m": 40.00
+      "d": 1.75,
+      "w": 16.00,
+      "m": 41.75
     },
     {
       "name": "Soymeal CBOT (Dec, SMZ26)",
-      "close": 334.60,
+      "close": 335.20,
       "d1": null,
-      "d": 4.80,
-      "w": 13.90,
-      "m": -22.50
+      "d": 0.60,
+      "w": 8.70,
+      "m": -21.90
     },
     {
       "name": "Rapemeal Neuss/Spyck (December)",
-      "close": 300.00,
+      "close": 302.00,
       "d1": null,
-      "d": 4.00,
-      "w": 6.00,
-      "m": 11.00
+      "d": 2.00,
+      "w": 14.00,
+      "m": 13.00
     }
   ]
 }
